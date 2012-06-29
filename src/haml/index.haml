@@ -4,6 +4,10 @@
     %meta(charset="utf-8")
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/bootstrap.css")
     %link(rel="stylesheet" type="text/css" href="style.css")
+    %script(src="vendor/jquery-1.7.2.js")
+    %script(src="vendor/chosen/chosen.jquery.js")
+    %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
+
   %body
     .container
       %section#main
@@ -17,8 +21,7 @@
           .span8
             .well
               %label VCF files
-              %select
-              %select
+              .file-selectors
           .span4
             .well
               %label Metrics

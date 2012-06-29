@@ -6,7 +6,9 @@
   
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"
-                 "vendor/bcbio.variation/src" "vendor/bcbio.variation/lib/*"]
+                 ;;Needed when compiling scratch data, but don't leave in because it'll pollute cljs builds with old libs.
+                 ;;"vendor/bcbio.variation/src" "vendor/bcbio.variation/lib/*"
+                 ]
   
   :plugins [[lein-cljsbuild "0.2.2"]]
 
@@ -14,4 +16,5 @@
               [{:source-path "src/cljs"
                 :compiler {:output-to "public/vcf.js"
                            :pretty-print true
-                           :optimizations :whitespace}}]})
+                           :optimizations :advanced
+                           :externs ["externs/jquery.js"]}}]})
