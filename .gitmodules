@@ -1,3 +1,3 @@
 [submodule "vendor/bcbio.variation"]
 	path = vendor/bcbio.variation
-	url = https://github.com/chapmanb/bcbio.variation.git
+	url = ssh://git@github.com/lynaghk/bcbio.variation.git
