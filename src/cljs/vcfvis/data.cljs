@@ -12,3 +12,6 @@
 
 (defn load [filename]
   (stub filename))
+
+(defn available-filenames []
+  (keys stub))

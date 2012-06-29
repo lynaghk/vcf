@@ -1,9 +1,19 @@
 (ns vcfvis.main
-  (:use-macros [c2.util :only [pp p]])
-  (:require [vcfvis.data :as data]))
+  (:use-macros [c2.util :only [pp p]]
+               [reflex.macros :only [constrain!]])
+  (:require [vcfvis.core :as core]
+            [vcfvis.data :as data]
+            [vcfvis.controls :as controls]))
 
-(pp (data/load "vendor/bcbio.variation/test/data/freebayes-calls.vcf"))
+
+(constrain!
+ (reset! core/!vcfs
+         (doall (map data/load
+                     (remove nil? (distinct (map deref controls/selectors)))))))
+
+(reset! core/!available-filenames (data/available-filenames))
 
 
-
+(constrain!
+ (pp @core/!vcfs))
 

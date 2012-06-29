@@ -16,5 +16,6 @@
               [{:source-path "src/cljs"
                 :compiler {:output-to "public/vcf.js"
                            :pretty-print true
-                           :optimizations :advanced
+                           ;;:optimizations :advanced
+                           :optimizations :whitespace
                            :externs ["externs/jquery.js"]}}]})
