@@ -3,7 +3,11 @@
 
 
 (def reference "vendor/bcbio.variation/test/data/GRCh37.fa")
-(def vcf "vendor/bcbio.variation/test/data/phasing-reference.vcf")
+(def vcf1 "vendor/bcbio.variation/test/data/gatk-calls.vcf")
+(def vcf2 "vendor/bcbio.variation/test/data/freebayes-calls.vcf")
 
-(plot-ready-metrics vcf reference)
+[(plot-ready-metrics vcf1 reference)
+ (plot-ready-metrics vcf2 reference)]
+
+
 
