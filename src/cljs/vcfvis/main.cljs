@@ -17,3 +17,5 @@
 (constrain!
  (pp @core/!vcfs))
 
+(constrain!
+ (pp @core/!shared-metrics))

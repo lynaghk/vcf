@@ -1,7 +1,8 @@
 (ns vcfvis.core
-  (:use-macros [c2.util :only [pp p]]
+  (:use-macros [c2.util :only [pp p interval]]
                [reflex.macros :only [computed-observable]])
-  )
+  (:use [clojure.set :only [intersection]])
+  (:require [reflex.core :as reflex]))
 
 
 (def !available-filenames
@@ -13,16 +14,27 @@
   "VCFs currently under analysis."
   (atom []))
 
-#_(def !available-metics
-  (computed-observable 
-   ))
+(def !shared-metrics
+  "Metrics"
+  (computed-observable
+   ;;TODO, order metrics by relevance/usefulness to biologists.
+   (apply intersection
+          (map (fn [vcf]
+                 (set (map (fn [metric]
+                             (select-keys metric [:id :desc]))
+                           (vcf :metrics))))
+               @!vcfs))))
+
 
 (def !metric
   "The metric to be displayed on the histogram."
-  (atom {}))
+  (atom {:id "QUAL"}))
 
 
 
 
+(defn vcf-metric [vcf metric-id]
+  (first (filter #(= metric-id (% :id))
+                 (vcf :metrics))))
 
 

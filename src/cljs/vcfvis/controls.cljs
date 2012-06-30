@@ -3,8 +3,7 @@
                [reflex.macros :only [constrain!]])
   (:use [chosen.core :only [ichooseu! options selected]])
   (:require [vcfvis.core :as core]
-            [c2.dom :as dom]
-            [reflex.core :as reflex]))
+            [c2.dom :as dom]))
 
 
 (def num-datasets 2)
@@ -17,3 +16,5 @@
                ;;The selectors should always reflect the user's avaliable flies
                (constrain! (options !c @core/!available-filenames))
                !c)))))
+
+
