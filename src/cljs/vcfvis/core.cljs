@@ -44,7 +44,7 @@
 
 (def !metric
   "The metric to be displayed on the histogram."
-  (atom {:id "QUAL"}))
+  (atom {}))
 
 (defn select-metric! [metric]
   (reset! !metric metric))

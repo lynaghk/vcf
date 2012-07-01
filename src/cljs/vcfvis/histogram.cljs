@@ -26,15 +26,14 @@
        (extent domains)))))
 
 (bind! "#histogram"
-       (when @!extent
-         (let [{:keys [extent ticks]} (ticks/search @!extent :length width)
-               x (scale/linear :domain extent
-                               :range [0 width])]
-
-           [:svg#histogram {:height (+ height (* 2 margin))
-                            :width  (+ width (* 2 margin))}
-            [:g {:transform (svg/translate [margin margin])}
-             [:g.data-frame]
-             [:g.axis.ordinate]
-             [:g.axis.abscissa {:transform (svg/translate [0 height])}
-              (svg/axis x ticks :orientation :bottom)]]])))
+       [:svg#histogram {:height (+ height (* 2 margin))
+                        :width  (+ width (* 2 margin))}
+        [:g {:transform (svg/translate [margin margin])}
+         [:g.data-frame]
+         [:g.axis.ordinate]
+         [:g.axis.abscissa {:transform (svg/translate [0 height])}
+          (when @!extent
+            (let [{:keys [extent ticks]} (ticks/search @!extent :length width)
+                  x (scale/linear :domain extent
+                                  :range [0 width])]
+              (svg/axis x ticks :orientation :bottom)))]]])
