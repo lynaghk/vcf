@@ -20,7 +20,7 @@
   "Extent of x-scale for the currently selected metric of the current VCFs."
   (computed-observable
    (let [domains (mapcat #(get-in (core/vcf-metric % (@core/!metric :id))
-                            [:x-scale :domain])
+                                  [:x-scale :domain])
                          @core/!vcfs)]
      (when (seq domains)
        (extent domains)))))

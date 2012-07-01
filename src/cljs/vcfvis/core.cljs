@@ -1,6 +1,6 @@
 (ns vcfvis.core
   (:use-macros [c2.util :only [pp p interval]]
-               [reflex.macros :only [computed-observable]])
+               [reflex.macros :only [computed-observable constrain!]])
   (:use [clojure.set :only [intersection]])
   (:require [reflex.core :as reflex]))
 
@@ -50,6 +50,11 @@
   (reset! !metric metric))
 
 
+(constrain! ;;Make sure that the selected metric is always one of the shared metrics
+ (let [shared @!shared-metrics]
+   (when (seq shared)
+     (when-not (some #{@!metric} shared)
+       (select-metric! (first shared))))))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;Querying
