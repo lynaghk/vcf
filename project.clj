@@ -4,8 +4,12 @@
 
                  [com.keminglabs/c2 "0.2.0"
                   :exclusions [org.clojure/core.match
-                               com.keminglabs/singult]]
+                               com.keminglabs/singult
+                               com.keminglabs/reflex]]
+                 
                  [com.keminglabs/singult "0.1.3-SNAPSHOT"]
+                 [com.keminglabs/reflex "0.1.1-SNAPSHOT"]
+                 
                  [com.keminglabs/chosen "0.1.6"
                   :exclusions [org.clojure/core.match]]
                  [match "0.2.0-alpha10-SNAPSHOT"]

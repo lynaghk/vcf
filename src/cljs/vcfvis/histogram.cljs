@@ -16,23 +16,25 @@
 (def height 400)
 (def width 900)
 
-
 (def !extent
   "Extent of x-scale for the currently selected metric of the current VCFs."
   (computed-observable
-   (extent (mapcat #(get-in (core/vcf-metric % (@core/!metric :id))
+   (let [domains (mapcat #(get-in (core/vcf-metric % (@core/!metric :id))
                             [:x-scale :domain])
-                   @core/!vcfs))))
+                         @core/!vcfs)]
+     (when (seq domains)
+       (extent domains)))))
 
 (bind! "#histogram"
-       (let [{:keys [extent ticks]} (ticks/search @!extent :length width)
-             x (scale/linear :domain extent
-                             :range [0 width])]
-         
-         [:svg#histogram {:height (+ height (* 2 margin))
-                          :width  (+ width (* 2 margin))}
-          [:g {:transform (svg/translate [margin margin])}
-           [:g.data-frame]
-           [:g.axis.ordinate]
-           [:g.axis.abscissa {:transform (svg/translate [0 height])}
-            (svg/axis x ticks :orientation :bottom)]]]))
+       (when @!extent
+         (let [{:keys [extent ticks]} (ticks/search @!extent :length width)
+               x (scale/linear :domain extent
+                               :range [0 width])]
+
+           [:svg#histogram {:height (+ height (* 2 margin))
+                            :width  (+ width (* 2 margin))}
+            [:g {:transform (svg/translate [margin margin])}
+             [:g.data-frame]
+             [:g.axis.ordinate]
+             [:g.axis.abscissa {:transform (svg/translate [0 height])}
+              (svg/axis x ticks :orientation :bottom)]]])))

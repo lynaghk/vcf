@@ -22,9 +22,10 @@
           .span4
             .well
               %label Metrics
-              - %w(Qual Metric2 Metric3).each do |m|
-                %label.radio
-                  %input(type="radio" name="metric-type")
-                  = m
+              #metrics
+              -# - %w(Qual Metric2 Metric3).each do |m|
+              -#   %label.radio
+              -#     %input(type="radio" name="metric-type")
+              -#     = m
 
     %script(src="vcf.js")
