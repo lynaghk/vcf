@@ -28,12 +28,32 @@
 (bind! "#histogram"
        [:svg#histogram {:height (+ height (* 2 margin))
                         :width  (+ width (* 2 margin))}
-        [:g {:transform (svg/translate [margin margin])}
-         [:g.data-frame]
-         [:g.axis.ordinate]
-         [:g.axis.abscissa {:transform (svg/translate [0 height])}
-          (when @!extent
-            (let [{:keys [extent ticks]} (ticks/search @!extent :length width)
-                  x (scale/linear :domain extent
-                                  :range [0 width])]
-              (svg/axis x ticks :orientation :bottom)))]]])
+        (when @!extent
+          (let [vcfs @core/!vcfs
+                {:keys [extent ticks]} (ticks/search @!extent :length width)
+                x (scale/linear :domain extent
+                                :range [0 width])]
+
+            [:g {:transform (svg/translate [margin margin])}
+             [:g.data-frame {:transform (str (svg/translate [0 height])
+                                             (svg/scale [1 -1]))}
+              (let [metric-id (@core/!metric :id)
+                    metrics (map #(core/vcf-metric % metric-id) vcfs)
+                    max-val (apply max (flatten (map :vals metrics)))
+                    y (scale/linear :domain [0 max-val]
+                                    :range [0 height])
+                    bin-width (:bin-width (core/vcf-metric (first vcfs) metric-id))
+                    dx (- (x bin-width) (x 0))]
+
+                (unify metrics
+                       (fn [metric]
+                         [:g.distribution
+                          (map-indexed
+                           (fn [idx v]
+                             [:rect {:x (* dx idx) :width dx
+                                     :height (y v)}])
+                           (metric :vals))])))]
+             [:g.axis.ordinate]
+             [:g.axis.abscissa {:transform (svg/translate [0 height])}
+              (svg/axis x ticks :orientation :bottom)
+              ]]))])
