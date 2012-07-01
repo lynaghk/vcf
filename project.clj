@@ -2,18 +2,8 @@
   :description "Genetic variant metric visualization tool"
   :dependencies [[org.clojure/clojure "1.4.0"]
 
-                 [com.keminglabs/c2 "0.2.0"
-                  :exclusions [org.clojure/core.match
-                               com.keminglabs/singult
-                               com.keminglabs/reflex]]
-                 
-                 [com.keminglabs/singult "0.1.3-SNAPSHOT"]
-                 [com.keminglabs/reflex "0.1.1-SNAPSHOT"]
-                 
-                 [com.keminglabs/chosen "0.1.6"
-                  :exclusions [org.clojure/core.match]]
-                 [match "0.2.0-alpha10-SNAPSHOT"]
-                 ]
+                 [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
+                 [com.keminglabs/chosen "0.1.7-SNAPSHOT"]]
   
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"
