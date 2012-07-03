@@ -1,6 +1,10 @@
 ////////////
 //Histogram
 
+
+//Colors from Brewer's Set-1 categorical scheme
+$colors: (rgb(228,26,28), rgb(55,126,184), rgb(77,175,74), rgb(152,78,163), rgb(255,127,0), rgb(255,255,51), rgb(166,86,40), rgb(247,129,191), rgb(153,153,153))
+
 #histogram
   border: 1px solid black
   display: block
@@ -14,12 +18,11 @@
   .distribution
     rect
       fill-opacity: 0.5
-    &:nth-child(1)
-      rect
-        fill: red
-    &:nth-child(2)
-      rect
-        fill: blue
+    @for $i from 1 through length($colors)
+      &:nth-child(#{$i})
+        rect
+          fill: nth($colors, $i)
+
 
 .axis
   rect 
@@ -44,6 +47,23 @@
 ////////////
 //Controls
 
-select
-  display: block
-  width: 100%
+.file-selector
+  display: -webkit-box
+  -webkit-box-align: center
+  margin-bottom: 0.5em
+
+  .colorbox
+    width: 30px
+    height: 30px
+    border-radius: 5px
+    margin-right: 10px
+
+  select
+    -webkit-box-flex: 1
+    display: -webkit-box
+
+  @for $i from 1 through length($colors)
+    &:nth-child(#{$i})
+      .colorbox
+        background-color: nth($colors, $i)
+

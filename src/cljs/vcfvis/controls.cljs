@@ -13,8 +13,11 @@
 (def selectors
   (let [$selectors (dom/select ".file-selectors")]
     (doall (for [_ (range num-datasets)]
-             (let [$sel (dom/append! $selectors [:select])
-                   !c (ichooseu! $sel)]
+             (let [$sel (dom/append! $selectors
+                                     [:div.file-selector
+                                      [:div.colorbox]
+                                      [:select]])
+                   !c (ichooseu! (dom/select "select" $sel))]
                ;;The selectors should always reflect the user's avaliable flies
                (constrain! (options !c @core/!available-filenames))
                !c)))))
