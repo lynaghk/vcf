@@ -2,11 +2,11 @@
   (:use-macros [c2.util :only [pp p bind!]]
                [reflex.macros :only [constrain!]])
   (:use [chosen.core :only [ichooseu! options selected]]
-        [c2.core :only [unify]])
+        [c2.core :only [unify]]
+        [c2.util :only [clj->js]])
   (:require [vcfvis.core :as core]
             [c2.dom :as dom]
             [c2.event :as event]))
-
 
 (def num-datasets 2)
 
@@ -25,10 +25,18 @@
           (unify shared
                  (fn [{:keys [id desc]
                       :as metric}]
-                   [:label.radio
+                   [:label.radio {:title id :data-content desc
+
+                                  ;;Hack through Bootstrap's broken caching.
+                                  ;;Can be removed once Singult#2 is resolved.
+                                  :data-original-title id}
                     [:input {:type "radio" :name "metric-type"
                              :properties {:checked (= @core/!metric metric)}}]
                     id])
                  :force-update? true)]))
+
+(-> (js/$ "#metrics")
+    (.popover (clj->js {:selector "label"
+                        :placement "left"})))
 
 (event/on "#metrics" :click core/select-metric!)

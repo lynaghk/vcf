@@ -16,7 +16,12 @@
   :cljsbuild {:builds
               [{:source-path "src/cljs"
                 :compiler {:output-to "public/vcf.js"
-                           :pretty-print true
-                           ;;:optimizations :advanced
+                           
+                           ;; :optimizations :advanced
+                           ;; :pretty-print false
+                           
                            :optimizations :whitespace
-                           :externs ["externs/jquery.js"]}}]})
+                           :pretty-print true
+
+                           :externs ["externs/jquery.js"
+                                     "resources/closure-js/externs"]}}]})
