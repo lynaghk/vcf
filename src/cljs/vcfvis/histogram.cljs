@@ -11,16 +11,17 @@
             [c2.svg :as svg]
             [c2.ticks :as ticks]))
 
-(def margin 20)
-
+(def margin "left/right margin" 20)
+(def inter-hist-margin "vertical margin between stacked histograms" 20)
 ;;width and height of data frame
-(def height 200)
+(def height 500)
 (def width 900)
 
 (defn histograms* [vcfs x-scale]
   (let [metric-id (@core/!metric :id)
         metrics (map #(core/vcf-metric % metric-id) vcfs)
         max-val (apply max (flatten (map :vals metrics)))
+        height (- (/ height (count vcfs)) inter-hist-margin)
         y (scale/linear :domain [0 max-val]
                         :range [0 height])
         ;;The bin width is the same for a given metric across all samples
@@ -28,18 +29,19 @@
         dx (- (x-scale bin-width) (x-scale 0))]
 
     [:div.span12
-     (unify (map vector vcfs (repeat metric-id))
-            (fn [[vcf metric-id]]
+     (unify vcfs
+            (fn [vcf]
               [:div.histogram
                [:span.label (vcf :filename)]
-               [:svg {:width (+ width (* 2 margin)) :height (+ height (* 1.1 margin))}
+               [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
                 [:g {:transform (svg/translate [margin margin])}
                  [:g.distribution {:transform (str (svg/translate [0 height])
                                                    (svg/scale [1 -1]))}
                   (map-indexed (fn [idx v]
                                  [:rect {:x (* dx idx) :width dx
                                          :height (y v)}])
-                               ((core/vcf-metric vcf metric-id) :vals))]]]]))]))
+                               ((core/vcf-metric vcf metric-id) :vals))]]]])
+            :force-update? true)]))
 
 (bind! "#histograms"
        (let [vcfs @core/!vcfs]
