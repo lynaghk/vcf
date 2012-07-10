@@ -14,14 +14,20 @@
 (def margin "left/right margin" 20)
 (def inter-hist-margin "vertical margin between stacked histograms" 20)
 ;;width and height of data frame
-(def height 500)
+(def axis-height 20)
+
+(def height
+  "Height available to histogram facet grid"
+  (js/parseFloat (dom/style "#histograms" :height)))
+
 (def width 900)
 
 (defn histograms* [vcfs x-scale]
   (let [metric-id (@core/!metric :id)
         metrics (map #(core/vcf-metric % metric-id) vcfs)
         max-val (apply max (flatten (map :vals metrics)))
-        height (- (/ height (count vcfs)) inter-hist-margin)
+        height (- (/ (- height axis-height) (count vcfs))
+                  inter-hist-margin)
         y (scale/linear :domain [0 max-val]
                         :range [0 height])
         ;;The bin width is the same for a given metric across all samples
@@ -45,7 +51,7 @@
 
 (bind! "#histograms"
        (let [vcfs @core/!vcfs]
-         (when (seq vcfs)
+         (if (seq vcfs)
            (let [metric-extent (get-in (core/vcf-metric (first vcfs)
                                                         (@core/!metric :id))
                                        [:x-scale :domain])
@@ -62,9 +68,11 @@
               ;;x-axis
               [:div.span12
                [:div.axis.abscissa
-                [:svg {:width (+ width (* 2 margin)) :height 20}
+                [:svg {:width (+ width (* 2 margin)) :height axis-height}
                  [:g {:transform (svg/translate [margin 2])}
-                  (svg/axis x ticks :orientation :bottom)]]]]]))))
+                  (svg/axis x ticks :orientation :bottom)]]]]])
+           ;;If no VCFs, clear everything
+           [:div.row#histograms])))
 
 
 ;;Range selector
