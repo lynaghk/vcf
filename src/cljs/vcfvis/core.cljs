@@ -7,7 +7,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;;From server
 
-(def !available-filenames
+(def !available-files
   "User's files available on the server.
    May want to refactor this design if users have more than a few dozen files."
   (atom []))

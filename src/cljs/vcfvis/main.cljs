@@ -6,12 +6,11 @@
             [vcfvis.controls :as controls]))
 
 (constrain!
- (let [res (doall (map data/load
-                       (remove nil? (distinct (map deref controls/selectors)))))]
+ (let [res (doall (map data/load @controls/file-selector))]
    ;;Need timeout here so that computed-observables that depend on !vcfs don't get picked up as dependencies for this form (causing an infinite loop). TODO: nice general solution for this problem.
    (timeout 10 (reset! core/!vcfs res))))
 
-(reset! core/!available-filenames (data/available-filenames))
+(reset! core/!available-files (data/available-files))
 
 
 

@@ -10,8 +10,16 @@
            '{:filename "vendor/bcbio.variation/test/data/freebayes-calls.vcf", :created-on #inst "2012-07-03T15:12:41.963-00:00", :metrics ({:vals (0.2727272727272727 0.18181818181818182 0.2727272727272727 0.18181818181818182 0.09090909090909091 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0), :desc "Variant quality score, phred-scaled", :x-scale {:type :linear, :domain [0.0 100000.0]}, :bin-width 5000.0, :y-scale {:type :linear}, :id "QUAL"} {:y-scale {:type :linear}, :x-scale {:type :linear, :domain [0.0 5000.0]}, :bin-width 250.0, :vals (0.18181818181818182 0.45454545454545453 0.09090909090909091 0.2727272727272727 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0), :id "DP", :desc "Total read depth at the locus"})}})
 
 
-(defn load [filename]
-  (stub filename))
+(def stub-files
+  (let [dirname "vendor/bcbio.variation/test/data"]
+    (map (fn [name]
+           {:id (str dirname "/" name)
+            :folder dirname :filename name
+            :created-on #inst "2012-07-03T15:12:41.963-00:00"})
+         ["freebayes-calls.vcf" "gatk-calls.vcf"])))
 
-(defn available-filenames []
-  (keys stub))
+(defn load [id]
+  (stub id))
+
+(defn available-files []
+  stub-files)
