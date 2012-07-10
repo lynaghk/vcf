@@ -5,6 +5,7 @@
   (:use [c2.core :only [unify]]
         [c2.maths :only [irange extent]])
   (:require [vcfvis.core :as core]
+            [vcfvis.double-range :as double-range]
             [c2.dom :as dom]
             [c2.scale :as scale]
             [c2.svg :as svg]
@@ -62,3 +63,9 @@
                 [:svg {:width (+ width (* 2 margin)) :height 20}
                  [:g {:transform (svg/translate [margin 2])}
                   (svg/axis x ticks :orientation :bottom)]]]]]))))
+
+
+;;Range selector
+(-> (dom/select "#range-selector")
+    (dom/style :width width)
+    (double-range/init! #(pp %)))
