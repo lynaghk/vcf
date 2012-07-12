@@ -11,12 +11,19 @@
     %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
 
   %body
-    .container
-      %section#main
+    .navbar#navbar
+      .navbar-inner
+        .container
+          %a.brand VCF Visualizer
+
+    %section
+      .container
         .row#histograms
         .row
           .span12
             #range-selector
+
+      .controls.container
         .row
           .span8
             .well
@@ -26,9 +33,6 @@
             .well
               %label Metrics
               #metrics
-              -# - %w(Qual Metric2 Metric3).each do |m|
-              -#   %label.radio
-              -#     %input(type="radio" name="metric-type")
-              -#     = m
+
 
     %script(src="vcf.js")

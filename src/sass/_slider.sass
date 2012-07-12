@@ -3,14 +3,26 @@
 .goog-twothumbslider-horizontal
   background-color: gray
   position: relative
-  overflow: hidden
+  //overflow: hidden
+  &:focus
+    outline: none
+  &:hover, &:focus
+    .goog-twothumbslider-value-thumb, .goog-twothumbslider-extent-thumb
+      height: 800px
+
 
   .goog-twothumbslider-value-thumb, .goog-twothumbslider-extent-thumb
     position: absolute
     box-sizing: border-box
     border: 1px solid black
-    background-color: lightGray
-    overflow: hidden
-    width: 20px
+    background-color: darkRed
+    //overflow: hidden
+    width: 10px
     height: 100%
+    bottom: 0
 
+
+  .goog-twothumbslider-rangehighlight
+    position: absolute
+    height: 100%
+    //background-color: darkRed
