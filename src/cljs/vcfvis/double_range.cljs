@@ -11,7 +11,6 @@
         tt (new goog.ui.TwoThumbSlider)]
     (doto tt
       (.decorate $tt)
-      (.setMoveToPointEnabled true)
       (gevents/listen goog.ui.Component.EventType.CHANGE
                       #(let [v (.getValue tt)]
                          (callback [v (+ v (.getExtent tt))]))))))

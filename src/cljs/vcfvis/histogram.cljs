@@ -13,14 +13,27 @@
 
 (def margin "left/right margin" 20)
 (def inter-hist-margin "vertical margin between stacked histograms" 20)
-;;width and height of data frame
 (def axis-height 20)
 
 (def height
-  "Height available to histogram facet grid"
+  "height available to histogram facet grid"
   (js/parseFloat (dom/style "#histograms" :height)))
 
-(def width 900)
+(def width
+  "width of histogram facet grid"
+  900)
+
+;;Range selector
+(let [tt (-> (dom/select "#range-selector")
+             (dom/style :width width)
+             (double-range/init! #(pp %)))]
+
+  ;;possible todo: use pubsub bus rather than side-effecting fn.
+  (defn update-range-selector! [[min max] bin-width]
+    (doto tt
+      (.setMinimum min) (.setMaximum max)
+      (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
+      (.setValue min) (.setExtent (+ min bin-width)))))
 
 (defn histograms* [vcfs x-scale]
   (let [metric-id (@core/!metric :id)
@@ -52,13 +65,15 @@
 (bind! "#histograms"
        (let [vcfs @core/!vcfs]
          (if (seq vcfs)
-           (let [metric-extent (get-in (core/vcf-metric (first vcfs)
-                                                        (@core/!metric :id))
-                                       [:x-scale :domain])
+           (let [metric (core/vcf-metric (first vcfs)
+                                         (@core/!metric :id))
+                 metric-extent (get-in metric [:x-scale :domain])
                  {:keys [extent ticks]} (ticks/search metric-extent
                                                       :length width)
                  x (scale/linear :domain extent
                                  :range [0 width])]
+
+             (update-range-selector! extent (:bin-width metric))
 
              [:div.row#histograms
 
@@ -75,7 +90,3 @@
            [:div.row#histograms])))
 
 
-;;Range selector
-(-> (dom/select "#range-selector")
-    (dom/style :width width)
-    (double-range/init! #(pp %)))
