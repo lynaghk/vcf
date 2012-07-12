@@ -7,6 +7,7 @@
   (:require [vcfvis.core :as core]
             [vcfvis.double-range :as double-range]
             [c2.dom :as dom]
+            [c2.event :as event]
             [c2.scale :as scale]
             [c2.svg :as svg]
             [c2.ticks :as ticks]))
@@ -23,17 +24,19 @@
   "width of histogram facet grid"
   900)
 
+
+(def !selected-extent (atom [0 1]))
 ;;Range selector
 (let [tt (-> (dom/select "#range-selector")
              (dom/style :width width)
-             (double-range/init! #(pp %)))]
+             (double-range/init! #(reset! !selected-extent %)))]
 
   ;;possible todo: use pubsub bus rather than side-effecting fn.
   (defn update-range-selector! [[min max] bin-width]
     (doto tt
       (.setMinimum min) (.setMaximum max)
       (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
-      (.setValue min) (.setExtent (+ min bin-width)))))
+      (.setValueAndExtent min (+ min bin-width)))))
 
 (defn histograms* [vcfs x-scale]
   (let [metric-id (@core/!metric :id)
@@ -52,6 +55,7 @@
             (fn [vcf]
               [:div.histogram
                [:span.label (vcf :filename)]
+               [:button.btn "Download subset"]
                [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
                 [:g {:transform (svg/translate [margin margin])}
                  [:g.distribution {:transform (str (svg/translate [0 height])
@@ -90,3 +94,9 @@
            [:div.row#histograms])))
 
 
+(event/on "#histograms" "button" :click
+          (fn [{:keys [filename]}]
+            (let [metric-id (@core/!metric :id)]
+              (js/alert (str "Download subset of " filename
+                             " for " metric-id
+                             " between " (pr-str @!selected-extent))))))
