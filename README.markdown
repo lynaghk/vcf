@@ -2,7 +2,7 @@ VCF Visualizer
 ==============
 
 Web frontend for VCF analysis tools in Brad Chapman's [bcbio.variation](https://github.com/chapmanb/bcbio.variation) toolkit.
-Currently a work in progress.
+Currently a work in progress; check out the [temporary dev/evaluation build](http://keminglabs.com/harvard_vcf/).
 First official release scheduled for August 2012.
 
 Funding provided by the Harvard School of Public Health and EdgeBio; development by Keming Labs.
