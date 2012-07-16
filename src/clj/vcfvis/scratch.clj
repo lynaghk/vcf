@@ -10,4 +10,4 @@
 [(plot-ready-metrics vcf1 reference)
  (plot-ready-metrics vcf2 reference)]
 
-(get-files "VCF" {:username "keminglabs" :password "vcftest"} nil)
+(get-files :vcf {:username "keminglabs" :password "vcftest"})
