@@ -31,8 +31,16 @@ to start the Guard watcher (use Chrome Livereload plugin for auto browser refres
 to start a webserver.
 
 [Leiningen 2](https://github.com/technomancy/leiningen/) required to build Clojure components.
-Run
+First step is to install the bcbio snapshot to your local machine:
+
+    cd vendor/bcbio.variation/
+    lein install
+
+Then run
 
     lein cljsbuild auto
 
 to compile JavaScript.
+
+
+

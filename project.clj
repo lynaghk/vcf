@@ -4,13 +4,11 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
 
                  [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
-                 [com.keminglabs/chosen "0.1.7-SNAPSHOT"]]
+                 [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
+                 [bcbio.variation "0.0.1-SNAPSHOT"]]
   
   :min-lein-version "2.0.0"
-  :source-paths ["src/clj" "src/cljs"
-                 ;;Needed when compiling scratch data, but don't leave in because it'll pollute cljs builds with old libs.
-                 ;;"vendor/bcbio.variation/src" "vendor/bcbio.variation/lib/*"
-                 ]
+  :source-paths ["src/clj" "src/cljs"]
   
   :plugins [[lein-cljsbuild "0.2.2"]]
 
