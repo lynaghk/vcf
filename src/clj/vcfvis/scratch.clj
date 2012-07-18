@@ -10,4 +10,9 @@
 [(plot-ready-metrics vcf1 reference)
  (plot-ready-metrics vcf2 reference)]
 
-(get-files :vcf {:username "keminglabs" :password "vcftest"})
+(def creds {:username "keminglabs" :password "vcftest"})
+(def files (get-files :vcf creds))
+
+(plot-ready-metrics (:id (first files)) reference
+                    :creds creds
+                    :cache-dir "/tmp/")
