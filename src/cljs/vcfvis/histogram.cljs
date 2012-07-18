@@ -27,9 +27,13 @@
 
 (def !selected-extent (atom [0 1]))
 ;;Range selector
-(let [tt (-> (dom/select "#range-selector")
-             (dom/style :width width)
-             (double-range/init! #(reset! !selected-extent %)))]
+(let [$tt (-> (dom/select "#range-selector")
+              (dom/style :width width))
+      tt (double-range/init! $tt #(reset! !selected-extent %))]
+
+  (constrain!
+   (dom/style $tt :visibility
+              (if (seq @core/!vcfs) "visible" "hidden")))
 
   ;;possible todo: use pubsub bus rather than side-effecting fn.
   (defn update-range-selector! [[min max] bin-width]
@@ -37,6 +41,8 @@
       (.setMinimum min) (.setMaximum max)
       (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
       (.setValueAndExtent min (+ min bin-width)))))
+
+
 
 (defn histograms* [vcfs x-scale]
   (let [metric-id (@core/!metric :id)
