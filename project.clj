@@ -5,12 +5,15 @@
 
                  [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
-                 [bcbio.variation "0.0.1-SNAPSHOT"]]
+                 
+                 ;;Comment out until lein-cljsbulid deps conflict issue can be resolved.
+                 ;;[bcbio.variation "0.0.1-SNAPSHOT"]
+                 ]
   
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
   
-  :plugins [[lein-cljsbuild "0.2.2"]]
+  :plugins [[lein-cljsbuild "0.2.4"]]
 
   :cljsbuild {:builds
               [{:source-path "src/cljs"
