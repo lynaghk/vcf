@@ -11,9 +11,7 @@
                  [ring/ring-jetty-adapter "1.1.1"]
                  [com.cemerick/friend "0.0.9"]
                  
-                 ;;Comment out until lein-cljsbulid deps conflict issue can be resolved.
-                 ;;[bcbio.variation "0.0.1-SNAPSHOT"]
-                 ]
+                 [bcbio.variation "0.0.1-SNAPSHOT" :exclusions [org.clojars.chapmanb/gatk]]]
   
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
