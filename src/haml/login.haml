@@ -1,0 +1,23 @@
+!!! 5
+%html(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(content="IE=edge,chrome=1" http-equiv="X-UA-Compatible")
+    %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/bootstrap.css")
+    %link(rel="stylesheet" type="text/css" href="style.css")
+    %title VCF Login
+  %body
+    %section#main.container
+      %h1 Login
+      %form#login(method="POST" action="/login")
+        %fieldset
+          .control-group
+            %label.control-label(for="username") Username:
+            .controls
+              %input#username(name="username" data-placeholder="username")
+          .control-group
+            %label.control-label(for="password") Password:
+            .controls
+              %input#password(name="password" type="password")
+          %input.btn(type="submit" value="Login")
+

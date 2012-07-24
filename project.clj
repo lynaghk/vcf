@@ -6,6 +6,11 @@
                  [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
                  
+                 [compojure "1.1.1"]
+                 [ring/ring-core "1.1.1"]
+                 [ring/ring-jetty-adapter "1.1.1"]
+                 [com.cemerick/friend "0.0.9"]
+                 
                  ;;Comment out until lein-cljsbulid deps conflict issue can be resolved.
                  ;;[bcbio.variation "0.0.1-SNAPSHOT"]
                  ]

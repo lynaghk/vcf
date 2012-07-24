@@ -8,6 +8,7 @@
     %script(src="vendor/chosen/chosen.jquery.js")
     %script(src="vendor/bootstrap/bootstrap-tooltip.js")
     %script(src="vendor/bootstrap/bootstrap-popover.js")
+    %script(src="vendor/bootstrap/bootstrap-dropdown.js")
     %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
 
   %body
@@ -15,7 +16,14 @@
       .navbar-inner
         .container
           %a.brand VCF Visualizer
-
+          %ul.nav.pull-right
+            %li.dropdown
+              %a.dropdown-toggle(href="#" data-toggle="dropdown")
+                Logged in as USER
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  %a#btn-logout(href="/logout") Logout
     %section
       .container
         .row#histograms
