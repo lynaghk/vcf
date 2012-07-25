@@ -3,7 +3,7 @@
         [ring.adapter.jetty :only [run-jetty]]
         [ring.middleware.file :only [wrap-file]]
         [ring.middleware.file-info :only [wrap-file-info]]
-        [ring.util.response :only [redirect]])
+        [ring.util.response :only [redirect response]])
 
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
@@ -16,10 +16,15 @@
   (GET "/login" req (slurp "public/login.html"))
   
   (friend/logout (ANY "/logout" req (redirect "/")))
-
+  
   (GET "/" req
        (friend/authorize #{::user}
-                         (slurp "public/index.html")))
+                         (let [{session :session} req]
+
+                           ;;TODO associate GenomeSpace client with user's session.
+                           
+                           (assoc (response (slurp "public/index.html"))
+                             :session session))))
 
   (route/files "/" {:root "public" :allow-symlinks? true})
   (route/not-found "Not found"))
@@ -35,7 +40,8 @@
                             :unauthorized-redirect-uri "/login"
                             :workflows [(workflows/interactive-form :login-uri "/login")]})
       (wrap-file-info)
-      (handler/site)))
+      (handler/site {:session {:cookie-attrs {:max-age 3600
+                                              :secure true}}})))
 
 (defn start!
   ([] (start! 8080))
