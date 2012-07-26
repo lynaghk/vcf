@@ -3,9 +3,8 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [bcbio.variation.api.file :as bc-file]
-            [cemerick.friend :as friend]
-            (cemerick.friend [workflows :as workflows]
-                             [credentials :as creds])))
+            ;;[bcbio.variation.api.metrics :as bc-metrics]
+            ))
 
 (defn gs-creds
   "Helper fn to extract GenomeSpace client from session and return creds map expected by bcbio api fns."
@@ -19,8 +18,21 @@
    :headers {"Content-Type" "application/clojure; charset=utf-8"}
    :body (pr-str x)})
 
+(def reference "vendor/bcbio.variation/test/data/GRCh37.fa")
+
+
 (defroutes api-routes
   (GET "/files" req
        (if-let [creds (gs-creds req)]
          (clj-response (bc-file/get-files :vcf creds))))
+
+  (GET "/metrics" req
+       (if-let [creds (gs-creds req)]
+         (let [{{file-url :file-url} :params} req]
+           (pr req)
+           #_(clj-response (bc-metrics/plot-ready-metrics file-url
+                                                        reference
+                                                        :creds creds
+                                                        :cache-dir "/tmp/")))))
+
   (route/not-found "API ERROR =("))

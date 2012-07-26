@@ -2,7 +2,7 @@
   :description "Genetic variant metric visualization tool"
   :license {:name "BSD" :url "http://www.opensource.org/licenses/BSD-3-Clause"}
   :dependencies [[org.clojure/clojure "1.4.0"]
-
+                 
                  [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
                  
@@ -11,7 +11,12 @@
                  [ring/ring-jetty-adapter "1.1.1"]
                  [com.cemerick/friend "0.0.9"]
                  
-                 [bcbio.variation "0.0.1-SNAPSHOT" :exclusions [org.clojars.chapmanb/gatk]]]
+                 [bcbio.variation "0.0.1-SNAPSHOT"
+                  :exclusions [org.clojars.chapmanb/gatk-lite]
+                  ]]
+  
+  :profiles {:dev {:dependencies [[midje "1.4.0"]
+                                  [clj-http "0.5.0"]]}}
   
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
