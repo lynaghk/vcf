@@ -10,14 +10,16 @@
                  [ring/ring-core "1.1.1"]
                  [ring/ring-jetty-adapter "1.1.1"]
                  [com.cemerick/friend "0.0.9"]
-                 
+
                  [bcbio.variation "0.0.1-SNAPSHOT"]]
-  
+
   :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"]
-  
+
   :profiles {:dev {:dependencies [[midje "1.4.0"]
-                                  [clj-http "0.5.0"]]}}
-  
+                                  [clj-http "0.5.0"]]}
+             :cljs {:dependencies [[bcbio.variation "0.0.1-SNAPSHOT"
+                                    :exclusions [com.google.collections/google-collections]]]}}
+
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
 

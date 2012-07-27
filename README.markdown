@@ -38,7 +38,7 @@ First step is to install the bcbio snapshot to your local machine:
 
 Then run
 
-    lein cljsbuild auto
+    lein with-profile cljs cljsbuild auto
 
 to compile JavaScript.
 
