@@ -1,5 +1,6 @@
 (ns vcfvis.api
-  (:use compojure.core)
+  (:use compojure.core
+        [cemerick.friend :only [current-authentication]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [bcbio.variation.api.file :as bc-file]
@@ -9,9 +10,8 @@
 (defn gs-creds
   "Helper fn to extract GenomeSpace client from session and return creds map expected by bcbio api fns."
   [req]
-  (when-let [ident (get-in req [:session :cemerick.friend/identity :current])]
-    (when-let [gs-client (get-in req [:session :cemerick.friend/identity :authentications ident :client])]
-      {:client gs-client})))
+  (when-let [gs-client (:client (current-authentication))]
+    {:client gs-client}))
 
 (defn clj-response [x]
   {:status 202
