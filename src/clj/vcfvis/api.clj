@@ -4,8 +4,7 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [bcbio.variation.api.file :as bc-file]
-            ;;[bcbio.variation.api.metrics :as bc-metrics]
-            ))
+            [bcbio.variation.api.metrics :as bc-metrics]))
 
 (defn gs-creds
   "Helper fn to extract GenomeSpace client from session and return creds map expected by bcbio api fns."
@@ -29,8 +28,7 @@
   (GET "/metrics" req
        (if-let [creds (gs-creds req)]
          (let [{{file-url :file-url} :params} req]
-           (pr req)
-           #_(clj-response (bc-metrics/plot-ready-metrics file-url
+           (clj-response (bc-metrics/plot-ready-metrics file-url
                                                         reference
                                                         :creds creds
                                                         :cache-dir "/tmp/")))))
