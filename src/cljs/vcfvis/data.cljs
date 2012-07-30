@@ -18,8 +18,10 @@
             :created-on #inst "2012-07-03T15:12:41.963-00:00"})
          ["freebayes-calls.vcf" "gatk-calls.vcf"])))
 
-(defn load [id]
-  (stub id))
+(defn load [ids callback]
+  (let [res (map stub ids)]
+    (when (seq res)
+      (callback res))))
 
-(defn available-files []
-  stub-files)
+(defn available-files [callback]
+  (callback stub-files))
