@@ -1,0 +1,12 @@
+---
+# Configureation information for running VCF web server
+
+ref:
+  - sample: NA00001
+    description: Test Genome
+    genome: data/GRCh37.fa
+    genome-alts: []
+
+dir:
+  cache: "tmp/cache"
+  work: "tmp"
