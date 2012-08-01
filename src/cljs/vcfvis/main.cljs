@@ -6,8 +6,8 @@
             [vcfvis.controls :as controls]))
 
 (constrain!
- (data/load @controls/file-selector
-            (partial reset! core/!vcfs)))
+ (data/load-metrics @controls/file-selector
+                    (partial reset! core/!vcfs)))
 
 ;;Request file list from server
 (data/available-files (partial reset! core/!available-files))

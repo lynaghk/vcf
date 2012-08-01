@@ -22,15 +22,19 @@
 
 (defroutes api-routes
   (GET "/files" req
-       (if-let [creds (gs-creds req)]
+       (when-let [creds (gs-creds req)]
          (clj-response (bc-file/get-files :vcf creds))))
 
   (GET "/metrics" req
-       (if-let [creds (gs-creds req)]
-         (let [{{file-url :file-url} :params} req]
-           (clj-response (bc-metrics/plot-ready-metrics file-url
-                                                        reference
-                                                        :creds creds
-                                                        :cache-dir "/tmp/")))))
+        (when-let [creds (gs-creds req)]
+          (let [{{file-urls :file-urls} :params} req]
+            (clj-response
+             (for [file-url file-urls]
+               (dissoc (bc-metrics/plot-ready-metrics file-url
+                                                      reference
+                                                      :creds creds
+                                                      :cache-dir "/tmp/")
+                       ;;TODO: figure out why cljs reader is blowing up on instant literals.
+                       :created-on))))))
 
   (route/not-found "API ERROR =("))

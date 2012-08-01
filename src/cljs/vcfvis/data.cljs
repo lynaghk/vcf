@@ -1,5 +1,7 @@
 (ns vcfvis.data
-  (:use-macros [c2.util :only [pp p]]))
+  (:use-macros [c2.util :only [pp p]])
+  (:use [c2.util :only [clj->js]]
+        [cljs.reader :only [read-string]]))
 
 ;;Stub data for now, generated in scratch.clj
 ;;NOTE: Desc for DP don't match up. Are they the same metric or not?
@@ -18,10 +20,15 @@
             :created-on #inst "2012-07-03T15:12:41.963-00:00"})
          ["freebayes-calls.vcf" "gatk-calls.vcf"])))
 
-(defn load [ids callback]
-  (let [res (map stub ids)]
-    (when (seq res)
-      (callback res))))
+
+(defn load-metrics [file-urls callback]
+  (when (seq file-urls)
+    (.get js/jQuery "/api/metrics"
+          (clj->js {:file-urls file-urls})
+          (fn [d]
+            (let [res (read-string d)]
+              (callback res))))))
+
 
 (defn available-files [callback]
   (callback stub-files))
