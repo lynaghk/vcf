@@ -1,6 +1,7 @@
 (ns vcfvis.api
   (:use compojure.core
-        [cemerick.friend :only [current-authentication]])
+        [cemerick.friend :only [current-authentication]]
+        [bcbio.variation.api.run :only [do-analysis]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [bcbio.variation.api.file :as bc-file]
@@ -15,7 +16,11 @@
 (defn clj-response [x]
   {:status 202
    :headers {"Content-Type" "application/clojure; charset=utf-8"}
-   :body (pr-str x)})
+   :body (pr-str (cond
+                  ;;TODO: figure out why cljs reader is blowing up on instant literals.
+                  (map? x) (dissoc x :created-on)
+                  (seq? x) (map #(dissoc % :created-on) x)
+                  :else x))})
 
 (def reference "vendor/bcbio.variation/test/data/GRCh37.fa")
 
@@ -30,11 +35,19 @@
           (let [{{file-urls :file-urls} :params} req]
             (clj-response
              (for [file-url file-urls]
-               (dissoc (bc-metrics/plot-ready-metrics file-url
-                                                      reference
-                                                      :creds creds
-                                                      :cache-dir "/tmp/")
-                       ;;TODO: figure out why cljs reader is blowing up on instant literals.
-                       :created-on))))))
+               (bc-metrics/plot-ready-metrics file-url
+                                              reference
+                                              :creds creds
+                                              :cache-dir "/tmp/"))))))
+  
+  (POST "/filter" req
+        (when-let [creds (gs-creds req)]
+          (let [{{:keys [file-url metrics]} :params} req]
+            (clj-response
+             ;;do-analysis returns a seq, but the result is always just one file
+             (first (do-analysis :filter
+                                 {:filename file-url
+                                  :metrics metrics}
+                                 creds))))))
 
   (route/not-found "API ERROR =("))

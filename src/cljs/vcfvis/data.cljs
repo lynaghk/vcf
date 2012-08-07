@@ -1,5 +1,6 @@
 (ns vcfvis.data
-  (:use-macros [c2.util :only [pp p]])
+  (:use-macros [c2.util :only [pp p]]
+               [reflex.macros :only [constrain!]])
   (:use [c2.util :only [clj->js]]
         [cljs.reader :only [read-string]]))
 
@@ -11,9 +12,25 @@
             (let [res (read-string d)]
               (callback res))))))
 
-
 (defn available-files [callback]
   (.get js/jQuery "/api/files"
         (fn [d]
           (let [res (read-string d)]
             (callback res)))))
+
+
+(def !analysis-status
+  "File analysis status---are analyses running, completed, &c.?
+   Keyed by filename."
+  (atom {}))
+
+(defn update-status! [filename status]
+  (swap! !analysis-status assoc-in [filename] status))
+
+(defn filter-analysis [opts]
+  (let [{:keys [file-url]} opts]
+    (update-status! file-url :running)
+    (.post js/jQuery "/api/filter" (clj->js opts)
+           (fn [d]
+             (let [res (read-string d)]
+               (update-status! file-url :completed))))))

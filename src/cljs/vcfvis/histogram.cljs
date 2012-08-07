@@ -5,6 +5,7 @@
   (:use [c2.core :only [unify]]
         [c2.maths :only [irange extent]])
   (:require [vcfvis.core :as core]
+            [vcfvis.data :as data]
             [vcfvis.double-range :as double-range]
             [c2.dom :as dom]
             [c2.event :as event]
@@ -61,7 +62,10 @@
             (fn [vcf]
               [:div.histogram
                [:span.label (vcf :filename)]
-               [:button.btn "Download subset"]
+               (case (get @data/!analysis-status (vcf :filename))
+                 :completed  [:button.btn {:properties {:disabled true}} "Completed"]
+                 :running    [:button.btn {:properties {:disabled true}} "Running..."]
+                 nil         [:button.btn "Download subset"])
                [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
                 [:g {:transform (svg/translate [margin margin])}
                  [:g.distribution {:transform (str (svg/translate [0 height])
@@ -102,7 +106,7 @@
 
 (event/on "#histograms" "button" :click
           (fn [{:keys [filename]}]
-            (let [metric-id (@core/!metric :id)]
-              (js/alert (str "Download subset of " filename
-                             " for " metric-id
-                             " between " (pr-str @!selected-extent))))))
+            (let [metric-id (name (@core/!metric :id))]
+              (data/filter-analysis
+               {:file-url filename
+                :metrics {metric-id @!selected-extent}}))))
