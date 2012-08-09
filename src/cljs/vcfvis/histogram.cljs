@@ -41,7 +41,7 @@
     (doto tt
       (.setMinimum min) (.setMaximum max)
       (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
-      (.setValueAndExtent min (+ min bin-width)))))
+      (.setValueAndExtent min (- max min)))))
 
 (constrain!
  (let [{:keys [bin-width range]} @core/!metric]
