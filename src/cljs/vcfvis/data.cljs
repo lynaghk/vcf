@@ -5,7 +5,8 @@
         [cljs.reader :only [read-string]]))
 
 (defn load-metrics [file-urls callback]
-  (when (seq file-urls)
+  (if-not (seq file-urls)
+    (callback []) ;;empty result
     (.get js/jQuery "/api/metrics"
           (clj->js {:file-urls file-urls})
           (fn [d]
@@ -26,6 +27,9 @@
 
 (defn update-status! [filename status]
   (swap! !analysis-status assoc-in [filename] status))
+
+(defn reset-statuses! []
+  (reset! !analysis-status {}))
 
 (defn filter-analysis [opts]
   (let [{:keys [file-url]} opts]

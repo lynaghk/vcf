@@ -16,12 +16,12 @@
                                [:select {:multiple "multiple"
                                          :data-placeholder "Select VCF files"}])
         !c (ichooseu! $selector)]
-    
+
     ;;The selector should always reflect the user's avaliable flies
-    (constrain! (options !c
-                         (map (fn [{:keys [filename id]}]
-                                {:text filename :value id})
-                              @core/!available-files)))
+    (constrain!
+     (options !c (map (fn [{:keys [filename id]}]
+                        {:text filename :value id})
+                      @core/!available-files)))
     !c))
 
 

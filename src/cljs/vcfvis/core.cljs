@@ -26,10 +26,10 @@
    ;;TODO, order metrics by relevance/usefulness to biologists.
    (let [sets (map (fn [vcf]
                      (set (map (fn [metric]
-                                 (select-keys metric [:id :desc]))
+                                 (select-keys metric [:id :desc :bin-width :range]))
                                (vcf :metrics))))
                    @!vcfs)]
-     
+
      (when (seq sets)
        (apply intersection sets)))))
 

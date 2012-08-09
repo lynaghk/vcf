@@ -43,6 +43,13 @@
       (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
       (.setValueAndExtent min (+ min bin-width)))))
 
+(constrain!
+ (let [{:keys [bin-width range]} @core/!metric]
+   (update-range-selector! range bin-width)))
+
+;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the buttons
+(add-watch !selected-extent :reset-analysis-status-buttons
+           (fn [_ _ _ _] (data/reset-statuses!)))
 
 
 (defn histograms* [vcfs x-scale]
@@ -65,7 +72,7 @@
                (case (get @data/!analysis-status (vcf :filename))
                  :completed  [:button.btn {:properties {:disabled true}} "Completed"]
                  :running    [:button.btn {:properties {:disabled true}} "Running..."]
-                 nil         [:button.btn "Download subset"])
+                 nil         [:button.btn {:properties {:disabled false}} "Export subset"])
                [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
                 [:g {:transform (svg/translate [margin margin])}
                  [:g.distribution {:transform (str (svg/translate [0 height])
@@ -76,18 +83,17 @@
                                ((core/vcf-metric vcf metric-id) :vals))]]]])
             :force-update? true)]))
 
+
 (bind! "#histograms"
        (let [vcfs @core/!vcfs]
          (if (seq vcfs)
            (let [metric (core/vcf-metric (first vcfs)
                                          (@core/!metric :id))
-                 metric-extent (get-in metric [:x-scale :domain])
-                 {:keys [extent ticks]} (ticks/search metric-extent
-                                                      :length width)
-                 x (scale/linear :domain extent
+                 metric-extent (metric :range)
+                 {:keys [ticks]} (ticks/search metric-extent
+                                               :clamp? true :length width)
+                 x (scale/linear :domain metric-extent
                                  :range [0 width])]
-
-             (update-range-selector! extent (:bin-width metric))
 
              [:div.row#histograms
 

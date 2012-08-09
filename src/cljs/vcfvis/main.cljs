@@ -5,9 +5,10 @@
             [vcfvis.data :as data]
             [vcfvis.controls :as controls]))
 
-(constrain!
- (data/load-metrics @controls/file-selector
-                    (partial reset! core/!vcfs)))
+(add-watch controls/file-selector :load-metrics
+           (fn [files]
+             (data/load-metrics files
+              (partial reset! core/!vcfs))))
 
 ;;Request file list from server
 (data/available-files (partial reset! core/!available-files))
