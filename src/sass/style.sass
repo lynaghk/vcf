@@ -1,5 +1,9 @@
 $background-color: #F4F4DD
 
+@import "histogram"
+@import "slider"
+
+
 body
   background-color: $background-color
   font-size: 12px
@@ -8,5 +12,9 @@ body
 section
   overflow: visible
 
-@import "histogram"
-@import "slider"
+#user-dropdown
+  &:before
+    content: "Logged in as: "
+
+
+

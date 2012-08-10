@@ -19,9 +19,10 @@
    :body (pr-str x)})
 
 (defroutes api-routes
-  (GET "/files" req
+  (GET "/context" req
        (when-let [creds (gs-creds req)]
-         (clj-response (bc-file/get-files :vcf creds))))
+         (clj-response {:files (bc-file/get-files :vcf creds)
+                        :username (:identity (current-authentication))})))
 
   (GET "/metrics" req
         (when-let [creds (gs-creds req)]

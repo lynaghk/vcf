@@ -13,8 +13,8 @@
             (let [res (read-string d)]
               (callback res))))))
 
-(defn available-files [callback]
-  (.get js/jQuery "/api/files"
+(defn load-context [callback]
+  (.get js/jQuery "/api/context"
         (fn [d]
           (let [res (read-string d)]
             (callback res)))))

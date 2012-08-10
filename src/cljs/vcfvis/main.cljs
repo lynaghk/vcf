@@ -11,4 +11,4 @@
               (partial reset! core/!vcfs))))
 
 ;;Request file list from server
-(data/available-files (partial reset! core/!available-files))
+(data/load-context (partial reset! core/!context))

@@ -7,10 +7,9 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;;From server
 
-(def !available-files
-  "User's files available on the server.
-   May want to refactor this design if users have more than a few dozen files."
-  (atom []))
+(def !context
+  "User info retrieved from server; includes available files, username, &c."
+  (atom {}))
 
 (def !vcfs
   "VCFs currently under analysis."
@@ -19,6 +18,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;Derived
+
+(def !available-files
+  "User's files available on the server.
+   May want to refactor this design if users have more than a few dozen files."
+  (computed-observable
+   (get @!context :files [])))
 
 (def !shared-metrics
   "Metrics"
