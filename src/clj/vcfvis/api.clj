@@ -16,11 +16,7 @@
 (defn clj-response [x]
   {:status 202
    :headers {"Content-Type" "application/clojure; charset=utf-8"}
-   :body (pr-str (cond
-                  ;;TODO: figure out why cljs reader is blowing up on instant literals.
-                  (map? x) (dissoc x :created-on)
-                  (seq? x) (map #(dissoc % :created-on) x)
-                  :else x))})
+   :body (pr-str x)})
 
 (defroutes api-routes
   (GET "/files" req

@@ -20,7 +20,8 @@
   :profiles {:dev {:dependencies [[midje "1.4.0"]
                                   [clj-http "0.5.0"]]}
              :cljs {:dependencies [[bcbio.variation "0.0.1-SNAPSHOT"
-                                    :exclusions [com.google.collections/google-collections]]]}}
+                                    :exclusions [com.google.collections/google-collections
+                                                 org.clojure/clojurescript]]]}}
 
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
