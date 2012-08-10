@@ -11,7 +11,8 @@
             [c2.event :as event]
             [c2.scale :as scale]
             [c2.svg :as svg]
-            [c2.ticks :as ticks]))
+            [c2.ticks :as ticks]
+            [goog.string :as gstr]))
 
 (def margin "left/right margin" 20)
 (def inter-hist-margin "vertical margin between stacked histograms" 20)
@@ -105,10 +106,10 @@
                [:div.axis.abscissa
                 [:svg {:width (+ width (* 2 margin)) :height axis-height}
                  [:g {:transform (svg/translate [margin 2])}
-                  (svg/axis x ticks :orientation :bottom)]]]]])
+                  (svg/axis x ticks :orientation :bottom
+                            :formatter (partial gstr/format "%.1f"))]]]]])
            ;;If no VCFs, clear everything
            [:div.row#histograms])))
-
 
 (event/on "#histograms" "button" :click
           (fn [{:keys [filename]}]
