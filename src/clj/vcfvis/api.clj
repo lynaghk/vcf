@@ -22,9 +22,6 @@
                   (seq? x) (map #(dissoc % :created-on) x)
                   :else x))})
 
-(def reference "vendor/bcbio.variation/test/data/GRCh37.fa")
-
-
 (defroutes api-routes
   (GET "/files" req
        (when-let [creds (gs-creds req)]
@@ -36,9 +33,7 @@
             (clj-response
              (for [file-url file-urls]
                (bc-metrics/plot-ready-metrics file-url
-                                              reference
-                                              :creds creds
-                                              :cache-dir "/tmp/"))))))
+                                              :creds creds))))))
   
   (POST "/filter" req
         (when-let [creds (gs-creds req)]
