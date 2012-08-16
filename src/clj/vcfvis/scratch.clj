@@ -1,8 +1,9 @@
 (ns vcfvis.scratch
-  (:use [bcbio.variation.api.metrics :only [plot-ready-metrics]]
+  (:use [bcbio.variation.api.metrics :only [plot-ready-metrics get-raw-metrics]]
         [bcbio.variation.api.file :only [get-files]]
         [bcbio.variation.api.run :only [do-analysis]]
-        [bcbio.variation.api.shared :only [set-config-from-file!]]))
+        [bcbio.variation.api.shared :only [set-config-from-file!]]
+        [cheshire.core :only [generate-string]]))
 
 
 (def config-yaml "config/web-processing.yaml")
@@ -24,3 +25,9 @@
              {:filename (:id (first files))
               :metrics {"DP" [0 100]}}
              creds)
+
+
+(def big "data/NA19239-v0_1-prep-negtrain.vcf")
+
+(spit "public/big.json"
+ (generate-string (get-raw-metrics big)))
