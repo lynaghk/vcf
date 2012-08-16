@@ -6,6 +6,7 @@
                  
                  [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
+                 [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
 
                  [compojure "1.1.1"]
                  [ring/ring-core "1.1.1"]
