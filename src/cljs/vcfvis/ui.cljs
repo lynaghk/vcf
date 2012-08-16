@@ -6,4 +6,4 @@
 
 (let [$dd (dom/select "#user-dropdown")]
   (constrain!
-   (dom/text $dd (pp (get @core/!context :username "USER")))))
+   (dom/text $dd (get @core/!context :username "USER"))))
