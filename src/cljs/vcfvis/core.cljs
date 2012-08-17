@@ -2,7 +2,8 @@
   (:use-macros [c2.util :only [pp p interval]]
                [reflex.macros :only [computed-observable constrain!]])
   (:use [clojure.set :only [intersection]])
-  (:require [reflex.core :as reflex]))
+  (:require [reflex.core :as reflex]
+            [dubstep.pubsub :as dubstep.pubsub]))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;From server
