@@ -34,11 +34,12 @@
               [{:source-path "src/cljs"
                 :compiler {:output-to "public/vcf.js"
 
-                           ;; :optimizations :advanced
-                           ;; :pretty-print false
-
-                           :optimizations :whitespace
+                           :optimizations :advanced
                            :pretty-print true
 
+                           ;; :optimizations :whitespace
+                           ;; :pretty-print true
+
                            :externs ["externs/jquery.js"
+                                     "vendor/externs.js"
                                      "resources/closure-js/externs"]}}]})

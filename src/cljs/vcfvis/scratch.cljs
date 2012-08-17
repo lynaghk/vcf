@@ -41,18 +41,15 @@
     ;;Range selector
     (let [$tt (dom/select ".range" $container)
           [min max] (:domain scale-x)
-          cb (fn [extent]
-               (pp {:extent-updated name :extent extent})
-               (publish!  {:extent-updated name :extent extent}))]
+          cb (fn [extent] (publish! {:extent-updated name :extent extent}))]
       (doto (double-range/init! $tt cb)
         (.setMinimum min) (.setMaximum max)
         (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
         (.setValueAndExtent min (- max min))))
 
     ;;update filter dimension whenever extent changes
-    (subscribe! {:extent-updated grr :extent extent}
-                (when (= grr name)
-                  (p (str "updating " name))
+    (subscribe! {:extent-updated dim-name :extent extent}
+                (when (= dim-name name)
                   (.filter dimension (clj->js extent))
                   (publish! {:filter-updated dimension})))
 
@@ -66,12 +63,12 @@
                               [:g.bars]])]
 
       (subscribe! {:filter-updated _}
-                  (let [scale-y (assoc scale-y :domain  [0 (.-value (first (.top xs 1)))])]
+                  (let [scale-y (assoc scale-y :domain  [0 (aget (first (.top xs 1)) "value")])]
                     (singult/merge! (dom/select ".bars" $hist)
                                     [:g.bars
                                      (unify (.all xs)
                                             (fn [d]
-                                              (let [x (.-key d), count (.-value d)
+                                              (let [x (aget d "key"), count (aget d "value")
                                                     h (scale-y count)]
                                                 [:rect.bar {:x (scale-x x)
                                                             :y (- height h)
@@ -101,10 +98,3 @@
                   (hist-view! "body" dim scale
                               :bin-width 100))
               )))
-(defn grr [x]
-  (subscribe! {:x x} (p x)))
-
-(grr "abc")
-(grr "def")
-
-(publish! {:x "abc"})
