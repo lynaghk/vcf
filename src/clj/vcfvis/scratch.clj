@@ -29,5 +29,6 @@
 
 (def big "data/NA19239-v0_1-prep-negtrain.vcf")
 
+;;Needed to increase heap size to 2 GB for this one: -Xmx2g
 (spit "public/big.json"
  (generate-string (get-raw-metrics big)))
