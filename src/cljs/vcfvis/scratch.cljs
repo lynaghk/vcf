@@ -33,9 +33,9 @@
 
   (let [$container (dom/append! $container (view* name))
         dimension (.dimension *cf* #(aget % name))
-        xs (.group dimension (rounder bin-width))
-        scale-x (scale/linear :domain [(.-key (first (.all xs)))
-                                       (.-key (last (.all xs)))]
+        binned (.group dimension (rounder bin-width))
+        scale-x (scale/linear :domain [(.-key (first (.all binned)))
+                                       (.-key (last (.all binned)))]
                               :range [0 (js/parseFloat (dom/style $container :width))])]
 
     ;;Range selector
@@ -62,21 +62,25 @@
                              [:svg.hist {:width width :height height}
                               [:g.bars]])]
 
-      (subscribe! {:filter-updated _}
-                  (let [scale-y (assoc scale-y :domain  [0 (aget (first (.top xs 1)) "value")])]
-                    (singult/merge! (dom/select ".bars" $hist)
-                                    [:g.bars
-                                     (unify (.all xs)
-                                            (fn [d]
-                                              (let [x (aget d "key"), count (aget d "value")
-                                                    h (scale-y count)]
-                                                [:rect.bar {:x (scale-x x)
-                                                            :y (- height h)
-                                                            :width (- (scale-x (+ x bin-width))
-                                                                      (scale-x x))
-                                                            :height h}]))
-                                            ;;Mutable JavaScript objects muck up singult semantics; always force updates
-                                            :force-update? true)]))))
+      (subscribe! {:filter-updated dim}
+                  (when-not (= dim dimension) ;;only need to redraw when other filters are updated
+                    (let [scale-y (assoc scale-y :domain  [0 (aget (first (.top binned 1)) "value")])]
+                      
+                      (singult/merge! (dom/select ".bars" $hist)
+                                      [:g.bars
+                                       (unify (.all binned)
+                                        (fn [d]
+                                          (let [x (aget d "key"), count (aget d "value")
+                                                h (scale-y count)]
+                                            [:rect.bar {:x (scale-x x)
+                                                        :y (- height h)
+                                                        :width (- (scale-x (+ x bin-width))
+                                                                  (scale-x x))
+                                                        :height h}]))
+                                        ;;Mutable JavaScript objects muck up singult semantics; always force updates
+                                        :force-update? true)])))))
+
+    ;;This fn side effects; return nil.
     nil))
 
 
@@ -88,13 +92,17 @@
           (fn [ds]
             (set! *cf* (js/crossfilter ds))
 
-            (let [scale (scale/linear :domain [0 100]
-                                      :range [0 600])]
+            (let [all (.groupAll *cf*)]
 
+              (subscribe! {:filter-updated _}
+                          (p (.value all)))
+              
               (hist-view! "body" "MQ" :bin-width 1)
               (hist-view! "body" "QD" :bin-width 5)
               #_(doseq  [dim ["AD" "DP" "HaplotypeScore"; "MQ" "PL" "QD" "QUAL" "ReadPosEndDist"
-                              ]]
-                  (hist-view! "body" dim scale
-                              :bin-width 100))
+                              ]])
+
+              ;;Initial draw everyone
+              (publish! {:filter-updated :all})
+
               )))
