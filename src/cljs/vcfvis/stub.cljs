@@ -31,7 +31,7 @@
 
 (defn load-context [callback]
   (timeout 10
-           (callback context)))
+           (callback (data/prep-context context))))
 
 (defn load-vcf [file-url callback]
   (.getJSON js/$ "big.json"

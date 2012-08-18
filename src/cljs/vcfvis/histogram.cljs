@@ -5,26 +5,20 @@
         [c2.maths :only [irange extent]])
   (:require [vcfvis.core :as core]
             [vcfvis.data :as data]
+            [vcfvis.ui :as ui]
             [vcfvis.double-range :as double-range]
             [c2.dom :as dom]
             [c2.event :as event]
             [c2.scale :as scale]
             [c2.svg :as svg]
-            [c2.ticks :as ticks]
             [goog.string :as gstr]))
 
-(def margin "left/right margin" 20)
-(def inter-hist-margin "vertical margin between stacked histograms" 20)
-(def axis-height (js/parseFloat (dom/style "#hist-axis" :height)))
+(def height ui/hist-height)
+(def width ui/hist-width)
+(def margin ui/hist-margin)
+(def inter-hist-margin ui/inter-hist-margin)
+(def axis-height ui/axis-height)
 
-(def height
-  "height available to histogram facet grid"
-  (js/parseFloat (dom/style "#histograms" :height)))
-
-(def width
-  "Width of histogram facet grid"
-  (- (js/parseFloat (dom/style "#histograms" :width))
-     (* 2 margin)))
 
 
 ;; (def !selected-extent (atom [0 1]))
@@ -53,28 +47,26 @@
 ;;            (fn [_ _ _ _] (data/reset-statuses!)))
 
 
-
-
-(defn histogram* [vcf scale-x metric]
+(defn hist-svg* [vcf metric & {:keys [margin]}]
   (let [height (- height axis-height)
-        {:keys [dimension binned bin-width]} (get-in vcf [:cf (metric :id)])
+        {metric-id :id scale-x :scale-x} metric
+        {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
+        ;;Since we're only interested in relative density, histograms have free y-scales.
         scale-y (scale/linear :domain [0 (aget (first (.top binned 1)) "value")]
                               :range [0 height])
         dx (- (scale-x bin-width) (scale-x 0))]
 
-    [:div.histogram
-     [:span.label (vcf :file-url)]
+    [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
+     [:g {:transform (svg/translate [margin margin])}
+      [:g.distribution {:transform (str (svg/translate [0 height])
+                                        (svg/scale [1 -1]))}
 
-     [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
-      [:g {:transform (svg/translate [margin margin])}
-       [:g.distribution {:transform (str (svg/translate [0 height])
-                                         (svg/scale [1 -1]))}
-        (for [d (.all binned)]
-          (let [x (aget d "key"), count (aget d "value")]
-            [:rect.bar {:x (scale-x x)
-                        :width (- (scale-x (+ x bin-width))
-                                  (scale-x x))
-                        :height (scale-y count)}]))]]]]))
+       (for [d (.all binned)]
+         (let [x (aget d "key"), count (aget d "value")]
+           [:rect.bar {:x (scale-x x)
+                       :width (- (scale-x (+ x bin-width))
+                                 (scale-x x))
+                       :height (scale-y count)}]))]]]))
 
 
 
@@ -82,24 +74,23 @@
 (bind! "#main-hist"
        (let [vcfs @core/!vcfs]
          (if (seq vcfs)
-           (let [metric @core/!metric
-                 metric-extent (metric :range)
-                 {:keys [ticks]} (ticks/search metric-extent
-                                               :clamp? true :length width)
-                 x (scale/linear :domain metric-extent
-                                 :range [0 width])]
+           (let [{x :scale-x :as metric} @core/!metric]
              [:div#main-hist
               [:div#histograms
-
-               ;;histogram distributions
-               (histogram* (first vcfs) x metric)]
+               (for [vcf vcfs]
+                 [:div.histogram
+                  [:span.label (vcf :file-url)]
+                  (hist-svg* vcf metric :margin margin)])]
 
               [:div#hist-axis
                [:div.axis.abscissa
                 [:svg {:width (+ width (* 2 margin)) :height axis-height}
                  [:g {:transform (svg/translate [margin 2])}
-                  (svg/axis x ticks :orientation :bottom
+                  (svg/axis x (:ticks x)
+                            :orientation :bottom
                             :formatter (partial gstr/format "%.1f"))]]]]])
+
+
            ;;If no VCFs, clear everything
            [:div#main-hist
             [:div#histograms]

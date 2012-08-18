@@ -3,33 +3,69 @@
                [reflex.macros :only [constrain!]])
   (:use [c2.util :only [clj->js]]
         [cljs.reader :only [read-string]])
-  (:require [vcfvis.core :as core]))
+  (:require [vcfvis.core :as core]
+            [vcfvis.ui :as ui]
+            [c2.scale :as scale]
+            [c2.ticks :as ticks]))
 
 
 (def num-bins 100)
 
-(defn expand-metric [metric-id]
-  (if-let [m (-> @core/!context :metrics metric-id)]
-    (merge {:id metric-id} m)
-    (throw (str "No metric information for metric-id: " metric-id))))
+(defn expand-metric
+  "Adds id and an x-scale with tick marks to a metric."
+  [metric]
+  (if (metric :range)
+    (assoc metric
+      :scale-x (let [{:keys [ticks]} (ticks/search (metric :range)
+                                                   :clamp? true :length ui/hist-width)
+                     x (scale/linear :domain (metric :range)
+                                     :range [0 ui/hist-width])]
+                 (assoc x :ticks ticks)))
+    (throw (str "Metric doesn't have range: " (pr metric)))))
+
+(defn prep-context [context]
+  (update-in context [:metrics]
+             #(reduce (fn [res [id m]]
+                        (assoc res id
+                               (-> m
+                                   expand-metric
+                                   (assoc :id id))))
+                      {} %)))
 
 (defn prep-vcf-json [vcf-json]
-  (let [info (read-string (aget vcf-json "clj"))
+  (let [info (-> (read-string (aget vcf-json "clj"))
+                 ;;Expand metric-ids to full metric maps available in context (a join, basically)
+                 (update-in [:available-metrics] #(map (@core/!context :metrics) %)))
+
         cf (js/crossfilter (aget vcf-json "raw"))]
-    (merge (update-in info [:available-metrics] #(set (map expand-metric %)))
-           {:cf (into {:crossfilter cf}
-                      (for [metric (info :available-metrics)]
-                        (let [[start end] (get-in @core/!context [:metrics metric :range])
-                              bin-width (/ (- end start) num-bins)
-                              dim (.dimension cf #(aget % metric))
-                              binned (.group dim (fn [x]
-                                                   (+ start (* bin-width
-                                                               ;;take the min to catch any roundoff into the last bin
-                                                               (min (Math/floor (/ (- x start) bin-width))
-                                                                    (dec num-bins))))))]
-                          [metric {:bin-width bin-width
-                                   :dimension dim
-                                   :binned binned}])))})))
+
+    (assoc info
+      :cf (into {:crossfilter cf}
+                (for [{:keys [id range]} (info :available-metrics)]
+                  (let [[start end] range
+                        bin-width (/ (- end start) num-bins)
+                        dim (.dimension cf #(aget % id))
+                        binned (.group dim (fn [x]
+                                             (+ start (* bin-width
+                                                         ;;take the min to catch any roundoff into the last bin
+                                                         (min (Math/floor (/ (- x start) bin-width))
+                                                              (dec num-bins))))))]
+                    [id {:bin-width bin-width
+                         :dimension dim
+                         :binned binned}]))))))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
