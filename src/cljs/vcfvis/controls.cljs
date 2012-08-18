@@ -28,19 +28,29 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-;;Metrics radio buttons
+;;Metrics mini-hists
 (bind! "#metrics"
-       (let [shared (set (map :id @core/!shared-metrics))]
+       (let [shared (set (map :id @core/!shared-metrics))
+             selected-metric @core/!metric
+             metrics (for [[id m] (@core/!context :metrics)]
+                       (assoc m :id id
+                              :selected? (= m selected-metric)
+                              :shared? (contains? shared id)))]
          [:div#metrics
-          (doall (for [[id {:keys [desc] :as metric}] (@core/!context :metrics)]
+          (unify metrics
+                 (fn [{:keys [id desc selected? shared?]}] 
                    [:div.metric {:id (str "metric-" id)
-                                 :class (str (when (= @core/!metric metric) "selected")
-                                             " " (when-not (shared id) "disabled"))}
+                                 :class (str (when selected? "selected")
+                                             " " (when-not shared?  "disabled"))}
                     [:h2 id]
                     [:span desc]
                     [:div.mini-hist]]))]))
 
 (event/on "#metrics" :click core/select-metric!)
+
+
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
