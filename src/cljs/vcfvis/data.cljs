@@ -16,7 +16,7 @@
 (defn prep-vcf-json [vcf-json]
   (let [info (read-string (aget vcf-json "clj"))
         cf (js/crossfilter (aget vcf-json "raw"))]
-    (merge (pp (update-in info [:available-metrics] #(map expand-metric %)))
+    (merge (update-in info [:available-metrics] #(set (map expand-metric %)))
            {:cf (into {:crossfilter cf}
                       (for [metric (info :available-metrics)]
                         (let [[start end] (get-in @core/!context [:metrics metric :range])

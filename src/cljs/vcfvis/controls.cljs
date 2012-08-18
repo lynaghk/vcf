@@ -30,27 +30,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;Metrics radio buttons
 (bind! "#metrics"
-       (let [shared @core/!shared-metrics]
+       (let [shared (set (map :id @core/!shared-metrics))]
          [:div#metrics
-          (unify shared
-                 (fn [{:keys [id desc]
-                      :as metric}]
-                   [:label.radio {:title id :data-content desc
-
-                                  ;;Hack through Bootstrap's broken caching.
-                                  ;;Can be removed once Singult#2 is resolved.
-                                  :data-original-title id}
-                    [:input {:type "radio" :name "metric-type"
-                             :properties {:checked (= @core/!metric metric)}}]
-                    id])
-                 :force-update? true)]))
-
-(-> (js/$ "#metrics")
-    (.popover (clj->js {:selector "label"
-                        :placement "left"})))
+          (doall (for [[id {:keys [desc] :as metric}] (@core/!context :metrics)]
+                   [:div.metric {:id (str "metric-" id)
+                                 :class (str (when (= @core/!metric metric) "selected")
+                                             " " (when-not (shared id) "disabled"))}
+                    [:h2 id]
+                    [:span desc]
+                    [:div.mini-hist]]))]))
 
 (event/on "#metrics" :click core/select-metric!)
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;

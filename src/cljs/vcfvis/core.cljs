@@ -1,8 +1,9 @@
 (ns vcfvis.core
   (:use-macros [c2.util :only [pp p interval]]
                [reflex.macros :only [computed-observable constrain!]])
-  (:use [clojure.set :only [intersection]])
-  (:require [reflex.core :as reflex]
+  (:require [clojure.set :as set]
+
+            [reflex.core :as reflex]
             [dubstep.pubsub :as dubstep.pubsub]))
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -29,16 +30,16 @@
   (computed-observable
    (get @!context :files [])))
 
+;;Y U No haz identity, clojure.set/intersection!?!?!
+(defn intersection
+  ([] #{})
+  ([& args] (apply set/intersection args)))
+
 (def !shared-metrics
   "Metrics"
   (computed-observable
    ;;TODO, order metrics by relevance/usefulness to biologists.
    (reduce intersection (map :available-metrics @!vcfs))))
-
-(constrain!
- (pp @!shared-metrics))
-
-
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;From UI
