@@ -88,7 +88,7 @@
 
 
 
-(.getJSON js/$ "big.json"
+#_(.getJSON js/$ "big.json"
           (fn [ds]
             (set! *cf* (js/crossfilter ds))
 
@@ -99,6 +99,9 @@
               
               (hist-view! "body" "MQ" :bin-width 1)
               (hist-view! "body" "QD" :bin-width 5)
+              (hist-view! "body" "DP" :bin-width 5)
+              (hist-view! "body" "QUAL" :bin-width 1000)
+              (hist-view! "body" "PL" :bin-width 50)
               #_(doseq  [dim ["AD" "DP" "HaplotypeScore"; "MQ" "PL" "QD" "QUAL" "ReadPosEndDist"
                               ]])
 

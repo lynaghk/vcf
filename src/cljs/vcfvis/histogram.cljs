@@ -23,8 +23,8 @@
   (js/parseFloat (dom/style "#histograms" :height)))
 
 (def width
-  "width of histogram facet grid"
-  900)
+  "Width of histogram facet grid"
+  (js/parseFloat (dom/style "#histograms" :width)))
 
 
 (def !selected-extent (atom [0 1]))
@@ -85,7 +85,7 @@
             :force-update? true)]))
 
 
-(bind! "#histograms"
+#_(bind! "#histograms"
        (let [vcfs @core/!vcfs]
          (if (seq vcfs)
            (let [metric (core/vcf-metric (first vcfs)
@@ -96,7 +96,7 @@
                  x (scale/linear :domain metric-extent
                                  :range [0 width])]
 
-             [:div.row#histograms
+             [:div#histograms
 
               ;;histogram distributions
               (histograms* vcfs x)
@@ -109,7 +109,7 @@
                   (svg/axis x ticks :orientation :bottom
                             :formatter (partial gstr/format "%.1f"))]]]]])
            ;;If no VCFs, clear everything
-           [:div.row#histograms])))
+           [:div#histograms])))
 
 (event/on "#histograms" "button" :click
           (fn [{:keys [filename]}]

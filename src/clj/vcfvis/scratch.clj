@@ -31,4 +31,8 @@
 
 ;;Needed to increase heap size to 2 GB for this one: -Xmx2g
 (spit "public/big.json"
- (generate-string (get-raw-metrics big)))
+      (let [raw (get-raw-metrics big)]
+        (generate-string
+         {:clj (pr-str {:file-url "data/NA19239-v0_1-prep-negtrain.vcf"
+                        :available-metrics (-> raw first (dissoc :id) keys set)})
+          :raw raw})))

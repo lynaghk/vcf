@@ -2,7 +2,36 @@
   (:use-macros [c2.util :only [pp p]]
                [reflex.macros :only [constrain!]])
   (:use [c2.util :only [clj->js]]
-        [cljs.reader :only [read-string]]))
+        [cljs.reader :only [read-string]])
+  (:require [vcfvis.core :as core]))
+
+
+(def num-bins 100)
+
+(defn expand-metric [metric-id]
+  (if-let [m (-> @core/!context :metrics metric-id)]
+    (merge {:id metric-id} m)
+    (throw (str "No metric information for metric-id: " metric-id))))
+
+(defn prep-vcf-json [vcf-json]
+  (let [info (read-string (aget vcf-json "clj"))
+        cf (js/crossfilter (aget vcf-json "raw"))]
+    (merge (pp (update-in info [:available-metrics] #(map expand-metric %)))
+           {:cf (into {:crossfilter cf}
+                      (for [metric (info :available-metrics)]
+                        (let [[start end] (get-in @core/!context [:metrics metric :range])
+                              bin-width (/ (- end start) num-bins)
+                              dim (.dimension cf #(aget % metric))
+                              binned (.group dim (fn [x]
+                                                   (+ start (* bin-width
+                                                               ;;take the min to catch any roundoff into the last bin
+                                                               (min (Math/floor (/ (- x start) bin-width))
+                                                                    (dec num-bins))))))]
+                          [metric {:bin-width bin-width
+                                   :dimension dim
+                                   :binned binned}])))})))
+
+
 
 (defn load-metrics [file-urls callback]
   (if-not (seq file-urls)

@@ -26,22 +26,29 @@
               %ul.dropdown-menu
                 %li
                   %a#btn-logout(href="/logout") Logout
-    %section
-      .container
-        .row#histograms
-        .row
-          .span12
-            #range-selector
+    .container
 
+      %section
+        #histograms
+        #range-selector
+
+      %section
         .row.controls
           .span8
             .well
               %label VCF files
               #file-selector
+
+      %section
+        #metrics
+        .row
           .span4
-            .well
-              %label Metrics
-              #metrics
+            %h3 Metric A
+        .row
+          .span4
+            %h3 Metric B
+
+
 
 
     %script(src="vcf.js")

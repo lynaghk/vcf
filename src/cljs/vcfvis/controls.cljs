@@ -50,3 +50,13 @@
                         :placement "left"})))
 
 (event/on "#metrics" :click core/select-metric!)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;TODO: download button
+
+;; (case (get @data/!analysis-status (vcf :filename))
+;;                  :completed  [:button.btn {:properties {:disabled true}} "Completed"]
+;;                  :running    [:button.btn {:properties {:disabled true}} "Running..."]
+;;                  nil         [:button.btn {:properties {:disabled false}} "Export subset"])
