@@ -32,13 +32,13 @@
 (bind! "#metrics"
        (let [shared (set (map :id @core/!shared-metrics))
              selected-metric @core/!metric
-             metrics (for [[id m] (@core/!context :metrics)]
-                       (assoc m :id id
-                              :selected? (= m selected-metric)
-                              :shared? (contains? shared id)))]
+             metrics (for [m (vals (@core/!context :metrics))]
+                       (assoc m
+                         :selected? (= m selected-metric)
+                         :shared? (contains? shared (m :id))))]
          [:div#metrics
           (unify metrics
-                 (fn [{:keys [id desc selected? shared?]}] 
+                 (fn [{:keys [id desc selected? shared?]}]
                    [:div.metric {:id (str "metric-" id)
                                  :class (str (when selected? "selected")
                                              " " (when-not shared?  "disabled"))}
@@ -46,7 +46,8 @@
                     [:span desc]
                     [:div.mini-hist]]))]))
 
-(event/on "#metrics" :click core/select-metric!)
+(event/on "#metrics" :click
+          (fn [d] (core/select-metric! (dissoc d :selected? :shared?))))
 
 
 
