@@ -8,8 +8,10 @@
 
 (add-watch controls/file-selector :load-metrics
            (fn [files]
-             (doseq [f files]
-               (data/load-vcf f (partial swap! core/!vcfs conj)))))
+             (if (seq files)
+               (doseq [f files]
+                 (data/load-vcf f (partial swap! core/!vcfs conj)))
+               (reset! core/!vcfs []))))
 
 ;;Request file list from server
 (data/load-context (partial reset! core/!context))
