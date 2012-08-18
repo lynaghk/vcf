@@ -1,10 +1,13 @@
 (ns vcfvis.controls
   (:use-macros [c2.util :only [pp p bind!]]
-               [reflex.macros :only [constrain!]])
+               [reflex.macros :only [constrain!]]
+               [dubstep.macros :only [publish! subscribe!]])
   (:use [chosen.core :only [ichooseu! options]]
         [c2.core :only [unify]]
         [c2.util :only [clj->js]])
   (:require [vcfvis.core :as core]
+            [vcfvis.histogram :as histogram]
+            [singult.core :as singult]
             [c2.dom :as dom]
             [c2.event :as event]))
 
@@ -51,7 +54,15 @@
 
 
 
-
+(subscribe! {:filter-updated metric}
+            (let [vcf (first @core/!vcfs)] ;;TODO, faceting
+              ;;Redraw all metrics besides the one whose filter was updated.
+              (doseq [m (remove #{metric} @core/!shared-metrics)]
+                (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
+                                [:div.mini-hist (histogram/hist-svg* vcf m
+                                                                     :margin 0
+                                                                     :height 100
+                                                                     :width 250)]))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;

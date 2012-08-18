@@ -1,8 +1,9 @@
 (ns vcfvis.core
   (:use-macros [c2.util :only [pp p interval]]
-               [reflex.macros :only [computed-observable constrain!]])
+               [reflex.macros :only [computed-observable constrain!]]
+               [dubstep.macros :only [publish! subscribe!]])
+  (:use [c2.util :only [clj->js]])
   (:require [clojure.set :as set]
-
             [reflex.core :as reflex]
             [dubstep.pubsub :as dubstep.pubsub]))
 
@@ -16,11 +17,6 @@
 (def !vcfs
   "VCFs currently under analysis."
   (atom []))
-
-;;VCFs look like
-{:file-url "gs://myfile.vcf"
- :available-metrics #{"QUAL" "PR" "QD" "MD"}
- :raw "<js array of js objects for use with CrossFilter>"}
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;Derived
@@ -57,3 +53,12 @@
    (when (seq shared)
      (when-not (some #{@!metric} shared)
        (select-metric! (first shared))))))
+
+
+
+(subscribe! {:update-metric m :extent extent}
+            ;;Update the crossfilter for each VCF
+            (let [vcf (first @!vcfs)] ;;TODO, faceting
+              (.filter (get-in vcf [:cf (m :id) :dimension])
+                       (clj->js extent))
+              (publish! {:filter-updated m})))

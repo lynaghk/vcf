@@ -8,7 +8,7 @@
 (defn init! [el callback]
   (let [$tt (dom/->dom el)
         tt (new goog.ui.TwoThumbSlider)
-        !old-val (atom [])]
+        !old-val (atom [] :meta {:no-deref-monitor true})]
     (doto tt
       (.decorate $tt)
       (gevents/listen goog.ui.Component.EventType.CHANGE

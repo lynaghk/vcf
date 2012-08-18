@@ -16,6 +16,8 @@
   [metric]
   (if (metric :range)
     (assoc metric
+      :bin-width (let [[start end] (metric :range)]
+                   (/ (- end start) num-bins))
       :scale-x (let [{:keys [ticks]} (ticks/search (metric :range)
                                                    :clamp? true :length ui/hist-width)
                      x (scale/linear :domain (metric :range)
@@ -41,9 +43,8 @@
 
     (assoc info
       :cf (into {:crossfilter cf}
-                (for [{:keys [id range]} (info :available-metrics)]
+                (for [{:keys [id range bin-width]} (info :available-metrics)]
                   (let [[start end] range
-                        bin-width (/ (- end start) num-bins)
                         dim (.dimension cf #(aget % id))
                         binned (.group dim (fn [x]
                                              (+ start (* bin-width

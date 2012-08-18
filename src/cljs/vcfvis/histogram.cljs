@@ -1,6 +1,7 @@
 (ns vcfvis.histogram
   (:use-macros [c2.util :only [pp p bind!]]
-               [reflex.macros :only [constrain!]])
+               [reflex.macros :only [constrain!]]
+               [dubstep.macros :only [publish! subscribe!]])
   (:use [c2.core :only [unify]]
         [c2.maths :only [irange extent]])
   (:require [vcfvis.core :as core]
@@ -21,39 +22,43 @@
 
 
 
-;; (def !selected-extent (atom [0 1]))
-;; ;;Range selector
-;; (let [$tt (-> (dom/select "#range-selector")
-;;               (dom/style :width width))
-;;       tt (double-range/init! $tt #(reset! !selected-extent %))]
+;;Range selector
+(let [$tt (-> (dom/select "#range-selector")
+              (dom/style :width width))
+      tt (double-range/init! $tt
+                             (fn [extent]
+                               (let [m @core/!metric]
+                                 (when (seq m)
+                                   (publish! {:update-metric m :extent extent})))))]
+  
+  (constrain!
+   (dom/style $tt :visibility
+              (if (seq @core/!vcfs) "visible" "hidden")))
 
-;;   (constrain!
-;;    (dom/style $tt :visibility
-;;               (if (seq @core/!vcfs) "visible" "hidden")))
+  ;;possible todo: use pubsub bus rather than side-effecting fn.
+  (defn update-range-selector! [[min max] bin-width]
+    (doto tt
+      (.setMinimum min) (.setMaximum max)
+      (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
+      (.setValueAndExtent min (- max min)))))
 
-;;   ;;possible todo: use pubsub bus rather than side-effecting fn.
-;;   (defn update-range-selector! [[min max] bin-width]
-;;     (doto tt
-;;       (.setMinimum min) (.setMaximum max)
-;;       (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
-;;       (.setValueAndExtent min (- max min)))))
 
-;; (constrain!
-;;  (let [{:keys [bin-width range]} @core/!metric]
-;;    (update-range-selector! range bin-width)))
+(constrain!
+ (let [{:keys [range bin-width]} @core/!metric]
+   (update-range-selector! range bin-width)))
 
 ;; ;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the buttons
 ;; (add-watch !selected-extent :reset-analysis-status-buttons
 ;;            (fn [_ _ _ _] (data/reset-statuses!)))
 
 
-(defn hist-svg* [vcf metric & {:keys [margin]}]
-  (let [height (- height axis-height)
-        {metric-id :id scale-x :scale-x} metric
+(defn hist-svg* [vcf metric & {:keys [margin height width]}]
+  (let [{metric-id :id scale-x :scale-x} metric
         {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
         ;;Since we're only interested in relative density, histograms have free y-scales.
         scale-y (scale/linear :domain [0 (aget (first (.top binned 1)) "value")]
                               :range [0 height])
+        scale-x (assoc-in scale-x [:range 1] width)
         dx (- (scale-x bin-width) (scale-x 0))]
 
     [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
@@ -80,7 +85,10 @@
                (for [vcf vcfs]
                  [:div.histogram
                   [:span.label (vcf :file-url)]
-                  (hist-svg* vcf metric :margin margin)])]
+                  (hist-svg* vcf metric
+                             :margin margin
+                             :height (- height axis-height)
+                             :width width)])]
 
               [:div#hist-axis
                [:div.axis.abscissa
