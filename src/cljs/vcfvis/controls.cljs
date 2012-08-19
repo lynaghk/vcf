@@ -62,7 +62,8 @@
                                 [:div.mini-hist (histogram/hist-svg* vcf m
                                                                      :margin 0
                                                                      :height 100
-                                                                     :width 250)]))))
+                                                                     :width 250
+                                                                     :bars? false)]))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;

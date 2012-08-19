@@ -30,7 +30,7 @@
                                (let [m @core/!metric]
                                  (when (seq m)
                                    (publish! {:update-metric m :extent extent})))))]
-  
+
   (constrain!
    (dom/style $tt :visibility
               (if (seq @core/!vcfs) "visible" "hidden")))
@@ -52,27 +52,42 @@
 ;;            (fn [_ _ _ _] (data/reset-statuses!)))
 
 
-(defn hist-svg* [vcf metric & {:keys [margin height width]}]
+(defn hist-svg* [vcf metric & {:keys [margin height width bars?]
+                               :or {bars? true}}]
   (let [{metric-id :id scale-x :scale-x} metric
         {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
         ;;Since we're only interested in relative density, histograms have free y-scales.
-        scale-y (scale/linear :domain [0 (aget (first (.top binned 1)) "value")]
+        data-extent [0 (aget (first (.top binned 1)) "value")]
+        scale-y (scale/linear :domain data-extent
                               :range [0 height])
         scale-x (assoc-in scale-x [:range 1] width)
         dx (- (scale-x bin-width) (scale-x 0))]
+    (when-not (zero? (apply - data-extent))
+      [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
+       [:g {:transform (svg/translate [margin margin])}
+        [:g.distribution {:transform (str (svg/translate [0 height])
+                                          (svg/scale [1 -1]))}
+         (if bars?
+           (for [d (.all binned)]
+             (let [x (aget d "key"), count (aget d "value")]
+               [:rect.bar {:x (scale-x x)
+                           :width dx
+                           :height (scale-y count)}]))
+           ;;else, render using a path element
+           [:path
+            {:d (str "M"
+                     (.join (.map (.all binned)
+                                  (fn [d]
+                                    (let [x (aget d "key"), count (aget d "value")
+                                          h (scale-y count)]
+                                      (str (scale-x x) "," h))))
+                            "L"))}])]]])))
 
-    [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
-     [:g {:transform (svg/translate [margin margin])}
-      [:g.distribution {:transform (str (svg/translate [0 height])
-                                        (svg/scale [1 -1]))}
-
-       (for [d (.all binned)]
-         (let [x (aget d "key"), count (aget d "value")]
-           [:rect.bar {:x (scale-x x)
-                       :width (- (scale-x (+ x bin-width))
-                                 (scale-x x))
-                       :height (scale-y count)}]))]]]))
-
+;; ;;Path Bars
+;; (str "M" (scale-x x) ",0"
+;;      "l0," h
+;;      "l" dx "," 0
+;;      "l" 0 "," (- h))
 
 
 
