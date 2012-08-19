@@ -4,8 +4,13 @@
 ref:
   - sample: NA00001
     description: Test Genome
-    genome: data/GRCh37.fa
+    genome: biodata:/GRCh37/seq/GRCh37.fa
     genome-alts: []
+
+remote:
+  public:
+    - /Home/Public/chapmanb/xprize
+  biodata: /Home/Public/chapmanb/biodata
 
 dir:
   cache: "tmp/cache"
