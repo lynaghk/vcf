@@ -73,3 +73,9 @@
 ;;                  :completed  [:button.btn {:properties {:disabled true}} "Completed"]
 ;;                  :running    [:button.btn {:properties {:disabled true}} "Running..."]
 ;;                  nil         [:button.btn {:properties {:disabled false}} "Export subset"])
+
+
+(let [$btn (dom/append! "body" [:button "Download subset"])]
+  (event/on-raw $btn :click
+                (fn [e]
+                  (pp (core/current-filters)))))

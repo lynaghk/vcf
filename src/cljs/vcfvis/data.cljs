@@ -12,12 +12,13 @@
 (def num-bins 100)
 
 (defn expand-metric
-  "Adds id and an x-scale with tick marks to a metric."
+  "Adds bin-width, filter extent atom, and x-scale with tick marks to a metric."
   [metric]
   (if (metric :range)
     (assoc metric
       :bin-width (let [[start end] (metric :range)]
                    (/ (- end start) num-bins))
+      :!filter-extent (atom nil)
       :scale-x (let [{:keys [ticks]} (ticks/search (metric :range)
                                                    :clamp? true :length ui/hist-width)
                      x (scale/linear :domain (metric :range)

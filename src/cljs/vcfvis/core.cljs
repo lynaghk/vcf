@@ -42,7 +42,7 @@
 
 (def !metric
   "The metric to be displayed on the main histogram."
-  (atom {}))
+  (atom nil))
 
 (defn select-metric! [metric]
   (reset! !metric metric))
@@ -57,8 +57,22 @@
 
 
 (subscribe! {:update-metric m :extent extent}
-            ;;Update the crossfilter for each VCF
+            
             (let [vcf (first @!vcfs)] ;;TODO, faceting
+              ;;Update the crossfilter for each VCF
               (.filter (get-in vcf [:cf (m :id) :dimension])
                        (clj->js extent))
+              
+              ;;Save extent in metric's atom
+              (reset! (m :!filter-extent) extent)
+              
               (publish! {:filter-updated m})))
+
+
+
+(defn current-filters []
+  (reduce (fn [filters m]
+               (if-let [extent @(m :!filter-extent)]
+                 (assoc filters (m :id) extent)
+                 filters))
+          {} @!shared-metrics))

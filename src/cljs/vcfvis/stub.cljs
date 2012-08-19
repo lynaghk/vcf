@@ -21,8 +21,9 @@
                                :desc "Consistency of the site with at most two segregating haplotypes"}
              "ReadPosEndDist" {:range [0.0 50.0]
                                :desc "Mean distance from either end of read"}
-             "AD" {:range [0.0 1.0]
-                   :desc "Deviation from expected allele balance for ref/alt alleles"}
+             ;;Comment out for now because Goog's two-thumb slider blows up on decimal ranges.
+             ;; "AD" {:range [0.0 1.0]
+             ;;       :desc "Deviation from expected allele balance for ref/alt alleles"}
              "PL" {:range [-250.0 0]
                    :desc "Normalized, phred-scaled likelihoods for alternative genotype"}}
 

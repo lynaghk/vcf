@@ -36,16 +36,22 @@
               (if (seq @core/!vcfs) "visible" "hidden")))
 
   ;;possible todo: use pubsub bus rather than side-effecting fn.
-  (defn update-range-selector! [[min max] bin-width]
-    (doto tt
-      (.setMinimum min) (.setMaximum max)
-      (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
-      (.setValueAndExtent min (- max min)))))
+  (defn update-range-selector!
+    ([[min max] bin-width]
+       (update-range-selector! [min max] bin-width [min max]))
+    ([[min max] bin-width [v1 v2]]
+       (doto tt
+         (.setMinimum min) (.setMaximum max)
+         (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
+         (.setValueAndExtent v1 (- v2 v1))))))
 
 
 (constrain!
- (let [{:keys [range bin-width]} @core/!metric]
-   (update-range-selector! range bin-width)))
+ (when-let [metric @core/!metric]
+   (let [{:keys [range bin-width !filter-extent]} metric]
+     (if-let [extent @!filter-extent]
+       (update-range-selector! range bin-width extent)
+       (update-range-selector! range bin-width)))))
 
 ;; ;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the buttons
 ;; (add-watch !selected-extent :reset-analysis-status-buttons
