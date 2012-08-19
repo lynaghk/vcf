@@ -35,9 +35,16 @@
                       {} %)))
 
 (defn prep-vcf-json [vcf-json]
-  (let [info (-> (read-string (aget vcf-json "clj"))
+  (let [core-metrics (@core/!context :metrics)
+        info (-> (read-string (aget vcf-json "clj"))
                  ;;Expand metric-ids to full metric maps available in context (a join, basically)
-                 (update-in [:available-metrics] #(map (@core/!context :metrics) %)))
+                 (update-in [:available-metrics]
+                            #(reduce (fn [ms m]
+                                       (if-let [metric (core-metrics m)]
+                                         (conj ms metric)
+                                         (do (p (str "Don't know how to deal with metric: '" m "', dropping."))
+                                             ms)))
+                                     #{} %)))
 
         cf (js/crossfilter (aget vcf-json "raw"))]
 
