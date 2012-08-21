@@ -9,6 +9,7 @@
             [vcfvis.ui :as ui]
             [vcfvis.double-range :as double-range]
             [c2.dom :as dom]
+            [singult.core :as singult]
             [c2.event :as event]
             [c2.scale :as scale]
             [c2.svg :as svg]
@@ -94,6 +95,19 @@
 ;;      "l0," h
 ;;      "l" dx "," 0
 ;;      "l" 0 "," (- h))
+
+
+(defn draw-mini-hist-for-metric! [m]
+  (let [vcf (first @core/!vcfs)] ;;TODO, faceting
+    (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
+                    [:div.mini-hist (hist-svg* vcf m
+                                                         :margin 0
+                                                         :height 100
+                                                         :width 250
+                                                         :bars? false)])))
+
+(subscribe! {:draw-mini-hist m}
+           (draw-mini-hist-for-metric! m))
 
 
 

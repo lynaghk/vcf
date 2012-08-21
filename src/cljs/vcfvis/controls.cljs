@@ -6,8 +6,6 @@
         [c2.core :only [unify]]
         [c2.util :only [clj->js]])
   (:require [vcfvis.core :as core]
-            [vcfvis.histogram :as histogram]
-            [singult.core :as singult]
             [c2.dom :as dom]
             [c2.event :as event]))
 
@@ -38,32 +36,30 @@
              metrics (for [m (vals (@core/!context :metrics))]
                        (assoc m
                          :selected? (= m selected-metric)
+                         :visible? (core/visible-metric? m)
                          :shared? (contains? shared (m :id))))]
          [:div#metrics
           (unify metrics
-                 (fn [{:keys [id desc selected? shared?]}]
+                 (fn [{:keys [id desc selected? visible? shared?]}]
                    [:div.metric {:id (str "metric-" id)
                                  :class (str (when selected? "selected")
+                                             " " (when visible? "expanded")
                                              " " (when-not shared?  "disabled"))}
                     [:h2 id]
-                    [:span desc]
-                    [:div.mini-hist]]))]))
+                    [:button.expand-btn "V"]
+                    [:span.desc desc]
+                    [:div.mini-hist
+                     ;;TODO implement "ignore these children" semantics in Singult.
+                     [:svg [:g [:g [:path]]]]]])
+                 :key-fn #(:id %))]))
 
 (event/on "#metrics" :click
-          (fn [d] (core/select-metric! (dissoc d :selected? :shared?))))
+          (fn [d _ e]
+            (when-not (dom/matches-selector? (.-target e) ".expand-btn")
+              (core/select-metric! (dissoc d :selected? :shared? :visible?)))))
 
-
-
-(subscribe! {:filter-updated metric}
-            (let [vcf (first @core/!vcfs)] ;;TODO, faceting
-              ;;Redraw all metrics besides the one whose filter was updated.
-              (doseq [m (remove #{metric} @core/!shared-metrics)]
-                (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
-                                [:div.mini-hist (histogram/hist-svg* vcf m
-                                                                     :margin 0
-                                                                     :height 100
-                                                                     :width 250
-                                                                     :bars? false)]))))
+(event/on "#metrics" ".expand-btn" :click
+          (fn [d] (core/toggle-visible-metric! (dissoc d :selected? :shared? :visible?))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;

@@ -2,12 +2,25 @@
 
   
 
-.mini-hist
-  height: 150px
-  border: 1px solid gray
-  path
-    fill: none
-    stroke: black
+.metric
+  position: relative
+  overflow: hidden
+  .expand-btn
+    position: absolute
+    top: 0
+    right: 0
+  .descr
+    margin-left: 1em
+
+  .mini-hist
+    display: none
+    path
+      fill: none
+      stroke: black
+
+.metric.expanded
+  .mini-hist
+    display: block
 
 .metric.disabled
   background-color: gray
@@ -16,3 +29,5 @@
 
 .metric.selected
   background-color: rgba(255,255,255, 0.5)
+  .expand-btn
+    display: none

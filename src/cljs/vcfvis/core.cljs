@@ -47,32 +47,58 @@
 (defn select-metric! [metric]
   (reset! !metric metric))
 
-
 (constrain! ;;Make sure that the selected metric is always one of the shared metrics
  (let [shared @!shared-metrics]
    (when (seq shared)
      (when-not (some #{@!metric} shared)
        (select-metric! (first shared))))))
 
+(def !visible-metrics
+  "Metrics that should be shown with mini-histograms the UI"
+  (atom #{}
+        :validator
+        (fn [ms]
+          (if (contains? ms @!metric)
+            (throw (js/Error. "Selected metric doesn't need a mini-histogram."))
+            true))))
 
+(constrain!
+ (let [m @!metric]
+   (when (contains? @!visible-metrics m)
+     (swap! !visible-metrics disj m))))
+
+(defn visible-metric? [m]
+  (contains? @!visible-metrics m))
+
+(defn toggle-visible-metric! [m]
+  (when-not (visible-metric? m)
+    (publish! {:draw-mini-hist m}))
+  (swap! !visible-metrics
+         (if (visible-metric? m) disj conj)
+         m))
 
 (subscribe! {:update-metric m :extent extent}
-            
+
             (let [vcf (first @!vcfs)] ;;TODO, faceting
               ;;Update the crossfilter for each VCF
               (.filter (get-in vcf [:cf (m :id) :dimension])
                        (clj->js extent))
-              
+
               ;;Save extent in metric's atom
               (reset! (m :!filter-extent) extent)
-              
+
               (publish! {:filter-updated m})))
+
+(subscribe! {:filter-updated _}
+            ;;Redraw all visible metrics
+            (doseq [m @!visible-metrics]
+              (publish! {:draw-mini-hist m})))
 
 
 
 (defn current-filters []
   (reduce (fn [filters m]
-               (if-let [extent @(m :!filter-extent)]
-                 (assoc filters (m :id) extent)
-                 filters))
+            (if-let [extent @(m :!filter-extent)]
+              (assoc filters (m :id) extent)
+              filters))
           {} @!shared-metrics))
