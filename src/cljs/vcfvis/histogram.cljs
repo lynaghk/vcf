@@ -97,17 +97,21 @@
 ;;      "l" 0 "," (- h))
 
 
+
+
 (defn draw-mini-hist-for-metric! [m]
-  (let [vcf (first @core/!vcfs)] ;;TODO, faceting
+  (let [vcf (first @core/!vcfs) ;;TODO, faceting
+        mini-width (js/parseFloat (dom/style "#metrics" :width))
+        mini-height 100] 
     (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
                     [:div.mini-hist (hist-svg* vcf m
-                                                         :margin 0
-                                                         :height 100
-                                                         :width 250
-                                                         :bars? false)])))
+                                               :margin 0
+                                               :height mini-height
+                                               :width mini-width
+                                               :bars? false)])))
 
 (subscribe! {:draw-mini-hist m}
-           (draw-mini-hist-for-metric! m))
+            (draw-mini-hist-for-metric! m))
 
 
 
