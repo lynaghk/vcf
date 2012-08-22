@@ -47,9 +47,7 @@
   (.call goog.fx.Dragger (js* "this") el))
 (goog.inherits SVGDrag goog.fx.Dragger)
 (set! (.-defaultAction (.-prototype SVGDrag))
-      (fn [x y]
-        (pp [x y])
-        #_(dom/attr (.-target (js* "this")) {:x x :y y})))
+      (fn [x y] "Do nothing"))
 
 
 
@@ -69,25 +67,64 @@
 
     (bind! $brush
            (let [[[x1 x2] [y1 y2]] @!extent]
-             [:g.brush
+             [:g.brush {:style {:display (when (zero? (- x1 x2)) "none")}}
               [:rect.background {:x 0 :width width :height height}]
               [:rect.extent {:x (scale-x x1) :width (- (scale-x x2)
                                                        (scale-x x1))
                              :height height}]
-              [:g.resize.e
+              [:g.resize.w
                [:rect {:x (scale-x x1)
                        :width 5 :height height}]]
-              [:g.resize.w
+              [:g.resize.e
                [:rect {:x (scale-x x2)
                        :width 5 :height height}]]]))
-    
-    ;;Add event handlers
-    (let [dragger (SVGDrag. (dom/select ".extent" $brush))]
-      (gevents/listen dragger goog.fx.Dragger.EventType.DRAG
-                          (fn [e]
-                            (p e)))
 
-      (set-drag-limits! dragger [0 0 width 0]))
+    ;;Add event handlers
+    (let [!extent-at-start (atom nil)
+          [xmin xmax] (:domain scale-x)
+          ix (scale/invert scale-x)
+          min-extent (ix 10) ;;10px min exent
+
+          start-drag! #(reset! !extent-at-start @!extent)
+          drag-fn! (fn [dragger transform-x]
+                     (gevents/listen dragger goog.fx.Dragger.EventType.DRAG
+                                     (fn [e]
+                                       (let [[[x1 x2] ys] @!extent-at-start
+                                             w (- x2 x1)
+                                             dx (ix (.-left e)) ;;convert from pixel-space to data-space
+                                             xs (transform-x dx x1 x2 w)]
+                                         (reset! !extent [xs ys])))))
+
+          dragger (SVGDrag. (dom/select ".extent" $brush))
+          left (SVGDrag. (dom/select ".resize.w" $brush))
+          right (SVGDrag. (dom/select ".resize.e" $brush))]
+
+      (doseq [d [dragger left right]]
+        (gevents/listen d goog.fx.Dragger.EventType.START start-drag!))
+
+      (drag-fn! dragger (fn [dx x1 x2 w]
+                          (cond
+                           ;;moving too far left
+                           (< (+ dx x1) xmin) [xmin (+ xmin w)]
+                           ;;moving too far right
+                           (> (+ dx x2) xmax) [(- xmax w) xmax]
+                           :else [(+ dx x1) (+ dx x2)])))
+      
+      (drag-fn! left (fn [dx x1 x2 w]
+                       (cond
+                        ;;moving too far left
+                        (< (+ dx x1) xmin) [xmin x2]
+                        ;;moving beyond the right bar
+                        (> (+ dx x1) x2) [(- x2 min-extent) x2]
+                        :else [(+ dx x1) x2])))
+      
+      (drag-fn! right (fn [dx x1 x2 w]
+                       (cond
+                        ;;moving too far right
+                        (> (+ dx x2) xmax) [x1 xmax]
+                        ;;moving beyond the left bar 
+                        (< (+ dx x2) x1) [x1 (+ x1 min-extent)]
+                        :else [x1 (+ dx x2)]))))
 
 
 
@@ -96,7 +133,10 @@
 
 (let [!b (brush! "#brush g.distribution " scale-x scale-y)]
   (constrain!
-   (pp @!b)))
+   (pp @!b))
+
+  #_(js/setTimeout #(reset! !b [[0 0] [0 0]]) 1000)
+  )
 
 
 
