@@ -7,7 +7,7 @@
   (:require [vcfvis.core :as core]
             [vcfvis.data :as data]
             [vcfvis.ui :as ui]
-            [vcfvis.double-range :as double-range]
+            [vcfvis.brush :as brush]
             [c2.dom :as dom]
             [singult.core :as singult]
             [c2.event :as event]
@@ -21,38 +21,12 @@
 (def inter-hist-margin ui/inter-hist-margin)
 (def axis-height ui/axis-height)
 
-
-
-;;Range selector
-(let [$tt (-> (dom/select "#range-selector")
-              (dom/style :width width))
-      tt (double-range/init! $tt
-                             (fn [extent]
-                               (let [m @core/!metric]
-                                 (when (seq m)
-                                   (publish! {:update-metric m :extent extent})))))]
-
-  (constrain!
-   (dom/style $tt :visibility
-              (if (seq @core/!vcfs) "visible" "hidden")))
-
-  ;;possible todo: use pubsub bus rather than side-effecting fn.
-  (defn update-range-selector!
-    ([[min max] bin-width]
-       (update-range-selector! [min max] bin-width [min max]))
-    ([[min max] bin-width [v1 v2]]
-       (doto tt
-         (.setMinimum min) (.setMaximum max)
-         (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
-         (.setValueAndExtent v1 (- v2 v1))))))
-
-
-(constrain!
- (when-let [metric @core/!metric]
-   (let [{:keys [range bin-width !filter-extent]} metric]
-     (if-let [extent @!filter-extent]
-       (update-range-selector! range bin-width extent)
-       (update-range-selector! range bin-width)))))
+#_(constrain!
+   (when-let [metric @core/!metric]
+     (let [{:keys [range bin-width !filter-extent]} metric]
+       (if-let [extent @!filter-extent]
+         (update-range-selector! range bin-width extent)
+         (update-range-selector! range bin-width)))))
 
 ;; ;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the buttons
 ;; (add-watch !selected-extent :reset-analysis-status-buttons
@@ -72,23 +46,24 @@
     (when-not (zero? (apply - data-extent))
       [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
        [:g {:transform (svg/translate [margin margin])}
-        [:g.distribution {:transform (str (svg/translate [0 height])
-                                          (svg/scale [1 -1]))}
-         (if bars?
-           (for [d (.all binned)]
-             (let [x (aget d "key"), count (aget d "value")]
-               [:rect.bar {:x (scale-x x)
-                           :width dx
-                           :height (scale-y count)}]))
-           ;;else, render using a path element
-           [:path
-            {:d (str "M"
-                     (.join (.map (.all binned)
-                                  (fn [d]
-                                    (let [x (aget d "key"), count (aget d "value")
-                                          h (scale-y count)]
-                                      (str (scale-x x) "," h))))
-                            "L"))}])]]])))
+        [:g.data-frame {:transform (str (svg/translate [0 height])
+                                        (svg/scale [1 -1]))}
+         [:g.distribution
+          (if bars?
+            (for [d (.all binned)]
+              (let [x (aget d "key"), count (aget d "value")]
+                [:rect.bar {:x (scale-x x)
+                            :width dx
+                            :height (scale-y count)}]))
+            ;;else, render using a path element
+            [:path
+             {:d (str "M"
+                      (.join (.map (.all binned)
+                                   (fn [d]
+                                     (let [x (aget d "key"), count (aget d "value")
+                                           h (scale-y count)]
+                                       (str (scale-x x) "," h))))
+                             "L"))}])]]]])))
 
 ;; ;;Path Bars
 ;; (str "M" (scale-x x) ",0"
@@ -97,44 +72,56 @@
 ;;      "l" 0 "," (- h))
 
 
+
+
 (defn draw-mini-hist-for-metric! [m]
-  (let [vcf (first @core/!vcfs)] ;;TODO, faceting
+  (let [vcf (first @core/!vcfs) ;;TODO, faceting
+        mini-width (js/parseFloat (dom/style "#metrics" :width))
+        mini-height 100]
     (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
                     [:div.mini-hist (hist-svg* vcf m
-                                                         :margin 0
-                                                         :height 100
-                                                         :width 250
-                                                         :bars? false)])))
+                                               :margin 0
+                                               :height mini-height
+                                               :width mini-width
+                                               :bars? false)])))
+(defn draw-histogram! [vcfs metric]
+  (let [{x :scale-x} metric]
+    (singult/merge! (dom/select "#main-hist")
+                    [:div#main-hist
+                     [:div#histograms
+                      (for [vcf vcfs]
+                        [:div.histogram
+                         [:span.label (vcf :file-url)]
+                         (hist-svg* vcf metric
+                                    :margin margin
+                                    :height (- height axis-height)
+                                    :width width)])]
 
-(subscribe! {:draw-mini-hist m}
-           (draw-mini-hist-for-metric! m))
+                     [:div#hist-axis
+                      [:div.axis.abscissa
+                       [:svg {:width (+ width (* 2 margin)) :height axis-height}
+                        [:g {:transform (svg/translate [margin 2])}
+                         (svg/axis x (:ticks x)
+                                   :orientation :bottom
+                                   :formatter (partial gstr/format "%.1f"))]]]]])
 
+    (let [!b (brush/init! "#histograms .histogram svg .data-frame"
+                          x (scale/linear :range [0 height]))]
+      
+      (add-watch !b :onbrush (fn [_ _ _ [xs _]]
+                               (publish! {:metric-brushed metric :extent xs}))))))
 
+(defn clear-histogram! []
+  (singult/merge! (dom/select "#main-hist")
+                  [:div#main-hist
+                   [:div#histograms]
+                   [:div#hist-axis]]))
 
-(bind! "#main-hist"
-       (let [vcfs @core/!vcfs]
-         (if (seq vcfs)
-           (let [{x :scale-x :as metric} @core/!metric]
-             [:div#main-hist
-              [:div#histograms
-               (for [vcf vcfs]
-                 [:div.histogram
-                  [:span.label (vcf :file-url)]
-                  (hist-svg* vcf metric
-                             :margin margin
-                             :height (- height axis-height)
-                             :width width)])]
+(constrain!
+ (let [vcfs @core/!vcfs
+       metric @core/!metric]
+   (if (seq vcfs)
+     (draw-histogram! vcfs metric)
+     ;;If no VCFs, clear everything
+     (clear-histogram!))))
 
-              [:div#hist-axis
-               [:div.axis.abscissa
-                [:svg {:width (+ width (* 2 margin)) :height axis-height}
-                 [:g {:transform (svg/translate [margin 2])}
-                  (svg/axis x (:ticks x)
-                            :orientation :bottom
-                            :formatter (partial gstr/format "%.1f"))]]]]])
-
-
-           ;;If no VCFs, clear everything
-           [:div#main-hist
-            [:div#histograms]
-            [:div#hist-axis]])))

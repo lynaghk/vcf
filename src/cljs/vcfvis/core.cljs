@@ -71,28 +71,24 @@
   (contains? @!visible-metrics m))
 
 (defn toggle-visible-metric! [m]
-  (when-not (visible-metric? m)
-    (publish! {:draw-mini-hist m}))
   (swap! !visible-metrics
          (if (visible-metric? m) disj conj)
          m))
 
-(subscribe! {:update-metric m :extent extent}
+(defn update-metric! [m extent]
+  (let [vcf (first @!vcfs)] ;;TODO, faceting
+    ;;Update the crossfilter for each VCF
+    (.filter (get-in vcf [:cf (m :id) :dimension])
+             (clj->js extent))
 
-            (let [vcf (first @!vcfs)] ;;TODO, faceting
-              ;;Update the crossfilter for each VCF
-              (.filter (get-in vcf [:cf (m :id) :dimension])
-                       (clj->js extent))
+    ;;Save extent in metric's atom
+    (reset! (m :!filter-extent) extent)
 
-              ;;Save extent in metric's atom
-              (reset! (m :!filter-extent) extent)
+    (publish! {:filter-updated m})))
 
-              (publish! {:filter-updated m})))
+(subscribe! {:metric-brushed metric :extent extent}
+            (update-metric! metric extent))
 
-(subscribe! {:filter-updated _}
-            ;;Redraw all visible metrics
-            (doseq [m @!visible-metrics]
-              (publish! {:draw-mini-hist m})))
 
 
 
