@@ -1,48 +1,13 @@
-(ns brush.test
-  (:use-macros [c2.util :only [p pp bind!]]
-               [reflex.macros :only [constrain!]])
+(ns vcfvis.brush
+  (:use-macros [c2.util :only [p pp bind!]])
   (:require [c2.dom :as dom]
             [c2.scale :as scale]
             [c2.svg :as svg]
             [goog.fx.Dragger :as goog.fx.Dragger]
-            [c2.event :as event]
-            [goog.events :as gevents]
-            [clojure.string :as str]))
-
-(def width 500)
-(def height 300)
-(def margin 20)
-(def n 200)
-(def data (repeatedly n rand))
-
-(def scale-x (scale/linear :domain [0 (dec n)] :range [0 width]))
-(def scale-y (scale/linear :range [0 height]))
-
-
-(dom/append! "#brush"
-             [:svg {:width (+ width (* 2 margin)) :height (+ 50 height)}
-              [:g {:transform (svg/translate [margin 0])}
-               [:g.distribution {:transform (str (svg/translate [0 height])
-                                                 (svg/scale [1 -1]))}
-
-                [:path
-                 {:d (str "M"
-                          (str/join "L" (map-indexed (fn [idx d]
-                                                       (str (scale-x idx) "," (scale-y d)))
-                                                     data)))}]
-                ]]])
-
-
-
-
-
-(defn set-drag-limits! [dragger [x y w h]]
-  (.setLimits dragger
-              (goog.math.Rect. x y w h)))
+            [goog.events :as gevents]))
 
 ;;;;;;;;;;;;;;;
 ;;Dragger subclass that doesn't actually move its element; used just for picking up events
-
 (defn SVGDrag [el]
   (.call goog.fx.Dragger (js* "this") el))
 (goog.inherits SVGDrag goog.fx.Dragger)
@@ -50,11 +15,8 @@
       (fn [x y] "Do nothing"))
 
 
-
-
-
 ;;TODO generalize to support y-only brushing and full rectangular brushing.
-(defn brush!
+(defn init!
   "Given scale and element to append to, creates an SVG brush overlay and returns an atom that references the brush extent."
   [el scale-x scale-y]
   (let [width (let [[xmin xmax] (:range scale-x)]
@@ -62,7 +24,7 @@
         height (let [[ymin ymax] (:range scale-y)]
                  (- ymax ymin))
         ;;extent of selection, in data-space
-        !extent (atom [[0 100] [0 0]])
+        !extent (atom [[0 0] [0 0]])
         $brush (dom/append! el [:g.brush])]
 
     (bind! $brush
@@ -130,30 +92,3 @@
 
     ;;return extent atom.
     !extent))
-
-(let [!b (brush! "#brush g.distribution " scale-x scale-y)]
-  (constrain!
-   (pp @!b))
-
-  #_(js/setTimeout #(reset! !b [[0 0] [0 0]]) 1000)
-  )
-
-
-
-
-
-
-;; function resizePath(d) {
-;;   var e = +(d == "e"),
-;;       x = e ? 1 : -1,
-;;       y = height / 3;
-;;   return "M" + (.5 * x) + "," + y
-;;       + "A6,6 0 0 " + e + " " + (6.5 * x) + "," + (y + 6)
-;;       + "V" + (2 * y - 6)
-;;       + "A6,6 0 0 " + e + " " + (.5 * x) + "," + (2 * y)
-;;       + "Z"
-;;       + "M" + (2.5 * x) + "," + (y + 8)
-;;       + "V" + (2 * y - 8)
-;;       + "M" + (4.5 * x) + "," + (y + 8)
-;;       + "V" + (2 * y - 8);
-;; }

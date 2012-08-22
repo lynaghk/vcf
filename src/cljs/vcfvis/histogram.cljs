@@ -7,7 +7,7 @@
   (:require [vcfvis.core :as core]
             [vcfvis.data :as data]
             [vcfvis.ui :as ui]
-            [vcfvis.double-range :as double-range]
+            [vcfvis.brush :as brush]
             [c2.dom :as dom]
             [singult.core :as singult]
             [c2.event :as event]
@@ -21,33 +21,7 @@
 (def inter-hist-margin ui/inter-hist-margin)
 (def axis-height ui/axis-height)
 
-
-
-;;Range selector
-(let [$tt (-> (dom/select "#range-selector")
-              (dom/style :width width))
-      tt (double-range/init! $tt
-                             (fn [extent]
-                               (let [m @core/!metric]
-                                 (when (seq m)
-                                   (publish! {:update-metric m :extent extent})))))]
-
-  (constrain!
-   (dom/style $tt :visibility
-              (if (seq @core/!vcfs) "visible" "hidden")))
-
-  ;;possible todo: use pubsub bus rather than side-effecting fn.
-  (defn update-range-selector!
-    ([[min max] bin-width]
-       (update-range-selector! [min max] bin-width [min max]))
-    ([[min max] bin-width [v1 v2]]
-       (doto tt
-         (.setMinimum min) (.setMaximum max)
-         (.setStep bin-width) (.setMinExtent bin-width) (.setBlockIncrement bin-width)
-         (.setValueAndExtent v1 (- v2 v1))))))
-
-
-(constrain!
+#_(constrain!
  (when-let [metric @core/!metric]
    (let [{:keys [range bin-width !filter-extent]} metric]
      (if-let [extent @!filter-extent]
@@ -142,3 +116,12 @@
            [:div#main-hist
             [:div#histograms]
             [:div#hist-axis]])))
+
+(add-watch core/!vcfs :make-brush
+           (fn []
+             (let [!b (brush/init! "#histograms .histogram svg .distribution"
+                                   (@core/!metric :scale-x)
+                                   (scale/linear :range [0 height]))]
+               (constrain! (pp @!b)))))
+
+

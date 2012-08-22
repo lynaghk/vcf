@@ -42,15 +42,4 @@
 
                            :externs ["externs/jquery.js"
                                      "vendor/externs.js"
-                                     "resources/closure-js/externs"]}}
-
-
-               {:source-path "src/cljs/brush/"
-                :compiler {:output-to "public/brushtest.js"
-
-                           :optimizations :whitespace
-                           :pretty-print true
-
-                           :externs ["externs/jquery.js"
-                                     "vendor/externs.js"
                                      "resources/closure-js/externs"]}}]})
