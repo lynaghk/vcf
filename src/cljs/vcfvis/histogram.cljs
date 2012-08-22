@@ -84,11 +84,6 @@
                                                :width mini-width
                                                :bars? false)])))
 
-(subscribe! {:draw-mini-hist m}
-            (draw-mini-hist-for-metric! m))
-
-
-
 (bind! "#main-hist"
        (let [vcfs @core/!vcfs]
          (if (seq vcfs)

@@ -6,6 +6,7 @@
         [c2.core :only [unify]]
         [c2.util :only [clj->js]])
   (:require [vcfvis.core :as core]
+            [vcfvis.histogram :as histogram]
             [c2.dom :as dom]
             [c2.event :as event]))
 
@@ -59,7 +60,24 @@
               (core/select-metric! (dissoc d :selected? :shared? :visible?)))))
 
 (event/on "#metrics" ".expand-btn" :click
-          (fn [d] (core/toggle-visible-metric! (dissoc d :selected? :shared? :visible?))))
+          (fn [d]
+            (let [m (dissoc d :selected? :shared? :visible?)]
+              (when-not (core/visible-metric? m)
+                ;;then it's about to become visible, draw the mini-hist
+                (histogram/draw-mini-hist-for-metric! m))
+              (core/toggle-visible-metric! m))))
+
+(subscribe! {:filter-updated _}
+            ;;Redraw all visible metrics
+            (doseq [m @core/!visible-metrics]
+              (histogram/draw-mini-hist-for-metric! m)))
+
+
+
+
+
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
