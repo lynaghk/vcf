@@ -21,13 +21,6 @@
 (def inter-hist-margin ui/inter-hist-margin)
 (def axis-height ui/axis-height)
 
-#_(constrain!
-   (when-let [metric @core/!metric]
-     (let [{:keys [range bin-width !filter-extent]} metric]
-       (if-let [extent @!filter-extent]
-         (update-range-selector! range bin-width extent)
-         (update-range-selector! range bin-width)))))
-
 ;; ;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the buttons
 ;; (add-watch !selected-extent :reset-analysis-status-buttons
 ;;            (fn [_ _ _ _] (data/reset-statuses!)))
@@ -57,6 +50,11 @@
                             :height (scale-y count)}]))
             ;;else, render using a path element
             [:path
+             ;; ;;Path Bars
+             ;; (str "M" (scale-x x) ",0"
+             ;;      "l0," h
+             ;;      "l" dx "," 0
+             ;;      "l" 0 "," (- h))
              {:d (str "M"
                       (.join (.map (.all binned)
                                    (fn [d]
@@ -64,12 +62,6 @@
                                            h (scale-y count)]
                                        (str (scale-x x) "," h))))
                              "L"))}])]]]])))
-
-;; ;;Path Bars
-;; (str "M" (scale-x x) ",0"
-;;      "l0," h
-;;      "l" dx "," 0
-;;      "l" 0 "," (- h))
 
 
 
@@ -84,6 +76,7 @@
                                                :height mini-height
                                                :width mini-width
                                                :bars? false)])))
+
 (defn draw-histogram! [vcfs metric]
   (let [{x :scale-x} metric]
     (singult/merge! (dom/select "#main-hist")
@@ -107,7 +100,7 @@
 
     (let [!b (brush/init! "#histograms .histogram svg .data-frame"
                           x (scale/linear :range [0 height]))]
-      
+
       (add-watch !b :onbrush (fn [_ _ _ [xs _]]
                                (publish! {:metric-brushed metric :extent xs}))))))
 

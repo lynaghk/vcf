@@ -63,7 +63,7 @@
           (fn [d]
             (let [m (dissoc d :selected? :shared? :visible?)]
               (when-not (core/visible-metric? m)
-                ;;then it's about to become visible, draw the mini-hist
+                ;;then it's about to become visible; draw the mini-hist
                 (histogram/draw-mini-hist-for-metric! m))
               (core/toggle-visible-metric! m))))
 
