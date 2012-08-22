@@ -70,8 +70,10 @@
 (subscribe! {:filter-updated _}
             ;;Redraw all visible metrics
             (doseq [m @core/!visible-metrics]
-              (histogram/draw-mini-hist-for-metric! m)))
+              (histogram/draw-mini-hist-for-metric! m))
 
+            ;;Update counts
+            (dom/text "#count" (.value (get-in (first @core/!vcfs) [:cf :all]))))
 
 
 

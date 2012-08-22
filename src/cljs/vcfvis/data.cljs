@@ -50,7 +50,8 @@
         cf (js/crossfilter (aget vcf-json "raw"))]
 
     (assoc info
-      :cf (into {:crossfilter cf}
+      :cf (into {:crossfilter cf
+                 :all (.groupAll cf)}
                 (for [{:keys [id range bin-width]} (info :available-metrics)]
                   (let [[start end] range
                         dim (.dimension cf #(aget % id))
