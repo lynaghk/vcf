@@ -76,7 +76,9 @@
          m))
 
 (defn update-metric! [m extent]
-  (let [vcf (first @!vcfs)] ;;TODO, faceting
+  (let [vcf (first @!vcfs) ;;TODO, faceting
+        extent (if (zero? (apply - extent))
+                 nil extent)] 
     ;;Update the crossfilter for each VCF
     (.filter (get-in vcf [:cf (m :id) :dimension])
              (clj->js extent))
