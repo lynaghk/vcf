@@ -14,6 +14,18 @@
 (set! (.-defaultAction (.-prototype SVGDrag))
       (fn [x y] "Do nothing"))
 
+(defn mouse-point
+  "Returns SVG coordinates of a mouse event on an SVG element.
+   Inspired by d3.svg.mouse."
+  [$container e]
+  (let [point (.createSVGPoint (or (.-ownerSVGElement $container)
+                                   $container))]
+    
+    (set! (.-x point) (.-clientX e))
+    (set! (.-y point) (.-clientY e))
+    
+    (let [point (.matrixTransform point (.inverse (.getScreenCTM $container)))]
+      [(.-x point) (.-y point)])))
 
 ;;TODO generalize to support y-only brushing and full rectangular brushing.
 (defn init!
@@ -21,6 +33,8 @@
   [el scale-x scale-y]
   (let [width (let [[xmin xmax] (:range scale-x)]
                 (- xmax xmin))
+        ix (scale/invert scale-x)
+
         height (let [[ymin ymax] (:range scale-y)]
                  (- ymax ymin))
         ;;extent of selection, in data-space
@@ -29,7 +43,7 @@
 
     (bind! $brush
            (let [[[x1 x2] [y1 y2]] @!extent]
-             [:g.brush {:style {:display (when (zero? (- x1 x2)) "none")}}
+             [:g.brush {:style {:visibility (when (zero? (- x1 x2)) "hidden")}}
               [:rect.background {:x 0 :width width :height height}]
               [:rect.extent {:x (scale-x x1) :width (- (scale-x x2)
                                                        (scale-x x1))
@@ -41,10 +55,40 @@
                [:rect {:x (scale-x x2)
                        :width 5 :height height}]]]))
 
-    ;;Add event handlers
+    ;;Mouse event handlers for creating a new selection
+    (let [$background (dom/select ".background" $brush)
+          !creating? (atom false)]
+      
+      (gevents/listen $background "mousedown"
+                      (fn [e]
+                        (reset! !creating? true)
+                        (let [[x y] (mouse-point $background e)]
+                          (let [x (ix x)]
+                            (swap! !extent #(assoc-in % [0] [x x]))))))
+      
+      (gevents/listen $brush "mouseup"
+                      (fn [_] (reset! !creating? false)))
+      
+      (gevents/listen $brush "mousemove"
+                      (fn [e]
+                        (when @!creating?
+                          ;;then we're still within the element; update the extent
+                          (let [[x y] (mouse-point $background e)]
+                            (let [x (ix x)]
+                              (swap! !extent (fn [[[x1 x2] ys]]
+                                               [(if (> x x1) [x1 x] [x x2])
+                                                ys])))))))
+      (gevents/listen $brush "mouseout"
+                      (fn [e]
+                        (when-not (and (.-relatedTarget e)
+                                       (goog.dom/contains $brush (.-relatedTarget e)))
+                          (reset! !creating? false)))))
+
+    
+
+    ;;Drag event handlers for manipulating an existing selection
     (let [!extent-at-start (atom nil)
           [xmin xmax] (:domain scale-x)
-          ix (scale/invert scale-x)
           min-extent (ix 10) ;;10px min exent
 
           start-drag! #(reset! !extent-at-start @!extent)
