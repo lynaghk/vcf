@@ -51,7 +51,7 @@
                     [:span.desc desc]
                     [:div.mini-hist
                      ;;TODO implement "ignore these children" semantics in Singult.
-                     [:svg [:g [:g [:path]]]]]])
+                     [:svg [:g [:g [:g [:path]]]]]]])
                  :key-fn #(:id %))]))
 
 (event/on "#metrics" :click

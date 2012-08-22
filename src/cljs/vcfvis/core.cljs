@@ -86,6 +86,8 @@
 
     (publish! {:filter-updated m})))
 
+(subscribe! {:metric-brushed metric :extent extent}
+            (update-metric! metric extent))
 
 
 
