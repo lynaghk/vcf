@@ -4,7 +4,9 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [org.clojure/tools.cli "0.2.1"]
                  
-                 [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
+                 [com.keminglabs/c2 "0.2.1"
+                  :exclusions [com.keminglabs/singult]]
+                 [com.keminglabs/singult "0.1.5-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
                  [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
 

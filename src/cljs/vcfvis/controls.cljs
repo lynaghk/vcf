@@ -3,6 +3,7 @@
                [reflex.macros :only [constrain!]]
                [dubstep.macros :only [publish! subscribe!]])
   (:use [chosen.core :only [ichooseu! options]]
+        [singult.core :only [ignore]]
         [c2.core :only [unify]]
         [c2.util :only [clj->js]])
   (:require [vcfvis.core :as core]
@@ -50,8 +51,7 @@
                     [:button.expand-btn "V"]
                     [:span.desc desc]
                     [:div.mini-hist
-                     ;;TODO implement "ignore these children" semantics in Singult.
-                     [:svg [:g [:g [:g [:path]]]]]]])
+                     (ignore)]])
                  :key-fn #(:id %))]))
 
 (event/on "#metrics" :click
