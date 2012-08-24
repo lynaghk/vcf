@@ -32,16 +32,23 @@
         {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
         ;;Since we're only interested in relative density, histograms have free y-scales.
         data-extent [0 (aget (first (.top binned 1)) "value")]
+        no-data? (zero? (apply - data-extent))
         scale-y (scale/linear :domain data-extent
                               :range [0 height])
         scale-x (assoc-in scale-x [:range 1] width)
         dx (- (scale-x bin-width) (scale-x 0))]
-    (when-not (zero? (apply - data-extent))
-      [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
-       [:g {:transform (svg/translate [margin margin])}
-        [:g.data-frame {:transform (str (svg/translate [0 height])
-                                        (svg/scale [1 -1]))}
-         [:g.distribution
+    
+    [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
+     [:g {:transform (svg/translate [margin margin])}
+
+      [:text.message {:x (/ width 2) :y (/ height 2)}
+       (when no-data?
+         "No available data; try clearing filters on other dimensions.")]
+      
+      [:g.data-frame {:transform (str (svg/translate [0 height])
+                                      (svg/scale [1 -1]))}
+       [:g.distribution
+        (when-not no-data?
           (if bars?
             (for [d (.all binned)]
               (let [x (aget d "key"), count (aget d "value")]
@@ -61,7 +68,7 @@
                                      (let [x (aget d "key"), count (aget d "value")
                                            h (scale-y count)]
                                        (str (scale-x x) "," h))))
-                             "L"))}])]]]])))
+                             "L"))}]))]]]]))
 
 
 
