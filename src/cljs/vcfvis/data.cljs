@@ -94,6 +94,20 @@
           (let [res (read-string d)]
             (callback res)))))
 
+(defn load-vcf [file-url callback]
+  (.getJSON js/jQuery "/api/vcf"
+            (clj->js {:file-url file-url})
+            (fn [res]
+              (callback (data/prep-vcf-json res)))))
+
+
+
+
+
+
+
+
+
 
 (def !analysis-status
   "File analysis status---are analyses running, completed, &c.?
