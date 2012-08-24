@@ -108,6 +108,9 @@
     (let [!b (brush/init! "#histograms .histogram svg .data-frame"
                           x (scale/linear :range [0 height]))]
 
+      ;;Update initial extent, if metric has it
+      (reset! !b [@(metric :!filter-extent) [0 0]])
+      
       (add-watch !b :onbrush (fn [_ _ _ [xs _]]
                                (publish! {:metric-brushed metric :extent xs}))))))
 
