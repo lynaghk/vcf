@@ -108,7 +108,8 @@
   (singult/merge! (dom/select "#main-hist")
                   [:div#main-hist
                    [:div#histograms]
-                   [:div#hist-axis]]))
+                   [:div#hist-axis]])
+  (publish! {:count-updated nil}))
 
 (constrain!
  (let [vcfs @core/!vcfs

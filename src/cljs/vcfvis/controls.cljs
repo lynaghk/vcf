@@ -72,8 +72,13 @@
             (doseq [m @core/!visible-metrics]
               (histogram/draw-mini-hist-for-metric! m))
 
-            ;;Update counts
-            (dom/text "#count" (.value (get-in (first @core/!vcfs) [:cf :all]))))
+
+            (publish! {:count-updated (.value (get-in (first @core/!vcfs) [:cf :all]))}))
+
+(subscribe! {:count-updated x}
+            (dom/text "#count" x)
+            (dom/style "#count" :visibility
+                       (if (nil? x) "hidden" "visible")))
 
 
 
