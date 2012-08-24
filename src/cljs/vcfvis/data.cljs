@@ -92,13 +92,13 @@
   (.get js/jQuery "/api/context"
         (fn [d]
           (let [res (read-string d)]
-            (callback res)))))
+            (callback (prep-context res))))))
 
 (defn load-vcf [file-url callback]
   (.getJSON js/jQuery "/api/vcf"
             (clj->js {:file-url file-url})
             (fn [res]
-              (callback (data/prep-vcf-json res)))))
+              (callback (prep-vcf-json res)))))
 
 
 
