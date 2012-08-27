@@ -50,9 +50,12 @@
                     [:h2 id]
                     [:button.expand-btn "V"]
                     [:span.desc desc]
-                    [:div.mini-hist
-                     (ignore)]])
+                    [:div.mini-hist (ignore)]
+                    [:div.sort-handle]])
                  :key-fn #(:id %))]))
+
+(-> (js/jQuery "#metrics")
+    (.sortable (js-obj "handle" ".sort-handle")))
 
 (event/on "#metrics" :click
           (fn [d _ e]
