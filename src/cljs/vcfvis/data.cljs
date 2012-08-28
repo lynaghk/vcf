@@ -1,6 +1,7 @@
 (ns vcfvis.data
   (:use-macros [c2.util :only [pp p]]
-               [reflex.macros :only [constrain!]])
+               [reflex.macros :only [constrain!]]
+               [dubstep.macros :only [subscribe!]])
   (:use [c2.util :only [clj->js]]
         [cljs.reader :only [read-string]])
   (:require [vcfvis.core :as core]
@@ -113,6 +114,9 @@
   "File analysis status---are analyses running, completed, &c.?
    Keyed by filename."
   (atom {}))
+
+;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the filter button
+(subscribe! {:filter-updated _} (reset! !analysis-status {}))
 
 (defn update-status! [filename status]
   (swap! !analysis-status assoc-in [filename] status))

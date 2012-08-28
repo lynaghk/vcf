@@ -21,13 +21,9 @@
 (def inter-hist-margin ui/inter-hist-margin)
 (def axis-height ui/axis-height)
 
-;; ;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the buttons
-;; (add-watch !selected-extent :reset-analysis-status-buttons
-;;            (fn [_ _ _ _] (data/reset-statuses!)))
-
-
 (defn hist-svg* [vcf metric & {:keys [margin height width bars?]
                                :or {bars? true}}]
+
   (let [{metric-id :id scale-x :scale-x} metric
         {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
         ;;Since we're only interested in relative density, histograms have free y-scales.

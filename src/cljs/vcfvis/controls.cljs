@@ -8,6 +8,7 @@
         [c2.util :only [clj->js]])
   (:require [vcfvis.core :as core]
             [vcfvis.histogram :as histogram]
+            [vcfvis.data :as data]
             [c2.dom :as dom]
             [c2.event :as event]))
 
@@ -93,13 +94,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;TODO: download button
 
-;; (case (get @data/!analysis-status (vcf :filename))
-;;                  :completed  [:button.btn {:properties {:disabled true}} "Completed"]
-;;                  :running    [:button.btn {:properties {:disabled true}} "Running..."]
-;;                  nil         [:button.btn {:properties {:disabled false}} "Export subset"])
+(let [$btn (dom/select "#filter-btn")]
+  (bind! $btn
+         (case (get @data/!analysis-status
+                    (get (first @core/!vcfs) :file-url))
+           :completed [:button#filter-btn.btn {:properties {:disabled true}} "Completed"]
+           :running   [:button#filter-btn.btn {:properties {:disabled true}} "Running..."]
+           nil        [:button#filter-btn.btn {:properties {:disabled false}} "Export subset"]))
 
-
-(let [$btn (dom/append! "body" [:button "Download subset"])]
   (event/on-raw $btn :click
-                (fn [e]
-                  (pp (core/current-filters)))))
+                (fn [_]
+                  (data/filter-analysis {:file-url (get (first @core/!vcfs) :file-url)
+                                         :metrics @core/!filters}))))

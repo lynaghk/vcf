@@ -53,6 +53,15 @@
      (when-not (some #{@!metric} shared)
        (select-metric! (first shared))))))
 
+(def !filters
+  "Map of filter-id -> extent"
+  (computed-observable
+   (reduce (fn [filters m]
+             (if-let [extent @(m :!filter-extent)]
+               (assoc filters (m :id) extent)
+               filters))
+           {} @!shared-metrics)))
+
 (def !visible-metrics
   "Metrics that should be shown with mini-histograms the UI"
   (atom #{}
@@ -78,7 +87,7 @@
 (defn update-metric! [m extent]
   (let [vcf (first @!vcfs) ;;TODO, faceting
         extent (if (zero? (apply - extent))
-                 nil extent)] 
+                 nil extent)]
     ;;Update the crossfilter for each VCF
     (.filter (get-in vcf [:cf (m :id) :dimension])
              (clj->js extent))
@@ -90,13 +99,3 @@
 
 (subscribe! {:metric-brushed metric :extent extent}
             (update-metric! metric extent))
-
-
-
-
-(defn current-filters []
-  (reduce (fn [filters m]
-            (if-let [extent @(m :!filter-extent)]
-              (assoc filters (m :id) extent)
-              filters))
-          {} @!shared-metrics))
