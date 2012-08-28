@@ -18,7 +18,8 @@
 
                  [bcbio.variation "0.0.1-SNAPSHOT"]]
 
-  :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"]
+  :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"
+             "-Xmx2g"]
   :main vcfvis.main
   
   :profiles {:dev {:dependencies [[midje "1.4.0"]

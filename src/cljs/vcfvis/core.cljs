@@ -18,6 +18,9 @@
   "VCFs currently under analysis."
   (atom []))
 
+(subscribe! {:vcf vcf}
+            (swap! !vcfs conj vcf))
+
 ;;;;;;;;;;;;;;;;;;;;
 ;;Derived
 
@@ -85,12 +88,14 @@
          m))
 
 (defn update-metric! [m extent]
-  (let [vcf (first @!vcfs) ;;TODO, faceting
-        extent (if (zero? (apply - extent))
+  (let [extent (if (zero? (apply - extent))
                  nil extent)]
+
+
     ;;Update the crossfilter for each VCF
-    (.filter (get-in vcf [:cf (m :id) :dimension])
-             (clj->js extent))
+    (doseq [vcf @!vcfs]
+      (.filter (get-in vcf [:cf (m :id) :dimension])
+               (clj->js extent)))
 
     ;;Save extent in metric's atom
     (reset! (m :!filter-extent) extent)

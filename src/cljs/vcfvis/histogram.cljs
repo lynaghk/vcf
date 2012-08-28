@@ -21,9 +21,8 @@
 (def inter-hist-margin ui/inter-hist-margin)
 (def axis-height ui/axis-height)
 
-(defn hist-svg* [vcf metric & {:keys [margin height width bars?]
-                               :or {bars? true}}]
-
+(defn hist-g* [vcf metric & {:keys [height width bars?]
+                             :or {bars? true}}]
   (let [{metric-id :id scale-x :scale-x} metric
         {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
         ;;Since we're only interested in relative density, histograms have free y-scales.
@@ -33,65 +32,77 @@
                               :range [0 height])
         scale-x (assoc-in scale-x [:range 1] width)
         dx (- (scale-x bin-width) (scale-x 0))]
-    
-    [:svg {:width (+ width (* 2 margin)) :height (+ height inter-hist-margin)}
-     [:g {:transform (svg/translate [margin margin])}
 
-      [:text.message {:x (/ width 2) :y (/ height 2)}
-       (when no-data?
-         "No available data; try clearing filters on other dimensions.")]
-      
-      [:g.data-frame {:transform (str (svg/translate [0 height])
-                                      (svg/scale [1 -1]))}
-       [:g.distribution
-        (when-not no-data?
-          (if bars?
-            (for [d (.all binned)]
-              (let [x (aget d "key"), count (aget d "value")]
-                [:rect.bar {:x (scale-x x)
-                            :width dx
-                            :height (scale-y count)}]))
-            ;;else, render using a path element
-            [:path
-             ;; ;;Path Bars
-             ;; (str "M" (scale-x x) ",0"
-             ;;      "l0," h
-             ;;      "l" dx "," 0
-             ;;      "l" 0 "," (- h))
-             {:d (str "M"
-                      (.join (.map (.all binned)
-                                   (fn [d]
-                                     (let [x (aget d "key"), count (aget d "value")
-                                           h (scale-y count)]
-                                       (str (scale-x x) "," h))))
-                             "L"))}]))]]]]))
+    [:g
+     [:text.message {:x (/ width 2) :y (/ height 2)}
+      (when no-data?
+        "No available data; try clearing filters on other dimensions.")]
+     [:g.data-frame {:transform (str (svg/translate [0 height])
+                                     (svg/scale [1 -1]))}
+      [:g.distribution
+       (when-not no-data?
+         (if bars?
+           (for [d (.all binned)]
+             (let [x (aget d "key"), count (aget d "value")]
+               [:rect.bar {:x (scale-x x)
+                           :width dx
+                           :height (scale-y count)}]))
+           ;;else, render using a path element
+           [:path
+            ;; ;;Path Bars
+            ;; (str "M" (scale-x x) ",0"
+            ;;      "l0," h
+            ;;      "l" dx "," 0
+            ;;      "l" 0 "," (- h))
+            {:d (str "M"
+                     (.join (.map (.all binned)
+                                  (fn [d]
+                                    (let [x (aget d "key"), count (aget d "value")
+                                          h (scale-y count)]
+                                      (str (scale-x x) "," h))))
+                            "L"))}]))]]]))
 
 
 
 
 (defn draw-mini-hist-for-metric! [m]
-  (let [vcf (first @core/!vcfs) ;;TODO, faceting
+  (let [vcfs @core/!vcfs
+        n (count vcfs)
         mini-width (js/parseFloat (dom/style "#metrics" :width))
         mini-height 100]
+
     (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
-                    [:div.mini-hist (hist-svg* vcf m
-                                               :margin 0
-                                               :height mini-height
-                                               :width mini-width
-                                               :bars? false)])))
+                    [:div.mini-hist
+                     [:svg {:width width :height (+ (* n mini-height)
+                                                    (* (dec n) inter-hist-margin))}
+
+                      (for [[vcf idx] (map vector vcfs (range))]
+                        [:g {:transform (svg/translate [0 (* idx (+ mini-height inter-hist-margin))])}
+                         (hist-g* vcf m
+                                  :height mini-height
+                                  :width mini-width
+                                  :bars? false)])]])))
+
 
 (defn draw-histogram! [vcfs metric]
-  (let [{x :scale-x} metric]
+  (let [{x :scale-x} metric
+        n (count vcfs)
+        hist-height (/ (- height (* n (dec inter-hist-margin))) n)]
     (singult/merge! (dom/select "#main-hist")
                     [:div#main-hist
                      [:div#histograms
-                      (for [vcf vcfs]
-                        [:div.histogram
-                         [:span.label (vcf :file-url)]
-                         (hist-svg* vcf metric
-                                    :margin margin
-                                    :height (- height axis-height)
-                                    :width width)])]
+
+                      [:div.labels
+                       (for [[vcf idx] (map vector vcfs (range))]
+                         [:span.label {:style {:top (str (* idx (+ hist-height inter-hist-margin)) "px")}}
+                          (vcf :file-url)])]
+                      
+                      
+                      [:svg.histogram {:width (+ width (* 2 margin)) :height (+ height (* (dec n) inter-hist-margin))}
+                       [:g.hist-container {:transform (svg/translate [margin 0])}
+                        (for [[vcf idx] (map vector vcfs (range))]
+                          [:g {:transform (svg/translate [0 (* idx (+ hist-height inter-hist-margin))])}
+                           (hist-g* vcf metric :height hist-height :width width)])]]]
 
                      [:div#hist-axis
                       [:div.axis.abscissa
@@ -101,12 +112,12 @@
                                    :orientation :bottom
                                    :formatter (partial gstr/format "%.1f"))]]]]])
 
-    (let [!b (brush/init! "#histograms .histogram svg .data-frame"
+    (let [!b (brush/init! "#histograms svg .hist-container"
                           x (scale/linear :range [0 height]))]
 
       ;;Update initial extent, if metric has it
       (reset! !b [@(metric :!filter-extent) [0 0]])
-      
+
       (add-watch !b :onbrush (fn [_ _ _ [xs _]]
                                (publish! {:metric-brushed metric :extent xs}))))))
 

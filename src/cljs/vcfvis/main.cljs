@@ -1,6 +1,7 @@
 (ns vcfvis.main
   (:use-macros [c2.util :only [pp p timeout]]
-               [reflex.macros :only [constrain!]])
+               [reflex.macros :only [constrain!]]
+               [dubstep.macros :only [publish!]])
   (:require [vcfvis.core :as core]
             [vcfvis.data :as data]
             ;;[vcfvis.stub :as data]
@@ -8,10 +9,10 @@
 
 (add-watch controls/file-selector :load-metrics
            (fn [files]
-             (if (seq files)
+             (reset! core/!vcfs [])
+             (when (seq files)
                (doseq [f files]
-                 (data/load-vcf f (partial swap! core/!vcfs conj)))
-               (reset! core/!vcfs []))))
+                 (data/load-vcf f (fn [vcf] (publish! {:vcf vcf})))))))
 
 ;;Request file list from server
 (data/load-context (partial reset! core/!context))
