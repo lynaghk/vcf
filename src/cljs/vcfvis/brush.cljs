@@ -20,12 +20,27 @@
   [$container e]
   (let [point (.createSVGPoint (or (.-ownerSVGElement $container)
                                    $container))]
-    
+
     (set! (.-x point) (.-clientX e))
     (set! (.-y point) (.-clientY e))
-    
+
     (let [point (.matrixTransform point (.inverse (.getScreenCTM $container)))]
       [(.-x point) (.-y point)])))
+
+(defn resize-path-d [height direction]
+  "Nice looking resize-handles; modified from Mike Bostock's Crossfilter demo page."
+  (let [[x e] (case direction
+                :west [-1 0]
+                :east [1 1])]
+    (str "M" (* 0.5 x) "," height
+         "A6,6 0 0 " e " " (* 6.5 x) "," (+ height 6)
+         "V" (- (* 2 height) 6)
+         "A6,6 0 0 " e " " (* 0.5 x) "," (* 2 height)
+         "Z"
+         "M" (* 2.5 x) "," (+ height 8)
+         "V" (- (* 2 height) 8)
+         "M" (* 4.5 x) "," (+ height 8)
+         "V" (- (* 2 height) 8))))
 
 ;;TODO generalize to support y-only brushing and full rectangular brushing.
 (defn init!
@@ -49,26 +64,26 @@
                                                        (scale-x x1))
                              :height height}]
               [:g.resize.w
-               [:rect {:x (scale-x x1)
-                       :width 5 :height height}]]
+               [:path {:transform (svg/translate [(scale-x x1) 0])
+                       :d (resize-path-d (/ height 3) :west)}]]
               [:g.resize.e
-               [:rect {:x (scale-x x2)
-                       :width 5 :height height}]]]))
+               [:path {:transform (svg/translate [(scale-x x2) 0])
+                       :d (resize-path-d (/ height 3) :east)}]]]))
 
     ;;Mouse event handlers for creating a new selection
     (let [$background (dom/select ".background" $brush)
           !creating? (atom false)]
-      
+
       (gevents/listen $background "mousedown"
                       (fn [e]
                         (reset! !creating? true)
                         (let [[x y] (mouse-point $background e)]
                           (let [x (ix x)]
                             (swap! !extent #(assoc-in % [0] [x x]))))))
-      
+
       (gevents/listen $brush "mouseup"
                       (fn [_] (reset! !creating? false)))
-      
+
       (gevents/listen $brush "mousemove"
                       (fn [e]
                         (when @!creating?
@@ -84,7 +99,7 @@
                                        (goog.dom/contains $brush (.-relatedTarget e)))
                           (reset! !creating? false)))))
 
-    
+
 
     ;;Drag event handlers for manipulating an existing selection
     (let [!extent-at-start (atom nil)
@@ -115,7 +130,7 @@
                            ;;moving too far right
                            (> (+ dx x2) xmax) [(- xmax w) xmax]
                            :else [(+ dx x1) (+ dx x2)])))
-      
+
       (drag-fn! left (fn [dx x1 x2 w]
                        (cond
                         ;;moving too far left
@@ -123,14 +138,14 @@
                         ;;moving beyond the right bar
                         (> (+ dx x1) x2) [(- x2 min-extent) x2]
                         :else [(+ dx x1) x2])))
-      
+
       (drag-fn! right (fn [dx x1 x2 w]
-                       (cond
-                        ;;moving too far right
-                        (> (+ dx x2) xmax) [x1 xmax]
-                        ;;moving beyond the left bar 
-                        (< (+ dx x2) x1) [x1 (+ x1 min-extent)]
-                        :else [x1 (+ dx x2)]))))
+                        (cond
+                         ;;moving too far right
+                         (> (+ dx x2) xmax) [x1 xmax]
+                         ;;moving beyond the left bar
+                         (< (+ dx x2) x1) [x1 (+ x1 min-extent)]
+                         :else [x1 (+ dx x2)]))))
 
 
 
