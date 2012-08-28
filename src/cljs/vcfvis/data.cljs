@@ -9,7 +9,7 @@
             [c2.ticks :as ticks]))
 
 
-(def num-bins 100)
+
 
 (defn expand-metric
   "Adds bin-width, filter extent atom, and x-scale with tick marks to a metric."
@@ -17,7 +17,7 @@
   (if (metric :range)
     (assoc metric
       :bin-width (let [[start end] (metric :range)]
-                   (/ (- end start) num-bins))
+                   (/ (- end start) ui/hist-bins))
       :!filter-extent (atom nil)
       :scale-x (let [{:keys [ticks]} (ticks/search (metric :range)
                                                    :clamp? true :length ui/hist-width)
@@ -59,7 +59,7 @@
                                              (+ start (* bin-width
                                                          ;;take the min to catch any roundoff into the last bin
                                                          (min (Math/floor (/ (- x start) bin-width))
-                                                              (dec num-bins))))))]
+                                                              (dec ui/hist-bins))))))]
                     [id {:bin-width bin-width
                          :dimension dim
                          :binned binned}]))))))

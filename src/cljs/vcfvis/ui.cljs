@@ -27,3 +27,5 @@
   "Width of histogram facet grid"
   (- (js/parseFloat (dom/style "#histograms" :width))
      (* 2 hist-margin)))
+
+(def hist-bins "number of histogram bins" 100)
