@@ -1,7 +1,8 @@
 $background-color: #F4F4DD
 
 @import "histogram"
-@import "slider"
+@import "brush"
+@import "mini_metrics"
 
 
 body
@@ -16,5 +17,14 @@ section
   &:before
     content: "Logged in as: "
 
+#file-selector
+  display: -webkit-box
+  -webkit-box-align: center
+  margin-bottom: 0.5em
+  select
+    -webkit-box-flex: 1
+    display: -webkit-box
 
-
+#count
+  &:after
+    content: " variants selected"

@@ -1,0 +1,29 @@
+//Brushing CSS
+
+
+
+.brush 
+  // An invisible, mouseable area for starting a new brush.
+  .background
+    visibility: hidden
+    pointer-events: all
+    cursor: crosshair
+
+  rect.extent
+    fill: steelblue
+    fill-opacity: .125
+    cursor: move
+
+  .resize path
+    fill: #eee
+    stroke: #666
+
+  .resize.e, .resize.w
+    cursor: ew-resize
+
+#brush
+  svg
+    border: 1px solid red
+  path
+    fill: none
+    stroke: black

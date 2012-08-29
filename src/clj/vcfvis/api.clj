@@ -1,7 +1,9 @@
 (ns vcfvis.api
   (:use compojure.core
         [cemerick.friend :only [current-authentication]]
-        [bcbio.variation.api.run :only [do-analysis]])
+        [bcbio.variation.api.run :only [do-analysis]]
+        [bcbio.variation.index.metrics :only [expose-metrics]]
+        [cheshire.core :only [generate-string]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [bcbio.variation.api.file :as bc-file]
@@ -22,16 +24,27 @@
   (GET "/context" req
        (when-let [creds (gs-creds req)]
          (clj-response {:files (bc-file/get-files :vcf creds)
+                        :metrics expose-metrics
                         :username (:identity (current-authentication))})))
 
   (GET "/metrics" req
-        (when-let [creds (gs-creds req)]
-          (let [{{file-urls :file-urls} :params} req]
-            (clj-response
-             (for [file-url file-urls]
-               (bc-metrics/plot-ready-metrics file-url
-                                              :creds creds))))))
-  
+       (when-let [creds (gs-creds req)]
+         (let [{{file-urls :file-urls} :params} req]
+           (clj-response
+            (for [file-url file-urls]
+              (bc-metrics/plot-ready-metrics file-url
+                                             :creds creds))))))
+
+  (GET "/vcf" req
+       (when-let [creds (gs-creds req)]
+         (let [{{file-url :file-url} :params} req]
+           (let [raw (bc-metrics/get-raw-metrics file-url
+                                                 :creds creds)]
+             (generate-string
+              {:clj (pr-str {:file-url file-url
+                             :available-metrics (-> raw first (dissoc :id) keys set)})
+               :raw raw})))))
+
   (POST "/filter" req
         (when-let [creds (gs-creds req)]
           (let [{{:keys [file-url metrics]} :params} req]

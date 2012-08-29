@@ -42,8 +42,7 @@
                             :unauthorized-redirect-uri "/login"
                             :workflows [(workflows/interactive-form :login-uri "/login")]})
       (wrap-file-info)
-      (handler/site {:session {:cookie-attrs {:max-age 3600
-                                              :secure true}}})))
+      (handler/site {:session {:cookie-attrs {:max-age 3600}}})))
 
 (defn start!
   ([] (start! 8080))

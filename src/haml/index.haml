@@ -4,11 +4,14 @@
     %meta(charset="utf-8")
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/bootstrap.css")
     %link(rel="stylesheet" type="text/css" href="style.css")
-    %script(src="vendor/jquery-1.7.2.js")
+    %script(src="vendor/jquery-1.8.0.min.js")
+    %script(src="vendor/jquery-ui-1.8.23.custom.min.js")
     %script(src="vendor/chosen/chosen.jquery.js")
     %script(src="vendor/bootstrap/bootstrap-tooltip.js")
     %script(src="vendor/bootstrap/bootstrap-popover.js")
     %script(src="vendor/bootstrap/bootstrap-dropdown.js")
+    %script(src="vendor/crossfilter.js")
+
     %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
 
   %body
@@ -24,23 +27,29 @@
               %ul.dropdown-menu
                 %li
                   %a#btn-logout(href="/logout") Logout
-    %section
-      .container
-        .row#histograms
+    .container
+
+      %section
         .row
           .span12
-            #range-selector
+            #main-hist
+              #histograms
+              #hist-axis
 
-      .controls.container
-        .row
+        .row.controls
           .span8
             .well
               %label VCF files
               #file-selector
-          .span4
-            .well
-              %label Metrics
-              #metrics
+          .span8
+            %span#count
+          .span8
+            %button.btn#filter-btn Download subset
+
+      %section
+        .row
+          .span6
+            #metrics
 
 
     %script(src="vcf.js")

@@ -1,0 +1,40 @@
+/* Styles for the mini-histograms / metric selectors sidebar
+
+.metric
+  position: relative
+  overflow: hidden
+  padding-left: 15px
+  margin-bottom: 1em
+  background: $background-color
+  .expand-btn
+    position: absolute
+    top: 0
+    right: 0
+  .descr
+    margin-left: 1em
+
+  .mini-hist
+    display: none
+    path
+      fill: none
+      stroke: black
+  .sort-handle
+    position: absolute
+    top: 0
+    left: 0
+    width: 10px
+    height: 100%
+    background-color: black
+    cursor: move
+
+.metric.expanded
+  .mini-hist
+    display: block
+
+.metric.disabled
+  display: none
+
+.metric.selected
+  background-color: rgba(255,255,255, 0.5)
+  .expand-btn
+    display: none

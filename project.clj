@@ -4,17 +4,22 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [org.clojure/tools.cli "0.2.1"]
                  
-                 [com.keminglabs/c2 "0.2.1-SNAPSHOT"]
+                 [com.keminglabs/c2 "0.2.1"
+                  :exclusions [com.keminglabs/singult]]
+                 [com.keminglabs/singult "0.1.5-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
+                 [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
 
                  [compojure "1.1.1"]
                  [ring/ring-core "1.1.1"]
                  [ring/ring-jetty-adapter "1.1.1"]
                  [com.cemerick/friend "0.0.9"]
+                 [cheshire "4.0.1"]
 
                  [bcbio.variation "0.0.1-SNAPSHOT"]]
 
-  :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"]
+  :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"
+             "-Xmx2g"]
   :main vcfvis.main
   
   :profiles {:dev {:dependencies [[midje "1.4.0"]
@@ -29,7 +34,7 @@
   :plugins [[lein-cljsbuild "0.2.5"]]
 
   :cljsbuild {:builds
-              [{:source-path "src/cljs"
+              [{:source-path "src/cljs/vcfvis"
                 :compiler {:output-to "public/vcf.js"
 
                            ;; :optimizations :advanced
@@ -39,4 +44,5 @@
                            :pretty-print true
 
                            :externs ["externs/jquery.js"
+                                     "vendor/externs.js"
                                      "resources/closure-js/externs"]}}]})
