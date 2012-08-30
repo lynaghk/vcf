@@ -128,11 +128,18 @@
                    [:div#hist-axis]])
   (publish! {:count-updated nil}))
 
+(defn draw-mini-hists! []
+  (doseq [m @core/!visible-metrics]
+    (draw-mini-hist-for-metric! m)))
+
+
 (constrain!
  (let [vcfs @core/!vcfs
        metric @core/!metric]
    (if (seq vcfs)
-     (draw-histogram! vcfs metric)
+     (do
+       (draw-histogram! vcfs metric)
+       (draw-mini-hists!))
      ;;If no VCFs, clear everything
      (clear-histogram!))))
 

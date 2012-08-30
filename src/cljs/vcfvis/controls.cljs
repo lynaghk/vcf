@@ -72,11 +72,7 @@
               (core/toggle-visible-metric! m))))
 
 (subscribe! {:filter-updated _}
-            ;;Redraw all visible metrics
-            (doseq [m @core/!visible-metrics]
-              (histogram/draw-mini-hist-for-metric! m))
-
-
+            (histogram/draw-mini-hists!)
             (publish! {:count-updated (.value (get-in (first @core/!vcfs) [:cf :all]))}))
 
 (subscribe! {:count-updated x}
