@@ -29,11 +29,9 @@
 
 (defn prep-context [context]
   (update-in context [:metrics]
-             #(reduce (fn [res [id m]]
-                        (assoc res id
-                               (-> m
-                                   expand-metric
-                                   (assoc :id id))))
+             #(reduce (fn [res m]
+                        (assoc res (:id m)
+                               (expand-metric m)))
                       {} %)))
 
 (defn prep-vcf-json [vcf-json]

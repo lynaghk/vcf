@@ -2,7 +2,6 @@
   (:use compojure.core
         [cemerick.friend :only [current-authentication]]
         [bcbio.variation.api.run :only [do-analysis]]
-        [bcbio.variation.index.metrics :only [expose-metrics]]
         [cheshire.core :only [generate-string]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
@@ -24,7 +23,7 @@
   (GET "/context" req
        (when-let [creds (gs-creds req)]
          (clj-response {:files (bc-file/get-files :vcf creds)
-                        :metrics expose-metrics
+                        :metrics (bc-metrics/available-metrics nil)
                         :username (:identity (current-authentication))})))
 
   (GET "/metrics" req
