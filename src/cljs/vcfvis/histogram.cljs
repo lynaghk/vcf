@@ -26,10 +26,13 @@
   (let [{metric-id :id scale-x :scale-x} metric
         {:keys [dimension binned bin-width]} (get-in vcf [:cf metric-id])
         ;;Since we're only interested in relative density, histograms have free y-scales.
-        data-extent [0 (aget (first (.top binned 1)) "value")]
-        no-data? (zero? (apply - data-extent))
-        scale-y (scale/linear :domain data-extent
-                              :range [0 height])
+        max-val (aget (first (.top binned 1)) "value")
+        no-data? (zero? max-val)
+        scale-y (case (get-in metric [:y-scale :type] :linear)
+                  :linear (scale/linear :domain [0 max-val]
+                                        :range [0 height])
+                  :log (scale/log :domain [1 max-val]
+                                  :range [0 height]))
         scale-x (assoc-in scale-x [:range 1] width)
         dx (- (scale-x bin-width) (scale-x 0))]
 
