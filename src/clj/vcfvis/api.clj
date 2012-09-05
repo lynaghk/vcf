@@ -38,7 +38,7 @@
        (when-let [creds (gs-creds req)]
          (let [{{file-url :file-url} :params} req]
            (let [raw (bc-metrics/get-raw-metrics file-url
-                                                 :creds creds)]
+                                                 :creds creds :use-subsample? true)]
              (generate-string
               {:clj (pr-str {:file-url file-url
                              :available-metrics (-> raw first (dissoc :id) keys set)})

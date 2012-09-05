@@ -7,6 +7,11 @@ ref:
     genome: biodata:/GRCh37/seq/GRCh37.fa
     genome-alts: []
 
+params:
+  subsample:
+    method: k-means
+    count: 400000
+
 remote:
   public:
     - /Home/Public/chapmanb/xprize
