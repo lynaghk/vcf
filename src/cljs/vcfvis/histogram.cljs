@@ -139,10 +139,8 @@
 (constrain!
  (let [vcfs @core/!vcfs
        metric @core/!metric]
-   (if (seq vcfs)
-     (do
-       (draw-histogram! vcfs metric)
-       (draw-mini-hists!))
-     ;;If no VCFs, clear everything
-     (clear-histogram!))))
+   (clear-histogram!)
+   (when (seq vcfs)
+     (draw-histogram! vcfs metric)
+     (draw-mini-hists!))))
 
