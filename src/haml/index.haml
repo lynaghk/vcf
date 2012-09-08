@@ -3,6 +3,7 @@
   %head
     %meta(charset="utf-8")
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/bootstrap.css")
+    %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
     %link(rel="stylesheet" type="text/css" href="style.css")
     %script(src="vendor/jquery-1.8.0.min.js")
     %script(src="vendor/jquery-ui-1.8.23.custom.min.js")
@@ -12,7 +13,6 @@
     %script(src="vendor/bootstrap/bootstrap-dropdown.js")
     %script(src="vendor/crossfilter.js")
 
-    %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
 
   %body
     .navbar#navbar
@@ -27,29 +27,23 @@
               %ul.dropdown-menu
                 %li
                   %a#btn-logout(href="/logout") Logout
-    .container
+    
+    .wrapper
+      %section.content
+        #main-hist
+          #histograms
+          #hist-axis
 
-      %section
-        .row
-          .span12
-            #main-hist
-              #histograms
-              #hist-axis
+        .controls
+          .well
+            %label VCF files
+            #file-selector
+          %button.btn#filter-btn Download subset
+          %span#count
+         
 
-        .row.controls
-          .span8
-            .well
-              %label VCF files
-              #file-selector
-          .span8
-            %span#count
-          .span8
-            %button.btn#filter-btn Download subset
-
-      %section
-        .row
-          .span6
-            #metrics
+      %section.sidebar
+        #metrics
 
 
     %script(src="vcf.js")

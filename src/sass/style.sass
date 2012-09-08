@@ -1,17 +1,68 @@
-$background-color: #F4F4DD
+@import compass/css3
+
+$background-color: #eee
 
 @import "histogram"
 @import "brush"
 @import "mini_metrics"
 
+*
+  +box-sizing(border-box)
+
+html
+  height: 100%
 
 body
-  background-color: $background-color
   font-size: 12px
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  min-width: 960px
+  height: 100%
+
+.navbar
+  margin: 0
+  position: absolute
+  top: 0
+  z-index: 100
+  width: 100%
+  .navbar-inner
+    +border-radius(0)
+    +box-shadow(0 0 0)
+    background: black
+    padding: 8px 16px
+
+.wrapper
+  margin: 0
+  width: 100%
+  height: 100%
+  padding-top: 56px
 
 section
   overflow: visible
+  height: 100%
+
+  &.content // Main histogram
+    min-width: 660px
+    background: $background-color
+    padding: 16px 16px 0 16px
+    overflow-y: scroll
+    overflow-x: hidden
+    width: 70%
+    float: left
+  &.sidebar // Sortable metrics
+    background: #444
+    width: 30%
+    overflow: auto
+    float: right
+    padding: 16px 8px 16px 8px
+
+.well
+  background: #ccc
+  border: none
+  +border-radius(0)
+
+.chzn-container-multi .chzn-choices
+  background: white
+  border: none
 
 #user-dropdown
   &:before
@@ -26,5 +77,7 @@ section
     display: -webkit-box
 
 #count
+  margin-left: 12px
   &:after
     content: " variants selected"
+

@@ -1,4 +1,7 @@
-guard 'sass', :input => 'src/sass', :output => 'public'
+guard 'compass' do
+  watch %r{^src/sass/.+\.sass$}
+end
+
 guard 'haml', :input => 'src/haml', :output => 'public' do
   watch %r{^src/haml/.+\.haml$}
 end

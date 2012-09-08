@@ -3,38 +3,77 @@
 .metric
   position: relative
   overflow: hidden
-  padding-left: 15px
-  margin-bottom: 1em
-  background: $background-color
+  //padding: 8px 18px
+  //margin-bottom: 1em
+  width: 100%
+  margin-bottom: 8px
+  cursor: pointer
+  //border-top: 1px solid rgba(255,255,255,0.4)
+  //+box-shadow(0 2px 2px rgba(0,0,0,0.2))
+  background: white
+  h2
+    line-height: 1em
+    padding-left: 18px
+    padding-top: 12px
+    margin-bottom: 2px
+  .desc
+    color: #666
+    line-height: 1em
+    padding-left: 18px
+    display: block
+    padding-bottom: 12px
+    padding-right: 36px
+    line-height: 1.2em
   .expand-btn
     position: absolute
-    top: 0
-    right: 0
+    top: 12px
+    right: 12px
+    border: none
+    width: 24px
+    height: 24px
+    text-indent: -9000px
+    background: #eee url(vendor/sparkline-icon.svg) no-repeat center center
   .descr
     margin-left: 1em
 
   .mini-hist
     display: none
+    +background-image(linear-gradient(#f2f2f2, white)) 
+    padding-top: 12px
     path
       fill: none
-      stroke: black
+      stroke: orangered
   .sort-handle
     position: absolute
     top: 0
     left: 0
-    width: 10px
+    width: 8px
     height: 100%
-    background-color: black
+    background-color: lightblue
     cursor: move
 
 .metric.expanded
   .mini-hist
     display: block
+  .expand-btn
+    background: #eee url(vendor/sparkline-icon-active.svg) no-repeat center center
 
 .metric.disabled
   display: none
 
 .metric.selected
-  background-color: rgba(255,255,255, 0.5)
+  //background-color: rgba(255,255,255, 0.5)
+  background: #eee
+  margin-left: -8px
+  padding-left: 6px
+  h2
+    color: orangered
+    padding-left: 0
+  .desc
+    padding-left: 0
   .expand-btn
     display: none
+  .sort-handle
+    display: none
+
+
