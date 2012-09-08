@@ -119,7 +119,11 @@
                           x (scale/linear :range [0 height]))]
 
       ;;Update initial extent, if metric has it
-      (reset! !b [@(metric :!filter-extent) [0 0]])
+      (when-let [initial-extent @(metric :!filter-extent)]
+        (let [[r-min r-max] (metric :range)
+              [start end] initial-extent]
+          (reset! !b [[(max start r-min) (min end r-max)]
+                      [0 0]])))
 
       (add-watch !b :onbrush (fn [_ _ _ [xs _]]
                                (publish! {:metric-brushed metric :extent xs}))))))

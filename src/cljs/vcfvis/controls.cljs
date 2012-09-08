@@ -88,8 +88,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
-;;TODO: download button
-
+;;Download button
 (let [$btn (dom/select "#filter-btn")]
   (bind! $btn
          (case (get @data/!analysis-status

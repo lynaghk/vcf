@@ -88,9 +88,15 @@
          m))
 
 (defn update-metric! [m extent]
-  (let [extent (if (zero? (apply - extent))
-                 nil extent)]
-
+  (let [[min max] (m :range)
+        extent (cond
+                ;;clear zero extent
+                (zero? (apply - extent)) nil
+                ;;extend to +/- infinity if extent reaches extreme of metric range
+                (= extent [min max])    [(- js/Infinity) js/Infinity]
+                (= (first extent) min)  [(- js/Infinity) (second extent)]
+                (= (second extent) max) [(first extent) js/Infinity]
+                :else extent)]
 
     ;;Update the crossfilter for each VCF
     (doseq [vcf @!vcfs]
