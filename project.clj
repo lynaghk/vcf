@@ -31,7 +31,7 @@
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
 
-  :plugins [[lein-cljsbuild "0.2.5"]]
+  :plugins [[lein-cljsbuild "0.2.7"]]
 
   :cljsbuild {:builds
               [{:source-path "src/cljs/vcfvis"
