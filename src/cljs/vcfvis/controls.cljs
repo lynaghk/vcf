@@ -19,7 +19,7 @@
   (let [$selector (dom/append! "#file-selector"
                                [:select {:multiple "multiple"
                                          :data-placeholder "Select VCF files"}])
-        !c (ichooseu! $selector)]
+        !c (ichooseu! $selector :search-contains true)]
 
     ;;The selector should always reflect the user's avaliable flies
     (constrain!
