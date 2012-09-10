@@ -12,6 +12,9 @@
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Processing data retrieved from server
+
 (defn expand-metric
   "Adds bin-width, filter extent atom, and x-scale with tick marks to a metric."
   [metric]
@@ -65,18 +68,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+;;;;;;;;;;;;;;;
+;;Fetching data
 
 (defn load-metrics [file-urls callback]
   (if-not (seq file-urls)
@@ -100,20 +93,15 @@
               (callback (prep-vcf-json res)))))
 
 
-
-
-
-
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Exporting filter selection
 
 (def !analysis-status
   "File analysis status---are analyses running, completed, &c.?
    Keyed by filename."
   (atom {}))
 
-;;Whenever the range sliders move, we're looking at a new subset of the data, so reset the filter button
+;;Whenever filter changes we're looking at a new subset of the data, so reset the filter button.
 (subscribe! {:filter-updated _} (reset! !analysis-status {}))
 
 (defn update-status! [filename status]
