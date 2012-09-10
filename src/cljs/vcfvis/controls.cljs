@@ -23,8 +23,8 @@
 
     ;;The selector should always reflect the user's avaliable flies
     (constrain!
-     (options !c (map (fn [{:keys [filename id]}]
-                        {:text filename :value id})
+     (options !c (map (fn [{:keys [filename folder id]}]
+                        {:text filename :value id :group folder})
                       @core/!available-files)))
     !c))
 
