@@ -112,7 +112,8 @@
                                      (fn [e]
                                        (let [[[x1 x2] ys] @!extent-at-start
                                              w (- x2 x1)
-                                             dx (ix (.-left e)) ;;convert from pixel-space to data-space
+                                             ;;convert dx from pixel-space to data-space
+                                             dx (- (ix (.-left e)) (ix 0))
                                              xs (transform-x dx x1 x2 w)]
                                          (reset! !extent [xs ys])))))
 
