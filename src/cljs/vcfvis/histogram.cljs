@@ -84,7 +84,7 @@
                          (hist-g* vcf m
                                   :height mini-height
                                   :width mini-width
-                                  :bars? false)])]])))
+                                  :bars? true)])]])))
 
 
 (defn draw-histogram! [vcfs metric]
