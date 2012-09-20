@@ -89,6 +89,8 @@
 
 (defn draw-histogram! [vcfs metric]
   (let [{x :scale-x} metric
+        tick-range (/ (- (apply - (:domain x)))
+                      (count (:ticks x)))
         n (count vcfs)
         hist-height (/ (- height (* n (dec inter-hist-margin))) n)]
     (singult/merge! (dom/select "#main-hist")
@@ -113,7 +115,8 @@
                         [:g {:transform (svg/translate [margin 2])}
                          (svg/axis x (:ticks x)
                                    :orientation :bottom
-                                   :formatter (partial gstr/format "%.1f"))]]]]])
+                                   :formatter (partial gstr/format
+                                                       (if (< tick-range 0.075) "%.2f" "%.1f")))]]]]])
 
     (let [!b (brush/init! "#histograms svg .hist-container"
                           x (scale/linear :range [0 height]))]
