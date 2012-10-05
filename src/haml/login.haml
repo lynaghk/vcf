@@ -29,7 +29,7 @@
                     .control-group
                       %label.control-label(for="username") Username:
                       .controls
-                        %input#username(name="username" type="text" data-placeholder="username")
+                        %input#username(name="username" type="text")
                     .control-group
                       %label.control-label(for="password") Password:
                       .controls
@@ -48,10 +48,11 @@
             .tab-pane#login-tab-galaxy
               %fieldset
                 %label Galaxy server:
-                %input#galaxy-server(name="galaxy-serrver" type="text" value="https://main.g2.bx.psu.edu/")
+                %input#galaxy-server(name="galaxy-server" type="text" value="https://main.g2.bx.psu.edu/")
                 %label API key:
                 %input#galaxy-apikey(name="galaxy-apikey" type="text")
                 %span.help-block On your Galaxy server, select API Keys from the User menu
+                %strong Galaxy login is still under development
 
         %input.btn.btn-primary(type="submit" value="Login")
 

@@ -28,19 +28,43 @@
   (route/files "/" {:root "public" :allow-symlinks? true})
   (route/not-found "Not found"))
 
-(defn gs-credential-fn
-  "Given map with GenomeSpace username and password keys, returns GS client (if valid) or nil."
+(defmulti credential-fn
+  "Handle login with multiple credentials"
+  (fn [params]
+    (println params)
+    (cond
+     (seq (:username params)) :gs
+     (seq (:galaxy-apikey params)) :galaxy
+     :else :default)))
+
+(defmethod credential-fn :gs
+  ^{:doc "Given map with GenomeSpace username and password keys, returns GS client (if valid) or nil."}
   [{:keys [username password]}]
   (when-let [client (get-gs-client {:username username :password password})]
     {:client client
+     :service :gs
      :identity username
      :roles #{::user}}))
 
+(defmethod credential-fn :galaxy
+  ^{:doc "Retrieve Galaxy client connection using API key."}
+  [{:keys [galaxy-server galaxy-apikey]}])
+
+(defmethod credential-fn :default [_] nil)
+
+(defn galaxy-api-workflow
+  "Provide retrieval of parameters for Galaxy API"
+  [& {:keys [login-uri] :as form-config}]
+  (fn [{:keys [uri request-method params] :as request}]
+    (when (and (= uri (get-in request [::friend/auth-config :login-uri]))
+               (= :post request-method))
+      (println params))))
+
 (def app
   (-> main-routes
-      (friend/authenticate {:credential-fn gs-credential-fn
-                            :unauthorized-redirect-uri "/login"
-                            :workflows [(workflows/interactive-form :login-uri "/login")]})
+      (friend/authenticate {:credential-fn credential-fn
+                            :workflows [(workflows/interactive-form)
+                                        (galaxy-api-workflow)]})
       (wrap-file-info)
       (handler/site {:session {:cookie-attrs {:max-age 3600}}})))
 

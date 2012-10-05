@@ -13,7 +13,7 @@
                  [compojure "1.1.1"]
                  [ring/ring-core "1.1.1"]
                  [ring/ring-jetty-adapter "1.1.1"]
-                 [com.cemerick/friend "0.0.9"]
+                 [com.cemerick/friend "0.1.2"]
                  [cheshire "4.0.1"]
 
                  [bcbio.variation "0.0.1-SNAPSHOT"]]
