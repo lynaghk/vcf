@@ -31,7 +31,11 @@ from ClojureScript source, watching for changes and automatically recompiling:
     
 ### Starting the server
 
-From the commandline:
+During development:
+
+    lein ring server-headless
+
+For a production server:
  
     lein run
 

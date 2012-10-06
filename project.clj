@@ -31,7 +31,11 @@
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs"]
 
-  :plugins [[lein-cljsbuild "0.2.7"]]
+  :plugins [[lein-cljsbuild "0.2.7"]
+            [lein-ring "0.7.5"]]
+
+  :ring {:handler vcfvis.server/app
+         :init vcfvis.main/devel-set-config!}
 
   :cljsbuild {:builds
               [{:source-path "src/cljs/vcfvis"

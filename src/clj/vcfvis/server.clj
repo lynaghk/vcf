@@ -28,41 +28,46 @@
   (route/files "/" {:root "public" :allow-symlinks? true})
   (route/not-found "Not found"))
 
-(defmulti credential-fn
-  "Handle login with multiple credentials"
+(defmulti bio-credential-fn
+  "Handle login with multiple credentials to useful biological services."
   (fn [params]
-    (println params)
-    (cond
-     (seq (:username params)) :gs
-     (seq (:galaxy-apikey params)) :galaxy
-     :else :default)))
+    (::friend/workflow (meta params))))
 
-(defmethod credential-fn :gs
+(defmethod bio-credential-fn :interactive-form
   ^{:doc "Given map with GenomeSpace username and password keys, returns GS client (if valid) or nil."}
   [{:keys [username password]}]
-  (when-let [client (get-gs-client {:username username :password password})]
-    {:client client
-     :service :gs
-     :identity username
-     :roles #{::user}}))
+  (when (seq username)
+    (when-let [client (get-gs-client {:username username :password password})]
+      {:client client
+       :service :gs
+       :identity username
+       :roles #{::user}})))
 
-(defmethod credential-fn :galaxy
+(defmethod bio-credential-fn :galaxy
   ^{:doc "Retrieve Galaxy client connection using API key."}
-  [{:keys [galaxy-server galaxy-apikey]}])
+  [{:keys [galaxy-server galaxy-apikey]}]
+  (when (seq galaxy-apikey)
+    (println galaxy-server galaxy-apikey)))
 
-(defmethod credential-fn :default [_] nil)
+(defmethod bio-credential-fn :default [_] nil)
 
 (defn galaxy-api-workflow
   "Provide retrieval of parameters for Galaxy API"
-  [& {:keys [login-uri] :as form-config}]
+  [& {:keys [login-uri credential-fn redirect-on-auth?] :as form-config}]
   (fn [{:keys [uri request-method params] :as request}]
     (when (and (= uri (get-in request [::friend/auth-config :login-uri]))
                (= :post request-method))
-      (println params))))
+      (let [credential-fn (or credential-fn (get-in request [::friend/auth-config :credential-fn]))]
+        (if-let [user-rec (credential-fn (with-meta params {::friend/workflow :galaxy}))]
+          (workflows/make-auth user-rec {::friend/workflow :galaxy
+                                        ::friend/redirect-on-auth? redirect-on-auth?})
+          ((get-in request [::friend/auth-config :login-failure-handler]
+                   #'workflows/interactive-login-redirect)
+           (update-in request [::friend/auth-config] merge form-config)))))))
 
 (def app
   (-> main-routes
-      (friend/authenticate {:credential-fn credential-fn
+      (friend/authenticate {:credential-fn bio-credential-fn
                             :workflows [(workflows/interactive-form)
                                         (galaxy-api-workflow)]})
       (wrap-file-info)
