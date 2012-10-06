@@ -1,6 +1,6 @@
 (defproject com.keminglabs/vcf "0.0.1-SNAPSHOT"
-  :description "Genetic variant metric visualization tool"
-  :license {:name "BSD" :url "http://www.opensource.org/licenses/BSD-3-Clause"}
+  :description "Genetic variant visualization and analysis tool"
+  :license {:name "MIT" :url "http://www.opensource.org/licenses/mit-license.html"}
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [org.clojure/tools.cli "0.2.1"]
                  
