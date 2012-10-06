@@ -1,0 +1,76 @@
+#histograms { position: relative; width: 100%; height: 400px; background: white; }
+#histograms .label { position: absolute; top: 1em; right: 1em; z-index: 10; }
+
+#main-hist { margin-bottom: 18px; }
+
+#hist-axis { height: 30px; text-align: center; background: #eeeeee; }
+
+.histogram { box-sizing: border-box; position: relative; }
+.histogram rect { fill: gray; stroke: black; }
+.histogram button.btn { position: absolute; bottom: 1em; right: 1em; }
+
+text.message { text-anchor: middle; font-size: 1.2em; }
+
+.axis rect { fill: black; }
+.axis text { fill: black; }
+.axis line { stroke: black; shape-rendering: crisp-edges; }
+
+.histogram, .axis { display: block; margin: auto; }
+
+.abscissa { margin-top: 2px; }
+.abscissa text { dominant-baseline: hanging; text-anchor: middle; }
+
+.brush .background { visibility: hidden; pointer-events: all; cursor: crosshair; }
+.brush rect.extent { fill: steelblue; fill-opacity: 0.125; cursor: move; }
+.brush .resize path { fill: #eeeeee; stroke: #666666; }
+.brush .resize.e, .brush .resize.w { cursor: ew-resize; }
+
+/* Styles for the mini-histograms / metric selectors sidebar */
+.metric { position: relative; overflow: hidden; width: 100%; margin-bottom: 8px; cursor: pointer; background: white; }
+.metric h2 { line-height: 1em; padding-left: 18px; padding-top: 12px; margin-bottom: 2px; }
+.metric .desc { color: #666666; line-height: 1em; padding-left: 18px; display: block; padding-bottom: 12px; padding-right: 36px; line-height: 1.2em; }
+.metric .expand-btn { position: absolute; top: 12px; right: 12px; border: none; width: 24px; height: 24px; text-indent: -9000px; background: #eeeeee url(vendor/sparkline-icon.svg) no-repeat center center; }
+.metric .descr { margin-left: 1em; }
+.metric .mini-hist { display: none; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f2f2f2), color-stop(100%, #ffffff)); background-image: -webkit-linear-gradient(#f2f2f2, #ffffff); background-image: -moz-linear-gradient(#f2f2f2, #ffffff); background-image: -o-linear-gradient(#f2f2f2, #ffffff); background-image: linear-gradient(#f2f2f2, #ffffff); padding-top: 12px; }
+.metric .mini-hist path { fill: none; stroke: orangered; }
+.metric .sort-handle { position: absolute; top: 0; left: 0; width: 8px; height: 100%; background-color: lightblue; cursor: move; }
+
+.metric.expanded .mini-hist { display: block; }
+.metric.expanded .expand-btn { background: #eeeeee url(vendor/sparkline-icon-active.svg) no-repeat center center; }
+
+.metric.disabled { display: none; }
+
+.metric.selected { background: #eeeeee; margin-left: -8px; padding-left: 6px; }
+.metric.selected h2 { color: orangered; padding-left: 0; }
+.metric.selected .desc { padding-left: 0; }
+.metric.selected .expand-btn { display: none; }
+.metric.selected .sort-handle { display: none; }
+
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+html { height: 100%; }
+
+body { font-size: 12px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; min-width: 960px; height: 100%; }
+
+.navbar { margin: 0; position: absolute; top: 0; z-index: 100; width: 100%; }
+.navbar .navbar-inner { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: 0 0 0; -moz-box-shadow: 0 0 0; box-shadow: 0 0 0; background: black; padding: 8px 16px; }
+
+.wrapper { margin: 0; width: 100%; height: 100%; padding-top: 56px; }
+
+section { overflow: visible; height: 100%; }
+section.content { min-width: 660px; background: #eeeeee; padding: 16px 16px 0 16px; overflow-y: scroll; overflow-x: hidden; width: 70%; float: left; }
+section.sidebar { background: #444444; width: 30%; overflow: auto; float: right; padding: 16px 8px 16px 8px; }
+
+.well { background: #cccccc; border: none; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; }
+
+.chzn-container-multi .chzn-choices { background: white; border: none; }
+
+#user-dropdown:before { content: "Logged in as: "; }
+
+#file-selector { display: -webkit-box; -webkit-box-align: center; margin-bottom: 0.5em; }
+#file-selector select { -webkit-box-flex: 1; display: -webkit-box; }
+
+input { -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; }
+
+#count { margin-left: 12px; }
+#count:after { content: " variants selected"; }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <link href='vendor/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css' />
+    <link href='vendor/bootstrap/css/bootstrap-responsive.css' rel='stylesheet' type='text/css' />
+    <link href='vendor/chosen/chosen.css' rel='stylesheet' type='text/css' />
+    <link href='style.css' rel='stylesheet' type='text/css' />
+    <script src='vendor/jquery-1.8.0.min.js'></script>
+    <script src='vendor/jquery-ui-1.8.23.custom.min.js'></script>
+    <script src='vendor/chosen/chosen.jquery.js'></script>
+    <script src='vendor/bootstrap/js/bootstrap.min.js'></script>
+    <script src='vendor/crossfilter.js'></script>
+  </head>
+  <body>
+    <div class='navbar' id='navbar'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='brand'>Variant visualizer</a>
+          <ul class='nav pull-right'>
+            <li class='dropdown'>
+              <a class='dropdown-toggle' data-toggle='dropdown' href='#' id='user-dropdown'>
+                USER
+                <b class='caret'></b>
+              </a>
+              <ul class='dropdown-menu'>
+                <li>
+                  <a href='/logout' id='btn-logout'>Logout</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class='wrapper'>
+      <section class='content'>
+        <div id='main-hist'>
+          <div id='histograms'></div>
+          <div id='hist-axis'></div>
+        </div>
+        <div class='controls'>
+          <div class='well'>
+            <label>VCF files</label>
+            <div id='file-selector'></div>
+          </div>
+          <button class='btn' id='filter-btn'>Download subset</button>
+          <span id='count'></span>
+        </div>
+      </section>
+      <section class='sidebar'>
+        <div id='metrics'></div>
+      </section>
+    </div>
+    <div class='modal' id='waiting-modal' role='dialog'>
+      <div class='modal-body'>
+        Loading...
+      </div>
+    </div>
+    <script src='vcf.js'></script>
+  </body>
+</html>
