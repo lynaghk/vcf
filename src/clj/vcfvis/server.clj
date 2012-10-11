@@ -1,6 +1,6 @@
 (ns vcfvis.server
   (:use [vcfvis.api :only [api-routes]]
-        [bcbio.variation.api.file :only [get-gs-client]]
+        [bcbio.variation.api.file :only [get-client]]
 
         compojure.core
         [ring.adapter.jetty :only [run-jetty]]
@@ -28,6 +28,11 @@
   (route/files "/" {:root "public" :allow-symlinks? true})
   (route/not-found "Not found"))
 
+(defn- client->friend [rclient]
+  {:client rclient
+   :identity (:username rclient)
+   :roles #{::user}})
+
 (defmulti bio-credential-fn
   "Handle login with multiple credentials to useful biological services."
   (fn [params]
@@ -37,17 +42,15 @@
   ^{:doc "Given map with GenomeSpace username and password keys, returns GS client (if valid) or nil."}
   [{:keys [username password]}]
   (when (seq username)
-    (when-let [client (get-gs-client {:username username :password password})]
-      {:client client
-       :service :gs
-       :identity username
-       :roles #{::user}})))
+    (when-let [rclient (get-client {:username username :password password :type :gs})]
+      (client->friend rclient))))
 
 (defmethod bio-credential-fn :galaxy
   ^{:doc "Retrieve Galaxy client connection using API key."}
   [{:keys [galaxy-server galaxy-apikey]}]
   (when (seq galaxy-apikey)
-    (println galaxy-server galaxy-apikey)))
+    (when-let [rclient (get-client {:url galaxy-server :api-key galaxy-apikey :type :galaxy})]
+      (client->friend rclient))))
 
 (defmethod bio-credential-fn :default [_] nil)
 
