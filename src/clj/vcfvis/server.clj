@@ -36,43 +36,51 @@
 (defmulti bio-credential-fn
   "Handle login with multiple credentials to useful biological services."
   (fn [params]
-    (::friend/workflow (meta params))))
+    (let [{:keys [username galaxy-apikey]} params]
+      (cond
+       (seq username) :gs
+       (seq galaxy-apikey) :galaxy
+       :else :default))))
 
-(defmethod bio-credential-fn :interactive-form
+(defmethod bio-credential-fn :gs
   ^{:doc "Given map with GenomeSpace username and password keys, returns GS client (if valid) or nil."}
   [{:keys [username password]}]
   (when (seq username)
-    (when-let [rclient (get-client {:username username :password password :type :gs})]
-      (client->friend rclient))))
+    (let [rclient (get-client {:username username :password password :type :gs})]
+      (when (:conn rclient)
+        (client->friend rclient)))))
 
 (defmethod bio-credential-fn :galaxy
   ^{:doc "Retrieve Galaxy client connection using API key."}
   [{:keys [galaxy-server galaxy-apikey]}]
   (when (seq galaxy-apikey)
-    (when-let [rclient (get-client {:url galaxy-server :api-key galaxy-apikey :type :galaxy})]
-      (client->friend rclient))))
+    (let [rclient (get-client {:url galaxy-server :api-key galaxy-apikey :type :galaxy})]
+      (when (:conn rclient)
+        (client->friend rclient)))))
 
 (defmethod bio-credential-fn :default [_] nil)
 
-(defn galaxy-api-workflow
-  "Provide retrieval of parameters for Galaxy API"
-  [& {:keys [login-uri credential-fn redirect-on-auth?] :as form-config}]
+(defn bio-remote-workflow
+  "Provide retrieval of friend authentication for remote servers."
+  [& {:keys [login-uri credential-fn redirect-on-auth?] :as form-config
+      :or {redirect-on-auth? true}}]
   (fn [{:keys [uri request-method params] :as request}]
     (when (and (= uri (get-in request [::friend/auth-config :login-uri]))
                (= :post request-method))
-      (let [credential-fn (or credential-fn (get-in request [::friend/auth-config :credential-fn]))]
-        (if-let [user-rec (credential-fn (with-meta params {::friend/workflow :galaxy}))]
-          (workflows/make-auth user-rec {::friend/workflow :galaxy
-                                        ::friend/redirect-on-auth? redirect-on-auth?})
-          ((get-in request [::friend/auth-config :login-failure-handler]
-                   #'workflows/interactive-login-redirect)
+      (let [credential-fn (or credential-fn (get-in request [::friend/auth-config :credential-fn]))
+            friend-kw :bio-remote]
+        (if-let [user-rec (credential-fn (with-meta params {::friend/workflow friend-kw}))]
+          (workflows/make-auth user-rec
+                               {::friend/workflow friend-kw
+                                ::friend/redirect-on-auth? redirect-on-auth?})
+          ((or (get-in request [::friend/auth-config :login-failure-handler])
+               #'workflows/interactive-login-redirect)
            (update-in request [::friend/auth-config] merge form-config)))))))
 
 (def app
   (-> main-routes
       (friend/authenticate {:credential-fn bio-credential-fn
-                            :workflows [(workflows/interactive-form)
-                                        (galaxy-api-workflow)]})
+                            :workflows [(bio-remote-workflow)]})
       (wrap-file-info)
       (handler/site {:session {:cookie-attrs {:max-age 3600}}})))
 
