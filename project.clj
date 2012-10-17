@@ -16,7 +16,7 @@
                  [com.cemerick/friend "0.1.2"]
                  [cheshire "4.0.1"]
 
-                 [bcbio.variation "0.0.1-SNAPSHOT"]]
+                 [bcbio.variation "0.0.4-SNAPSHOT"]]
 
   :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"
              "-Xmx2g"]
@@ -24,7 +24,7 @@
   
   :profiles {:dev {:dependencies [[midje "1.4.0"]
                                   [clj-http "0.5.0"]]}
-             :cljs {:dependencies [[bcbio.variation "0.0.1-SNAPSHOT"
+             :cljs {:dependencies [[bcbio.variation "0.0.4-SNAPSHOT"
                                     :exclusions [com.google.collections/google-collections
                                                  org.clojure/clojurescript]]]}}
 

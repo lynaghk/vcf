@@ -43,6 +43,8 @@ For a production server:
 
 The code is freely available under the [MIT license][l1].
 
+Copyright (c) 2012 Keming Labs, LLC
+
 [1]: https://github.com/chapmanb/bcbio.variation
 [2]: http://variantviz.rc.fas.harvard.edu
 [3]: http://www.edgebio.com/
