@@ -83,16 +83,13 @@
 (defn load-context [callback]
   (.get js/jQuery "/api/context"
         (fn [d]
-          (.modal (js/jQuery "#waiting-modal") "hide")
           (let [res (read-string d)]
             (callback (prep-context res))))))
 
 (defn load-vcf [file-url callback]
-  (.modal (js/jQuery "#waiting-modal") "show")
   (.getJSON js/jQuery "/api/vcf"
             (clj->js {:file-url file-url})
             (fn [res]
-              (.modal (js/jQuery "#waiting-modal") "hide")
               (callback (prep-vcf-json res)))))
 
 

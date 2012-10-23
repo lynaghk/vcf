@@ -3,7 +3,8 @@
                [reflex.macros :only [computed-observable constrain!]]
                [dubstep.macros :only [publish! subscribe!]])
   (:use [c2.util :only [clj->js]])
-  (:require [clojure.set :as set]
+  (:require [domina]
+            [clojure.set :as set]
             [reflex.core :as reflex]
             [dubstep.pubsub :as dubstep.pubsub]))
 
@@ -18,8 +19,14 @@
   "VCFs currently under analysis."
   (atom []))
 
-(subscribe! {:vcf vcf}
-            (swap! !vcfs conj vcf))
+(defn check-new-vcfs!
+  "Retrieve new VCFs for loading, updating stored VCFs to avoid removed files."
+  [new-vcfs]
+  (if (seq new-vcfs)
+    (do
+      (reset! !vcfs (vec (filter #(contains? new-vcfs (:file-url %)) @!vcfs)))
+      (set/difference new-vcfs (into #{} (map :file-url@!vcfs))))
+    (reset! !vcfs [])))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;Derived

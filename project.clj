@@ -9,6 +9,7 @@
                  [com.keminglabs/singult "0.1.5-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
                  [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
+                 [domina "1.0.1"]
 
                  [compojure "1.1.1"]
                  [ring/ring-core "1.1.1"]
@@ -16,7 +17,7 @@
                  [com.cemerick/friend "0.1.2"]
                  [cheshire "4.0.1"]
 
-                 [bcbio.variation "0.0.4-SNAPSHOT"]]
+                 [bcbio.variation "0.0.6-SNAPSHOT"]]
 
   :jvm-opts ["-Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StdErrLog"
              "-Xmx2g"]
@@ -24,7 +25,7 @@
   
   :profiles {:dev {:dependencies [[midje "1.4.0"]
                                   [clj-http "0.5.0"]]}
-             :cljs {:dependencies [[bcbio.variation "0.0.4-SNAPSHOT"
+             :cljs {:dependencies [[bcbio.variation "0.0.6-SNAPSHOT"
                                     :exclusions [com.google.collections/google-collections
                                                  org.clojure/clojurescript]]]}}
 
