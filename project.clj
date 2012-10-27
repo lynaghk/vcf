@@ -11,11 +11,14 @@
                  [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
                  [domina "1.0.1"]
 
-                 [compojure "1.1.1"]
-                 [ring/ring-core "1.1.1"]
-                 [ring/ring-jetty-adapter "1.1.1"]
+                 [compojure "1.1.3"]
+                 [ring/ring-core "1.1.6"]
+                 [ring/ring-jetty-adapter "1.1.6"]
                  [com.cemerick/friend "0.1.2"]
                  [cheshire "4.0.1"]
+                 [shoreleave/shoreleave-remote "0.2.2"]
+                 [com.cemerick/shoreleave-remote-ring "0.0.2"]
+                 [ring-anti-forgery "0.2.1"]
 
                  [bcbio.variation "0.0.6-SNAPSHOT"]]
 
