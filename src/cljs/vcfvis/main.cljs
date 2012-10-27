@@ -5,6 +5,7 @@
   (:require [domina]
             [vcfvis.core :as core]
             [vcfvis.data :as data]
+            [vcfvis.ui :as ui]
             ;;[vcfvis.stub :as data]
             [vcfvis.controls :as controls]))
 
@@ -22,5 +23,6 @@
 (.modal (js/jQuery "#waiting-modal")
         (clj->js {:backdrop "static" :keyboard false :show true}))
 (data/load-context (fn [context]
+                     (ui/update-user! context)
                      (.modal (js/jQuery "#waiting-modal") "hide")
                      (reset! core/!context context)))

@@ -10,6 +10,7 @@
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
                  [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
                  [domina "1.0.1"]
+                 [crate "0.2.1" :exclusions [org.clojure/clojurescript]]
 
                  [compojure "1.1.3"]
                  [ring/ring-core "1.1.6"]

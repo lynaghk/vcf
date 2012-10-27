@@ -1,16 +1,23 @@
 (ns vcfvis.ui
-  (:use-macros [c2.util :only [pp p bind!]]
-               [reflex.macros :only [computed-observable constrain!]])
+  (:use-macros [c2.util :only [pp p bind!]])
   (:require [vcfvis.core :as core]
-            [c2.dom :as dom]))
+            [c2.dom :as dom]
+            [crate.core :as crate]))
 
-(let [$dd (dom/select "#user-dropdown")]
-  (constrain!
-   (dom/text $dd (get @core/!context :username "USER"))))
+(defn- logged-in-html [user]
+  (crate/html
+   [:div {:class "btn-group" :id "user-dropdown"}
+    [:button {:class "btn btn-info dropdown-toggle" :data-toggle "dropdown"}
+     [:i {:class "icon-user icon-white" :style "margin-right: 6px"}]
+     user
+     [:span {:class "caret" :style "margin-left: 6px"}]]
+    [:ul {:class "dropdown-menu"}
+     [:li [:a {:id "logout-btn" :href "/logout"} "Logout"]]]]))
 
-
-
-
+(defn update-user!
+  [context]
+  (-> (dom/select "#user-dropdown")
+      (dom/replace! (logged-in-html (get context :username "user")))))
 
 ;;;;;;;;;;;;;;;;;;;
 ;;Histogram params

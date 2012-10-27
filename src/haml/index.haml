@@ -19,14 +19,8 @@
         .container
           %a.brand Variant visualizer
           %ul.nav.pull-right
-            %li.dropdown
-              %a.dropdown-toggle#user-dropdown(href="#" data-toggle="dropdown")
-                USER
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  %a#btn-logout(href="/logout") Logout
-    
+            %div#user-dropdown
+              
     .wrapper
       %section.content
         #main-hist
