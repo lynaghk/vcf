@@ -19,7 +19,9 @@
                  [cheshire "4.0.1"]
                  [shoreleave/shoreleave-remote "0.2.2"]
                  [com.cemerick/shoreleave-remote-ring "0.0.2"]
-                 [ring-anti-forgery "0.2.1"]
+                 [ring-anti-forgery "0.2.1" :exclusions [hiccup]]
+                 [hiccup "1.0.1"]
+                 [enlive "1.0.1" :exclusions [org.clojure/clojure]]
 
                  [bcbio.variation "0.0.6-SNAPSHOT"]]
 

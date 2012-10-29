@@ -34,6 +34,7 @@
                       %label.control-label(for="password") Password:
                       .controls
                         %input#password(name="password" type="password")
+                    #anti-forgery
                 .span4
                   %fieldset
                     .control-group
@@ -53,6 +54,5 @@
                 %input#galaxy-apikey(name="galaxy-apikey" type="text")
                 %span.help-block On your Galaxy server, select API Keys from the User menu
                 %strong Galaxy login is still under development
-
-        %input.btn.btn-primary(type="submit" value="Login")
+          %input.btn.btn-primary(type="submit" value="Login")
 
