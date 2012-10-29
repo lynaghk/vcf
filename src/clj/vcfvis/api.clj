@@ -1,6 +1,7 @@
 (ns vcfvis.api
   (:use compojure.core
         [cemerick.friend :only [current-authentication]]
+        [cemerick.shoreleave.rpc :only [defremote]]
         [bcbio.variation.api.run :only [do-analysis]]
         [cheshire.core :only [generate-string]])
   (:require [compojure.handler :as handler]
@@ -8,26 +9,20 @@
             [bcbio.variation.api.file :as bc-file]
             [bcbio.variation.api.metrics :as bc-metrics]))
 
+(defremote ^{:remote-name :variant/context} variant-context
+  "Retrieve user-level details about available files and global metrics."
+  []
+  (when-let [rclient (:client (current-authentication))]
+    {:files (bc-file/list-files-w-cache rclient :vcf)
+     :metrics (bc-metrics/available-metrics nil)
+     :username (:identity (current-authentication))}))
+
 (defn clj-response [x]
   {:status 202
    :headers {"Content-Type" "application/clojure; charset=utf-8"}
    :body (pr-str x)})
 
 (defroutes api-routes
-  (GET "/context" req
-       (when-let [rclient (:client (current-authentication))]
-         (clj-response {:files (bc-file/list-files-w-cache rclient :vcf)
-                        :metrics (bc-metrics/available-metrics nil)
-                        :username (:identity (current-authentication))})))
-
-  (GET "/metrics" req
-       (when-let [rclient (:client (current-authentication))]
-         (let [{{file-urls :file-urls} :params} req]
-           (clj-response
-            (for [file-url file-urls]
-              (bc-metrics/plot-ready-metrics file-url
-                                             :rclient rclient))))))
-
   (GET "/vcf" req
        (when-let [rclient (:client (current-authentication))]
          (let [{{file-url :file-url} :params} req]

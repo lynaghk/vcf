@@ -1,14 +1,15 @@
 (ns vcfvis.server
   (:use [vcfvis.api :only [api-routes]]
         [vcfvis.login :only [bio-remote-workflow bio-credential-fn]]
-        compojure.core
+        [compojure.core]
         [ring.adapter.jetty :only [run-jetty]]
-        [ring.middleware.file :only [wrap-file]]
-        [ring.middleware.file-info :only [wrap-file-info]]
+        [ring.middleware file-info session anti-forgery]
         [ring.util.response :only [redirect response]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
-            [cemerick.friend :as friend]))
+            [cemerick.friend :as friend]
+            [cemerick.shoreleave.rpc :as rpc]
+            [vcfvis.api]))
 
 (defroutes main-routes
   (GET "/login" req (slurp "public/login.html"))
@@ -25,9 +26,12 @@
 
 (def app
   (-> main-routes
+      wrap-file-info
+      ;wrap-anti-forgery
+      wrap-session
+      rpc/wrap-rpc
       (friend/authenticate {:credential-fn bio-credential-fn
                             :workflows [(bio-remote-workflow)]})
-      (wrap-file-info)
       (handler/site {:session {:cookie-attrs {:max-age 3600}}})))
 
 (defn start!

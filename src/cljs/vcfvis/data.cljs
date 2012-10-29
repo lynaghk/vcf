@@ -4,8 +4,10 @@
                [dubstep.macros :only [subscribe!]])
   (:use [c2.util :only [clj->js]]
         [cljs.reader :only [read-string]])
-  (:require [vcfvis.core :as core]
+  (:require [domina]
+            [vcfvis.core :as core]
             [vcfvis.ui :as ui]
+            [shoreleave.remotes.http-rpc :as rpc]
             [c2.scale :as scale]
             [c2.ticks :as ticks]))
 
@@ -71,20 +73,10 @@
 ;;;;;;;;;;;;;;;
 ;;Fetching data
 
-(defn load-metrics [file-urls callback]
-  (if-not (seq file-urls)
-    (callback []) ;;empty result
-    (.get js/jQuery "/api/metrics"
-          (clj->js {:file-urls file-urls})
-          (fn [d]
-            (let [res (read-string d)]
-              (callback res))))))
-
 (defn load-context [callback]
-  (.get js/jQuery "/api/context"
-        (fn [d]
-          (let [res (read-string d)]
-            (callback (prep-context res))))))
+  (rpc/remote-callback "variant/context" []
+                       (fn [res]
+                         (callback (prep-context res)))))
 
 (defn load-vcf [file-url callback]
   (.getJSON js/jQuery "/api/vcf"
