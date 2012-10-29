@@ -12,7 +12,6 @@
             [c2.dom :as dom]
             [c2.event :as event]))
 
-
 ;;;;;;;;;;;;;;;;;;
 ;;File multiselect
 (def file-selector
@@ -27,9 +26,6 @@
                         {:text filename :value id :group folder})
                       @core/!available-files)))
     !c))
-
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;Metrics mini-hists
@@ -80,13 +76,6 @@
             (dom/style "#count" :visibility
                        (if (nil? x) "hidden" "visible")))
 
-
-
-
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;Download button
 (let [$btn (dom/select "#filter-btn")]
@@ -99,5 +88,5 @@
 
   (event/on-raw $btn :click
                 (fn [_]
-                  (data/filter-analysis {:file-url (get (first @core/!vcfs) :file-url)
-                                         :metrics @core/!filters}))))
+                  (data/filter-analysis (get (first @core/!vcfs) :file-url)
+                                        @core/!filters))))

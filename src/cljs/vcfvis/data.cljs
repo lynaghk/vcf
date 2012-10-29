@@ -11,9 +11,6 @@
             [c2.scale :as scale]
             [c2.ticks :as ticks]))
 
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Processing data retrieved from server
 
@@ -47,7 +44,8 @@
                             #(reduce (fn [ms m]
                                        (if-let [metric (core-metrics m)]
                                          (conj ms metric)
-                                         (do (p (str "Don't know how to deal with metric: '" m "', dropping."))
+                                         (do (p (str "Don't know how to deal with metric: '"
+                                                     m "', dropping."))
                                              ms)))
                                      #{} %)))
 
@@ -84,7 +82,6 @@
             (fn [res]
               (callback (prep-vcf-json res)))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Exporting filter selection
 
@@ -102,10 +99,8 @@
 (defn reset-statuses! []
   (reset! !analysis-status {}))
 
-(defn filter-analysis [opts]
-  (let [{:keys [file-url]} opts]
-    (update-status! file-url :running)
-    (.post js/jQuery "/api/filter" (clj->js opts)
-           (fn [d]
-             (let [res (read-string d)]
-               (update-status! file-url :completed))))))
+(defn filter-analysis [file-url metrics]
+  (update-status! file-url :running)
+  (rpc/remote-callback "run/filter" [file-url metrics]
+                       (fn [res]
+                         (update-status! file-url :completed))))

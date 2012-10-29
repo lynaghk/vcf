@@ -17,10 +17,24 @@
      :metrics (bc-metrics/available-metrics nil)
      :username (:identity (current-authentication))}))
 
-(defn clj-response [x]
-  {:status 202
-   :headers {"Content-Type" "application/clojure; charset=utf-8"}
-   :body (pr-str x)})
+(defremote ^{:remote-name :variant/raw} variant-raw
+  "Retrieve raw variant data for a given input file"
+  [file-url]
+  (when-let [rclient (:client (current-authentication))]
+    (let [raw (bc-metrics/get-raw-metrics file-url
+                                          :rclient rclient :use-subsample? true)]
+      {:available-metrics (-> raw first (dissoc :id) keys set)
+       :raw (generate-string raw)})))
+
+(defremote ^{:remote-name :run/filter} run-filter
+  "Run filtering analysis, pushing results to remote server.
+   TODO: make asynchronous and provide callbacks to check status"
+  [file-url metrics]
+  (when-let [rclient (:client (current-authentication))]
+    (-> (do-analysis :filter {:filename file-url :metrics metrics}
+                     rclient)
+        :runner
+        deref)))
 
 (defroutes api-routes
   (GET "/vcf" req
@@ -32,15 +46,5 @@
               {:clj (pr-str {:file-url file-url
                              :available-metrics (-> raw first (dissoc :id) keys set)})
                :raw raw})))))
-
-  (POST "/filter" req
-        (when-let [rclient (:client (current-authentication))]
-          (let [{{:keys [file-url metrics]} :params} req]
-            (clj-response
-             ;;do-analysis returns a seq, but the result is always just one file
-             (first (do-analysis :filter
-                                 {:filename file-url
-                                  :metrics metrics}
-                                 rclient))))))
 
   (route/not-found "API ERROR =("))

@@ -18,8 +18,9 @@
   (GET "/" req
        (friend/authorize #{:user} (slurp "public/index.html")))
 
-  (context "/api" req
-           (friend/wrap-authorize api-routes #{:user}))
+  (context "/api" req api-routes
+           ;(friend/wrap-authorize api-routes #{:user})
+           )
 
   (route/files "/" {:root "public" :allow-symlinks? true})
   (route/not-found "Not found"))
