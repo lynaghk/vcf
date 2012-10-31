@@ -21,8 +21,8 @@
   [req]
   (let [ds-path "dataset"]
     (fn [local-file remote-host]
-      (dataset/expose-w-url local-file remote-host 
-                            (:server-name req) (:server-port req) ds-path))))
+      (dataset/expose-w-url local-file remote-host
+                            (-> req :headers (get "origin")) ds-path))))
 
 (defremote ^{:remote-name :variant/context} variant-context
   "Retrieve user-level details about available files and global metrics."

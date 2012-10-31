@@ -31,9 +31,9 @@
 
 (defn expose-w-url
   "Expose a dataset with a provided callback URL."
-  [fname remote-url cb-host cb-port cb-path]
+  [fname remote-url cb-origin cb-path]
   (let [dsid (expose fname remote-url)]
-    (str "http://" cb-host ":" cb-port "/" cb-path "/" dsid)))
+    (str cb-origin "/" cb-path "/" dsid)))
 
 (defn retrieve
   "Retrieve a dataset via identifier, checking remote host for permissions match."
