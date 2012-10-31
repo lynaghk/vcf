@@ -30,7 +30,7 @@
   (-> main-routes
       wrap-file-info
       wrap-anti-forgery
-      rpc/wrap-rpc
+      (rpc/wrap-rpc :pass-request? true)
       (friend/authenticate {:credential-fn bio-credential-fn
                             :workflows [(bio-remote-workflow)]})
       wrap-session

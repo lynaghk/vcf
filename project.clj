@@ -18,7 +18,7 @@
                  [com.cemerick/friend "0.1.2"]
                  [cheshire "4.0.1"]
                  [shoreleave/shoreleave-remote "0.2.2"]
-                 [com.cemerick/shoreleave-remote-ring "0.0.2"]
+                 [org.clojars.chapmanb/shoreleave-remote-ring "0.0.3-SNAPSHOT"]
                  [ring-anti-forgery "0.2.1" :exclusions [hiccup]]
                  [hiccup "1.0.1"]
                  [enlive "1.0.1" :exclusions [org.clojure/clojure]]
