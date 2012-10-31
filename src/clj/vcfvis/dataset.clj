@@ -20,9 +20,11 @@
   [fname remote-url]
   {:pre [(fs/exists? fname)]}
   (let [dsid (str (UUID/randomUUID))
-        remote-host (.getHost (URL. (if (.startsWith remote-url "http")
-                                      remote-url
-                                      (str "http://" remote-url))))
+        remote-host (-> remote-url
+                        (string/replace "_" ".")
+                        (#(if (.startsWith % "http") % (str "http://" %)))
+                        URL.
+                        .getHost)
         expected-remote (set (map #(.getHostAddress %) (InetAddress/getAllByName remote-host)))]
     (swap! exposed-datasets assoc dsid {:fname fname :expected-remote expected-remote})
     dsid))
