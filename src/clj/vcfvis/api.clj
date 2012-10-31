@@ -10,13 +10,18 @@
             [bcbio.variation.api.file :as bc-file]
             [bcbio.variation.api.metrics :as bc-metrics]))
 
+(defn get-username []
+  (-> (current-authentication)
+      :client
+      :username))
+
 (defremote ^{:remote-name :variant/context} variant-context
   "Retrieve user-level details about available files and global metrics."
   [& {:keys [request]}]
   (when-let [rclient (:client (current-authentication))]
     {:files (bc-file/list-files-w-cache rclient :vcf)
      :metrics (bc-metrics/available-metrics nil)
-     :username (:identity (current-authentication))}))
+     :username (get-username)}))
 
 (defremote ^{:remote-name :variant/raw} variant-raw
   "Retrieve raw variant data for a given input file"
