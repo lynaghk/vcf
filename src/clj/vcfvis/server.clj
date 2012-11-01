@@ -22,8 +22,8 @@
 
   (context "/api" req (friend/wrap-authorize api/api-routes #{:user}))
 
-  (GET "/dataset/:dsid" [dsid :as {remote-addr :remote-addr}]
-       (dataset/retrieve dsid remote-addr))
+  (GET "/dataset/:dsid" [dsid :as request]
+       (dataset/retrieve dsid request))
   (GET "/dataset/:runid/:name" [runid name :as {session :session}]
        (-> (response (dataset/get-variant-file runid name (api/get-username)
                                                (get (:work-info session) runid)))

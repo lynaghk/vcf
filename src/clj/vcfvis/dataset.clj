@@ -14,18 +14,21 @@
        :doc "List of available datasets for external retrieval."}
   exposed-datasets (atom {}))
 
+(defn- get-subnet [ip]
+  (let [parts (string/split ip #"\.")]
+    [ip (string/join "." (take 3 parts)) (string/join "." (take 2 parts))]))
+
 (defn expose
   "Provide a remote file for a single download via a remote server.
    Returns dataset identifier to use for retrieval."
   [fname remote-url]
   {:pre [(fs/exists? fname)]}
   (let [dsid (str (UUID/randomUUID))
-        remote-host (-> remote-url
-                        (string/replace "_" ".")
-                        (#(if (.startsWith % "http") % (str "http://" %)))
-                        URL.
-                        .getHost)
-        expected-remote (set (map #(.getHostAddress %) (InetAddress/getAllByName remote-host)))]
+        remote-host (.getHost (URL. remote-url))
+        expected-remote (->> (InetAddress/getAllByName remote-host)
+                             (map #(.getHostAddress %))
+                             (mapcat get-subnet)
+                             set)]
     (swap! exposed-datasets assoc dsid {:fname fname :expected-remote expected-remote})
     dsid))
 
@@ -37,13 +40,16 @@
 
 (defn retrieve
   "Retrieve a dataset via identifier, checking remote host for permissions match."
-  [dsid remote-addr]
-  (when-let [{:keys [fname expected-remote]} (get @exposed-datasets dsid)]
-    (when (contains? expected-remote remote-addr)
-      (swap! exposed-datasets dissoc dsid)
-      {:status 200
-       :header {}
-       :body (input-stream fname)})))
+  [dsid request]
+  (let [remote-addrs (->> [(:remote-addr request) (-> request :headers (get "x-forwarded-for"))]
+                          (remove nil?)
+                          (mapcat get-subnet))]
+    (when-let [{:keys [fname expected-remote]} (get @exposed-datasets dsid)]
+      (when (some #(contains? expected-remote %) remote-addrs)
+        (swap! exposed-datasets dissoc dsid)
+        {:status 200
+         :header {}
+         :body (input-stream fname)}))))
 
 ;; ## File retrieval from processing
 
