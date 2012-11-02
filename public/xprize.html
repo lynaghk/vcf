@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <title>Ahru</title>
+    <link href='vendor/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css' />
+    <link href='vendor/bootstrap/css/bootstrap-responsive.css' rel='stylesheet' type='text/css' />
+    <link href='vendor/chosen/chosen.css' rel='stylesheet' type='text/css' />
+    <link href='style.css' rel='stylesheet' type='text/css' />
+    <script src='vendor/jquery-1.8.0.min.js'></script>
+    <script src='vendor/jquery-ui-1.8.23.custom.min.js'></script>
+    <script src='vendor/chosen/chosen.jquery.js'></script>
+    <script src='vendor/bootstrap/js/bootstrap.min.js'></script>
+    <script src='vendor/crossfilter.js'></script>
+    <script>var CLOSURE_NO_DEPS = true;</script>
+    <script src='vcf.js'></script>
+  </head>
+  <body>
+    <div class='navbar navbar-fixed-top'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='brand' href='/'>Variant analysis</a>
+          <div class='collapse nav-collapse'>
+            <ul class='nav'>
+              <li>
+                <a href='/xprize'>XPrize scoring</a>
+              </li>
+              <li>
+                <a href='/xprize/analyses'>XPrize analyses</a>
+              </li>
+              <li>
+                <a href='/viz'>Visualize</a>
+              </li>
+            </ul>
+            <ul class='nav pull-right'>
+              <div id='user-dropdown'></div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='container' id='main-content'>
+      <form action='/xprize/score' class='form-horizontal' method='post'>
+        <fieldset>
+          <h4>Submit variation file for scoring</h4>
+          <div class='control-group'>
+            <label class='control-label' for='variant-file'>Variations</label>
+            <div class='controls'>
+              <select data-placeholder='Remote folder' id='variant-folder'></select>
+              <select data-placehold='Remote file' id='variant-file'></select>
+              <p class='help-block'>
+                Sequence differences in
+                <a href='http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41'>VCF format</a>
+                relative to the
+                <a href='http://www.ncbi.nlm.nih.gov/projects/genome/assembly/grc/human/index.shtml'>GRCh37 reference genome</a>
+              </p>
+            </div>
+          </div>
+          <div class='control-group'>
+            <label class='control-label' for='region-file'>Regions</label>
+            <div class='controls'>
+              <select data-placeholder='Remote folder' id='region-folder'></select>
+              <select data-placehold='Remote file' id='region-file'></select>
+              <p class='help-block'>
+                Chromosome regions to assess for scoring in
+                <a ref='http://genome.ucsc.edu/FAQ/FAQformat.html#format1'>BED format</a>
+              </p>
+            </div>
+          </div>
+          <div class='control-group'>
+            <label class='control-label' for='comparison-genome'>Comparison</label>
+            <div class='controls'>
+              <select data-placeholder='Comparison calls' id='comparison-genome'></select>
+              <p class='help-block'>
+                Variant calls to compare against
+              </p>
+              <div id='anti-forgery'></div>
+            </div>
+          </div>
+          <div class='form-actions'>
+            <button class='btn btn-primary' type='submit'>Score</button>
+            <p class='help-block'>To see example output, click without specifying any input files.</p>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <script>vcfvis.xprize.score.set_navigation();</script>
+    <script>vcfvis.xprize.score.setup_remotes();</script>
+  </body>
+</html>

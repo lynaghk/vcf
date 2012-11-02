@@ -50,11 +50,16 @@ text.message { text-anchor: middle; font-size: 1.2em; }
 
 html { height: 100%; }
 
-body { font-size: 12px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; min-width: 960px; height: 100%; }
+body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; min-width: 960px; height: 100%; padding-top: 60px; }
+
+.sidebar { font-size: 12px; }
+
+.content { font-size: 12px; }
 
 .navbar { margin: 0; position: absolute; top: 0; z-index: 100; width: 100%; }
 .navbar .navbar-inner { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: 0 0 0; -moz-box-shadow: 0 0 0; box-shadow: 0 0 0; background: black; padding: 8px 16px; }
 .navbar .brand { text-shadow: none; }
+.navbar .nav li a { text-shadow: none; }
 
 .wrapper { margin: 0; width: 100%; height: 100%; padding-top: 56px; }
 
@@ -70,6 +75,10 @@ section.sidebar { background: #444444; width: 30%; overflow: auto; float: right;
 #file-selector select { -webkit-box-flex: 1; display: -webkit-box; }
 
 input { -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; }
+
+#anti-forgery { height: 0px; }
+
+input.hidden { height: 0px; }
 
 #count { margin-left: 12px; }
 #count:after { content: " variants selected"; }

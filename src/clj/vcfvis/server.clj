@@ -10,8 +10,9 @@
             [cemerick.friend :as friend]
             [cemerick.shoreleave.rpc :as rpc]
             [vcfvis.api :as api]
+            [vcfvis.dataset :as dataset]
             [vcfvis.pages :as pages]
-            [vcfvis.dataset :as dataset]))
+            [vcfvis.xprize :as xprize]))
 
 (defroutes main-routes
   (GET "/login" req (pages/add-anti-forgery "public/login.html"))
@@ -21,6 +22,7 @@
        (friend/authorize #{:user} (slurp "public/index.html")))
 
   (context "/api" req (friend/wrap-authorize api/api-routes #{:user}))
+  (context "/xprize" req (friend/wrap-authorize xprize/xprize-routes #{:user}))
 
   (GET "/dataset/:dsid" [dsid :as request]
        (dataset/retrieve dsid request))

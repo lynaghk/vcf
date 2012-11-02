@@ -4,17 +4,42 @@
         [cemerick.friend :only [current-authentication]]
         [cemerick.shoreleave.rpc :only [defremote current-request]]
         [bcbio.variation.api.run :only [do-analysis]]
+        [bcbio.variation.api.shared :only [web-config]]
         [cheshire.core :only [generate-string]])
-  (:require [compojure.handler :as handler]
+  (:require [clojure.string :as string]
+            [compojure.handler :as handler]
             [compojure.route :as route]
             [bcbio.variation.api.file :as bc-file]
             [bcbio.variation.api.metrics :as bc-metrics]
+            [bcbio.variation.remote.core :as remote]
             [vcfvis.dataset :as dataset]))
 
-(defn get-username []
+(defremote ^{:remote-name :meta/username} get-username []
   (-> (current-authentication)
       :client
       :username))
+
+(defremote ^{:remote-name :meta/genomes} get-genomes []
+  (map (fn [x] {:value (:sample x)
+                :text (format "%s (%s)" (:sample x) (:description x))})
+       (:ref @web-config)))
+
+(defremote ^{:remote-name :variant/external-dirs} list-external-dirs
+  [session]
+  (letfn [(prep-display-path [x]
+            {:full (:id x)
+             :name (last (string/split (:name x) #"/"))})]
+    (if-let [rclient (:rclient session)]
+      (map prep-display-path (remote/list-dirs rclient "."))
+      [])))
+
+(defremote ^{:remote-name :variant/external-files} list-external-files
+  [dir ftype session]
+  (if-let [rclient (:rclient session)]
+    (map (fn [x] {:full (:id x)
+                  :name (:filename x)})
+         (remote/list-files rclient {:id dir} ftype))
+    []))
 
 (defn expose-dataset
   "Create a local callback to retrieve a dataset from the server. "

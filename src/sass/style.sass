@@ -13,10 +13,16 @@ html
   height: 100%
 
 body
-  font-size: 12px
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   min-width: 960px
   height: 100%
+  padding-top: 60px
+
+.sidebar
+  font-size: 12px
+
+.content
+  font-size: 12px
 
 .navbar
   margin: 0
@@ -30,6 +36,8 @@ body
     background: black
     padding: 8px 16px
   .brand
+    text-shadow: none
+  .nav li a
     text-shadow: none
 
 .wrapper
@@ -76,8 +84,10 @@ section
 input
   +box-sizing(content-box)
 
-
-
+#anti-forgery
+  height: 0px
+input.hidden
+  height: 0px
 
 #count
   margin-left: 12px
