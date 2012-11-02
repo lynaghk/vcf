@@ -11,15 +11,23 @@
     %script(src="vendor/chosen/chosen.jquery.js")
     %script(src="vendor/bootstrap/js/bootstrap.min.js")
     %script(src="vendor/crossfilter.js")
-
+    //%script var CLOSURE_NO_DEPS = true;
+    //%script(src="aahru.js")
 
   %body
     .navbar#navbar
       .navbar-inner
         .container
-          %a.brand Variant visualizer
-          %ul.nav.pull-right
-            %div#user-dropdown
+          %a.btn.btn-navbar(data-toggle="collapse" data-target=".nav-collapse")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand(href="/") Variant analysis
+          %div.collapse.nav-collapse          
+            %ul#top-navbar.nav
+              %li
+                %a(href="/") Visualize
+            %ul#user-dropdown.nav.pull-right
               
     .wrapper
       %section.content
@@ -41,4 +49,6 @@
       .modal-body
         Loading...
 
+    //%script aahru.ui.set_navigation();
+    //%script aahru.ui.set_user();
     %script(src="vcf.js")

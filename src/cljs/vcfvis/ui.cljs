@@ -6,7 +6,7 @@
 
 (defn- logged-in-html [user]
   (crate/html
-   [:div {:class "btn-group" :id "user-dropdown"}
+   [:div {:class "btn-group pull-right" :id "user-dropdown"}
     [:button {:class "btn btn-info dropdown-toggle" :data-toggle "dropdown"}
      [:i {:class "icon-user icon-white" :style "margin-right: 6px"}]
      user

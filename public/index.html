@@ -11,15 +11,27 @@
     <script src='vendor/chosen/chosen.jquery.js'></script>
     <script src='vendor/bootstrap/js/bootstrap.min.js'></script>
     <script src='vendor/crossfilter.js'></script>
+    <!-- /%script var CLOSURE_NO_DEPS = true; -->
+    <!-- /%script(src="aahru.js") -->
   </head>
   <body>
     <div class='navbar' id='navbar'>
       <div class='navbar-inner'>
         <div class='container'>
-          <a class='brand'>Variant visualizer</a>
-          <ul class='nav pull-right'>
-            <div id='user-dropdown'></div>
-          </ul>
+          <a class='btn btn-navbar' data-target='.nav-collapse' data-toggle='collapse'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </a>
+          <a class='brand' href='/'>Variant analysis</a>
+          <div class='collapse nav-collapse'>
+            <ul class='nav' id='top-navbar'>
+              <li>
+                <a href='/'>Visualize</a>
+              </li>
+            </ul>
+            <ul class='nav pull-right' id='user-dropdown'></ul>
+          </div>
         </div>
       </div>
     </div>
@@ -47,6 +59,8 @@
         Loading...
       </div>
     </div>
+    <!-- /%script aahru.ui.set_navigation(); -->
+    <!-- /%script aahru.ui.set_user(); -->
     <script src='vcf.js'></script>
   </body>
 </html>

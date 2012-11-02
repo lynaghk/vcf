@@ -50,18 +50,30 @@ text.message { text-anchor: middle; font-size: 1.2em; }
 
 html { height: 100%; }
 
-body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; min-width: 960px; height: 100%; padding-top: 60px; }
+body { min-width: 960px; height: 100%; }
 
 .sidebar { font-size: 12px; }
 
 .content { font-size: 12px; }
 
-.navbar { margin: 0; position: absolute; top: 0; z-index: 100; width: 100%; }
-.navbar .navbar-inner { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; border-radius: 0; -webkit-box-shadow: 0 0 0; -moz-box-shadow: 0 0 0; box-shadow: 0 0 0; background: black; padding: 8px 16px; }
-.navbar .brand { text-shadow: none; }
-.navbar .nav li a { text-shadow: none; }
+#navbar { margin-bottom: 0px; }
 
-.wrapper { margin: 0; width: 100%; height: 100%; padding-top: 56px; }
+/* .navbar */
+/*   margin: 0 */
+/*   position: absolute */
+/*   top: 0 */
+/*   z-index: 100 */
+/*   width: 100% */
+/*   .navbar-inner */
+/*     +border-radius(0) */
+/*     +box-shadow(0 0 0) */
+/*     background: black */
+/*     padding: 8px 16px */
+/*   .brand */
+/*     text-shadow: none */
+/*   .nav li a */
+/*     text-shadow: none */
+.wrapper { margin: 0; width: 100%; height: 100%; }
 
 section { overflow: visible; height: 100%; }
 section.content { min-width: 660px; background: #eeeeee; padding: 16px 16px 0 16px; overflow-y: scroll; overflow-x: hidden; width: 70%; float: left; }

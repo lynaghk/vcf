@@ -2,7 +2,7 @@
 %html(lang="en")
   %head
     %meta(charset="utf-8")
-    %title Ahru
+    %title XPrize scoring
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.css")
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-responsive.css")
     %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
@@ -13,23 +13,26 @@
     %script(src="vendor/bootstrap/js/bootstrap.min.js")
     %script(src="vendor/crossfilter.js")
     %script var CLOSURE_NO_DEPS = true;
-    %script(src="vcf.js")
+    %script(src="aahru.js")
 
   %body
-    .navbar.navbar-fixed-top
+    .navbar
       .navbar-inner
         .container
+          %a.btn.btn-navbar(data-toggle="collapse" data-target=".nav-collapse")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
           %a.brand(href="/") Variant analysis
           %div.collapse.nav-collapse          
-            %ul.nav
+            %ul#top-navbar.nav
               %li
                 %a(href="/xprize") XPrize scoring
               %li
                 %a(href="/xprize/analyses") XPrize analyses
               %li
                 %a(href="/viz") Visualize
-            %ul.nav.pull-right
-              %div#user-dropdown
+            %ul#user-dropdown.nav.pull-right
                 
     #main-content.container
       %form.form-horizontal(method="post" action="/xprize/score")
@@ -39,7 +42,7 @@
             %label.control-label(for="variant-file") Variations
             .controls
               %select#variant-folder(data-placeholder="Remote folder")
-              %select#variant-file(data-placehold="Remote file")               
+              %select#variant-file(data-placeholder="Remote file")               
               %p.help-block
                 Sequence differences in
                 %a(href="http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41") VCF format
@@ -49,7 +52,7 @@
             %label.control-label(for="region-file") Regions
             .controls
               %select#region-folder(data-placeholder="Remote folder")
-              %select#region-file(data-placehold="Remote file")               
+              %select#region-file(data-placeholder="Remote file")               
               %p.help-block
                 Chromosome regions to assess for scoring in
                 %a(ref="http://genome.ucsc.edu/FAQ/FAQformat.html#format1") BED format
@@ -63,8 +66,10 @@
           .form-actions
             %button.btn.btn-primary(type="submit") Score
             %p.help-block To see example output, click without specifying any input files.
-    %script vcfvis.xprize.score.set_navigation();
-    %script vcfvis.xprize.score.setup_remotes();
+
+    %script aahru.ui.set_navigation();
+    %script aahru.ui.set_user();
+    %script aahru.xprize.score.setup_remotes();
         
         
                  

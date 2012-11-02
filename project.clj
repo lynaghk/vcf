@@ -44,7 +44,7 @@
          :init vcfvis.main/devel-set-config!}
 
   :cljsbuild {:builds
-              [{:source-path "src/cljs"
+              [{:source-path "src/cljs/vcfvis"
                 :compiler {:output-to "public/vcf.js"
 
                            ;; :optimizations :advanced
@@ -54,4 +54,9 @@
                            :pretty-print true
                            :externs ["externs/jquery.js"
                                      "vendor/externs.js"
-                                     "resources/closure-js/externs"]}}]})
+                                     "resources/closure-js/externs"]}}
+               {:source-path "src/cljs/aahru"
+                :compiler {:output-to "public/aahru.js"
+                           :optimizations :whitespace
+                           :pretty-print true
+                           :externs ["externs/jquery.js"]}}]})

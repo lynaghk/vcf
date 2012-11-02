@@ -1,6 +1,6 @@
 ;; Interactive functionality for display of older analyses.
 
-(ns vcfvis.xprize.analyses
+(ns aahru.xprize.analyses
   (:require [c2.dom :as dom]
             [c2.event :as event]
             [shoreleave.remotes.http-rpc :as rpc])

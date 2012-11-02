@@ -25,17 +25,17 @@
        (:ref @web-config)))
 
 (defremote ^{:remote-name :variant/external-dirs} list-external-dirs
-  [session]
+  []
   (letfn [(prep-display-path [x]
             {:full (:id x)
              :name (last (string/split (:name x) #"/"))})]
-    (if-let [rclient (:rclient session)]
+    (if-let [rclient (:client (current-authentication))]
       (map prep-display-path (remote/list-dirs rclient "."))
       [])))
 
 (defremote ^{:remote-name :variant/external-files} list-external-files
-  [dir ftype session]
-  (if-let [rclient (:rclient session)]
+  [dir ftype]
+  (if-let [rclient (:client (current-authentication))]
     (map (fn [x] {:full (:id x)
                   :name (:filename x)})
          (remote/list-files rclient {:id dir} ftype))

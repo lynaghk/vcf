@@ -1,6 +1,6 @@
 ;;Interactive functionality for X prize scoring based web pages.
 
-(ns vcfvis.xprize.score
+(ns aahru.xprize.score
   (:require [clojure.string :as string]
             [c2.dom :as dom]
             [chosen.core :as chosen]
@@ -82,20 +82,6 @@
   (let [genome-chosen (chosen/ichooseu! "#comparison-genome")]
     (sl/rpc ("meta/genomes") [genomes]
             (chosen/options genome-chosen genomes))))
-
-(defn ^:export set-navigation
-  "Correctly set the active top level navigation toolbar."
-  []
-  (let [loc (-> (.toString window.location ())
-                (string/split #"/")
-                last)]
-    (doseq [list-item (dom/children (dom/select "#top-navbar"))]
-      (if (= (str "/" loc)
-             (-> (dom/children list-item)
-                 first
-                 (dom/attr :href)))
-        (dom/add-class! list-item "active")
-        (dom/remove-class! list-item "active")))))
 
 (defn ^:export setup-remotes 
   "Setup retrieval of file information from GenomeSpace and Galaxy."

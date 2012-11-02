@@ -2,7 +2,7 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8' />
-    <title>Ahru</title>
+    <title>XPrize scoring</title>
     <link href='vendor/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css' />
     <link href='vendor/bootstrap/css/bootstrap-responsive.css' rel='stylesheet' type='text/css' />
     <link href='vendor/chosen/chosen.css' rel='stylesheet' type='text/css' />
@@ -13,15 +13,20 @@
     <script src='vendor/bootstrap/js/bootstrap.min.js'></script>
     <script src='vendor/crossfilter.js'></script>
     <script>var CLOSURE_NO_DEPS = true;</script>
-    <script src='vcf.js'></script>
+    <script src='aahru.js'></script>
   </head>
   <body>
-    <div class='navbar navbar-fixed-top'>
+    <div class='navbar'>
       <div class='navbar-inner'>
         <div class='container'>
+          <a class='btn btn-navbar' data-target='.nav-collapse' data-toggle='collapse'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </a>
           <a class='brand' href='/'>Variant analysis</a>
           <div class='collapse nav-collapse'>
-            <ul class='nav'>
+            <ul class='nav' id='top-navbar'>
               <li>
                 <a href='/xprize'>XPrize scoring</a>
               </li>
@@ -32,9 +37,7 @@
                 <a href='/viz'>Visualize</a>
               </li>
             </ul>
-            <ul class='nav pull-right'>
-              <div id='user-dropdown'></div>
-            </ul>
+            <ul class='nav pull-right' id='user-dropdown'></ul>
           </div>
         </div>
       </div>
@@ -47,7 +50,7 @@
             <label class='control-label' for='variant-file'>Variations</label>
             <div class='controls'>
               <select data-placeholder='Remote folder' id='variant-folder'></select>
-              <select data-placehold='Remote file' id='variant-file'></select>
+              <select data-placeholder='Remote file' id='variant-file'></select>
               <p class='help-block'>
                 Sequence differences in
                 <a href='http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41'>VCF format</a>
@@ -60,7 +63,7 @@
             <label class='control-label' for='region-file'>Regions</label>
             <div class='controls'>
               <select data-placeholder='Remote folder' id='region-folder'></select>
-              <select data-placehold='Remote file' id='region-file'></select>
+              <select data-placeholder='Remote file' id='region-file'></select>
               <p class='help-block'>
                 Chromosome regions to assess for scoring in
                 <a ref='http://genome.ucsc.edu/FAQ/FAQformat.html#format1'>BED format</a>
@@ -84,7 +87,8 @@
         </fieldset>
       </form>
     </div>
-    <script>vcfvis.xprize.score.set_navigation();</script>
-    <script>vcfvis.xprize.score.setup_remotes();</script>
+    <script>aahru.ui.set_navigation();</script>
+    <script>aahru.ui.set_user();</script>
+    <script>aahru.xprize.score.setup_remotes();</script>
   </body>
 </html>
