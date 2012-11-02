@@ -2,9 +2,9 @@
 
 (ns vcfvis.xprize.score
   (:require [clojure.string :as string]
+            [c2.dom :as dom]
             [chosen.core :as chosen]
             [crate.core :as crate]
-            [domina :as domina]
             [shoreleave.remotes.http-rpc :as rpc]
             [goog.string :as gstring]
             [goog.Timer :as timer])
@@ -32,15 +32,15 @@
             (sl/rpc (get-summary run-id) [sum-html]
                     (if (nil? sum-html)
                       (timer/callOnce (fn [] (update-run-status run-id)) 2000)
-                      (domina/set-html! (domina/by-id "scoring-in-process")
-                                        sum-html)))
+                      (-> (dom/select "#scoring-in-process")
+                          (dom/replace! sum-html))))
             (do
               (when-not (nil? info)
-                (domina/set-html! (domina/by-id "scoring-status")
-                                  (crate/html [:p (:desc info)]))
+                (-> (dom/select "#scoring-status")
+                    (dom/replace! (crate/html [:p (:desc info)])))
                 (when-let [pct (progress-percent (:desc info))]
-                  (domina/set-attr! (domina/by-id "scoring-progress")
-                                    :style (str "width: " pct "%"))))
+                  (-> (dom/select "#scoring-progress")
+                      (dom/attr :style (str "width: " pct "%")))))
               (timer/callOnce (fn [] (update-run-status run-id)) 2000)))))
 
 ;; ## Retrieve remote file information
@@ -51,13 +51,15 @@
 (defn- update-gs-files!
   "Update file information based on parent"
   [file-chosen file-id dir ftype]
-  (let [final-form-id (string/join "-" (cons "gs" (rest (string/split file-id #"-"))))]
+  (let [final-form-id (str "#" (string/join "-" (cons "gs" (rest (string/split file-id #"-")))))]
     (sl/rpc ("variant/external-files" dir ftype) [files]
             (chosen/options file-chosen (gs-paths-to-chosen files))
-            (domina/set-value! (domina/by-id final-form-id) (chosen/selected file-chosen))
+            (-> (dom/select final-form-id)
+                (dom/val (chosen/selected file-chosen)))
             (add-watch file-chosen :change
                        (fn [fname]
-                         (domina/set-value! (domina/by-id final-form-id) fname))))))
+                         (-> (dom/select final-form-id)
+                             (dom/val fname)))))))
 
 (defn prep-remote-selectors
   "Prepare dropdowns for retrieval via GenomeSpace or Galaxy."
@@ -87,13 +89,13 @@
   (let [loc (-> (.toString window.location ())
                 (string/split #"/")
                 last)]
-    (doseq [list-item (domina/children (domina/by-id "top-navbar"))]
+    (doseq [list-item (dom/children (dom/select "#top-navbar"))]
       (if (= (str "/" loc)
-             (-> (domina/children list-item)
+             (-> (dom/children list-item)
                  first
-                 (domina/attr :href)))
-        (domina/set-attr! list-item :class "active")
-        (domina/remove-attr! list-item :class)))))
+                 (dom/attr :href)))
+        (dom/add-class! list-item "active")
+        (dom/remove-class! list-item "active")))))
 
 (defn ^:export setup-remotes 
   "Setup retrieval of file information from GenomeSpace and Galaxy."

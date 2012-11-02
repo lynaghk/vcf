@@ -1,9 +1,8 @@
 ;; Interactive functionality for display of older analyses.
 
 (ns vcfvis.xprize.analyses
-  (:require [domina :as domina]
-            [domina.css :as css]
-            [domina.events :as events]
+  (:require [c2.dom :as dom]
+            [c2.event :as event]
             [shoreleave.remotes.http-rpc :as rpc])
   (:require-macros [shoreleave.remotes.macros :as sl]))
 
@@ -11,15 +10,15 @@
   "Update page with details from a selected analysis."
   [analysis-id]
   (sl/rpc (get-summary analysis-id) [sum-html]
-          (domina/set-html! (domina/by-id "user-analyses")
-                            sum-html)))
+          (-> (dom/select "#user-analyses")
+              (dom/replace! sum-html))))
 
 (defn ^:export display-analyses
   "Correctly set the top level navigation toolbar."
   []
-  (events/listen! (-> (domina/by-id "user-analyses")
-                      (css/sel "ul")
-                      domina/children)
-                  :click (fn [evt]
-                           (display-selected-analysis (domina/attr (events/target evt) :id))
-                           (events/prevent-default evt))))
+  (event/on (-> (dom/select "#user-analyses")
+                (dom/select "ul")
+                dom/children)
+            :click (fn [data node evt]
+                     (display-selected-analysis (dom/attr node :id)))
+            :capture true))

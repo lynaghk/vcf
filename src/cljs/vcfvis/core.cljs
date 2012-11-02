@@ -3,8 +3,7 @@
                [reflex.macros :only [computed-observable constrain!]]
                [dubstep.macros :only [publish! subscribe!]])
   (:use [c2.util :only [clj->js]])
-  (:require [domina]
-            [clojure.set :as set]
+  (:require [clojure.set :as set]
             [reflex.core :as reflex]
             [dubstep.pubsub :as dubstep.pubsub]))
 

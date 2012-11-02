@@ -9,9 +9,6 @@
                  [com.keminglabs/singult "0.1.5-SNAPSHOT"]
                  [com.keminglabs/chosen "0.1.7-SNAPSHOT"]
                  [com.keminglabs/dubstep "0.1.2-SNAPSHOT"]
-                 [domina "1.0.1" :exclusions [org.clojure/clojurescript]]
-                 [org.clojure/google-closure-library "0.0-1376-2"]
-                 [org.clojure/google-closure-library-third-party "0.0-1376-2"]
                  [crate "0.2.1" :exclusions [org.clojure/clojurescript]]
 
                  [compojure "1.1.3"]
@@ -47,7 +44,7 @@
          :init vcfvis.main/devel-set-config!}
 
   :cljsbuild {:builds
-              [{:source-path "src/cljs/vcfvis"
+              [{:source-path "src/cljs"
                 :compiler {:output-to "public/vcf.js"
 
                            ;; :optimizations :advanced
@@ -55,7 +52,6 @@
 
                            :optimizations :whitespace
                            :pretty-print true
-
                            :externs ["externs/jquery.js"
                                      "vendor/externs.js"
                                      "resources/closure-js/externs"]}}]})

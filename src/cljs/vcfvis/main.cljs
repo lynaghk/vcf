@@ -2,8 +2,7 @@
   (:use-macros [c2.util :only [pp p timeout]]
                [reflex.macros :only [constrain!]])
   (:use [c2.util :only [clj->js]])
-  (:require [domina]
-            [vcfvis.core :as core]
+  (:require [vcfvis.core :as core]
             [vcfvis.data :as data]
             [vcfvis.ui :as ui]
             ;;[vcfvis.stub :as data]

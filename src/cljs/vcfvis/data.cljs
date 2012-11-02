@@ -4,8 +4,7 @@
                [dubstep.macros :only [subscribe!]])
   (:use [c2.util :only [clj->js]]
         [cljs.reader :only [read-string]])
-  (:require [domina]
-            [vcfvis.core :as core]
+  (:require [vcfvis.core :as core]
             [vcfvis.ui :as ui]
             [shoreleave.remotes.http-rpc :as rpc]
             [c2.scale :as scale]
