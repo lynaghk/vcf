@@ -5,7 +5,7 @@
             [net.cgrand.enlive-html :as html]
             [ring.middleware.anti-forgery :as anti-forgery]))
 
-(defn- base-page-w-content
+(defn base-page-w-content
   "Update input HTML with specified content at selector"
   [input-html selector new-hiccup-html]
   (-> (html/xml-resource (file input-html))

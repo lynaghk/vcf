@@ -1,10 +1,113 @@
 (ns vcfvis.xprize
   "Provide X Prize specific scoring and comparisons."
-  (:use [compojure.core])
+  (:use [compojure.core]
+        [ring.util.response]
+        [cemerick.shoreleave.rpc :only [defremote current-request]]
+        [bcbio.variation.config :only [get-log-status]]
+        [bcbio.variation.api.shared :only [web-config]])
   (:require [cemerick.friend :as friend]
+            [fs.core :as fs]
+            [hiccup.core :as hiccup]
+            [bcbio.variation.api.run :as run]
+            [bcbio.variation.web.db :as db]
+            [vcfvis.api :as api]
             [vcfvis.pages :as pages]))
+
+(defn- get-work-info
+  [run-id]
+  (-> (current-request)
+      :session
+      :work-info
+      (get run-id)))
+
+(defremote ^{:remote-name :xprize/status} xprize-run-status
+  "Retrieve details on the current status of a running scoring process."
+  [run-id]
+  (get-log-status {:dir {:out (-> (get-work-info run-id)
+                                  :dir
+                                  (fs/file "grading"))}}))
+
+(defremote ^{:remote-name :xprize/summary} xprize-run-summary
+  "Retrieve summary HTML with results from an X Prize comparison."
+  [run-id]
+  (when-let [out-dir (if-let [username (api/get-username)]
+                       (->> (db/get-analyses username :scoring (:db @web-config))
+                            (filter #(= run-id (:analysis_id %)))
+                            first
+                            :location)
+                       (:dir (get-work-info run-id)))]
+    (let [summary-file (fs/file out-dir "scoring-summary.html")]
+      (when (fs/exists? summary-file)
+        (slurp summary-file)))))
+
+(defn scoring-html
+  "Update main page HTML with content for scoring."
+  [run-id]
+  (let [score-html-file (fs/file "public" "template" "scoring.html")
+        main-html-file (fs/file "public" "xprize.html")]
+    (pages/base-page-w-content
+     main-html-file
+     [:div#main-content]
+     (hiccup/html
+      [:div {:id "scoring-in-process"}
+       [:h3 "Status"]
+       [:div {:id "scoring-status"} "Downloading input files"]
+       [:div {:class "progress"}
+        [:div {:id "scoring-progress"
+               :class "bar" :style "width: 0%"}]]
+        [:script (format "aahru.xprize.score.update_run_status('%s');" run-id)]
+       ;(slurp score-html-file)
+       ]))))
+
+(defn- put-results-in-db
+  "Run scoring analysis and store results."
+  [work-info runner rclient]
+  (when-let [username (:username rclient)]
+    (let [comparisons @runner]
+      (db/add-analysis {:username username :files (:c-files comparisons)
+                        :analysis_id (:id work-info)
+                        :description (format "%s: %s" (:comparison-genome work-info)
+                                             (fs/base-name (-> comparisons :exp :calls second :file)))
+                        :location (:dir work-info) :type :scoring}
+                       (:db @web-config)))))
+
+(defn- run-xprize-scoring
+  "Run scoring, handling input parameters and updating session information."
+  [{:keys [params session] :as req}]
+  (let [rclient (:client (friend/current-authentication))
+        ready-params  (-> params
+                          (assoc :expose-fn (api/expose-dataset req)))
+        _ (prn ready-params)
+        {:keys [work-info runner]} (run/do-analysis :xprize ready-params rclient)
+        new-work-info (assoc (:work-info session)
+                        (:id work-info) work-info)]
+    (future (put-results-in-db work-info runner rclient))
+    (-> (response (scoring-html (:id work-info)))
+        (assoc :session
+          (assoc session :work-info new-work-info)))))
+
+(defn analyses-html
+  "Update main page with list of performed analyses."
+  [username]
+  (pages/base-page-w-content
+   (fs/file "public" "xprize.html")
+   [:div#main-content]
+   (hiccup/html
+    (if (nil? username)
+      [:p "Please login to display previously run analyses."]
+      [:div {:id "user-analyses" :class "container"}
+       [:h3 "Previous analyses"]
+       [:ul {:class "nav nav-tabs nav-stacked"}
+        (map (fn [x]
+               [:li
+                [:a {:href "#" :id (:analysis_id x)}
+                 (format "%s -- %s" (:description x)
+                         (-> (java.text.SimpleDateFormat. "dd MMM yyyy HH:mm" )
+                             (.format (:created x))))]])
+             (db/get-analyses username :scoring (:db @web-config)))]
+       [:script "aahru.xprize.analyses.display_analyses()"]]))))
 
 (defroutes xprize-routes
   (GET "/" req (pages/add-anti-forgery "public/xprize.html"))
-  (GET "/analyses" [:as {session :session}])
-  (POST "/score" req))
+  (GET "/analyses" req (analyses-html (api/get-username)))
+  (POST "/score" req (run-xprize-scoring req)))

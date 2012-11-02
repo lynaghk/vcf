@@ -37,8 +37,5 @@
   []
   (rpc/remote-callback "meta/username" []
                        (fn [username]
-                         (pp username)
-                         (pp (dom/select "#user-dropdown"))
-                         (pp (logged-in-dropdown username))
                          (when username
                            (dom/replace! "#user-dropdown"(logged-in-dropdown username))))))

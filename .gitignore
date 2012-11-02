@@ -1,4 +1,5 @@
 target/
 .lein*
 .sass-cache
-data/
+test/data/*-sorted.bed
+test/data/*vcf.idx

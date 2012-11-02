@@ -3,17 +3,17 @@
   <head>
     <meta charset='utf-8' />
     <title>XPrize scoring</title>
-    <link href='vendor/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css' />
-    <link href='vendor/bootstrap/css/bootstrap-responsive.css' rel='stylesheet' type='text/css' />
-    <link href='vendor/chosen/chosen.css' rel='stylesheet' type='text/css' />
-    <link href='style.css' rel='stylesheet' type='text/css' />
-    <script src='vendor/jquery-1.8.0.min.js'></script>
-    <script src='vendor/jquery-ui-1.8.23.custom.min.js'></script>
-    <script src='vendor/chosen/chosen.jquery.js'></script>
-    <script src='vendor/bootstrap/js/bootstrap.min.js'></script>
-    <script src='vendor/crossfilter.js'></script>
+    <link href='/vendor/bootstrap/css/bootstrap.css' rel='stylesheet' type='text/css' />
+    <link href='/vendor/bootstrap/css/bootstrap-responsive.css' rel='stylesheet' type='text/css' />
+    <link href='/vendor/chosen/chosen.css' rel='stylesheet' type='text/css' />
+    <link href='/style.css' rel='stylesheet' type='text/css' />
+    <script src='/vendor/jquery-1.8.0.min.js'></script>
+    <script src='/vendor/jquery-ui-1.8.23.custom.min.js'></script>
+    <script src='/vendor/chosen/chosen.jquery.js'></script>
+    <script src='/vendor/bootstrap/js/bootstrap.min.js'></script>
+    <script src='/vendor/crossfilter.js'></script>
     <script>var CLOSURE_NO_DEPS = true;</script>
-    <script src='aahru.js'></script>
+    <script src='/aahru.js'></script>
   </head>
   <body>
     <div class='navbar'>
@@ -50,7 +50,7 @@
             <label class='control-label' for='variant-file'>Variations</label>
             <div class='controls'>
               <select data-placeholder='Remote folder' id='variant-folder'></select>
-              <select data-placeholder='Remote file' id='variant-file'></select>
+              <select data-placeholder='Remote file' id='variant-file' name='variant-file'></select>
               <p class='help-block'>
                 Sequence differences in
                 <a href='http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41'>VCF format</a>
@@ -63,7 +63,7 @@
             <label class='control-label' for='region-file'>Regions</label>
             <div class='controls'>
               <select data-placeholder='Remote folder' id='region-folder'></select>
-              <select data-placeholder='Remote file' id='region-file'></select>
+              <select data-placeholder='Remote file' id='region-file' name='region-file'></select>
               <p class='help-block'>
                 Chromosome regions to assess for scoring in
                 <a ref='http://genome.ucsc.edu/FAQ/FAQformat.html#format1'>BED format</a>
@@ -73,7 +73,7 @@
           <div class='control-group'>
             <label class='control-label' for='comparison-genome'>Comparison</label>
             <div class='controls'>
-              <select data-placeholder='Comparison calls' id='comparison-genome'></select>
+              <select data-placeholder='Comparison calls' id='comparison-genome' name='comparison-genome'></select>
               <p class='help-block'>
                 Variant calls to compare against
               </p>

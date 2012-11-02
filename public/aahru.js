@@ -32972,24 +32972,24 @@ goog.require("crate.core");
 goog.require("c2.dom");
 goog.require("clojure.string");
 aahru.ui.set_navigation = function set_navigation() {
-  var loc__93419 = cljs.core.last.call(null, clojure.string.split.call(null, window.location.toString(cljs.core.List.EMPTY), /\//));
-  var G__93420__93421 = cljs.core.seq.call(null, c2.dom.children.call(null, c2.dom.select.call(null, "#top-navbar")));
-  if(G__93420__93421) {
-    var list_item__93422 = cljs.core.first.call(null, G__93420__93421);
-    var G__93420__93423 = G__93420__93421;
+  var loc__160004 = cljs.core.last.call(null, clojure.string.split.call(null, window.location.toString(cljs.core.List.EMPTY), /\//));
+  var G__160005__160006 = cljs.core.seq.call(null, c2.dom.children.call(null, c2.dom.select.call(null, "#top-navbar")));
+  if(G__160005__160006) {
+    var list_item__160007 = cljs.core.first.call(null, G__160005__160006);
+    var G__160005__160008 = G__160005__160006;
     while(true) {
-      if(cljs.core._EQ_.call(null, [cljs.core.str("/"), cljs.core.str(loc__93419)].join(""), c2.dom.attr.call(null, cljs.core.first.call(null, c2.dom.children.call(null, list_item__93422)), "\ufdd0'href"))) {
-        c2.dom.add_class_BANG_.call(null, list_item__93422, "active")
+      if(cljs.core._EQ_.call(null, [cljs.core.str("/"), cljs.core.str(loc__160004)].join(""), c2.dom.attr.call(null, cljs.core.first.call(null, c2.dom.children.call(null, list_item__160007)), "\ufdd0'href"))) {
+        c2.dom.add_class_BANG_.call(null, list_item__160007, "active")
       }else {
-        c2.dom.remove_class_BANG_.call(null, list_item__93422, "active")
+        c2.dom.remove_class_BANG_.call(null, list_item__160007, "active")
       }
-      var temp__3974__auto____93424 = cljs.core.next.call(null, G__93420__93423);
-      if(temp__3974__auto____93424) {
-        var G__93420__93425 = temp__3974__auto____93424;
-        var G__93426 = cljs.core.first.call(null, G__93420__93425);
-        var G__93427 = G__93420__93425;
-        list_item__93422 = G__93426;
-        G__93420__93423 = G__93427;
+      var temp__3974__auto____160009 = cljs.core.next.call(null, G__160005__160008);
+      if(temp__3974__auto____160009) {
+        var G__160005__160010 = temp__3974__auto____160009;
+        var G__160011 = cljs.core.first.call(null, G__160005__160010);
+        var G__160012 = G__160005__160010;
+        list_item__160007 = G__160011;
+        G__160005__160008 = G__160012;
         continue
       }else {
         return null
@@ -33008,15 +33008,6 @@ aahru.ui.logged_in_dropdown = function logged_in_dropdown(user) {
 };
 aahru.ui.set_user = function set_user() {
   return shoreleave.remotes.http_rpc.remote_callback.call(null, "meta/username", cljs.core.PersistentVector.EMPTY, function(username) {
-    var res__7906__auto____93431 = username;
-    console.log(cljs.core.prn_str.call(null, res__7906__auto____93431));
-    res__7906__auto____93431;
-    var res__7906__auto____93432 = c2.dom.select.call(null, "#user-dropdown");
-    console.log(cljs.core.prn_str.call(null, res__7906__auto____93432));
-    res__7906__auto____93432;
-    var res__7906__auto____93433 = aahru.ui.logged_in_dropdown.call(null, username);
-    console.log(cljs.core.prn_str.call(null, res__7906__auto____93433));
-    res__7906__auto____93433;
     if(cljs.core.truth_(username)) {
       return c2.dom.replace_BANG_.call(null, "#user-dropdown", aahru.ui.logged_in_dropdown.call(null, username))
     }else {
@@ -33497,25 +33488,25 @@ aahru.xprize.score.progress_percent = function progress_percent(desc) {
   }
 };
 aahru.xprize.score.update_run_status = function update_run_status(run_id) {
-  return shoreleave.remotes.http_rpc.remote_callback.call(null, "get-status", cljs.core.PersistentVector.fromArray([run_id], true), function(info) {
+  return shoreleave.remotes.http_rpc.remote_callback.call(null, "xprize/status", cljs.core.PersistentVector.fromArray([run_id], true), function(info) {
     if(cljs.core._EQ_.call(null, "\ufdd0'finished", (new cljs.core.Keyword("\ufdd0'state")).call(null, info))) {
-      return shoreleave.remotes.http_rpc.remote_callback.call(null, "get-summary", cljs.core.PersistentVector.fromArray([run_id], true), function(sum_html) {
+      return shoreleave.remotes.http_rpc.remote_callback.call(null, "xprize/summary", cljs.core.PersistentVector.fromArray([run_id], true), function(sum_html) {
         if(sum_html == null) {
           return goog.Timer.callOnce(function() {
             return update_run_status.call(null, run_id)
           }, 2E3)
         }else {
-          return c2.dom.replace_BANG_.call(null, c2.dom.select.call(null, "#scoring-in-process"), sum_html)
+          return c2.dom.replace_BANG_.call(null, "#scoring-in-process", crate.core.html.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'div", sum_html], true)))
         }
       })
     }else {
       if(info == null) {
       }else {
-        c2.dom.replace_BANG_.call(null, c2.dom.select.call(null, "#scoring-status"), crate.core.html.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'p", (new cljs.core.Keyword("\ufdd0'desc")).call(null, info)], true)));
-        var temp__3974__auto____103192 = aahru.xprize.score.progress_percent.call(null, (new cljs.core.Keyword("\ufdd0'desc")).call(null, info));
-        if(cljs.core.truth_(temp__3974__auto____103192)) {
-          var pct__103193 = temp__3974__auto____103192;
-          c2.dom.attr.call(null, c2.dom.select.call(null, "#scoring-progress"), "\ufdd0'style", [cljs.core.str("width: "), cljs.core.str(pct__103193), cljs.core.str("%")].join(""))
+        c2.dom.text.call(null, "#scoring-status", (new cljs.core.Keyword("\ufdd0'desc")).call(null, info));
+        var temp__3974__auto____232517 = aahru.xprize.score.progress_percent.call(null, (new cljs.core.Keyword("\ufdd0'desc")).call(null, info));
+        if(cljs.core.truth_(temp__3974__auto____232517)) {
+          var pct__232518 = temp__3974__auto____232517;
+          c2.dom.style.call(null, "#scoring-progress", "\ufdd0'width", [cljs.core.str(pct__232518), cljs.core.str("%")].join(""))
         }else {
         }
       }
@@ -33526,43 +33517,36 @@ aahru.xprize.score.update_run_status = function update_run_status(run_id) {
   })
 };
 goog.exportSymbol("aahru.xprize.score.update_run_status", aahru.xprize.score.update_run_status);
-aahru.xprize.score.gs_paths_to_chosen = function gs_paths_to_chosen(xs) {
+aahru.xprize.score.remote__GT_chosen = function remote__GT_chosen(xs) {
   return cljs.core.map.call(null, function(x) {
     return cljs.core.ObjMap.fromObject(["\ufdd0'value", "\ufdd0'text"], {"\ufdd0'value":(new cljs.core.Keyword("\ufdd0'full")).call(null, x), "\ufdd0'text":(new cljs.core.Keyword("\ufdd0'name")).call(null, x)})
   }, xs)
 };
-aahru.xprize.score.update_gs_files_BANG_ = function update_gs_files_BANG_(file_chosen, file_id, dir, ftype) {
-  var final_form_id__103195 = [cljs.core.str("#"), cljs.core.str(clojure.string.join.call(null, "-", cljs.core.cons.call(null, "gs", cljs.core.rest.call(null, clojure.string.split.call(null, file_id, /-/)))))].join("");
+aahru.xprize.score.update_remote_files_BANG_ = function update_remote_files_BANG_(file_chosen, dir, ftype) {
   return shoreleave.remotes.http_rpc.remote_callback.call(null, "variant/external-files", cljs.core.PersistentVector.fromArray([dir, ftype], true), function(files) {
-    chosen.core.options.call(null, file_chosen, aahru.xprize.score.gs_paths_to_chosen.call(null, files));
-    c2.dom.val.call(null, c2.dom.select.call(null, final_form_id__103195), chosen.core.selected.call(null, file_chosen));
-    return cljs.core.add_watch.call(null, file_chosen, "\ufdd0'change", function(fname) {
-      return c2.dom.val.call(null, c2.dom.select.call(null, final_form_id__103195), fname)
-    })
+    return chosen.core.options.call(null, file_chosen, aahru.xprize.score.remote__GT_chosen.call(null, files))
   })
 };
 aahru.xprize.score.prep_remote_selectors = function prep_remote_selectors(select_id, ftype) {
-  var folder_id__103202 = [cljs.core.str(select_id), cljs.core.str("-folder")].join("");
-  var file_id__103203 = [cljs.core.str(select_id), cljs.core.str("-file")].join("");
-  var folder_chosen__103204 = chosen.core.ichooseu_BANG_.call(null, [cljs.core.str("#"), cljs.core.str(folder_id__103202)].join(""));
-  var file_chosen__103205 = chosen.core.ichooseu_BANG_.call(null, [cljs.core.str("#"), cljs.core.str(file_id__103203)].join(""));
+  var folder_chosen__232523 = chosen.core.ichooseu_BANG_.call(null, [cljs.core.str("#"), cljs.core.str(select_id), cljs.core.str("-folder")].join(""));
+  var file_chosen__232524 = chosen.core.ichooseu_BANG_.call(null, [cljs.core.str("#"), cljs.core.str(select_id), cljs.core.str("-file")].join(""));
   return shoreleave.remotes.http_rpc.remote_callback.call(null, "variant/external-dirs", cljs.core.PersistentVector.EMPTY, function(dirs) {
-    chosen.core.options.call(null, folder_chosen__103204, aahru.xprize.score.gs_paths_to_chosen.call(null, dirs));
-    var temp__3974__auto____103206 = chosen.core.selected.call(null, folder_chosen__103204);
-    if(cljs.core.truth_(temp__3974__auto____103206)) {
-      var cur_dir__103207 = temp__3974__auto____103206;
-      aahru.xprize.score.update_gs_files_BANG_.call(null, file_chosen__103205, file_id__103203, cur_dir__103207, ftype)
+    chosen.core.options.call(null, folder_chosen__232523, aahru.xprize.score.remote__GT_chosen.call(null, dirs));
+    var temp__3974__auto____232525 = chosen.core.selected.call(null, folder_chosen__232523);
+    if(cljs.core.truth_(temp__3974__auto____232525)) {
+      var cur_dir__232526 = temp__3974__auto____232525;
+      aahru.xprize.score.update_remote_files_BANG_.call(null, file_chosen__232524, cur_dir__232526, ftype)
     }else {
     }
-    return cljs.core.add_watch.call(null, folder_chosen__103204, "\ufdd0'change", function(dir) {
-      return aahru.xprize.score.update_gs_files_BANG_.call(null, file_chosen__103205, file_id__103203, dir, ftype)
+    return cljs.core.add_watch.call(null, folder_chosen__232523, "\ufdd0'change", function(dir) {
+      return aahru.xprize.score.update_remote_files_BANG_.call(null, file_chosen__232524, dir, ftype)
     })
   })
 };
 aahru.xprize.score.prep_genome_selector = function prep_genome_selector() {
-  var genome_chosen__103209 = chosen.core.ichooseu_BANG_.call(null, "#comparison-genome");
+  var genome_chosen__232528 = chosen.core.ichooseu_BANG_.call(null, "#comparison-genome");
   return shoreleave.remotes.http_rpc.remote_callback.call(null, "meta/genomes", cljs.core.PersistentVector.EMPTY, function(genomes) {
-    return chosen.core.options.call(null, genome_chosen__103209, genomes)
+    return chosen.core.options.call(null, genome_chosen__232528, genomes)
   })
 };
 aahru.xprize.score.setup_remotes = function setup_remotes() {
