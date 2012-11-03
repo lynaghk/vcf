@@ -1,6 +1,7 @@
 (ns vcfvis.xprize
   "Provide X Prize specific scoring and comparisons."
-  (:use [compojure.core]
+  (:use [clojure.java.io]
+        [compojure.core]
         [ring.util.response]
         [cemerick.shoreleave.rpc :only [defremote current-request]]
         [bcbio.variation.config :only [get-log-status]]
@@ -8,6 +9,7 @@
   (:require [cemerick.friend :as friend]
             [fs.core :as fs]
             [hiccup.core :as hiccup]
+            [net.cgrand.enlive-html :as html]
             [bcbio.variation.api.run :as run]
             [bcbio.variation.web.db :as db]
             [vcfvis.api :as api]
@@ -27,6 +29,22 @@
                                   :dir
                                   (fs/file "grading"))}}))
 
+(defn- enlive->hiccup
+  [el]
+  (if-not (string? el)
+    (->> (map enlive->hiccup (:content el))
+         (concat [(:tag el) (:attrs el)])
+         (keep identity)
+         vec)
+    el))
+
+(defn html->hiccup
+  "Convert an HTML input file into hiccup vectors.
+   http://stackoverflow.com/questions/11094837/is-there-a-parser-for-html-to-hiccup-structures"
+  [html-file]
+  (enlive->hiccup
+   (first (html/html-resource (file html-file)))))
+
 (defremote ^{:remote-name :xprize/summary} xprize-run-summary
   "Retrieve summary HTML with results from an X Prize comparison."
   [run-id]
@@ -38,7 +56,7 @@
                        (:dir (get-work-info run-id)))]
     (let [summary-file (fs/file out-dir "scoring-summary.html")]
       (when (fs/exists? summary-file)
-        (slurp summary-file)))))
+        (html->hiccup summary-file)))))
 
 (defn scoring-html
   "Update main page HTML with content for scoring."
@@ -56,8 +74,7 @@
         [:div {:id "scoring-progress"
                :class "bar" :style "width: 0%"}]]
         [:script (format "aahru.xprize.score.update_run_status('%s');" run-id)]
-       ;(slurp score-html-file)
-       ]))))
+       (slurp score-html-file)]))))
 
 (defn- put-results-in-db
   "Run scoring analysis and store results."

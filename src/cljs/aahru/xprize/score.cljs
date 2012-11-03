@@ -33,7 +33,7 @@
             (sl/rpc ("xprize/summary" run-id) [sum-html]
                     (if (nil? sum-html)
                       (timer/callOnce (fn [] (update-run-status run-id)) 2000)
-                      (dom/replace! "#scoring-in-process" (crate/html [:div sum-html]))))
+                      (dom/replace! "#scoring-in-process" sum-html)))
             (do
               (when-not (nil? info)
                 (dom/text "#scoring-status" (:desc info))

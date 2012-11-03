@@ -1,6 +1,7 @@
 ;; Interactive functionality for display of older analyses.
 
 (ns aahru.xprize.analyses
+  (:use-macros [c2.util :only [pp]])
   (:require [c2.dom :as dom]
             [c2.event :as event]
             [shoreleave.remotes.http-rpc :as rpc])
@@ -9,16 +10,15 @@
 (defn- display-selected-analysis
   "Update page with details from a selected analysis."
   [analysis-id]
-  (sl/rpc (get-summary analysis-id) [sum-html]
-          (-> (dom/select "#user-analyses")
-              (dom/replace! sum-html))))
+  (sl/rpc ("xprize/summary" analysis-id) [sum-html]
+          (dom/replace! "#user-analyses" sum-html)))
 
 (defn ^:export display-analyses
   "Correctly set the top level navigation toolbar."
   []
-  (event/on (-> (dom/select "#user-analyses")
-                (dom/select "ul")
-                dom/children)
-            :click (fn [data node evt]
-                     (display-selected-analysis (dom/attr node :id)))
-            :capture true))
+  (doseq [x (-> (dom/select "#user-analyses ul")
+                dom/children)]
+    (event/on-raw x
+                  :click (fn [evt]
+                           (display-selected-analysis (dom/attr (.-target evt) :id)))
+                  :capture true)))
