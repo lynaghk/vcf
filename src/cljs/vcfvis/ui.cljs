@@ -2,22 +2,10 @@
   (:use-macros [c2.util :only [pp p bind!]])
   (:require [vcfvis.core :as core]
             [c2.dom :as dom]
-            [crate.core :as crate]))
+            [aahru.ui]))
 
-(defn- logged-in-html [user]
-  (crate/html
-   [:div {:class "btn-group pull-right" :id "user-dropdown"}
-    [:button {:class "btn btn-info dropdown-toggle" :data-toggle "dropdown"}
-     [:i {:class "icon-user icon-white" :style "margin-right: 6px"}]
-     user
-     [:span {:class "caret" :style "margin-left: 6px"}]]
-    [:ul {:class "dropdown-menu"}
-     [:li [:a {:id "logout-btn" :href "/logout"} "Logout"]]]]))
-
-(defn update-user!
-  [context]
-  (-> (dom/select "#user-dropdown")
-      (dom/replace! (logged-in-html (get context :username "user")))))
+(def set-user aahru.ui/set-user)
+(def set-navigation aahru.ui/set-navigation)
 
 ;;;;;;;;;;;;;;;;;;;
 ;;Histogram params

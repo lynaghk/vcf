@@ -5,7 +5,6 @@
   (:require [clojure.string :as string]
             [c2.dom :as dom]
             [chosen.core :as chosen]
-            [crate.core :as crate]
             [shoreleave.remotes.http-rpc :as rpc]
             [goog.string :as gstring]
             [goog.Timer :as timer])

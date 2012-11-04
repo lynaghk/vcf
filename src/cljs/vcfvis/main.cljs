@@ -22,6 +22,7 @@
 (.modal (js/jQuery "#waiting-modal")
         (clj->js {:backdrop "static" :keyboard false :show true}))
 (data/load-context (fn [context]
-                     (ui/update-user! context)
+                     (ui/set-user)
+                     (ui/set-navigation)
                      (.modal (js/jQuery "#waiting-modal") "hide")
                      (reset! core/!context context)))

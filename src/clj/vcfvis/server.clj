@@ -19,7 +19,9 @@
   (friend/logout (ANY "/logout" req (redirect "/")))
 
   (GET "/" req
-       (friend/authorize #{:user} (slurp "public/index.html")))
+       (redirect "/viz"))
+  (GET "/viz" req
+       (friend/authorize #{:user} (slurp "public/viz.html")))
 
   (context "/api" req (friend/wrap-authorize api/api-routes #{:user}))
   (context "/xprize" req (friend/wrap-authorize xprize/xprize-routes #{:user}))
