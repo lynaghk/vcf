@@ -13,16 +13,16 @@
 (defmulti bio-credential-fn
   "Handle login with multiple credentials to useful biological services."
   (fn [params]
-    (let [{:keys [username galaxy-apikey]} params]
+    (let [{:keys [username password galaxy-apikey]} params]
       (cond
-       (seq username) :gs
+       (and (seq username) (seq password)) :gs
        (seq galaxy-apikey) :galaxy
        :else :default))))
 
 (defmethod bio-credential-fn :gs
   ^{:doc "Given map with GenomeSpace username and password keys, returns GS client (if valid) or nil."}
   [{:keys [username password]}]
-  (when (seq username)
+  (when (and (seq username) (seq password))
     (let [rclient (get-client {:username username :password password :type :gs})]
       (when (:conn rclient)
         (client->friend rclient)))))
