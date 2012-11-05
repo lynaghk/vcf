@@ -125,6 +125,6 @@
        [:script "aahru.xprize.analyses.display_analyses()"]]))))
 
 (defroutes xprize-routes
-  (GET "/" req (pages/add-anti-forgery "public/xprize.html"))
+  (GET "/" req (pages/add-std-info "public/xprize.html"))
   (GET "/analyses" req (analyses-html (api/get-username)))
   (POST "/score" req (run-xprize-scoring req)))

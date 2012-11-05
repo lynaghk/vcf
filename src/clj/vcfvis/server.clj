@@ -4,7 +4,8 @@
         [ring.adapter.jetty :only [run-jetty]]
         [ring.middleware file-info session anti-forgery
          keyword-params multipart-params params]
-        [ring.util.response :only [redirect response content-type]])
+        [ring.util.response :only [redirect response content-type]]
+        [bcbio.variation.api.shared :only [web-config]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [cemerick.friend :as friend]
@@ -15,13 +16,15 @@
             [vcfvis.xprize :as xprize]))
 
 (defroutes main-routes
-  (GET "/login" req (pages/add-anti-forgery "public/login.html"))
+  (GET "/login" req (pages/add-std-info "public/login.html"))
   (friend/logout (ANY "/logout" req (redirect "/")))
 
   (GET "/" req
-       (redirect "/viz"))
+       (if (get-in @web-config [:params :web :xprize])
+         (redirect "/xprize")
+         (redirect "/viz")))
   (GET "/viz" req
-       (friend/authorize #{:user} (slurp "public/viz.html")))
+       (friend/authorize #{:user} (pages/add-std-info "public/viz.html")))
 
   (context "/api" req (friend/wrap-authorize api/api-routes #{:user}))
   (context "/xprize" req (friend/wrap-authorize xprize/xprize-routes #{:user}))

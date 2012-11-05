@@ -11,6 +11,9 @@ ref:
     default-compare: test/data/phasing-contestant.vcf
 
 params:
+  web:
+    xprize: true
+    google-analytics: null
   subsample:
     method: k-means
     count: 400000

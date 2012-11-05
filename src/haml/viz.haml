@@ -2,6 +2,7 @@
 %html(lang="en")
   %head
     %meta(charset="utf-8")
+    %title Variant visualization    
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.css")
     %link(rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-responsive.css")
     %link(rel="stylesheet" type="text/css" href="vendor/chosen/chosen.css")
@@ -25,9 +26,9 @@
           %a.brand(href="/") Variant analysis
           %div.collapse.nav-collapse          
             %ul#top-navbar.nav
-              %li
+              %li.xprize
                 %a(href="/xprize") XPrize scoring
-              %li
+              %li.xprize
                 %a(href="/xprize/analyses") XPrize analyses
               %li
                 %a(href="/viz") Visualize
@@ -53,6 +54,5 @@
       .modal-body
         Loading...
 
-    //%script aahru.ui.set_navigation();
-    //%script aahru.ui.set_user();
     %script(src="vcf.js")
+    %footer.footer
