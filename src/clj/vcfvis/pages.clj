@@ -46,9 +46,12 @@
         (#(apply str %)))
     base-str))
 
+(defn- is-xprize? []
+  (get-in @web-config [:params :web :xprize]))
+
 (defn filter-xprize-links
   [base-str]
-  (if (get-in @web-config [:params :web :xprize])
+  (if (is-xprize?)
     base-str
     (-> (html/xml-resource (java.io.StringReader. base-str))
         (html/transform [:li.xprize]
@@ -60,13 +63,14 @@
   [base-str]
   (let [always-present [["http://www.edgebio.com/" "EdgeBio"]
                         ["http://compbio.sph.harvard.edu/chb/" "Harvard School of Public Health"]]
-        final (if (get-in @web-config [:params :web :xprize])
+        final (if (is-xprize?)
                 (conj
                  (vec (cons ["http://genomics.xprize.org/"
                              "Archon Genomics XPrize presented by Express Scripts"]
                             always-present))
                  ["http://www.ncsa.illinois.edu/" "NCSA"])
-                always-present)
+                (conj always-present
+                      ["http://keminglabs.com/" "Keming Labs"]))
         footer (-> [:p (map-indexed (fn [i [url name]]
                                       [:span (when (pos? i) " | ")
                                        [:a {:href url :target "_blank"} name]]) final)]
@@ -79,15 +83,29 @@
         html/emit*
         (#(apply str %)))))
 
+(defn add-welcome
+  "Add welcome template to login page, either for X Prize or visualization."
+  [base-str]
+  (let [welcome-template (if (is-xprize?)
+                           (file "public" "template" "welcome-xprize.html")
+                           (file "public" "template" "welcome-viz.html"))]
+    (-> (html/xml-resource (java.io.StringReader. base-str))
+        (html/transform [:div#welcome]
+                        (html/content (html/html-resource (file welcome-template))))
+        html/emit*
+        (#(apply str %)))))
+
 (defn add-std-info
   "Add standard additions to the input HTML page:
    - anti-forgery tokens
    - google analytics callbacks
    - filter X-Prize specific links
-   - standard footer"
+   - standard footer
+   - Provide welcome page for login."
   [page]
   (-> page
       add-anti-forgery
       add-analytics
       add-footer
+      add-welcome
       filter-xprize-links))

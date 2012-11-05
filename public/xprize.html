@@ -46,7 +46,7 @@
     <div class='container' id='main-content'>
       <form action='/xprize/score' class='form-horizontal' method='post'>
         <fieldset>
-          <h4>Submit variation file for scoring</h4>
+          <legend>Submit variation file for scoring</legend>
           <div class='control-group'>
             <label class='control-label' for='variant-file'>Variations</label>
             <div class='controls'>
@@ -87,10 +87,44 @@
           </div>
         </fieldset>
       </form>
+      <div class='row'>
+        <div class='span4'>
+          <h4>About</h4>
+          <p>
+            The scoring process retrieves files from remote analysis platforms like
+            <a href='http://www.genomespace.org/'>GenomeSpace</a>
+            and
+            <a href='https://main.g2.bx.psu.edu/'>Galaxy</a>
+            and compares against a reference set of variant calls. The comparison process
+            performs SNP, indel and flexible structural variant comparisons. It normalizes variant
+            representation to ensure accurate comparisons and handles phased haplotype regions.
+          </p>
+        </div>
+        <div class='span4'>
+          <h4>Results</h4>
+          <p>Results are uploaded back into your remote analysis platform and include:</p>
+          <ul>
+            <li>Correctly matched variants</li>
+            <li>Incorrect variants, both discordant and missing</li>
+            <li>Phasing differences between input and reference</li>
+            <li>A summary table with comparison statistics</li>
+          </ul>
+        </div>
+        <div class='span4'>
+          <h4>More details</h4>
+          <p>
+            The
+            <a href='https://edgebio.atlassian.net/wiki/display/AGXPPUB/Home'>Validation Protocol Information Center</a>
+            has detailed information on the software and input data used to build the reference
+            variant calls and do the comparisons. We welcome feedback on our
+            <a href='http://agxpprotocol.xprize.org/agxp'>community GetSatisfaction site.</a>
+          </p>
+        </div>
+      </div>
+      <footer class='footer'></footer>
     </div>
     <script>aahru.ui.set_navigation();</script>
     <script>aahru.ui.set_user();</script>
     <script>aahru.xprize.score.setup_remotes();</script>
-    <footer class='footer'></footer>
   </body>
 </html>

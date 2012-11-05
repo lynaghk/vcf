@@ -94,7 +94,6 @@
   (let [rclient (:client (friend/current-authentication))
         ready-params  (-> params
                           (assoc :expose-fn (api/expose-dataset req)))
-        _ (prn ready-params)
         {:keys [work-info runner]} (run/do-analysis :xprize ready-params rclient)
         new-work-info (assoc (:work-info session)
                         (:id work-info) work-info)]

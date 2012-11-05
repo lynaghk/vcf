@@ -12,7 +12,7 @@ ref:
 
 params:
   web:
-    xprize: true
+    xprize: false
     google-analytics: null
   subsample:
     method: k-means
