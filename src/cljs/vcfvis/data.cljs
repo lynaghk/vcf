@@ -28,11 +28,18 @@
                  (assoc x :ticks ticks)))
     (throw (str "Metric doesn't have range: " (pr metric)))))
 
+(defn- add-metric-w-xscale
+  "Add metrics with the specified xscale axis type."
+  [xscale-type]
+  (fn [res m]
+    (if (= (get-in m [:x-scale :type] :linear) xscale-type) 
+      (assoc res (:id m)
+             (expand-metric m))
+      res)))
+
 (defn prep-context [context]
   (update-in context [:metrics]
-             #(reduce (fn [res m]
-                        (assoc res (:id m)
-                               (expand-metric m)))
+             #(reduce (add-metric-w-xscale :linear)
                       {} %)))
 
 (defn prep-vcf-json [vcf-json]

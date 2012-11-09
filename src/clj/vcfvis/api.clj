@@ -57,14 +57,14 @@
      :metrics (bc-metrics/available-metrics nil)
      :username (get-username)}))
 
-(defremote ^{:remote-name :variant/raw} variant-raw
-  "Retrieve raw variant data for a given input file"
-  [file-url]
-  (when-let [rclient (:client (current-authentication))]
-    (let [raw (bc-metrics/get-raw-metrics file-url
-                                          :rclient rclient :use-subsample? true)]
-      {:available-metrics (-> raw first (dissoc :id) keys set)
-       :raw (generate-string raw)})))
+;; (defremote ^{:remote-name :variant/raw} variant-raw
+;;   "Retrieve raw variant data for a given input file"
+;;   [file-url]
+;;   (when-let [rclient (:client (current-authentication))]
+;;     (let [raw (bc-metrics/get-raw-metrics file-url
+;;                                           :rclient rclient :use-subsample? true)]
+;;       {:available-metrics (-> raw first (dissoc :id) keys set)
+;;        :raw (generate-string raw)})))
 
 (defremote ^{:remote-name :run/filter} run-filter
   "Run filtering analysis, pushing results to remote server.
