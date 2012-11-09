@@ -67,19 +67,20 @@
   (assoc info
     :cf (into {:crossfilter cf
                :all (.groupAll cf)}
-              (for [{:keys [id range bin-width]} (info :available-metrics)]
-                (let [[start end] range
-                      dim (.dimension cf #(aget % id))
-                      binned (.group dim (fn [x]
-                                           (+ start (* bin-width
-                                                       ;;take the min to catch any roundoff into the last bin
-                                                       (min (Math/floor (/ (- x start) bin-width))
-                                                            (dec ui/hist-bins))))))]
-                  [id {:bin-width bin-width
-                       :dimension dim
-                       :binned binned}]))))))
-
-
+              (concat
+               (for [{:keys [id range bin-width]} (info :available-metrics)]
+                 (let [[start end] range
+                       dim (.dimension cf #(aget % id))
+                       binned (.group dim (fn [x]
+                                            (+ start (* bin-width
+                                                        ;;take the min to catch any roundoff into the last bin
+                                                        (min (Math/floor (/ (- x start) bin-width))
+                                                             (dec ui/hist-bins))))))]
+                   [id {:bin-width bin-width
+                        :dimension dim
+                        :binned binned}]))
+               (for [{:keys [id]} (info :available-categories)]
+                 [id {:dimension (.dimension cf #(aget % id))}]))))))
 
 ;;;;;;;;;;;;;;;
 ;;Fetching data

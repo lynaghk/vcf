@@ -92,7 +92,11 @@
 
 (defn update-category-filter!
   [cat-id val off?]
-  (pp (str cat-id " " val " " off?)))
+  (doseq [vcf @core/!vcfs]
+    (.filter (get-in vcf [:cf cat-id :dimension])
+             (fn [d]
+               (contains? (set d) val))))
+  (publish! {:filter-updated nil}))
 
 (event/on "#filters" :click
           (fn [d _ e]
