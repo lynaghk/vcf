@@ -48,7 +48,15 @@
           %span#count
     
       %section.sidebar
-        #metrics
+        .tabbable.tab-left
+          %ul.nav.nav-pills
+            %li.active
+              %a(href="#metrics" data-toggle="tab") Metrics
+            %li
+              %a(href="#filters" data-toggle="tab") Filters
+        .tab-content
+          .tab-pane.active#metrics
+          .tab-pane#filters
     
     #waiting-modal.modal(role="dialog")
       .modal-body

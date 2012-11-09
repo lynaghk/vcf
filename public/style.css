@@ -46,6 +46,10 @@ text.message { text-anchor: middle; font-size: 1.2em; }
 .metric.selected .expand-btn { display: none; }
 .metric.selected .sort-handle { display: none; }
 
+.filter { padding-bottom: 8px; }
+.filter .desc { padding-top: 8px; padding-bottom: 8px; font-size: 13px; }
+.filter .btn-group { float: left; padding-left: 18px; margin-left: 0px; }
+
 * { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 html { height: 100%; }
@@ -98,3 +102,5 @@ input.hidden { height: 0px; }
 .footer { padding: 15px 15px 16px; border-top: 1px solid #e5e5e5; }
 
 #welcome { padding: 15px 0 0; }
+
+.tab-content { overflow-x: visible; overflow-y: visible; }

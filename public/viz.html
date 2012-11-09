@@ -58,7 +58,20 @@
         </div>
       </section>
       <section class='sidebar'>
-        <div id='metrics'></div>
+        <div class='tabbable tab-left'>
+          <ul class='nav nav-pills'>
+            <li class='active'>
+              <a data-toggle='tab' href='#metrics'>Metrics</a>
+            </li>
+            <li>
+              <a data-toggle='tab' href='#filters'>Filters</a>
+            </li>
+          </ul>
+        </div>
+        <div class='tab-content'>
+          <div class='tab-pane active' id='metrics'></div>
+          <div class='tab-pane' id='filters'></div>
+        </div>
       </section>
     </div>
     <div class='modal' id='waiting-modal' role='dialog'>

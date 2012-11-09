@@ -26,7 +26,7 @@
                      x (scale/linear :domain (metric :range)
                                      :range [0 ui/hist-width])]
                  (assoc x :ticks ticks)))
-    (throw (str "Metric doesn't have range: " (pr metric)))))
+    metric))
 
 (defn- add-metric-w-xscale
   "Add metrics with the specified xscale axis type."
@@ -38,39 +38,46 @@
       res)))
 
 (defn prep-context [context]
-  (update-in context [:metrics]
-             #(reduce (add-metric-w-xscale :linear)
-                      {} %)))
+  (-> context
+      (update-in [:metrics]
+                 #(reduce (add-metric-w-xscale :linear)
+                          {} %))
+      (assoc :categories
+        (reduce (add-metric-w-xscale :category)
+                {} (:metrics context)))))
+
+(defn- collect-cur-metrics
+  "Expand metrics to full maps available in the context."
+  [core-kw orig-metrics]
+  (let [core-metrics (get @core/!context core-kw)]
+    (reduce (fn [ms m]
+              (if (contains? core-metrics (:id m))
+                (conj ms (expand-metric m))
+                ms))
+            #{} orig-metrics)))
 
 (defn prep-vcf-json [vcf-json]
-  (let [core-metrics (@core/!context :metrics)
-        info (-> (read-string (aget vcf-json "clj"))
-                 ;;Expand metric-ids to full metric maps available in context (a join, basically)
-                 (update-in [:available-metrics]
-                            #(reduce (fn [ms m]
-                                       (if-let [metric (core-metrics m)]
-                                         (conj ms metric)
-                                         (do (p (str "Don't know how to deal with metric: '"
-                                                     m "', dropping."))
-                                             ms)))
-                                     #{} %)))
-
+  (let [input (read-string (aget vcf-json "clj"))
+        info (-> input
+                 (update-in [:available-metrics] (partial collect-cur-metrics :metrics))
+                 (assoc :available-categories
+                   (collect-cur-metrics :categories (:available-metrics input))))
         cf (js/crossfilter (aget vcf-json "raw"))]
 
-    (assoc info
-      :cf (into {:crossfilter cf
-                 :all (.groupAll cf)}
-                (for [{:keys [id range bin-width]} (info :available-metrics)]
-                  (let [[start end] range
-                        dim (.dimension cf #(aget % id))
-                        binned (.group dim (fn [x]
-                                             (+ start (* bin-width
-                                                         ;;take the min to catch any roundoff into the last bin
-                                                         (min (Math/floor (/ (- x start) bin-width))
-                                                              (dec ui/hist-bins))))))]
-                    [id {:bin-width bin-width
-                         :dimension dim
-                         :binned binned}]))))))
+  (assoc info
+    :cf (into {:crossfilter cf
+               :all (.groupAll cf)}
+              (for [{:keys [id range bin-width]} (info :available-metrics)]
+                (let [[start end] range
+                      dim (.dimension cf #(aget % id))
+                      binned (.group dim (fn [x]
+                                           (+ start (* bin-width
+                                                       ;;take the min to catch any roundoff into the last bin
+                                                       (min (Math/floor (/ (- x start) bin-width))
+                                                            (dec ui/hist-bins))))))]
+                  [id {:bin-width bin-width
+                       :dimension dim
+                       :binned binned}]))))))
 
 
 

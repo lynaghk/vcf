@@ -81,11 +81,11 @@
   (GET "/vcf" req
        (when-let [rclient (:client (current-authentication))]
          (let [{{file-url :file-url} :params} req]
-           (let [raw (bc-metrics/get-raw-metrics file-url
-                                                 :rclient rclient :use-subsample? true)]
+           (let [{:keys [raw metrics]} (bc-metrics/get-raw-metrics file-url
+                                                                   :rclient rclient :use-subsample? true)]
              (generate-string
               {:clj (pr-str {:file-url file-url
-                             :available-metrics (-> raw first (dissoc :id) keys set)})
+                             :available-metrics metrics})
                :raw raw})))))
 
   (route/not-found "API ERROR =("))
