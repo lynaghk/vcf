@@ -71,6 +71,10 @@
                filters))
            {} @!shared-metrics)))
 
+(def !cat-filters
+  "Map of currently applied category filters: id -> #{applied filters}"
+  (atom {}))
+
 (def !visible-metrics
   "Metrics that should be shown with mini-histograms the UI"
   (atom #{}

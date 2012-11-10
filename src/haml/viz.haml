@@ -12,8 +12,7 @@
     %script(src="vendor/chosen/chosen.jquery.js")
     %script(src="vendor/bootstrap/js/bootstrap.min.js")
     %script(src="vendor/crossfilter.js")
-    //%script var CLOSURE_NO_DEPS = true;
-    //%script(src="aahru.js")
+    %script var CLOSURE_NO_DEPS = true;
 
   %body
     .navbar#navbar
@@ -53,10 +52,10 @@
             %li.active
               %a(href="#metrics" data-toggle="tab") Metrics
             %li
-              %a(href="#filters" data-toggle="tab") Filters
-        .tab-content
+              %a(href="#cat-filters" data-toggle="tab") Categories
+        .tab-content#metrics-content
           .tab-pane.active#metrics
-          .tab-pane#filters
+          .tab-pane#cat-filters
     
     #waiting-modal.modal(role="dialog")
       .modal-body

@@ -12,8 +12,7 @@
     <script src='vendor/chosen/chosen.jquery.js'></script>
     <script src='vendor/bootstrap/js/bootstrap.min.js'></script>
     <script src='vendor/crossfilter.js'></script>
-    <!-- /%script var CLOSURE_NO_DEPS = true; -->
-    <!-- /%script(src="aahru.js") -->
+    <script>var CLOSURE_NO_DEPS = true;</script>
   </head>
   <body>
     <div class='navbar' id='navbar'>
@@ -64,13 +63,13 @@
               <a data-toggle='tab' href='#metrics'>Metrics</a>
             </li>
             <li>
-              <a data-toggle='tab' href='#filters'>Filters</a>
+              <a data-toggle='tab' href='#cat-filters'>Categories</a>
             </li>
           </ul>
         </div>
-        <div class='tab-content'>
+        <div class='tab-content' id='metrics-content'>
           <div class='tab-pane active' id='metrics'></div>
-          <div class='tab-pane' id='filters'></div>
+          <div class='tab-pane' id='cat-filters'></div>
         </div>
       </section>
     </div>

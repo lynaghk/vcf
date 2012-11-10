@@ -68,7 +68,9 @@
                 (histogram/draw-mini-hist-for-metric! m))
               (core/toggle-visible-metric! m))))
 
-(subscribe! {:filter-updated _}
+(subscribe! {:filter-updated m}
+            (when (= :category (get-in m [:x-scale :type]))
+              (histogram/draw-histogram! @core/!vcfs @core/!metric))
             (histogram/draw-mini-hists!)
             (publish! {:count-updated (.value (get-in (first @core/!vcfs) [:cf :all]))}))
 
@@ -78,9 +80,9 @@
                        (if (nil? x) "hidden" "visible")))
 
 ;; ## Filters
-(bind! "#filters"
+(bind! "#cat-filters"
        (let [cs (reduce core/intersection (map :available-categories @core/!vcfs))]
-         [:div#filters
+         [:div#cat-filters
           (unify cs
                  (fn [{:keys [id desc choices]}]
                    [:div.filter.metric {:id (str "filter-" id)}
@@ -91,16 +93,20 @@
                          [:btn.btn.filter-btn x])])]))]))
 
 (defn update-category-filter!
-  [cat-id val off?]
-  (doseq [vcf @core/!vcfs]
-    (.filter (get-in vcf [:cf cat-id :dimension])
-             (fn [d]
-               (contains? (set d) val))))
-  (publish! {:filter-updated nil}))
+  [cat val off?]
+  (let [orig (get @core/!cat-filters (:id cat) #{})
+        new (if off? (disj orig val) (conj orig val))]
+    (swap! core/!cat-filters assoc (:id cat) new)
+    (doseq [vcf @core/!vcfs]
+      (.filter (get-in vcf [:cf (:id cat) :dimension])
+               (fn [d]
+                 (or (empty? new)
+                     (not (empty? (core/intersection (set d) new))))))))
+  (publish! {:filter-updated cat}))
 
-(event/on "#filters" :click
+(event/on "#cat-filters" :click
           (fn [d _ e]
-            (update-category-filter! (:id d) (dom/text (.-target e))
+            (update-category-filter! d (dom/text (.-target e))
                                      (gstring/contains (dom/attr (.-target e) :class) "active"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;

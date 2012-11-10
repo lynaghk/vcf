@@ -71,7 +71,7 @@
 (defn draw-mini-hist-for-metric! [m]
   (let [vcfs @core/!vcfs
         n (count vcfs)
-        mini-width (js/parseFloat (dom/style "#metrics" :width))
+        mini-width (js/parseFloat (dom/style "#metrics-content" :width))
         mini-height 100]
 
     (singult/merge! (dom/select (str "#metric-" (:id m) " .mini-hist"))
