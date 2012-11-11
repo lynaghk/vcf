@@ -32,11 +32,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;Metrics mini-hists
 (bind! "#metrics"
-       (let [shared (set (map :id @core/!shared-metrics))
-             selected-metric @core/!metric
+       (let [shared @core/!shared-metrics
+             selected-metric (:id @core/!metric)
              metrics (for [m (vals (@core/!context :metrics))]
                        (assoc m
-                         :selected? (= m selected-metric)
+                         :selected? (= (:id m) selected-metric)
                          :visible? (core/visible-metric? m)
                          :shared? (contains? shared (m :id))))]
          [:div#metrics

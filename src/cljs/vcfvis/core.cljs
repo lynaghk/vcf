@@ -24,7 +24,7 @@
   (if (seq new-vcfs)
     (do
       (reset! !vcfs (vec (filter #(contains? new-vcfs (:file-url %)) @!vcfs)))
-      (set/difference new-vcfs (into #{} (map :file-url@!vcfs))))
+      (set/difference new-vcfs (into #{} (map :file-url @!vcfs))))
     (reset! !vcfs [])))
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -38,13 +38,12 @@
 ;;Y U No haz identity, clojure.set/intersection!?!?!
 (defn intersection
   ([] #{})
-  ([& args] (apply set/intersection args)))
+  ([& args]
+     (if (= 1 (count args))
+       (first args)
+       (apply set/intersection args))))
 
-(def !shared-metrics
-  "Metrics"
-  (computed-observable
-   ;;TODO, order metrics by relevance/usefulness to biologists.
-   (reduce intersection (map :available-metrics @!vcfs))))
+(def !shared-metrics (atom #{}))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;From UI
@@ -56,11 +55,14 @@
 (defn select-metric! [metric]
   (reset! !metric metric))
 
-(constrain! ;;Make sure that the selected metric is always one of the shared metrics
- (let [shared @!shared-metrics]
-   (when (seq shared)
-     (when-not (some #{@!metric} shared)
-       (select-metric! (first shared))))))
+(defn update-shared-and-selected!
+  [vcfs]
+  (let [shared (reduce intersection (map #(set (map :id (:available-metrics %)))
+                                         vcfs))]
+    (when (or (nil? @!metric)
+              (not (contains? shared (:id @!metric))))
+      (select-metric! (first (for [[k v] (:metrics @!context) :when (contains? shared k)] v))))
+    (reset! !shared-metrics shared)))
 
 (def !filters
   "Map of filter-id -> extent"

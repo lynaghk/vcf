@@ -16,6 +16,7 @@
                  (doseq [f new-files]
                    (data/load-vcf f (fn [vcf]
                                       (.modal (js/jQuery "#waiting-modal") "hide")
+                                      (core/update-shared-and-selected! (conj @core/!vcfs vcf))
                                       (swap! core/!vcfs conj vcf))))))))
 
 ;;Request file list from server
