@@ -43,8 +43,11 @@
           .well
             %label VCF files
             #file-selector
-          %button.btn#filter-btn Download subset
-          %span#count
+        .row
+          .span2
+            %button.btn#filter-btn Download subset
+          .span6
+            %table.table.table-condensed#filter-summary
     
       %section.sidebar
         .tabbable.tab-left

@@ -3,14 +3,15 @@
                [reflex.macros :only [constrain!]]
                [dubstep.macros :only [publish! subscribe!]])
   (:use [chosen.core :only [ichooseu! options]]
-        [singult.core :only [ignore]]
         [c2.core :only [unify]]
         [c2.util :only [clj->js]])
-  (:require [vcfvis.core :as core]
+  (:require [clojure.string :as string]
+            [vcfvis.core :as core]
             [vcfvis.histogram :as histogram]
             [vcfvis.data :as data]
             [c2.dom :as dom]
             [c2.event :as event]
+            [singult.core :as singult]
             [goog.string :as gstring]))
 
 ;;;;;;;;;;;;;;;;;;
@@ -48,7 +49,7 @@
                     [:h2 id]
                     [:button.expand-btn "V"]
                     [:span.desc desc]
-                    [:div.mini-hist (ignore)]
+                    [:div.mini-hist (singult/ignore)]
                     [:div.sort-handle]])
                  :key-fn #(:id %))]))
 
@@ -75,9 +76,21 @@
             (publish! {:count-updated (.value (get-in (first @core/!vcfs) [:cf :all]))}))
 
 (subscribe! {:count-updated x}
-            (dom/text "#count" x)
-            (dom/style "#count" :visibility
-                       (if (nil? x) "hidden" "visible")))
+            (singult/merge! (dom/select "#filter-summary")
+                            [:table.table.table-condensed#filter-summary
+                             [:tbody
+                              (concat
+                               [[:tr
+                                 [:td [:span#count-pad]]
+                                 [:td [:span#count (if x (str x " variants") "")]]]]
+                               (for [[m-id extent] @core/!filters :when extent]
+                                 [:tr
+                                  [:td m-id]
+                                  [:td (format "%.1f-%.1f" (first extent) (second extent))]])
+                               (for [[cat-id vals] @core/!cat-filters :when (seq vals)]
+                                 [:tr
+                                  [:td cat-id]
+                                  [:td (string/join ", " vals)]]))]]))
 
 ;; ## Filters
 (bind! "#cat-filters"

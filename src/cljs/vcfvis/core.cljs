@@ -64,12 +64,7 @@
 
 (def !filters
   "Map of filter-id -> extent"
-  (computed-observable
-   (reduce (fn [filters m]
-             (if-let [extent @(m :!filter-extent)]
-               (assoc filters (m :id) extent)
-               filters))
-           {} @!shared-metrics)))
+  (atom {}))
 
 (def !cat-filters
   "Map of currently applied category filters: id -> #{applied filters}"
@@ -114,6 +109,7 @@
                (clj->js extent)))
 
     ;;Save extent in metric's atom
+    (swap! !filters assoc (m :id) extent)
     (reset! (m :!filter-extent) extent)
 
     (publish! {:filter-updated m})))

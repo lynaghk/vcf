@@ -135,19 +135,23 @@
   (singult/merge! (dom/select "#main-hist")
                   [:div#main-hist
                    [:div#histograms]
-                   [:div#hist-axis]])
-  (publish! {:count-updated nil}))
+                   [:div#hist-axis]]))
 
 (defn draw-mini-hists! []
   (doseq [m @core/!visible-metrics]
     (draw-mini-hist-for-metric! m)))
 
-
 (constrain!
  (let [vcfs @core/!vcfs
        metric @core/!metric]
    (clear-histogram!)
-   (when (seq vcfs)
-     (draw-histogram! vcfs metric)
-     (draw-mini-hists!))))
+   (if (seq vcfs)
+     (do
+       (draw-histogram! vcfs metric)
+       (publish! {:count-updated (.value (get-in (first vcfs) [:cf :all]))})
+       (draw-mini-hists!))
+     (do
+       (reset! core/!filters {})
+       (reset! core/!cat-filters {})
+       (publish! {:count-updated nil})))))
 
