@@ -25,9 +25,10 @@
 
     ;;The selector should always reflect the user's avaliable flies
     (constrain!
-     (options !c (map (fn [{:keys [filename folder id]}]
-                        {:text filename :value id :group folder})
-                      @core/!available-files)))
+     (options !c (->> @core/!available-files
+                      (map (fn [{:keys [filename folder id]}]
+                             {:text filename :value id :group folder}))
+                      (sort-by :group))))
     !c))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -156,4 +157,4 @@
   (event/on-raw $btn :click
                 (fn [_]
                   (data/filter-analysis (get (first @core/!vcfs) :file-url)
-                                        @core/!filters))))
+                                        (merge @core/!filters @core/!cat-filters)))))
