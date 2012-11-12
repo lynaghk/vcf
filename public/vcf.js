@@ -32230,8 +32230,8 @@ vcfvis.core._BANG_context = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY);
 vcfvis.core._BANG_vcfs = cljs.core.atom.call(null, cljs.core.PersistentVector.EMPTY);
 vcfvis.core.check_new_vcfs_BANG_ = function check_new_vcfs_BANG_(new_vcfs) {
   if(cljs.core.seq.call(null, new_vcfs)) {
-    cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_vcfs, cljs.core.vec.call(null, cljs.core.filter.call(null, function(p1__35496_SHARP_) {
-      return cljs.core.contains_QMARK_.call(null, new_vcfs, (new cljs.core.Keyword("\ufdd0'file-url")).call(null, p1__35496_SHARP_))
+    cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_vcfs, cljs.core.vec.call(null, cljs.core.filter.call(null, function(p1__43534_SHARP_) {
+      return cljs.core.contains_QMARK_.call(null, new_vcfs, (new cljs.core.Keyword("\ufdd0'file-url")).call(null, p1__43534_SHARP_))
     }, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs))));
     return clojure.set.difference.call(null, new_vcfs, cljs.core.into.call(null, cljs.core.PersistentHashSet.EMPTY, cljs.core.map.call(null, "\ufdd0'file-url", cljs.core.deref.call(null, vcfvis.core._BANG_vcfs))))
   }else {
@@ -32239,11 +32239,11 @@ vcfvis.core.check_new_vcfs_BANG_ = function check_new_vcfs_BANG_(new_vcfs) {
   }
 };
 vcfvis.core._BANG_available_files = function() {
-  var co__6205__auto____35497 = new reflex.core.ComputedObservable(null, true, function() {
+  var co__6205__auto____43535 = new reflex.core.ComputedObservable(null, true, function() {
     return cljs.core._lookup.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_context), "\ufdd0'files", cljs.core.PersistentVector.EMPTY)
   }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-  cljs.core.deref.call(null, co__6205__auto____35497);
-  return co__6205__auto____35497
+  cljs.core.deref.call(null, co__6205__auto____43535);
+  return co__6205__auto____43535
 }();
 vcfvis.core.intersection = function() {
   var intersection = null;
@@ -32251,27 +32251,27 @@ vcfvis.core.intersection = function() {
     return cljs.core.PersistentHashSet.EMPTY
   };
   var intersection__1 = function() {
-    var G__35498__delegate = function(args) {
+    var G__43536__delegate = function(args) {
       if(cljs.core._EQ_.call(null, 1, cljs.core.count.call(null, args))) {
         return cljs.core.first.call(null, args)
       }else {
         return cljs.core.apply.call(null, clojure.set.intersection, args)
       }
     };
-    var G__35498 = function(var_args) {
+    var G__43536 = function(var_args) {
       var args = null;
       if(goog.isDef(var_args)) {
         args = cljs.core.array_seq(Array.prototype.slice.call(arguments, 0), 0)
       }
-      return G__35498__delegate.call(this, args)
+      return G__43536__delegate.call(this, args)
     };
-    G__35498.cljs$lang$maxFixedArity = 0;
-    G__35498.cljs$lang$applyTo = function(arglist__35499) {
-      var args = cljs.core.seq(arglist__35499);
-      return G__35498__delegate(args)
+    G__43536.cljs$lang$maxFixedArity = 0;
+    G__43536.cljs$lang$applyTo = function(arglist__43537) {
+      var args = cljs.core.seq(arglist__43537);
+      return G__43536__delegate(args)
     };
-    G__35498.cljs$lang$arity$variadic = G__35498__delegate;
-    return G__35498
+    G__43536.cljs$lang$arity$variadic = G__43536__delegate;
+    return G__43536
   }();
   intersection = function(var_args) {
     var args = var_args;
@@ -32295,31 +32295,31 @@ vcfvis.core.select_metric_BANG_ = function select_metric_BANG_(metric) {
   return cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_metric, metric)
 };
 vcfvis.core.update_shared_and_selected_BANG_ = function update_shared_and_selected_BANG_(vcfs) {
-  var shared__35516 = cljs.core.reduce.call(null, vcfvis.core.intersection, cljs.core.map.call(null, function(p1__35500_SHARP_) {
-    return cljs.core.set.call(null, cljs.core.map.call(null, "\ufdd0'id", (new cljs.core.Keyword("\ufdd0'available-metrics")).call(null, p1__35500_SHARP_)))
+  var shared__43554 = cljs.core.reduce.call(null, vcfvis.core.intersection, cljs.core.map.call(null, function(p1__43538_SHARP_) {
+    return cljs.core.set.call(null, cljs.core.map.call(null, "\ufdd0'id", (new cljs.core.Keyword("\ufdd0'available-metrics")).call(null, p1__43538_SHARP_)))
   }, vcfs));
   if(function() {
-    var or__3824__auto____35517 = cljs.core.deref.call(null, vcfvis.core._BANG_metric) == null;
-    if(or__3824__auto____35517) {
-      return or__3824__auto____35517
+    var or__3824__auto____43555 = cljs.core.deref.call(null, vcfvis.core._BANG_metric) == null;
+    if(or__3824__auto____43555) {
+      return or__3824__auto____43555
     }else {
-      return!cljs.core.contains_QMARK_.call(null, shared__35516, (new cljs.core.Keyword("\ufdd0'id")).call(null, cljs.core.deref.call(null, vcfvis.core._BANG_metric)))
+      return!cljs.core.contains_QMARK_.call(null, shared__43554, (new cljs.core.Keyword("\ufdd0'id")).call(null, cljs.core.deref.call(null, vcfvis.core._BANG_metric)))
     }
   }()) {
     vcfvis.core.select_metric_BANG_.call(null, cljs.core.first.call(null, function() {
-      var iter__2355__auto____35530 = function iter__35518(s__35519) {
+      var iter__2355__auto____43568 = function iter__43556(s__43557) {
         return new cljs.core.LazySeq(null, false, function() {
-          var s__35519__35525 = s__35519;
+          var s__43557__43563 = s__43557;
           while(true) {
-            if(cljs.core.seq.call(null, s__35519__35525)) {
-              var vec__35526__35527 = cljs.core.first.call(null, s__35519__35525);
-              var k__35528 = cljs.core.nth.call(null, vec__35526__35527, 0, null);
-              var v__35529 = cljs.core.nth.call(null, vec__35526__35527, 1, null);
-              if(cljs.core.contains_QMARK_.call(null, shared__35516, k__35528)) {
-                return cljs.core.cons.call(null, v__35529, iter__35518.call(null, cljs.core.rest.call(null, s__35519__35525)))
+            if(cljs.core.seq.call(null, s__43557__43563)) {
+              var vec__43564__43565 = cljs.core.first.call(null, s__43557__43563);
+              var k__43566 = cljs.core.nth.call(null, vec__43564__43565, 0, null);
+              var v__43567 = cljs.core.nth.call(null, vec__43564__43565, 1, null);
+              if(cljs.core.contains_QMARK_.call(null, shared__43554, k__43566)) {
+                return cljs.core.cons.call(null, v__43567, iter__43556.call(null, cljs.core.rest.call(null, s__43557__43563)))
               }else {
-                var G__35531 = cljs.core.rest.call(null, s__35519__35525);
-                s__35519__35525 = G__35531;
+                var G__43569 = cljs.core.rest.call(null, s__43557__43563);
+                s__43557__43563 = G__43569;
                 continue
               }
             }else {
@@ -32329,11 +32329,11 @@ vcfvis.core.update_shared_and_selected_BANG_ = function update_shared_and_select
           }
         }, null)
       };
-      return iter__2355__auto____35530.call(null, (new cljs.core.Keyword("\ufdd0'metrics")).call(null, cljs.core.deref.call(null, vcfvis.core._BANG_context)))
+      return iter__2355__auto____43568.call(null, (new cljs.core.Keyword("\ufdd0'metrics")).call(null, cljs.core.deref.call(null, vcfvis.core._BANG_context)))
     }()))
   }else {
   }
-  return cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_shared_metrics, shared__35516)
+  return cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_shared_metrics, shared__43554)
 };
 vcfvis.core._BANG_filters = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY);
 vcfvis.core._BANG_cat_filters = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY);
@@ -32344,27 +32344,27 @@ vcfvis.core._BANG_visible_metrics = cljs.core.atom.call(null, cljs.core.Persiste
     return true
   }
 });
-var co__6211__auto____35534 = function() {
-  var co__6205__auto____35533 = new reflex.core.ComputedObservable(null, true, function() {
-    var m__35532 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
-    if(cljs.core.contains_QMARK_.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics), m__35532)) {
-      return cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_visible_metrics, cljs.core.disj, m__35532)
+var co__6211__auto____43572 = function() {
+  var co__6205__auto____43571 = new reflex.core.ComputedObservable(null, true, function() {
+    var m__43570 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
+    if(cljs.core.contains_QMARK_.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics), m__43570)) {
+      return cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_visible_metrics, cljs.core.disj, m__43570)
     }else {
       return null
     }
   }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-  cljs.core.deref.call(null, co__6205__auto____35533);
-  return co__6205__auto____35533
+  cljs.core.deref.call(null, co__6205__auto____43571);
+  return co__6205__auto____43571
 }();
-cljs.core.add_watch.call(null, co__6211__auto____35534, "\ufdd0'reflex-constraint", function() {
-  var m__35535 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
-  if(cljs.core.contains_QMARK_.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics), m__35535)) {
-    return cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_visible_metrics, cljs.core.disj, m__35535)
+cljs.core.add_watch.call(null, co__6211__auto____43572, "\ufdd0'reflex-constraint", function() {
+  var m__43573 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
+  if(cljs.core.contains_QMARK_.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics), m__43573)) {
+    return cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_visible_metrics, cljs.core.disj, m__43573)
   }else {
     return null
   }
 });
-co__6211__auto____35534;
+co__6211__auto____43572;
 vcfvis.core.visible_metric_QMARK_ = function visible_metric_QMARK_(m) {
   return cljs.core.contains_QMARK_.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics), m)
 };
@@ -32372,24 +32372,24 @@ vcfvis.core.toggle_visible_metric_BANG_ = function toggle_visible_metric_BANG_(m
   return cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_visible_metrics, cljs.core.truth_(vcfvis.core.visible_metric_QMARK_.call(null, m)) ? cljs.core.disj : cljs.core.conj, m)
 };
 vcfvis.core.update_metric_BANG_ = function update_metric_BANG_(m, extent) {
-  var vec__35553__35554 = m.call(null, "\ufdd0'range");
-  var min__35555 = cljs.core.nth.call(null, vec__35553__35554, 0, null);
-  var max__35556 = cljs.core.nth.call(null, vec__35553__35554, 1, null);
-  var extent__35557 = cljs.core.apply.call(null, cljs.core._, extent) === 0 ? null : cljs.core._EQ_.call(null, extent, cljs.core.PersistentVector.fromArray([min__35555, max__35556], true)) ? cljs.core.PersistentVector.fromArray([-Infinity, Infinity], true) : cljs.core._EQ_.call(null, cljs.core.first.call(null, extent), min__35555) ? cljs.core.PersistentVector.fromArray([-Infinity, cljs.core.second.call(null, extent)], true) : cljs.core._EQ_.call(null, cljs.core.second.call(null, extent), max__35556) ? 
+  var vec__43591__43592 = m.call(null, "\ufdd0'range");
+  var min__43593 = cljs.core.nth.call(null, vec__43591__43592, 0, null);
+  var max__43594 = cljs.core.nth.call(null, vec__43591__43592, 1, null);
+  var extent__43595 = cljs.core.apply.call(null, cljs.core._, extent) === 0 ? null : cljs.core._EQ_.call(null, extent, cljs.core.PersistentVector.fromArray([min__43593, max__43594], true)) ? cljs.core.PersistentVector.fromArray([-Infinity, Infinity], true) : cljs.core._EQ_.call(null, cljs.core.first.call(null, extent), min__43593) ? cljs.core.PersistentVector.fromArray([-Infinity, cljs.core.second.call(null, extent)], true) : cljs.core._EQ_.call(null, cljs.core.second.call(null, extent), max__43594) ? 
   cljs.core.PersistentVector.fromArray([cljs.core.first.call(null, extent), Infinity], true) : "\ufdd0'else" ? extent : null;
-  var G__35558__35559 = cljs.core.seq.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs));
-  if(G__35558__35559) {
-    var vcf__35560 = cljs.core.first.call(null, G__35558__35559);
-    var G__35558__35561 = G__35558__35559;
+  var G__43596__43597 = cljs.core.seq.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs));
+  if(G__43596__43597) {
+    var vcf__43598 = cljs.core.first.call(null, G__43596__43597);
+    var G__43596__43599 = G__43596__43597;
     while(true) {
-      cljs.core.get_in.call(null, vcf__35560, cljs.core.PersistentVector.fromArray(["\ufdd0'cf", m.call(null, "\ufdd0'id"), "\ufdd0'dimension"], true)).filter(c2.util.clj__GT_js.call(null, extent__35557));
-      var temp__3974__auto____35562 = cljs.core.next.call(null, G__35558__35561);
-      if(temp__3974__auto____35562) {
-        var G__35558__35563 = temp__3974__auto____35562;
-        var G__35570 = cljs.core.first.call(null, G__35558__35563);
-        var G__35571 = G__35558__35563;
-        vcf__35560 = G__35570;
-        G__35558__35561 = G__35571;
+      cljs.core.get_in.call(null, vcf__43598, cljs.core.PersistentVector.fromArray(["\ufdd0'cf", m.call(null, "\ufdd0'id"), "\ufdd0'dimension"], true)).filter(c2.util.clj__GT_js.call(null, extent__43595));
+      var temp__3974__auto____43600 = cljs.core.next.call(null, G__43596__43599);
+      if(temp__3974__auto____43600) {
+        var G__43596__43601 = temp__3974__auto____43600;
+        var G__43608 = cljs.core.first.call(null, G__43596__43601);
+        var G__43609 = G__43596__43601;
+        vcf__43598 = G__43608;
+        G__43596__43599 = G__43609;
         continue
       }else {
       }
@@ -32397,21 +32397,21 @@ vcfvis.core.update_metric_BANG_ = function update_metric_BANG_(m, extent) {
     }
   }else {
   }
-  cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_filters, cljs.core.assoc, m.call(null, "\ufdd0'id"), extent__35557);
-  cljs.core.reset_BANG_.call(null, m.call(null, "\ufdd0'!filter-extent"), extent__35557);
-  var G__35564__35565 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-  if(G__35564__35565) {
-    var s__8951__auto____35566 = cljs.core.first.call(null, G__35564__35565);
-    var G__35564__35567 = G__35564__35565;
+  cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_filters, cljs.core.assoc, m.call(null, "\ufdd0'id"), extent__43595);
+  cljs.core.reset_BANG_.call(null, m.call(null, "\ufdd0'!filter-extent"), extent__43595);
+  var G__43602__43603 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+  if(G__43602__43603) {
+    var s__8951__auto____43604 = cljs.core.first.call(null, G__43602__43603);
+    var G__43602__43605 = G__43602__43603;
     while(true) {
-      s__8951__auto____35566.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'filter-updated"], {"\ufdd0'filter-updated":m}));
-      var temp__3974__auto____35568 = cljs.core.next.call(null, G__35564__35567);
-      if(temp__3974__auto____35568) {
-        var G__35564__35569 = temp__3974__auto____35568;
-        var G__35572 = cljs.core.first.call(null, G__35564__35569);
-        var G__35573 = G__35564__35569;
-        s__8951__auto____35566 = G__35572;
-        G__35564__35567 = G__35573;
+      s__8951__auto____43604.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'filter-updated"], {"\ufdd0'filter-updated":m}));
+      var temp__3974__auto____43606 = cljs.core.next.call(null, G__43602__43605);
+      if(temp__3974__auto____43606) {
+        var G__43602__43607 = temp__3974__auto____43606;
+        var G__43610 = cljs.core.first.call(null, G__43602__43607);
+        var G__43611 = G__43602__43607;
+        s__8951__auto____43604 = G__43610;
+        G__43602__43605 = G__43611;
         continue
       }else {
         return null
@@ -32425,45 +32425,45 @@ vcfvis.core.update_metric_BANG_ = function update_metric_BANG_(m, extent) {
 cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.core.conj, function(m__8957__auto__) {
   try {
     if(function() {
-      var G__35579__35580 = m__8957__auto__;
-      if(G__35579__35580) {
+      var G__43617__43618 = m__8957__auto__;
+      if(G__43617__43618) {
         if(function() {
-          var or__3824__auto____35581 = G__35579__35580.cljs$lang$protocol_mask$partition0$ & 256;
-          if(or__3824__auto____35581) {
-            return or__3824__auto____35581
+          var or__3824__auto____43619 = G__43617__43618.cljs$lang$protocol_mask$partition0$ & 256;
+          if(or__3824__auto____43619) {
+            return or__3824__auto____43619
           }else {
-            return G__35579__35580.cljs$core$ILookup$
+            return G__43617__43618.cljs$core$ILookup$
           }
         }()) {
           return true
         }else {
-          if(!G__35579__35580.cljs$lang$protocol_mask$partition0$) {
-            return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__35579__35580)
+          if(!G__43617__43618.cljs$lang$protocol_mask$partition0$) {
+            return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__43617__43618)
           }else {
             return false
           }
         }
       }else {
-        return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__35579__35580)
+        return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__43617__43618)
       }
     }()) {
-      var extent__35583 = function() {
-        var val__6595__auto____35582 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'extent", "\ufdd0'clojure.core.match/not-found");
-        if(cljs.core._EQ_.call(null, val__6595__auto____35582, "\ufdd0'clojure.core.match/not-found")) {
+      var extent__43621 = function() {
+        var val__6595__auto____43620 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'extent", "\ufdd0'clojure.core.match/not-found");
+        if(cljs.core._EQ_.call(null, val__6595__auto____43620, "\ufdd0'clojure.core.match/not-found")) {
           throw 0;
         }else {
-          return val__6595__auto____35582
+          return val__6595__auto____43620
         }
       }();
-      var metric__35585 = function() {
-        var val__6595__auto____35584 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'metric-brushed", "\ufdd0'clojure.core.match/not-found");
-        if(cljs.core._EQ_.call(null, val__6595__auto____35584, "\ufdd0'clojure.core.match/not-found")) {
+      var metric__43623 = function() {
+        var val__6595__auto____43622 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'metric-brushed", "\ufdd0'clojure.core.match/not-found");
+        if(cljs.core._EQ_.call(null, val__6595__auto____43622, "\ufdd0'clojure.core.match/not-found")) {
           throw 0;
         }else {
-          return val__6595__auto____35584
+          return val__6595__auto____43622
         }
       }();
-      return vcfvis.core.update_metric_BANG_.call(null, metric__35585, extent__35583)
+      return vcfvis.core.update_metric_BANG_.call(null, metric__43623, extent__43621)
     }else {
       if("\ufdd0'else") {
         throw 0;
@@ -32473,7 +32473,7 @@ cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.c
     }
   }catch(e__7028__auto__) {
     if(e__7028__auto__ === 0) {
-      var G__35574__35578 = m__8957__auto__;
+      var G__43612__43616 = m__8957__auto__;
       return null
     }else {
       throw e__7028__auto__;
@@ -35530,30 +35530,30 @@ vcfvis.histogram.margin = vcfvis.ui.hist_margin;
 vcfvis.histogram.inter_hist_margin = vcfvis.ui.inter_hist_margin;
 vcfvis.histogram.axis_height = vcfvis.ui.axis_height;
 vcfvis.histogram.hist_g_STAR_ = function() {
-  var hist_g_STAR___delegate = function(vcf, metric, p__10687) {
-    var map__10726__10727 = p__10687;
-    var map__10726__10728 = cljs.core.seq_QMARK_.call(null, map__10726__10727) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10726__10727) : map__10726__10727;
-    var bars_QMARK___10729 = cljs.core._lookup.call(null, map__10726__10728, "\ufdd0'bars?", true);
-    var width__10730 = cljs.core._lookup.call(null, map__10726__10728, "\ufdd0'width", null);
-    var height__10731 = cljs.core._lookup.call(null, map__10726__10728, "\ufdd0'height", null);
-    var map__10732__10734 = metric;
-    var map__10732__10735 = cljs.core.seq_QMARK_.call(null, map__10732__10734) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10732__10734) : map__10732__10734;
-    var metric_id__10736 = cljs.core._lookup.call(null, map__10732__10735, "\ufdd0'id", null);
-    var scale_x__10737 = cljs.core._lookup.call(null, map__10732__10735, "\ufdd0'scale-x", null);
-    var map__10733__10738 = cljs.core.get_in.call(null, vcf, cljs.core.PersistentVector.fromArray(["\ufdd0'cf", metric_id__10736], true));
-    var map__10733__10739 = cljs.core.seq_QMARK_.call(null, map__10733__10738) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10733__10738) : map__10733__10738;
-    var bin_width__10740 = cljs.core._lookup.call(null, map__10733__10739, "\ufdd0'bin-width", null);
-    var binned__10741 = cljs.core._lookup.call(null, map__10733__10739, "\ufdd0'binned", null);
-    var dimension__10742 = cljs.core._lookup.call(null, map__10733__10739, "\ufdd0'dimension", null);
-    var max_val__10743 = cljs.core.first.call(null, binned__10741.top(1))["value"];
-    var no_data_QMARK___10744 = max_val__10743 === 0;
-    var scale_y__10747 = function() {
-      var G__10745__10746 = cljs.core.get_in.call(null, metric, cljs.core.PersistentVector.fromArray(["\ufdd0'y-scale", "\ufdd0'type"], true), "\ufdd0'linear");
-      if(cljs.core._EQ_.call(null, "\ufdd0'log", G__10745__10746)) {
-        return c2.scale.log.call(null, "\ufdd0'domain", cljs.core.PersistentVector.fromArray([1, max_val__10743], true), "\ufdd0'range", cljs.core.PersistentVector.fromArray([0, height__10731], true))
+  var hist_g_STAR___delegate = function(vcf, metric, p__119020) {
+    var map__119059__119060 = p__119020;
+    var map__119059__119061 = cljs.core.seq_QMARK_.call(null, map__119059__119060) ? cljs.core.apply.call(null, cljs.core.hash_map, map__119059__119060) : map__119059__119060;
+    var bars_QMARK___119062 = cljs.core._lookup.call(null, map__119059__119061, "\ufdd0'bars?", true);
+    var width__119063 = cljs.core._lookup.call(null, map__119059__119061, "\ufdd0'width", null);
+    var height__119064 = cljs.core._lookup.call(null, map__119059__119061, "\ufdd0'height", null);
+    var map__119065__119067 = metric;
+    var map__119065__119068 = cljs.core.seq_QMARK_.call(null, map__119065__119067) ? cljs.core.apply.call(null, cljs.core.hash_map, map__119065__119067) : map__119065__119067;
+    var metric_id__119069 = cljs.core._lookup.call(null, map__119065__119068, "\ufdd0'id", null);
+    var scale_x__119070 = cljs.core._lookup.call(null, map__119065__119068, "\ufdd0'scale-x", null);
+    var map__119066__119071 = cljs.core.get_in.call(null, vcf, cljs.core.PersistentVector.fromArray(["\ufdd0'cf", metric_id__119069], true));
+    var map__119066__119072 = cljs.core.seq_QMARK_.call(null, map__119066__119071) ? cljs.core.apply.call(null, cljs.core.hash_map, map__119066__119071) : map__119066__119071;
+    var bin_width__119073 = cljs.core._lookup.call(null, map__119066__119072, "\ufdd0'bin-width", null);
+    var binned__119074 = cljs.core._lookup.call(null, map__119066__119072, "\ufdd0'binned", null);
+    var dimension__119075 = cljs.core._lookup.call(null, map__119066__119072, "\ufdd0'dimension", null);
+    var max_val__119076 = cljs.core.first.call(null, binned__119074.top(1))["value"];
+    var no_data_QMARK___119077 = max_val__119076 === 0;
+    var scale_y__119080 = function() {
+      var G__119078__119079 = cljs.core.get_in.call(null, metric, cljs.core.PersistentVector.fromArray(["\ufdd0'y-scale", "\ufdd0'type"], true), "\ufdd0'linear");
+      if(cljs.core._EQ_.call(null, "\ufdd0'log", G__119078__119079)) {
+        return c2.scale.log.call(null, "\ufdd0'domain", cljs.core.PersistentVector.fromArray([1, max_val__119076], true), "\ufdd0'range", cljs.core.PersistentVector.fromArray([0, height__119064], true))
       }else {
-        if(cljs.core._EQ_.call(null, "\ufdd0'linear", G__10745__10746)) {
-          return c2.scale.linear.call(null, "\ufdd0'domain", cljs.core.PersistentVector.fromArray([0, max_val__10743], true), "\ufdd0'range", cljs.core.PersistentVector.fromArray([0, height__10731], true))
+        if(cljs.core._EQ_.call(null, "\ufdd0'linear", G__119078__119079)) {
+          return c2.scale.linear.call(null, "\ufdd0'domain", cljs.core.PersistentVector.fromArray([0, max_val__119076], true), "\ufdd0'range", cljs.core.PersistentVector.fromArray([0, height__119064], true))
         }else {
           if("\ufdd0'else") {
             throw new Error([cljs.core.str("No matching clause: "), cljs.core.str(cljs.core.get_in.call(null, metric, cljs.core.PersistentVector.fromArray(["\ufdd0'y-scale", "\ufdd0'type"], true), "\ufdd0'linear"))].join(""));
@@ -35563,21 +35563,21 @@ vcfvis.histogram.hist_g_STAR_ = function() {
         }
       }
     }();
-    var scale_x__10748 = cljs.core.assoc_in.call(null, scale_x__10737, cljs.core.PersistentVector.fromArray(["\ufdd0'range", 1], true), width__10730);
-    var dx__10749 = scale_x__10748.call(null, bin_width__10740) - scale_x__10748.call(null, 0);
-    return cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.PersistentVector.fromArray(["\ufdd0'text.message", cljs.core.ObjMap.fromObject(["\ufdd0'x", "\ufdd0'y"], {"\ufdd0'x":width__10730 / 2, "\ufdd0'y":height__10731 / 2}), no_data_QMARK___10744 ? "No available data; try clearing filters on other dimensions." : null], true), cljs.core.PersistentVector.fromArray(["\ufdd0'g.data-frame", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":[cljs.core.str(c2.svg.translate.call(null, 
-    cljs.core.PersistentVector.fromArray([0, height__10731], true))), cljs.core.str(c2.svg.scale.call(null, cljs.core.PersistentVector.fromArray([1, -1], true)))].join("")}), cljs.core.PersistentVector.fromArray(["\ufdd0'g.distribution", no_data_QMARK___10744 ? null : cljs.core.truth_(bars_QMARK___10729) ? function() {
-      var iter__2355__auto____10760 = function iter__10750(s__10751) {
+    var scale_x__119081 = cljs.core.assoc_in.call(null, scale_x__119070, cljs.core.PersistentVector.fromArray(["\ufdd0'range", 1], true), width__119063);
+    var dx__119082 = scale_x__119081.call(null, bin_width__119073) - scale_x__119081.call(null, 0);
+    return cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.PersistentVector.fromArray(["\ufdd0'text.message", cljs.core.ObjMap.fromObject(["\ufdd0'x", "\ufdd0'y"], {"\ufdd0'x":width__119063 / 2, "\ufdd0'y":height__119064 / 2}), no_data_QMARK___119077 ? "No available data; try clearing filters on other dimensions." : null], true), cljs.core.PersistentVector.fromArray(["\ufdd0'g.data-frame", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":[cljs.core.str(c2.svg.translate.call(null, 
+    cljs.core.PersistentVector.fromArray([0, height__119064], true))), cljs.core.str(c2.svg.scale.call(null, cljs.core.PersistentVector.fromArray([1, -1], true)))].join("")}), cljs.core.PersistentVector.fromArray(["\ufdd0'g.distribution", no_data_QMARK___119077 ? null : cljs.core.truth_(bars_QMARK___119062) ? function() {
+      var iter__2355__auto____119093 = function iter__119083(s__119084) {
         return new cljs.core.LazySeq(null, false, function() {
-          var s__10751__10756 = s__10751;
+          var s__119084__119089 = s__119084;
           while(true) {
-            if(cljs.core.seq.call(null, s__10751__10756)) {
-              var d__10757 = cljs.core.first.call(null, s__10751__10756);
+            if(cljs.core.seq.call(null, s__119084__119089)) {
+              var d__119090 = cljs.core.first.call(null, s__119084__119089);
               return cljs.core.cons.call(null, function() {
-                var x__10758 = d__10757["key"];
-                var count__10759 = d__10757["value"];
-                return cljs.core.PersistentVector.fromArray(["\ufdd0'rect.bar", cljs.core.ObjMap.fromObject(["\ufdd0'x", "\ufdd0'width", "\ufdd0'height"], {"\ufdd0'x":scale_x__10748.call(null, x__10758), "\ufdd0'width":dx__10749, "\ufdd0'height":scale_y__10747.call(null, count__10759)})], true)
-              }(), iter__10750.call(null, cljs.core.rest.call(null, s__10751__10756)))
+                var x__119091 = d__119090["key"];
+                var count__119092 = d__119090["value"];
+                return cljs.core.PersistentVector.fromArray(["\ufdd0'rect.bar", cljs.core.ObjMap.fromObject(["\ufdd0'x", "\ufdd0'width", "\ufdd0'height"], {"\ufdd0'x":scale_x__119081.call(null, x__119091), "\ufdd0'width":dx__119082, "\ufdd0'height":count__119092 === 0 ? 0 : scale_y__119080.call(null, count__119092)})], true)
+              }(), iter__119083.call(null, cljs.core.rest.call(null, s__119084__119089)))
             }else {
               return null
             }
@@ -35585,48 +35585,48 @@ vcfvis.histogram.hist_g_STAR_ = function() {
           }
         }, null)
       };
-      return iter__2355__auto____10760.call(null, binned__10741.all())
-    }() : cljs.core.PersistentVector.fromArray(["\ufdd0'path", cljs.core.ObjMap.fromObject(["\ufdd0'd"], {"\ufdd0'd":[cljs.core.str("M"), cljs.core.str(binned__10741.all().map(function(d) {
-      var x__10761 = d["key"];
-      var count__10762 = d["value"];
-      var h__10763 = scale_y__10747.call(null, count__10762);
-      return[cljs.core.str(scale_x__10748.call(null, x__10761)), cljs.core.str(","), cljs.core.str(h__10763)].join("")
+      return iter__2355__auto____119093.call(null, binned__119074.all())
+    }() : cljs.core.PersistentVector.fromArray(["\ufdd0'path", cljs.core.ObjMap.fromObject(["\ufdd0'd"], {"\ufdd0'd":[cljs.core.str("M"), cljs.core.str(binned__119074.all().map(function(d) {
+      var x__119094 = d["key"];
+      var count__119095 = d["value"];
+      var h__119096 = scale_y__119080.call(null, count__119095);
+      return[cljs.core.str(scale_x__119081.call(null, x__119094)), cljs.core.str(","), cljs.core.str(h__119096)].join("")
     }).join("L"))].join("")})], true)], true)], true)], true)
   };
   var hist_g_STAR_ = function(vcf, metric, var_args) {
-    var p__10687 = null;
+    var p__119020 = null;
     if(goog.isDef(var_args)) {
-      p__10687 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0)
+      p__119020 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0)
     }
-    return hist_g_STAR___delegate.call(this, vcf, metric, p__10687)
+    return hist_g_STAR___delegate.call(this, vcf, metric, p__119020)
   };
   hist_g_STAR_.cljs$lang$maxFixedArity = 2;
-  hist_g_STAR_.cljs$lang$applyTo = function(arglist__10764) {
-    var vcf = cljs.core.first(arglist__10764);
-    var metric = cljs.core.first(cljs.core.next(arglist__10764));
-    var p__10687 = cljs.core.rest(cljs.core.next(arglist__10764));
-    return hist_g_STAR___delegate(vcf, metric, p__10687)
+  hist_g_STAR_.cljs$lang$applyTo = function(arglist__119097) {
+    var vcf = cljs.core.first(arglist__119097);
+    var metric = cljs.core.first(cljs.core.next(arglist__119097));
+    var p__119020 = cljs.core.rest(cljs.core.next(arglist__119097));
+    return hist_g_STAR___delegate(vcf, metric, p__119020)
   };
   hist_g_STAR_.cljs$lang$arity$variadic = hist_g_STAR___delegate;
   return hist_g_STAR_
 }();
 vcfvis.histogram.draw_mini_hist_for_metric_BANG_ = function draw_mini_hist_for_metric_BANG_(m) {
-  var vcfs__10782 = cljs.core.deref.call(null, vcfvis.core._BANG_vcfs);
-  var n__10783 = cljs.core.count.call(null, vcfs__10782);
-  var mini_width__10784 = parseFloat(c2.dom.style.call(null, "#metrics-content", "\ufdd0'width"));
-  var mini_height__10785 = 100;
-  return singult.core.merge_BANG_.call(null, c2.dom.select.call(null, [cljs.core.str("#metric-"), cljs.core.str((new cljs.core.Keyword("\ufdd0'id")).call(null, m)), cljs.core.str(" .mini-hist")].join("")), cljs.core.PersistentVector.fromArray(["\ufdd0'div.mini-hist", cljs.core.PersistentVector.fromArray(["\ufdd0'svg", cljs.core.ObjMap.fromObject(["\ufdd0'width", "\ufdd0'height"], {"\ufdd0'width":vcfvis.histogram.width, "\ufdd0'height":n__10783 * mini_height__10785 + (n__10783 - 1) * vcfvis.histogram.inter_hist_margin}), 
+  var vcfs__119115 = cljs.core.deref.call(null, vcfvis.core._BANG_vcfs);
+  var n__119116 = cljs.core.count.call(null, vcfs__119115);
+  var mini_width__119117 = parseFloat(c2.dom.style.call(null, "#metrics-content", "\ufdd0'width"));
+  var mini_height__119118 = 100;
+  return singult.core.merge_BANG_.call(null, c2.dom.select.call(null, [cljs.core.str("#metric-"), cljs.core.str((new cljs.core.Keyword("\ufdd0'id")).call(null, m)), cljs.core.str(" .mini-hist")].join("")), cljs.core.PersistentVector.fromArray(["\ufdd0'div.mini-hist", cljs.core.PersistentVector.fromArray(["\ufdd0'svg", cljs.core.ObjMap.fromObject(["\ufdd0'width", "\ufdd0'height"], {"\ufdd0'width":vcfvis.histogram.width, "\ufdd0'height":n__119116 * mini_height__119118 + (n__119116 - 1) * vcfvis.histogram.inter_hist_margin}), 
   function() {
-    var iter__2355__auto____10798 = function iter__10786(s__10787) {
+    var iter__2355__auto____119131 = function iter__119119(s__119120) {
       return new cljs.core.LazySeq(null, false, function() {
-        var s__10787__10793 = s__10787;
+        var s__119120__119126 = s__119120;
         while(true) {
-          if(cljs.core.seq.call(null, s__10787__10793)) {
-            var vec__10794__10795 = cljs.core.first.call(null, s__10787__10793);
-            var vcf__10796 = cljs.core.nth.call(null, vec__10794__10795, 0, null);
-            var idx__10797 = cljs.core.nth.call(null, vec__10794__10795, 1, null);
-            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, cljs.core.PersistentVector.fromArray([0, idx__10797 * (mini_height__10785 + vcfvis.histogram.inter_hist_margin)], true))}), vcfvis.histogram.hist_g_STAR_.call(null, vcf__10796, m, "\ufdd0'height", mini_height__10785, "\ufdd0'width", mini_width__10784, "\ufdd0'bars?", true)], true), iter__10786.call(null, cljs.core.rest.call(null, 
-            s__10787__10793)))
+          if(cljs.core.seq.call(null, s__119120__119126)) {
+            var vec__119127__119128 = cljs.core.first.call(null, s__119120__119126);
+            var vcf__119129 = cljs.core.nth.call(null, vec__119127__119128, 0, null);
+            var idx__119130 = cljs.core.nth.call(null, vec__119127__119128, 1, null);
+            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, cljs.core.PersistentVector.fromArray([0, idx__119130 * (mini_height__119118 + vcfvis.histogram.inter_hist_margin)], true))}), vcfvis.histogram.hist_g_STAR_.call(null, vcf__119129, m, "\ufdd0'height", mini_height__119118, "\ufdd0'width", mini_width__119117, "\ufdd0'bars?", true)], true), iter__119119.call(null, 
+            cljs.core.rest.call(null, s__119120__119126)))
           }else {
             return null
           }
@@ -35634,26 +35634,26 @@ vcfvis.histogram.draw_mini_hist_for_metric_BANG_ = function draw_mini_hist_for_m
         }
       }, null)
     };
-    return iter__2355__auto____10798.call(null, cljs.core.map.call(null, cljs.core.vector, vcfs__10782, cljs.core.range.call(null)))
+    return iter__2355__auto____119131.call(null, cljs.core.map.call(null, cljs.core.vector, vcfs__119115, cljs.core.range.call(null)))
   }()], true)], true))
 };
 vcfvis.histogram.draw_histogram_BANG_ = function draw_histogram_BANG_(vcfs, metric) {
-  var map__10856__10857 = metric;
-  var map__10856__10858 = cljs.core.seq_QMARK_.call(null, map__10856__10857) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10856__10857) : map__10856__10857;
-  var x__10859 = cljs.core._lookup.call(null, map__10856__10858, "\ufdd0'scale-x", null);
-  var tick_range__10860 = -cljs.core.apply.call(null, cljs.core._, (new cljs.core.Keyword("\ufdd0'domain")).call(null, x__10859)) / cljs.core.count.call(null, (new cljs.core.Keyword("\ufdd0'ticks")).call(null, x__10859));
-  var n__10861 = cljs.core.count.call(null, vcfs);
-  var hist_height__10862 = (vcfvis.histogram.height - n__10861 * (vcfvis.histogram.inter_hist_margin - 1)) / n__10861;
+  var map__119189__119190 = metric;
+  var map__119189__119191 = cljs.core.seq_QMARK_.call(null, map__119189__119190) ? cljs.core.apply.call(null, cljs.core.hash_map, map__119189__119190) : map__119189__119190;
+  var x__119192 = cljs.core._lookup.call(null, map__119189__119191, "\ufdd0'scale-x", null);
+  var tick_range__119193 = -cljs.core.apply.call(null, cljs.core._, (new cljs.core.Keyword("\ufdd0'domain")).call(null, x__119192)) / cljs.core.count.call(null, (new cljs.core.Keyword("\ufdd0'ticks")).call(null, x__119192));
+  var n__119194 = cljs.core.count.call(null, vcfs);
+  var hist_height__119195 = (vcfvis.histogram.height - n__119194 * (vcfvis.histogram.inter_hist_margin - 1)) / n__119194;
   singult.core.merge_BANG_.call(null, c2.dom.select.call(null, "#main-hist"), cljs.core.PersistentVector.fromArray(["\ufdd0'div#main-hist", cljs.core.PersistentVector.fromArray(["\ufdd0'div#histograms", cljs.core.PersistentVector.fromArray(["\ufdd0'div.labels", function() {
-    var iter__2355__auto____10875 = function iter__10863(s__10864) {
+    var iter__2355__auto____119208 = function iter__119196(s__119197) {
       return new cljs.core.LazySeq(null, false, function() {
-        var s__10864__10870 = s__10864;
+        var s__119197__119203 = s__119197;
         while(true) {
-          if(cljs.core.seq.call(null, s__10864__10870)) {
-            var vec__10871__10872 = cljs.core.first.call(null, s__10864__10870);
-            var vcf__10873 = cljs.core.nth.call(null, vec__10871__10872, 0, null);
-            var idx__10874 = cljs.core.nth.call(null, vec__10871__10872, 1, null);
-            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'span.label", cljs.core.ObjMap.fromObject(["\ufdd0'style"], {"\ufdd0'style":cljs.core.ObjMap.fromObject(["\ufdd0'top"], {"\ufdd0'top":[cljs.core.str(idx__10874 * (hist_height__10862 + vcfvis.histogram.inter_hist_margin)), cljs.core.str("px")].join("")})}), vcf__10873.call(null, "\ufdd0'file-url")], true), iter__10863.call(null, cljs.core.rest.call(null, s__10864__10870)))
+          if(cljs.core.seq.call(null, s__119197__119203)) {
+            var vec__119204__119205 = cljs.core.first.call(null, s__119197__119203);
+            var vcf__119206 = cljs.core.nth.call(null, vec__119204__119205, 0, null);
+            var idx__119207 = cljs.core.nth.call(null, vec__119204__119205, 1, null);
+            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'span.label", cljs.core.ObjMap.fromObject(["\ufdd0'style"], {"\ufdd0'style":cljs.core.ObjMap.fromObject(["\ufdd0'top"], {"\ufdd0'top":[cljs.core.str(idx__119207 * (hist_height__119195 + vcfvis.histogram.inter_hist_margin)), cljs.core.str("px")].join("")})}), vcf__119206.call(null, "\ufdd0'file-url")], true), iter__119196.call(null, cljs.core.rest.call(null, s__119197__119203)))
           }else {
             return null
           }
@@ -35661,19 +35661,19 @@ vcfvis.histogram.draw_histogram_BANG_ = function draw_histogram_BANG_(vcfs, metr
         }
       }, null)
     };
-    return iter__2355__auto____10875.call(null, cljs.core.map.call(null, cljs.core.vector, vcfs, cljs.core.range.call(null)))
-  }()], true), cljs.core.PersistentVector.fromArray(["\ufdd0'svg.histogram", cljs.core.ObjMap.fromObject(["\ufdd0'width", "\ufdd0'height"], {"\ufdd0'width":vcfvis.histogram.width + 2 * vcfvis.histogram.margin, "\ufdd0'height":vcfvis.histogram.height + (n__10861 - 1) * vcfvis.histogram.inter_hist_margin}), cljs.core.PersistentVector.fromArray(["\ufdd0'g.hist-container", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, cljs.core.PersistentVector.fromArray([vcfvis.histogram.margin, 
+    return iter__2355__auto____119208.call(null, cljs.core.map.call(null, cljs.core.vector, vcfs, cljs.core.range.call(null)))
+  }()], true), cljs.core.PersistentVector.fromArray(["\ufdd0'svg.histogram", cljs.core.ObjMap.fromObject(["\ufdd0'width", "\ufdd0'height"], {"\ufdd0'width":vcfvis.histogram.width + 2 * vcfvis.histogram.margin, "\ufdd0'height":vcfvis.histogram.height + (n__119194 - 1) * vcfvis.histogram.inter_hist_margin}), cljs.core.PersistentVector.fromArray(["\ufdd0'g.hist-container", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, cljs.core.PersistentVector.fromArray([vcfvis.histogram.margin, 
   0], true))}), function() {
-    var iter__2355__auto____10888 = function iter__10876(s__10877) {
+    var iter__2355__auto____119221 = function iter__119209(s__119210) {
       return new cljs.core.LazySeq(null, false, function() {
-        var s__10877__10883 = s__10877;
+        var s__119210__119216 = s__119210;
         while(true) {
-          if(cljs.core.seq.call(null, s__10877__10883)) {
-            var vec__10884__10885 = cljs.core.first.call(null, s__10877__10883);
-            var vcf__10886 = cljs.core.nth.call(null, vec__10884__10885, 0, null);
-            var idx__10887 = cljs.core.nth.call(null, vec__10884__10885, 1, null);
-            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, cljs.core.PersistentVector.fromArray([0, idx__10887 * (hist_height__10862 + vcfvis.histogram.inter_hist_margin)], true))}), vcfvis.histogram.hist_g_STAR_.call(null, vcf__10886, metric, "\ufdd0'height", hist_height__10862, "\ufdd0'width", vcfvis.histogram.width)], true), iter__10876.call(null, cljs.core.rest.call(null, 
-            s__10877__10883)))
+          if(cljs.core.seq.call(null, s__119210__119216)) {
+            var vec__119217__119218 = cljs.core.first.call(null, s__119210__119216);
+            var vcf__119219 = cljs.core.nth.call(null, vec__119217__119218, 0, null);
+            var idx__119220 = cljs.core.nth.call(null, vec__119217__119218, 1, null);
+            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, cljs.core.PersistentVector.fromArray([0, idx__119220 * (hist_height__119195 + vcfvis.histogram.inter_hist_margin)], true))}), vcfvis.histogram.hist_g_STAR_.call(null, vcf__119219, metric, "\ufdd0'height", hist_height__119195, "\ufdd0'width", vcfvis.histogram.width)], true), iter__119209.call(null, cljs.core.rest.call(null, 
+            s__119210__119216)))
           }else {
             return null
           }
@@ -35681,39 +35681,39 @@ vcfvis.histogram.draw_histogram_BANG_ = function draw_histogram_BANG_(vcfs, metr
         }
       }, null)
     };
-    return iter__2355__auto____10888.call(null, cljs.core.map.call(null, cljs.core.vector, vcfs, cljs.core.range.call(null)))
+    return iter__2355__auto____119221.call(null, cljs.core.map.call(null, cljs.core.vector, vcfs, cljs.core.range.call(null)))
   }()], true)], true)], true), cljs.core.PersistentVector.fromArray(["\ufdd0'div#hist-axis", cljs.core.PersistentVector.fromArray(["\ufdd0'div.axis.abscissa", cljs.core.PersistentVector.fromArray(["\ufdd0'svg", cljs.core.ObjMap.fromObject(["\ufdd0'width", "\ufdd0'height"], {"\ufdd0'width":vcfvis.histogram.width + 2 * vcfvis.histogram.margin, "\ufdd0'height":vcfvis.histogram.axis_height}), cljs.core.PersistentVector.fromArray(["\ufdd0'g", cljs.core.ObjMap.fromObject(["\ufdd0'transform"], {"\ufdd0'transform":c2.svg.translate.call(null, 
-  cljs.core.PersistentVector.fromArray([vcfvis.histogram.margin, 2], true))}), c2.svg.axis.call(null, x__10859, (new cljs.core.Keyword("\ufdd0'ticks")).call(null, x__10859), "\ufdd0'orientation", "\ufdd0'bottom", "\ufdd0'formatter", cljs.core.partial.call(null, goog.string.format, tick_range__10860 < 0.075 ? "%.2f" : "%.1f"))], true)], true)], true)], true)], true));
-  var _BANG_b__10889 = vcfvis.brush.init_BANG_.call(null, "#histograms svg .hist-container", x__10859, c2.scale.linear.call(null, "\ufdd0'range", cljs.core.PersistentVector.fromArray([0, vcfvis.histogram.height], true)));
-  var temp__3974__auto____10890 = cljs.core.deref.call(null, metric.call(null, "\ufdd0'!filter-extent"));
-  if(cljs.core.truth_(temp__3974__auto____10890)) {
-    var initial_extent__10891 = temp__3974__auto____10890;
-    var vec__10892__10894 = metric.call(null, "\ufdd0'range");
-    var r_min__10895 = cljs.core.nth.call(null, vec__10892__10894, 0, null);
-    var r_max__10896 = cljs.core.nth.call(null, vec__10892__10894, 1, null);
-    var vec__10893__10897 = initial_extent__10891;
-    var start__10898 = cljs.core.nth.call(null, vec__10893__10897, 0, null);
-    var end__10899 = cljs.core.nth.call(null, vec__10893__10897, 1, null);
-    cljs.core.reset_BANG_.call(null, _BANG_b__10889, cljs.core.PersistentVector.fromArray([cljs.core.PersistentVector.fromArray([start__10898 > r_min__10895 ? start__10898 : r_min__10895, end__10899 < r_max__10896 ? end__10899 : r_max__10896], true), cljs.core.PersistentVector.fromArray([0, 0], true)], true))
+  cljs.core.PersistentVector.fromArray([vcfvis.histogram.margin, 2], true))}), c2.svg.axis.call(null, x__119192, (new cljs.core.Keyword("\ufdd0'ticks")).call(null, x__119192), "\ufdd0'orientation", "\ufdd0'bottom", "\ufdd0'formatter", cljs.core.partial.call(null, goog.string.format, tick_range__119193 < 0.075 ? "%.2f" : "%.1f"))], true)], true)], true)], true)], true));
+  var _BANG_b__119222 = vcfvis.brush.init_BANG_.call(null, "#histograms svg .hist-container", x__119192, c2.scale.linear.call(null, "\ufdd0'range", cljs.core.PersistentVector.fromArray([0, vcfvis.histogram.height], true)));
+  var temp__3974__auto____119223 = cljs.core.deref.call(null, metric.call(null, "\ufdd0'!filter-extent"));
+  if(cljs.core.truth_(temp__3974__auto____119223)) {
+    var initial_extent__119224 = temp__3974__auto____119223;
+    var vec__119225__119227 = metric.call(null, "\ufdd0'range");
+    var r_min__119228 = cljs.core.nth.call(null, vec__119225__119227, 0, null);
+    var r_max__119229 = cljs.core.nth.call(null, vec__119225__119227, 1, null);
+    var vec__119226__119230 = initial_extent__119224;
+    var start__119231 = cljs.core.nth.call(null, vec__119226__119230, 0, null);
+    var end__119232 = cljs.core.nth.call(null, vec__119226__119230, 1, null);
+    cljs.core.reset_BANG_.call(null, _BANG_b__119222, cljs.core.PersistentVector.fromArray([cljs.core.PersistentVector.fromArray([start__119231 > r_min__119228 ? start__119231 : r_min__119228, end__119232 < r_max__119229 ? end__119232 : r_max__119229], true), cljs.core.PersistentVector.fromArray([0, 0], true)], true))
   }else {
   }
-  return cljs.core.add_watch.call(null, _BANG_b__10889, "\ufdd0'onbrush", function(_10901, _10902, _, p__10900) {
-    var vec__10903__10904 = p__10900;
-    var xs__10905 = cljs.core.nth.call(null, vec__10903__10904, 0, null);
-    var ___10906 = cljs.core.nth.call(null, vec__10903__10904, 1, null);
-    var G__10907__10908 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-    if(G__10907__10908) {
-      var s__8951__auto____10909 = cljs.core.first.call(null, G__10907__10908);
-      var G__10907__10910 = G__10907__10908;
+  return cljs.core.add_watch.call(null, _BANG_b__119222, "\ufdd0'onbrush", function(_119234, _119235, _, p__119233) {
+    var vec__119236__119237 = p__119233;
+    var xs__119238 = cljs.core.nth.call(null, vec__119236__119237, 0, null);
+    var ___119239 = cljs.core.nth.call(null, vec__119236__119237, 1, null);
+    var G__119240__119241 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+    if(G__119240__119241) {
+      var s__8951__auto____119242 = cljs.core.first.call(null, G__119240__119241);
+      var G__119240__119243 = G__119240__119241;
       while(true) {
-        s__8951__auto____10909.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'metric-brushed", "\ufdd0'extent"], {"\ufdd0'metric-brushed":metric, "\ufdd0'extent":xs__10905}));
-        var temp__3974__auto____10911 = cljs.core.next.call(null, G__10907__10910);
-        if(temp__3974__auto____10911) {
-          var G__10907__10912 = temp__3974__auto____10911;
-          var G__10913 = cljs.core.first.call(null, G__10907__10912);
-          var G__10914 = G__10907__10912;
-          s__8951__auto____10909 = G__10913;
-          G__10907__10910 = G__10914;
+        s__8951__auto____119242.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'metric-brushed", "\ufdd0'extent"], {"\ufdd0'metric-brushed":metric, "\ufdd0'extent":xs__119238}));
+        var temp__3974__auto____119244 = cljs.core.next.call(null, G__119240__119243);
+        if(temp__3974__auto____119244) {
+          var G__119240__119245 = temp__3974__auto____119244;
+          var G__119246 = cljs.core.first.call(null, G__119240__119245);
+          var G__119247 = G__119240__119245;
+          s__8951__auto____119242 = G__119246;
+          G__119240__119243 = G__119247;
           continue
         }else {
           return null
@@ -35729,19 +35729,19 @@ vcfvis.histogram.clear_histogram_BANG_ = function clear_histogram_BANG_() {
   return singult.core.merge_BANG_.call(null, c2.dom.select.call(null, "#main-hist"), cljs.core.PersistentVector.fromArray(["\ufdd0'div#main-hist", cljs.core.PersistentVector.fromArray(["\ufdd0'div#histograms"], true), cljs.core.PersistentVector.fromArray(["\ufdd0'div#hist-axis"], true)], true))
 };
 vcfvis.histogram.draw_mini_hists_BANG_ = function draw_mini_hists_BANG_() {
-  var G__10921__10922 = cljs.core.seq.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics));
-  if(G__10921__10922) {
-    var m__10923 = cljs.core.first.call(null, G__10921__10922);
-    var G__10921__10924 = G__10921__10922;
+  var G__119254__119255 = cljs.core.seq.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_visible_metrics));
+  if(G__119254__119255) {
+    var m__119256 = cljs.core.first.call(null, G__119254__119255);
+    var G__119254__119257 = G__119254__119255;
     while(true) {
-      vcfvis.histogram.draw_mini_hist_for_metric_BANG_.call(null, m__10923);
-      var temp__3974__auto____10925 = cljs.core.next.call(null, G__10921__10924);
-      if(temp__3974__auto____10925) {
-        var G__10921__10926 = temp__3974__auto____10925;
-        var G__10927 = cljs.core.first.call(null, G__10921__10926);
-        var G__10928 = G__10921__10926;
-        m__10923 = G__10927;
-        G__10921__10924 = G__10928;
+      vcfvis.histogram.draw_mini_hist_for_metric_BANG_.call(null, m__119256);
+      var temp__3974__auto____119258 = cljs.core.next.call(null, G__119254__119257);
+      if(temp__3974__auto____119258) {
+        var G__119254__119259 = temp__3974__auto____119258;
+        var G__119260 = cljs.core.first.call(null, G__119254__119259);
+        var G__119261 = G__119254__119259;
+        m__119256 = G__119260;
+        G__119254__119257 = G__119261;
         continue
       }else {
         return null
@@ -35752,26 +35752,26 @@ vcfvis.histogram.draw_mini_hists_BANG_ = function draw_mini_hists_BANG_() {
     return null
   }
 };
-var co__6211__auto____10944 = function() {
-  var co__6205__auto____10943 = new reflex.core.ComputedObservable(null, true, function() {
-    var vcfs__10929 = cljs.core.deref.call(null, vcfvis.core._BANG_vcfs);
-    var metric__10930 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
+var co__6211__auto____119277 = function() {
+  var co__6205__auto____119276 = new reflex.core.ComputedObservable(null, true, function() {
+    var vcfs__119262 = cljs.core.deref.call(null, vcfvis.core._BANG_vcfs);
+    var metric__119263 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
     vcfvis.histogram.clear_histogram_BANG_.call(null);
-    if(cljs.core.seq.call(null, vcfs__10929)) {
-      vcfvis.histogram.draw_histogram_BANG_.call(null, vcfs__10929, metric__10930);
-      var G__10931__10932 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-      if(G__10931__10932) {
-        var s__8951__auto____10933 = cljs.core.first.call(null, G__10931__10932);
-        var G__10931__10934 = G__10931__10932;
+    if(cljs.core.seq.call(null, vcfs__119262)) {
+      vcfvis.histogram.draw_histogram_BANG_.call(null, vcfs__119262, metric__119263);
+      var G__119264__119265 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+      if(G__119264__119265) {
+        var s__8951__auto____119266 = cljs.core.first.call(null, G__119264__119265);
+        var G__119264__119267 = G__119264__119265;
         while(true) {
-          s__8951__auto____10933.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":cljs.core.get_in.call(null, cljs.core.first.call(null, vcfs__10929), cljs.core.PersistentVector.fromArray(["\ufdd0'cf", "\ufdd0'all"], true)).value()}));
-          var temp__3974__auto____10935 = cljs.core.next.call(null, G__10931__10934);
-          if(temp__3974__auto____10935) {
-            var G__10931__10936 = temp__3974__auto____10935;
-            var G__10959 = cljs.core.first.call(null, G__10931__10936);
-            var G__10960 = G__10931__10936;
-            s__8951__auto____10933 = G__10959;
-            G__10931__10934 = G__10960;
+          s__8951__auto____119266.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":cljs.core.get_in.call(null, cljs.core.first.call(null, vcfs__119262), cljs.core.PersistentVector.fromArray(["\ufdd0'cf", "\ufdd0'all"], true)).value()}));
+          var temp__3974__auto____119268 = cljs.core.next.call(null, G__119264__119267);
+          if(temp__3974__auto____119268) {
+            var G__119264__119269 = temp__3974__auto____119268;
+            var G__119292 = cljs.core.first.call(null, G__119264__119269);
+            var G__119293 = G__119264__119269;
+            s__8951__auto____119266 = G__119292;
+            G__119264__119267 = G__119293;
             continue
           }else {
           }
@@ -35783,19 +35783,19 @@ var co__6211__auto____10944 = function() {
     }else {
       cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_filters, cljs.core.ObjMap.EMPTY);
       cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_cat_filters, cljs.core.ObjMap.EMPTY);
-      var G__10937__10938 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-      if(G__10937__10938) {
-        var s__8951__auto____10939 = cljs.core.first.call(null, G__10937__10938);
-        var G__10937__10940 = G__10937__10938;
+      var G__119270__119271 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+      if(G__119270__119271) {
+        var s__8951__auto____119272 = cljs.core.first.call(null, G__119270__119271);
+        var G__119270__119273 = G__119270__119271;
         while(true) {
-          s__8951__auto____10939.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":null}));
-          var temp__3974__auto____10941 = cljs.core.next.call(null, G__10937__10940);
-          if(temp__3974__auto____10941) {
-            var G__10937__10942 = temp__3974__auto____10941;
-            var G__10961 = cljs.core.first.call(null, G__10937__10942);
-            var G__10962 = G__10937__10942;
-            s__8951__auto____10939 = G__10961;
-            G__10937__10940 = G__10962;
+          s__8951__auto____119272.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":null}));
+          var temp__3974__auto____119274 = cljs.core.next.call(null, G__119270__119273);
+          if(temp__3974__auto____119274) {
+            var G__119270__119275 = temp__3974__auto____119274;
+            var G__119294 = cljs.core.first.call(null, G__119270__119275);
+            var G__119295 = G__119270__119275;
+            s__8951__auto____119272 = G__119294;
+            G__119270__119273 = G__119295;
             continue
           }else {
             return null
@@ -35807,28 +35807,28 @@ var co__6211__auto____10944 = function() {
       }
     }
   }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-  cljs.core.deref.call(null, co__6205__auto____10943);
-  return co__6205__auto____10943
+  cljs.core.deref.call(null, co__6205__auto____119276);
+  return co__6205__auto____119276
 }();
-cljs.core.add_watch.call(null, co__6211__auto____10944, "\ufdd0'reflex-constraint", function() {
-  var vcfs__10945 = cljs.core.deref.call(null, vcfvis.core._BANG_vcfs);
-  var metric__10946 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
+cljs.core.add_watch.call(null, co__6211__auto____119277, "\ufdd0'reflex-constraint", function() {
+  var vcfs__119278 = cljs.core.deref.call(null, vcfvis.core._BANG_vcfs);
+  var metric__119279 = cljs.core.deref.call(null, vcfvis.core._BANG_metric);
   vcfvis.histogram.clear_histogram_BANG_.call(null);
-  if(cljs.core.seq.call(null, vcfs__10945)) {
-    vcfvis.histogram.draw_histogram_BANG_.call(null, vcfs__10945, metric__10946);
-    var G__10947__10948 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-    if(G__10947__10948) {
-      var s__8951__auto____10949 = cljs.core.first.call(null, G__10947__10948);
-      var G__10947__10950 = G__10947__10948;
+  if(cljs.core.seq.call(null, vcfs__119278)) {
+    vcfvis.histogram.draw_histogram_BANG_.call(null, vcfs__119278, metric__119279);
+    var G__119280__119281 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+    if(G__119280__119281) {
+      var s__8951__auto____119282 = cljs.core.first.call(null, G__119280__119281);
+      var G__119280__119283 = G__119280__119281;
       while(true) {
-        s__8951__auto____10949.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":cljs.core.get_in.call(null, cljs.core.first.call(null, vcfs__10945), cljs.core.PersistentVector.fromArray(["\ufdd0'cf", "\ufdd0'all"], true)).value()}));
-        var temp__3974__auto____10951 = cljs.core.next.call(null, G__10947__10950);
-        if(temp__3974__auto____10951) {
-          var G__10947__10952 = temp__3974__auto____10951;
-          var G__10963 = cljs.core.first.call(null, G__10947__10952);
-          var G__10964 = G__10947__10952;
-          s__8951__auto____10949 = G__10963;
-          G__10947__10950 = G__10964;
+        s__8951__auto____119282.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":cljs.core.get_in.call(null, cljs.core.first.call(null, vcfs__119278), cljs.core.PersistentVector.fromArray(["\ufdd0'cf", "\ufdd0'all"], true)).value()}));
+        var temp__3974__auto____119284 = cljs.core.next.call(null, G__119280__119283);
+        if(temp__3974__auto____119284) {
+          var G__119280__119285 = temp__3974__auto____119284;
+          var G__119296 = cljs.core.first.call(null, G__119280__119285);
+          var G__119297 = G__119280__119285;
+          s__8951__auto____119282 = G__119296;
+          G__119280__119283 = G__119297;
           continue
         }else {
         }
@@ -35840,19 +35840,19 @@ cljs.core.add_watch.call(null, co__6211__auto____10944, "\ufdd0'reflex-constrain
   }else {
     cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_filters, cljs.core.ObjMap.EMPTY);
     cljs.core.reset_BANG_.call(null, vcfvis.core._BANG_cat_filters, cljs.core.ObjMap.EMPTY);
-    var G__10953__10954 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-    if(G__10953__10954) {
-      var s__8951__auto____10955 = cljs.core.first.call(null, G__10953__10954);
-      var G__10953__10956 = G__10953__10954;
+    var G__119286__119287 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+    if(G__119286__119287) {
+      var s__8951__auto____119288 = cljs.core.first.call(null, G__119286__119287);
+      var G__119286__119289 = G__119286__119287;
       while(true) {
-        s__8951__auto____10955.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":null}));
-        var temp__3974__auto____10957 = cljs.core.next.call(null, G__10953__10956);
-        if(temp__3974__auto____10957) {
-          var G__10953__10958 = temp__3974__auto____10957;
-          var G__10965 = cljs.core.first.call(null, G__10953__10958);
-          var G__10966 = G__10953__10958;
-          s__8951__auto____10955 = G__10965;
-          G__10953__10956 = G__10966;
+        s__8951__auto____119288.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":null}));
+        var temp__3974__auto____119290 = cljs.core.next.call(null, G__119286__119289);
+        if(temp__3974__auto____119290) {
+          var G__119286__119291 = temp__3974__auto____119290;
+          var G__119298 = cljs.core.first.call(null, G__119286__119291);
+          var G__119299 = G__119286__119291;
+          s__8951__auto____119288 = G__119298;
+          G__119286__119289 = G__119299;
           continue
         }else {
           return null
@@ -35864,7 +35864,7 @@ cljs.core.add_watch.call(null, co__6211__auto____10944, "\ufdd0'reflex-constrain
     }
   }
 });
-co__6211__auto____10944;
+co__6211__auto____119277;
 goog.provide("vcfvis.controls");
 goog.require("cljs.core");
 goog.require("c2.util");
@@ -35878,51 +35878,52 @@ goog.require("vcfvis.data");
 goog.require("c2.dom");
 goog.require("clojure.string");
 goog.require("c2.util");
+goog.require("clojure.set");
 goog.require("vcfvis.histogram");
 goog.require("goog.string");
 goog.require("vcfvis.core");
 vcfvis.controls.file_selector = function() {
-  var $selector__10138 = c2.dom.append_BANG_.call(null, "#file-selector", cljs.core.PersistentVector.fromArray(["\ufdd0'select", cljs.core.ObjMap.fromObject(["\ufdd0'multiple", "\ufdd0'data-placeholder"], {"\ufdd0'multiple":"multiple", "\ufdd0'data-placeholder":"Select VCF files"})], true));
-  var _BANG_c__10139 = chosen.core.ichooseu_BANG_.call(null, $selector__10138, "\ufdd0'search-contains", true);
-  var co__6211__auto____10148 = function() {
-    var co__6205__auto____10147 = new reflex.core.ComputedObservable(null, true, function() {
-      return chosen.core.options.call(null, _BANG_c__10139, cljs.core.map.call(null, function(p__10140) {
-        var map__10141__10142 = p__10140;
-        var map__10141__10143 = cljs.core.seq_QMARK_.call(null, map__10141__10142) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10141__10142) : map__10141__10142;
-        var id__10144 = cljs.core._lookup.call(null, map__10141__10143, "\ufdd0'id", null);
-        var folder__10145 = cljs.core._lookup.call(null, map__10141__10143, "\ufdd0'folder", null);
-        var filename__10146 = cljs.core._lookup.call(null, map__10141__10143, "\ufdd0'filename", null);
-        return cljs.core.ObjMap.fromObject(["\ufdd0'text", "\ufdd0'value", "\ufdd0'group"], {"\ufdd0'text":filename__10146, "\ufdd0'value":id__10144, "\ufdd0'group":folder__10145})
+  var $selector__138315 = c2.dom.append_BANG_.call(null, "#file-selector", cljs.core.PersistentVector.fromArray(["\ufdd0'select", cljs.core.ObjMap.fromObject(["\ufdd0'multiple", "\ufdd0'data-placeholder"], {"\ufdd0'multiple":"multiple", "\ufdd0'data-placeholder":"Select VCF files"})], true));
+  var _BANG_c__138316 = chosen.core.ichooseu_BANG_.call(null, $selector__138315, "\ufdd0'search-contains", true);
+  var co__6211__auto____138325 = function() {
+    var co__6205__auto____138324 = new reflex.core.ComputedObservable(null, true, function() {
+      return chosen.core.options.call(null, _BANG_c__138316, cljs.core.map.call(null, function(p__138317) {
+        var map__138318__138319 = p__138317;
+        var map__138318__138320 = cljs.core.seq_QMARK_.call(null, map__138318__138319) ? cljs.core.apply.call(null, cljs.core.hash_map, map__138318__138319) : map__138318__138319;
+        var id__138321 = cljs.core._lookup.call(null, map__138318__138320, "\ufdd0'id", null);
+        var folder__138322 = cljs.core._lookup.call(null, map__138318__138320, "\ufdd0'folder", null);
+        var filename__138323 = cljs.core._lookup.call(null, map__138318__138320, "\ufdd0'filename", null);
+        return cljs.core.ObjMap.fromObject(["\ufdd0'text", "\ufdd0'value", "\ufdd0'group"], {"\ufdd0'text":filename__138323, "\ufdd0'value":id__138321, "\ufdd0'group":folder__138322})
       }, cljs.core.deref.call(null, vcfvis.core._BANG_available_files)))
     }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-    cljs.core.deref.call(null, co__6205__auto____10147);
-    return co__6205__auto____10147
+    cljs.core.deref.call(null, co__6205__auto____138324);
+    return co__6205__auto____138324
   }();
-  cljs.core.add_watch.call(null, co__6211__auto____10148, "\ufdd0'reflex-constraint", function() {
-    return chosen.core.options.call(null, _BANG_c__10139, cljs.core.map.call(null, function(p__10149) {
-      var map__10150__10151 = p__10149;
-      var map__10150__10152 = cljs.core.seq_QMARK_.call(null, map__10150__10151) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10150__10151) : map__10150__10151;
-      var id__10153 = cljs.core._lookup.call(null, map__10150__10152, "\ufdd0'id", null);
-      var folder__10154 = cljs.core._lookup.call(null, map__10150__10152, "\ufdd0'folder", null);
-      var filename__10155 = cljs.core._lookup.call(null, map__10150__10152, "\ufdd0'filename", null);
-      return cljs.core.ObjMap.fromObject(["\ufdd0'text", "\ufdd0'value", "\ufdd0'group"], {"\ufdd0'text":filename__10155, "\ufdd0'value":id__10153, "\ufdd0'group":folder__10154})
+  cljs.core.add_watch.call(null, co__6211__auto____138325, "\ufdd0'reflex-constraint", function() {
+    return chosen.core.options.call(null, _BANG_c__138316, cljs.core.map.call(null, function(p__138326) {
+      var map__138327__138328 = p__138326;
+      var map__138327__138329 = cljs.core.seq_QMARK_.call(null, map__138327__138328) ? cljs.core.apply.call(null, cljs.core.hash_map, map__138327__138328) : map__138327__138328;
+      var id__138330 = cljs.core._lookup.call(null, map__138327__138329, "\ufdd0'id", null);
+      var folder__138331 = cljs.core._lookup.call(null, map__138327__138329, "\ufdd0'folder", null);
+      var filename__138332 = cljs.core._lookup.call(null, map__138327__138329, "\ufdd0'filename", null);
+      return cljs.core.ObjMap.fromObject(["\ufdd0'text", "\ufdd0'value", "\ufdd0'group"], {"\ufdd0'text":filename__138332, "\ufdd0'value":id__138330, "\ufdd0'group":folder__138331})
     }, cljs.core.deref.call(null, vcfvis.core._BANG_available_files)))
   });
-  co__6211__auto____10148;
-  return _BANG_c__10139
+  co__6211__auto____138325;
+  return _BANG_c__138316
 }();
-var co__7953__auto____10176 = function() {
-  var co__6205__auto____10175 = new reflex.core.ComputedObservable(null, true, function() {
-    var shared__10156 = cljs.core.deref.call(null, vcfvis.core._BANG_shared_metrics);
-    var selected_metric__10157 = (new cljs.core.Keyword("\ufdd0'id")).call(null, cljs.core.deref.call(null, vcfvis.core._BANG_metric));
-    var metrics__10165 = function() {
-      var iter__2355__auto____10164 = function iter__10158(s__10159) {
+var co__7953__auto____138353 = function() {
+  var co__6205__auto____138352 = new reflex.core.ComputedObservable(null, true, function() {
+    var shared__138333 = cljs.core.deref.call(null, vcfvis.core._BANG_shared_metrics);
+    var selected_metric__138334 = (new cljs.core.Keyword("\ufdd0'id")).call(null, cljs.core.deref.call(null, vcfvis.core._BANG_metric));
+    var metrics__138342 = function() {
+      var iter__2355__auto____138341 = function iter__138335(s__138336) {
         return new cljs.core.LazySeq(null, false, function() {
-          var s__10159__10162 = s__10159;
+          var s__138336__138339 = s__138336;
           while(true) {
-            if(cljs.core.seq.call(null, s__10159__10162)) {
-              var m__10163 = cljs.core.first.call(null, s__10159__10162);
-              return cljs.core.cons.call(null, cljs.core.assoc.call(null, m__10163, "\ufdd0'selected?", cljs.core._EQ_.call(null, (new cljs.core.Keyword("\ufdd0'id")).call(null, m__10163), selected_metric__10157), "\ufdd0'visible?", vcfvis.core.visible_metric_QMARK_.call(null, m__10163), "\ufdd0'shared?", cljs.core.contains_QMARK_.call(null, shared__10156, m__10163.call(null, "\ufdd0'id"))), iter__10158.call(null, cljs.core.rest.call(null, s__10159__10162)))
+            if(cljs.core.seq.call(null, s__138336__138339)) {
+              var m__138340 = cljs.core.first.call(null, s__138336__138339);
+              return cljs.core.cons.call(null, cljs.core.assoc.call(null, m__138340, "\ufdd0'selected?", cljs.core._EQ_.call(null, (new cljs.core.Keyword("\ufdd0'id")).call(null, m__138340), selected_metric__138334), "\ufdd0'visible?", vcfvis.core.visible_metric_QMARK_.call(null, m__138340), "\ufdd0'shared?", cljs.core.contains_QMARK_.call(null, shared__138333, m__138340.call(null, "\ufdd0'id"))), iter__138335.call(null, cljs.core.rest.call(null, s__138336__138339)))
             }else {
               return null
             }
@@ -35930,31 +35931,31 @@ var co__7953__auto____10176 = function() {
           }
         }, null)
       };
-      return iter__2355__auto____10164.call(null, cljs.core.vals.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_context).call(null, "\ufdd0'metrics")))
+      return iter__2355__auto____138341.call(null, cljs.core.vals.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_context).call(null, "\ufdd0'metrics")))
     }();
-    return cljs.core.PersistentVector.fromArray(["\ufdd0'div#metrics", c2.core.unify.call(null, metrics__10165, function(p__10166) {
-      var map__10167__10168 = p__10166;
-      var map__10167__10169 = cljs.core.seq_QMARK_.call(null, map__10167__10168) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10167__10168) : map__10167__10168;
-      var shared_QMARK___10170 = cljs.core._lookup.call(null, map__10167__10169, "\ufdd0'shared?", null);
-      var visible_QMARK___10171 = cljs.core._lookup.call(null, map__10167__10169, "\ufdd0'visible?", null);
-      var selected_QMARK___10172 = cljs.core._lookup.call(null, map__10167__10169, "\ufdd0'selected?", null);
-      var desc__10173 = cljs.core._lookup.call(null, map__10167__10169, "\ufdd0'desc", null);
-      var id__10174 = cljs.core._lookup.call(null, map__10167__10169, "\ufdd0'id", null);
-      return cljs.core.PersistentVector.fromArray(["\ufdd0'div.metric", cljs.core.ObjMap.fromObject(["\ufdd0'id", "\ufdd0'class"], {"\ufdd0'id":[cljs.core.str("metric-"), cljs.core.str(id__10174)].join(""), "\ufdd0'class":[cljs.core.str(cljs.core.truth_(selected_QMARK___10172) ? "selected" : null), cljs.core.str(" "), cljs.core.str(cljs.core.truth_(visible_QMARK___10171) ? "expanded" : null), cljs.core.str(" "), cljs.core.str(cljs.core.truth_(shared_QMARK___10170) ? null : "disabled")].join("")}), 
-      cljs.core.PersistentVector.fromArray(["\ufdd0'h2", id__10174], true), cljs.core.PersistentVector.fromArray(["\ufdd0'button.expand-btn", "V"], true), cljs.core.PersistentVector.fromArray(["\ufdd0'span.desc", desc__10173], true), cljs.core.PersistentVector.fromArray(["\ufdd0'div.mini-hist", singult.core.ignore.call(null)], true), cljs.core.PersistentVector.fromArray(["\ufdd0'div.sort-handle"], true)], true)
-    }, "\ufdd0'key-fn", function(p1__10137_SHARP_) {
-      return(new cljs.core.Keyword("\ufdd0'id")).call(null, p1__10137_SHARP_)
+    return cljs.core.PersistentVector.fromArray(["\ufdd0'div#metrics", c2.core.unify.call(null, metrics__138342, function(p__138343) {
+      var map__138344__138345 = p__138343;
+      var map__138344__138346 = cljs.core.seq_QMARK_.call(null, map__138344__138345) ? cljs.core.apply.call(null, cljs.core.hash_map, map__138344__138345) : map__138344__138345;
+      var shared_QMARK___138347 = cljs.core._lookup.call(null, map__138344__138346, "\ufdd0'shared?", null);
+      var visible_QMARK___138348 = cljs.core._lookup.call(null, map__138344__138346, "\ufdd0'visible?", null);
+      var selected_QMARK___138349 = cljs.core._lookup.call(null, map__138344__138346, "\ufdd0'selected?", null);
+      var desc__138350 = cljs.core._lookup.call(null, map__138344__138346, "\ufdd0'desc", null);
+      var id__138351 = cljs.core._lookup.call(null, map__138344__138346, "\ufdd0'id", null);
+      return cljs.core.PersistentVector.fromArray(["\ufdd0'div.metric", cljs.core.ObjMap.fromObject(["\ufdd0'id", "\ufdd0'class"], {"\ufdd0'id":[cljs.core.str("metric-"), cljs.core.str(id__138351)].join(""), "\ufdd0'class":[cljs.core.str(cljs.core.truth_(selected_QMARK___138349) ? "selected" : null), cljs.core.str(" "), cljs.core.str(cljs.core.truth_(visible_QMARK___138348) ? "expanded" : null), cljs.core.str(" "), cljs.core.str(cljs.core.truth_(shared_QMARK___138347) ? null : "disabled")].join("")}), 
+      cljs.core.PersistentVector.fromArray(["\ufdd0'h2", id__138351], true), cljs.core.PersistentVector.fromArray(["\ufdd0'button.expand-btn", "V"], true), cljs.core.PersistentVector.fromArray(["\ufdd0'span.desc", desc__138350], true), cljs.core.PersistentVector.fromArray(["\ufdd0'div.mini-hist", singult.core.ignore.call(null)], true), cljs.core.PersistentVector.fromArray(["\ufdd0'div.sort-handle"], true)], true)
+    }, "\ufdd0'key-fn", function(p1__138314_SHARP_) {
+      return(new cljs.core.Keyword("\ufdd0'id")).call(null, p1__138314_SHARP_)
     })], true)
   }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-  cljs.core.deref.call(null, co__6205__auto____10175);
-  return co__6205__auto____10175
+  cljs.core.deref.call(null, co__6205__auto____138352);
+  return co__6205__auto____138352
 }();
-var $el__7954__auto____10177 = c2.dom.__GT_dom.call(null, "#metrics");
-singult.core.merge_BANG_.call(null, $el__7954__auto____10177, cljs.core.deref.call(null, co__7953__auto____10176));
-cljs.core.add_watch.call(null, co__7953__auto____10176, "\ufdd0'update-dom", function() {
-  return singult.core.merge_BANG_.call(null, $el__7954__auto____10177, cljs.core.deref.call(null, co__7953__auto____10176))
+var $el__7954__auto____138354 = c2.dom.__GT_dom.call(null, "#metrics");
+singult.core.merge_BANG_.call(null, $el__7954__auto____138354, cljs.core.deref.call(null, co__7953__auto____138353));
+cljs.core.add_watch.call(null, co__7953__auto____138353, "\ufdd0'update-dom", function() {
+  return singult.core.merge_BANG_.call(null, $el__7954__auto____138354, cljs.core.deref.call(null, co__7953__auto____138353))
 });
-co__7953__auto____10176;
+co__7953__auto____138353;
 jQuery("#metrics").sortable({"handle":".sort-handle"});
 c2.event.on.call(null, "#metrics", "\ufdd0'click", function(d, _, e) {
   if(cljs.core.truth_(c2.dom.matches_selector_QMARK_.call(null, e.target, ".expand-btn"))) {
@@ -35964,64 +35965,64 @@ c2.event.on.call(null, "#metrics", "\ufdd0'click", function(d, _, e) {
   }
 });
 c2.event.on.call(null, "#metrics", ".expand-btn", "\ufdd0'click", function(d) {
-  var m__10178 = cljs.core.dissoc.call(null, d, "\ufdd0'selected?", "\ufdd0'shared?", "\ufdd0'visible?");
-  if(cljs.core.truth_(vcfvis.core.visible_metric_QMARK_.call(null, m__10178))) {
+  var m__138355 = cljs.core.dissoc.call(null, d, "\ufdd0'selected?", "\ufdd0'shared?", "\ufdd0'visible?");
+  if(cljs.core.truth_(vcfvis.core.visible_metric_QMARK_.call(null, m__138355))) {
   }else {
-    vcfvis.histogram.draw_mini_hist_for_metric_BANG_.call(null, m__10178)
+    vcfvis.histogram.draw_mini_hist_for_metric_BANG_.call(null, m__138355)
   }
-  return vcfvis.core.toggle_visible_metric_BANG_.call(null, m__10178)
+  return vcfvis.core.toggle_visible_metric_BANG_.call(null, m__138355)
 });
 cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.core.conj, function(m__8957__auto__) {
   try {
     if(function() {
-      var G__10183__10184 = m__8957__auto__;
-      if(G__10183__10184) {
+      var G__138360__138361 = m__8957__auto__;
+      if(G__138360__138361) {
         if(function() {
-          var or__3824__auto____10185 = G__10183__10184.cljs$lang$protocol_mask$partition0$ & 256;
-          if(or__3824__auto____10185) {
-            return or__3824__auto____10185
+          var or__3824__auto____138362 = G__138360__138361.cljs$lang$protocol_mask$partition0$ & 256;
+          if(or__3824__auto____138362) {
+            return or__3824__auto____138362
           }else {
-            return G__10183__10184.cljs$core$ILookup$
+            return G__138360__138361.cljs$core$ILookup$
           }
         }()) {
           return true
         }else {
-          if(!G__10183__10184.cljs$lang$protocol_mask$partition0$) {
-            return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__10183__10184)
+          if(!G__138360__138361.cljs$lang$protocol_mask$partition0$) {
+            return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__138360__138361)
           }else {
             return false
           }
         }
       }else {
-        return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__10183__10184)
+        return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__138360__138361)
       }
     }()) {
-      var m__10187 = function() {
-        var val__6595__auto____10186 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'filter-updated", "\ufdd0'clojure.core.match/not-found");
-        if(cljs.core._EQ_.call(null, val__6595__auto____10186, "\ufdd0'clojure.core.match/not-found")) {
+      var m__138364 = function() {
+        var val__6595__auto____138363 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'filter-updated", "\ufdd0'clojure.core.match/not-found");
+        if(cljs.core._EQ_.call(null, val__6595__auto____138363, "\ufdd0'clojure.core.match/not-found")) {
           throw 0;
         }else {
-          return val__6595__auto____10186
+          return val__6595__auto____138363
         }
       }();
-      if(cljs.core._EQ_.call(null, "\ufdd0'category", cljs.core.get_in.call(null, m__10187, cljs.core.PersistentVector.fromArray(["\ufdd0'x-scale", "\ufdd0'type"], true)))) {
+      if(cljs.core._EQ_.call(null, "\ufdd0'category", cljs.core.get_in.call(null, m__138364, cljs.core.PersistentVector.fromArray(["\ufdd0'x-scale", "\ufdd0'type"], true)))) {
         vcfvis.histogram.draw_histogram_BANG_.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs), cljs.core.deref.call(null, vcfvis.core._BANG_metric))
       }else {
       }
       vcfvis.histogram.draw_mini_hists_BANG_.call(null);
-      var G__10188__10189 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-      if(G__10188__10189) {
-        var s__8951__auto____10190 = cljs.core.first.call(null, G__10188__10189);
-        var G__10188__10191 = G__10188__10189;
+      var G__138365__138366 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+      if(G__138365__138366) {
+        var s__8951__auto____138367 = cljs.core.first.call(null, G__138365__138366);
+        var G__138365__138368 = G__138365__138366;
         while(true) {
-          s__8951__auto____10190.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":cljs.core.get_in.call(null, cljs.core.first.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)), cljs.core.PersistentVector.fromArray(["\ufdd0'cf", "\ufdd0'all"], true)).value()}));
-          var temp__3974__auto____10192 = cljs.core.next.call(null, G__10188__10191);
-          if(temp__3974__auto____10192) {
-            var G__10188__10193 = temp__3974__auto____10192;
-            var G__10194 = cljs.core.first.call(null, G__10188__10193);
-            var G__10195 = G__10188__10193;
-            s__8951__auto____10190 = G__10194;
-            G__10188__10191 = G__10195;
+          s__8951__auto____138367.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'count-updated"], {"\ufdd0'count-updated":cljs.core.get_in.call(null, cljs.core.first.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)), cljs.core.PersistentVector.fromArray(["\ufdd0'cf", "\ufdd0'all"], true)).value()}));
+          var temp__3974__auto____138369 = cljs.core.next.call(null, G__138365__138368);
+          if(temp__3974__auto____138369) {
+            var G__138365__138370 = temp__3974__auto____138369;
+            var G__138371 = cljs.core.first.call(null, G__138365__138370);
+            var G__138372 = G__138365__138370;
+            s__8951__auto____138367 = G__138371;
+            G__138365__138368 = G__138372;
             continue
           }else {
             return null
@@ -36040,7 +36041,7 @@ cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.c
     }
   }catch(e__7028__auto__) {
     if(e__7028__auto__ === 0) {
-      var G__10179__10182 = m__8957__auto__;
+      var G__138356__138359 = m__8957__auto__;
       return null
     }else {
       throw e__7028__auto__;
@@ -36050,51 +36051,51 @@ cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.c
 cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.core.conj, function(m__8957__auto__) {
   try {
     if(function() {
-      var G__10200__10201 = m__8957__auto__;
-      if(G__10200__10201) {
+      var G__138378__138379 = m__8957__auto__;
+      if(G__138378__138379) {
         if(function() {
-          var or__3824__auto____10202 = G__10200__10201.cljs$lang$protocol_mask$partition0$ & 256;
-          if(or__3824__auto____10202) {
-            return or__3824__auto____10202
+          var or__3824__auto____138380 = G__138378__138379.cljs$lang$protocol_mask$partition0$ & 256;
+          if(or__3824__auto____138380) {
+            return or__3824__auto____138380
           }else {
-            return G__10200__10201.cljs$core$ILookup$
+            return G__138378__138379.cljs$core$ILookup$
           }
         }()) {
           return true
         }else {
-          if(!G__10200__10201.cljs$lang$protocol_mask$partition0$) {
-            return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__10200__10201)
+          if(!G__138378__138379.cljs$lang$protocol_mask$partition0$) {
+            return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__138378__138379)
           }else {
             return false
           }
         }
       }else {
-        return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__10200__10201)
+        return cljs.core.type_satisfies_.call(null, cljs.core.ILookup, G__138378__138379)
       }
     }()) {
-      var x__10204 = function() {
-        var val__6595__auto____10203 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'count-updated", "\ufdd0'clojure.core.match/not-found");
-        if(cljs.core._EQ_.call(null, val__6595__auto____10203, "\ufdd0'clojure.core.match/not-found")) {
+      var x__138382 = function() {
+        var val__6595__auto____138381 = cljs.core._lookup.call(null, m__8957__auto__, "\ufdd0'count-updated", "\ufdd0'clojure.core.match/not-found");
+        if(cljs.core._EQ_.call(null, val__6595__auto____138381, "\ufdd0'clojure.core.match/not-found")) {
           throw 0;
         }else {
-          return val__6595__auto____10203
+          return val__6595__auto____138381
         }
       }();
       return singult.core.merge_BANG_.call(null, c2.dom.select.call(null, "#filter-summary"), cljs.core.PersistentVector.fromArray(["\ufdd0'table.table.table-condensed#filter-summary", cljs.core.PersistentVector.fromArray(["\ufdd0'tbody", cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.PersistentVector.fromArray(["\ufdd0'tr", cljs.core.PersistentVector.fromArray(["\ufdd0'td", cljs.core.PersistentVector.fromArray(["\ufdd0'span#count-pad"], true)], true), cljs.core.PersistentVector.fromArray(["\ufdd0'td", 
-      cljs.core.PersistentVector.fromArray(["\ufdd0'span#count", cljs.core.truth_(x__10204) ? [cljs.core.str(x__10204), cljs.core.str(" variants")].join("") : ""], true)], true)], true)], true), function() {
-        var iter__2355__auto____10217 = function iter__10205(s__10206) {
+      cljs.core.PersistentVector.fromArray(["\ufdd0'span#count", cljs.core.truth_(x__138382) ? [cljs.core.str(x__138382), cljs.core.str(" variants")].join("") : ""], true)], true)], true)], true), function() {
+        var iter__2355__auto____138395 = function iter__138383(s__138384) {
           return new cljs.core.LazySeq(null, false, function() {
-            var s__10206__10212 = s__10206;
+            var s__138384__138390 = s__138384;
             while(true) {
-              if(cljs.core.seq.call(null, s__10206__10212)) {
-                var vec__10213__10214 = cljs.core.first.call(null, s__10206__10212);
-                var m_id__10215 = cljs.core.nth.call(null, vec__10213__10214, 0, null);
-                var extent__10216 = cljs.core.nth.call(null, vec__10213__10214, 1, null);
-                if(cljs.core.truth_(extent__10216)) {
-                  return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'tr", cljs.core.PersistentVector.fromArray(["\ufdd0'td", m_id__10215], true), cljs.core.PersistentVector.fromArray(["\ufdd0'td", cljs.core.format.call(null, "%.1f-%.1f", cljs.core.first.call(null, extent__10216), cljs.core.second.call(null, extent__10216))], true)], true), iter__10205.call(null, cljs.core.rest.call(null, s__10206__10212)))
+              if(cljs.core.seq.call(null, s__138384__138390)) {
+                var vec__138391__138392 = cljs.core.first.call(null, s__138384__138390);
+                var m_id__138393 = cljs.core.nth.call(null, vec__138391__138392, 0, null);
+                var extent__138394 = cljs.core.nth.call(null, vec__138391__138392, 1, null);
+                if(cljs.core.truth_(extent__138394)) {
+                  return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'tr", cljs.core.PersistentVector.fromArray(["\ufdd0'td", m_id__138393], true), cljs.core.PersistentVector.fromArray(["\ufdd0'td", cljs.core.format.call(null, "%.1f-%.1f", cljs.core.first.call(null, extent__138394), cljs.core.second.call(null, extent__138394))], true)], true), iter__138383.call(null, cljs.core.rest.call(null, s__138384__138390)))
                 }else {
-                  var G__10231 = cljs.core.rest.call(null, s__10206__10212);
-                  s__10206__10212 = G__10231;
+                  var G__138409 = cljs.core.rest.call(null, s__138384__138390);
+                  s__138384__138390 = G__138409;
                   continue
                 }
               }else {
@@ -36104,21 +36105,21 @@ cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.c
             }
           }, null)
         };
-        return iter__2355__auto____10217.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_filters))
+        return iter__2355__auto____138395.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_filters))
       }(), function() {
-        var iter__2355__auto____10230 = function iter__10218(s__10219) {
+        var iter__2355__auto____138408 = function iter__138396(s__138397) {
           return new cljs.core.LazySeq(null, false, function() {
-            var s__10219__10225 = s__10219;
+            var s__138397__138403 = s__138397;
             while(true) {
-              if(cljs.core.seq.call(null, s__10219__10225)) {
-                var vec__10226__10227 = cljs.core.first.call(null, s__10219__10225);
-                var cat_id__10228 = cljs.core.nth.call(null, vec__10226__10227, 0, null);
-                var vals__10229 = cljs.core.nth.call(null, vec__10226__10227, 1, null);
-                if(cljs.core.seq.call(null, vals__10229)) {
-                  return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'tr", cljs.core.PersistentVector.fromArray(["\ufdd0'td", cat_id__10228], true), cljs.core.PersistentVector.fromArray(["\ufdd0'td", clojure.string.join.call(null, ", ", vals__10229)], true)], true), iter__10218.call(null, cljs.core.rest.call(null, s__10219__10225)))
+              if(cljs.core.seq.call(null, s__138397__138403)) {
+                var vec__138404__138405 = cljs.core.first.call(null, s__138397__138403);
+                var cat_id__138406 = cljs.core.nth.call(null, vec__138404__138405, 0, null);
+                var vals__138407 = cljs.core.nth.call(null, vec__138404__138405, 1, null);
+                if(cljs.core.seq.call(null, vals__138407)) {
+                  return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'tr", cljs.core.PersistentVector.fromArray(["\ufdd0'td", cat_id__138406], true), cljs.core.PersistentVector.fromArray(["\ufdd0'td", clojure.string.join.call(null, ", ", vals__138407)], true)], true), iter__138396.call(null, cljs.core.rest.call(null, s__138397__138403)))
                 }else {
-                  var G__10232 = cljs.core.rest.call(null, s__10219__10225);
-                  s__10219__10225 = G__10232;
+                  var G__138410 = cljs.core.rest.call(null, s__138397__138403);
+                  s__138397__138403 = G__138410;
                   continue
                 }
               }else {
@@ -36128,7 +36129,7 @@ cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.c
             }
           }, null)
         };
-        return iter__2355__auto____10230.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_cat_filters))
+        return iter__2355__auto____138408.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_cat_filters))
       }())], true)], true))
     }else {
       if("\ufdd0'else") {
@@ -36139,50 +36140,87 @@ cljs.core.swap_BANG_.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_, cljs.c
     }
   }catch(e__7028__auto__) {
     if(e__7028__auto__ === 0) {
-      var G__10196__10199 = m__8957__auto__;
+      var G__138374__138377 = m__8957__auto__;
       return null
     }else {
       throw e__7028__auto__;
     }
   }
 });
-var co__7953__auto____10263 = function() {
-  var co__6205__auto____10262 = new reflex.core.ComputedObservable(null, true, function() {
-    var cs__10233 = cljs.core.reduce.call(null, vcfvis.core.intersection, cljs.core.map.call(null, "\ufdd0'available-categories", cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)));
-    return cljs.core.PersistentVector.fromArray(["\ufdd0'div#cat-filters", c2.core.unify.call(null, cs__10233, function(p__10234) {
-      var map__10235__10236 = p__10234;
-      var map__10235__10237 = cljs.core.seq_QMARK_.call(null, map__10235__10236) ? cljs.core.apply.call(null, cljs.core.hash_map, map__10235__10236) : map__10235__10236;
-      var choices__10238 = cljs.core._lookup.call(null, map__10235__10237, "\ufdd0'choices", null);
-      var desc__10239 = cljs.core._lookup.call(null, map__10235__10237, "\ufdd0'desc", null);
-      var id__10240 = cljs.core._lookup.call(null, map__10235__10237, "\ufdd0'id", null);
-      return cljs.core.PersistentVector.fromArray(["\ufdd0'div.filter.metric", cljs.core.ObjMap.fromObject(["\ufdd0'id"], {"\ufdd0'id":[cljs.core.str("filter-"), cljs.core.str(id__10240)].join("")}), cljs.core.PersistentVector.fromArray(["\ufdd0'span.desc", desc__10239], true), function() {
-        var iter__2355__auto____10261 = function iter__10241(s__10242) {
+vcfvis.controls.combine_categories = function combine_categories(vcfs) {
+  var shared__138422 = cljs.core.reduce.call(null, vcfvis.core.intersection, cljs.core.map.call(null, function(p1__138373_SHARP_) {
+    return cljs.core.set.call(null, cljs.core.map.call(null, "\ufdd0'id", (new cljs.core.Keyword("\ufdd0'available-categories")).call(null, p1__138373_SHARP_)))
+  }, vcfs));
+  var cats__138423 = cljs.core.map.call(null, "\ufdd0'available-categories", vcfs);
+  return cljs.core.sort_by.call(null, "\ufdd0'id", cljs.core.vals.call(null, cljs.core.reduce.call(null, function(coll, x) {
+    var temp__3971__auto____138424 = cljs.core._lookup.call(null, coll, (new cljs.core.Keyword("\ufdd0'id")).call(null, x), null);
+    if(cljs.core.truth_(temp__3971__auto____138424)) {
+      var cur__138425 = temp__3971__auto____138424;
+      return cljs.core.assoc.call(null, coll, (new cljs.core.Keyword("\ufdd0'id")).call(null, x), cljs.core.assoc.call(null, cur__138425, "\ufdd0'choices", clojure.set.union.call(null, (new cljs.core.Keyword("\ufdd0'choices")).call(null, cur__138425), (new cljs.core.Keyword("\ufdd0'choices")).call(null, x))))
+    }else {
+      return cljs.core.assoc.call(null, coll, (new cljs.core.Keyword("\ufdd0'id")).call(null, x), x)
+    }
+  }, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, function() {
+    var iter__2355__auto____138432 = function iter__138426(s__138427) {
+      return new cljs.core.LazySeq(null, false, function() {
+        var s__138427__138430 = s__138427;
+        while(true) {
+          if(cljs.core.seq.call(null, s__138427__138430)) {
+            var x__138431 = cljs.core.first.call(null, s__138427__138430);
+            if(cljs.core.contains_QMARK_.call(null, shared__138422, (new cljs.core.Keyword("\ufdd0'id")).call(null, x__138431))) {
+              return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0'id")).call(null, x__138431), x__138431], true), iter__138426.call(null, cljs.core.rest.call(null, s__138427__138430)))
+            }else {
+              var G__138433 = cljs.core.rest.call(null, s__138427__138430);
+              s__138427__138430 = G__138433;
+              continue
+            }
+          }else {
+            return null
+          }
+          break
+        }
+      }, null)
+    };
+    return iter__2355__auto____138432.call(null, cljs.core.first.call(null, cats__138423))
+  }()), cljs.core.apply.call(null, cljs.core.concat, cljs.core.rest.call(null, cats__138423)))))
+};
+var co__7953__auto____138464 = function() {
+  var co__6205__auto____138463 = new reflex.core.ComputedObservable(null, true, function() {
+    var cs__138434 = vcfvis.controls.combine_categories.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs));
+    return cljs.core.PersistentVector.fromArray(["\ufdd0'div#cat-filters", c2.core.unify.call(null, cs__138434, function(p__138435) {
+      var map__138436__138437 = p__138435;
+      var map__138436__138438 = cljs.core.seq_QMARK_.call(null, map__138436__138437) ? cljs.core.apply.call(null, cljs.core.hash_map, map__138436__138437) : map__138436__138437;
+      var choices__138439 = cljs.core._lookup.call(null, map__138436__138438, "\ufdd0'choices", null);
+      var desc__138440 = cljs.core._lookup.call(null, map__138436__138438, "\ufdd0'desc", null);
+      var id__138441 = cljs.core._lookup.call(null, map__138436__138438, "\ufdd0'id", null);
+      return cljs.core.PersistentVector.fromArray(["\ufdd0'div.filter.metric", cljs.core.ObjMap.fromObject(["\ufdd0'id"], {"\ufdd0'id":[cljs.core.str("filter-"), cljs.core.str(id__138441)].join("")}), cljs.core.PersistentVector.fromArray(["\ufdd0'span.desc", desc__138440], true), function() {
+        var iter__2355__auto____138462 = function iter__138442(s__138443) {
           return new cljs.core.LazySeq(null, false, function() {
-            var s__10242__10252 = s__10242;
+            var s__138443__138453 = s__138443;
             while(true) {
-              if(cljs.core.seq.call(null, s__10242__10252)) {
-                var group_choices__10253 = cljs.core.first.call(null, s__10242__10252);
+              if(cljs.core.seq.call(null, s__138443__138453)) {
+                var group_choices__138454 = cljs.core.first.call(null, s__138443__138453);
                 return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'div.btn-group", cljs.core.ObjMap.fromObject(["\ufdd0'data-toggle"], {"\ufdd0'data-toggle":"buttons-checkbox"}), function() {
-                  var iter__2355__auto____10260 = function(group_choices__10253) {
-                    return function iter__10254(s__10255) {
-                      return new cljs.core.LazySeq(null, false, function(group_choices__10253) {
+                  var iter__2355__auto____138461 = function(group_choices__138454) {
+                    return function iter__138455(s__138456) {
+                      return new cljs.core.LazySeq(null, false, function(group_choices__138454) {
                         return function() {
-                          var s__10255__10258 = s__10255;
+                          var s__138456__138459 = s__138456;
                           while(true) {
-                            if(cljs.core.seq.call(null, s__10255__10258)) {
-                              var x__10259 = cljs.core.first.call(null, s__10255__10258);
-                              return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'btn.btn.filter-btn", x__10259], true), iter__10254.call(null, cljs.core.rest.call(null, s__10255__10258)))
+                            if(cljs.core.seq.call(null, s__138456__138459)) {
+                              var x__138460 = cljs.core.first.call(null, s__138456__138459);
+                              return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0'btn.btn.filter-btn", x__138460], true), iter__138455.call(null, cljs.core.rest.call(null, s__138456__138459)))
                             }else {
                               return null
                             }
                             break
                           }
                         }
-                      }(group_choices__10253), null)
+                      }(group_choices__138454), null)
                     }
-                  }(group_choices__10253);
-                  return iter__2355__auto____10260.call(null, group_choices__10253)
-                }()], true), iter__10241.call(null, cljs.core.rest.call(null, s__10242__10252)))
+                  }(group_choices__138454);
+                  return iter__2355__auto____138461.call(null, group_choices__138454)
+                }()], true), iter__138442.call(null, cljs.core.rest.call(null, s__138443__138453)))
               }else {
                 return null
               }
@@ -36190,70 +36228,91 @@ var co__7953__auto____10263 = function() {
             }
           }, null)
         };
-        return iter__2355__auto____10261.call(null, cljs.core.partition_all.call(null, 3, cljs.core.sort.call(null, choices__10238)))
+        return iter__2355__auto____138462.call(null, cljs.core.partition_all.call(null, 3, cljs.core.sort.call(null, choices__138439)))
       }()], true)
     })], true)
   }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-  cljs.core.deref.call(null, co__6205__auto____10262);
-  return co__6205__auto____10262
+  cljs.core.deref.call(null, co__6205__auto____138463);
+  return co__6205__auto____138463
 }();
-var $el__7954__auto____10264 = c2.dom.__GT_dom.call(null, "#cat-filters");
-singult.core.merge_BANG_.call(null, $el__7954__auto____10264, cljs.core.deref.call(null, co__7953__auto____10263));
-cljs.core.add_watch.call(null, co__7953__auto____10263, "\ufdd0'update-dom", function() {
-  return singult.core.merge_BANG_.call(null, $el__7954__auto____10264, cljs.core.deref.call(null, co__7953__auto____10263))
+var $el__7954__auto____138465 = c2.dom.__GT_dom.call(null, "#cat-filters");
+singult.core.merge_BANG_.call(null, $el__7954__auto____138465, cljs.core.deref.call(null, co__7953__auto____138464));
+cljs.core.add_watch.call(null, co__7953__auto____138464, "\ufdd0'update-dom", function() {
+  return singult.core.merge_BANG_.call(null, $el__7954__auto____138465, cljs.core.deref.call(null, co__7953__auto____138464))
 });
-co__7953__auto____10263;
+co__7953__auto____138464;
 vcfvis.controls.update_category_filter_BANG_ = function update_category_filter_BANG_(cat, val, off_QMARK_) {
-  var orig__10280 = cljs.core._lookup.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_cat_filters), (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), cljs.core.PersistentHashSet.EMPTY);
-  var new__10281 = cljs.core.truth_(off_QMARK_) ? cljs.core.disj.call(null, orig__10280, val) : cljs.core.conj.call(null, orig__10280, val);
-  cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_cat_filters, cljs.core.assoc, (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), new__10281);
-  var G__10282__10283 = cljs.core.seq.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs));
-  if(G__10282__10283) {
-    var vcf__10284 = cljs.core.first.call(null, G__10282__10283);
-    var G__10282__10285 = G__10282__10283;
-    while(true) {
-      cljs.core.get_in.call(null, vcf__10284, cljs.core.PersistentVector.fromArray(["\ufdd0'cf", (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), "\ufdd0'dimension"], true)).filter(function(vcf__10284, G__10282__10285) {
-        return function(d) {
-          var or__3824__auto____10286 = cljs.core.empty_QMARK_.call(null, new__10281);
-          if(or__3824__auto____10286) {
-            return or__3824__auto____10286
+  var shared__138496 = cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, function() {
+    var iter__2355__auto____138495 = function iter__138489(s__138490) {
+      return new cljs.core.LazySeq(null, false, function() {
+        var s__138490__138493 = s__138490;
+        while(true) {
+          if(cljs.core.seq.call(null, s__138490__138493)) {
+            var x__138494 = cljs.core.first.call(null, s__138490__138493);
+            return cljs.core.cons.call(null, cljs.core.PersistentVector.fromArray([(new cljs.core.Keyword("\ufdd0'id")).call(null, x__138494), (new cljs.core.Keyword("\ufdd0'choices")).call(null, x__138494)], true), iter__138489.call(null, cljs.core.rest.call(null, s__138490__138493)))
           }else {
-            return!cljs.core.empty_QMARK_.call(null, vcfvis.core.intersection.call(null, cljs.core.set.call(null, d), new__10281))
+            return null
           }
+          break
         }
-      }(vcf__10284, G__10282__10285));
-      var temp__3974__auto____10287 = cljs.core.next.call(null, G__10282__10285);
-      if(temp__3974__auto____10287) {
-        var G__10282__10288 = temp__3974__auto____10287;
-        var G__10295 = cljs.core.first.call(null, G__10282__10288);
-        var G__10296 = G__10282__10288;
-        vcf__10284 = G__10295;
-        G__10282__10285 = G__10296;
-        continue
-      }else {
+      }, null)
+    };
+    return iter__2355__auto____138495.call(null, vcfvis.controls.combine_categories.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)))
+  }());
+  var orig__138497 = cljs.core._lookup.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_cat_filters), (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), cljs.core.PersistentHashSet.EMPTY);
+  var new__138498 = cljs.core.truth_(off_QMARK_) ? cljs.core.disj.call(null, orig__138497, val) : cljs.core.conj.call(null, orig__138497, val);
+  if(cljs.core.contains_QMARK_.call(null, cljs.core._lookup.call(null, shared__138496, (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), null), val)) {
+    cljs.core.swap_BANG_.call(null, vcfvis.core._BANG_cat_filters, cljs.core.assoc, (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), new__138498);
+    var G__138499__138500 = cljs.core.seq.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs));
+    if(G__138499__138500) {
+      var vcf__138501 = cljs.core.first.call(null, G__138499__138500);
+      var G__138499__138502 = G__138499__138500;
+      while(true) {
+        cljs.core.get_in.call(null, vcf__138501, cljs.core.PersistentVector.fromArray(["\ufdd0'cf", (new cljs.core.Keyword("\ufdd0'id")).call(null, cat), "\ufdd0'dimension"], true)).filter(function(vcf__138501, G__138499__138502) {
+          return function(d) {
+            var or__3824__auto____138503 = cljs.core.empty_QMARK_.call(null, new__138498);
+            if(or__3824__auto____138503) {
+              return or__3824__auto____138503
+            }else {
+              return!cljs.core.empty_QMARK_.call(null, vcfvis.core.intersection.call(null, cljs.core.set.call(null, d), new__138498))
+            }
+          }
+        }(vcf__138501, G__138499__138502));
+        var temp__3974__auto____138504 = cljs.core.next.call(null, G__138499__138502);
+        if(temp__3974__auto____138504) {
+          var G__138499__138505 = temp__3974__auto____138504;
+          var G__138512 = cljs.core.first.call(null, G__138499__138505);
+          var G__138513 = G__138499__138505;
+          vcf__138501 = G__138512;
+          G__138499__138502 = G__138513;
+          continue
+        }else {
+        }
+        break
       }
-      break
+    }else {
     }
-  }else {
-  }
-  var G__10289__10290 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
-  if(G__10289__10290) {
-    var s__8951__auto____10291 = cljs.core.first.call(null, G__10289__10290);
-    var G__10289__10292 = G__10289__10290;
-    while(true) {
-      s__8951__auto____10291.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'filter-updated"], {"\ufdd0'filter-updated":cat}));
-      var temp__3974__auto____10293 = cljs.core.next.call(null, G__10289__10292);
-      if(temp__3974__auto____10293) {
-        var G__10289__10294 = temp__3974__auto____10293;
-        var G__10297 = cljs.core.first.call(null, G__10289__10294);
-        var G__10298 = G__10289__10294;
-        s__8951__auto____10291 = G__10297;
-        G__10289__10292 = G__10298;
-        continue
-      }else {
-        return null
+    var G__138506__138507 = cljs.core.seq.call(null, cljs.core.deref.call(null, dubstep.pubsub._STAR__BANG_channel_STAR_));
+    if(G__138506__138507) {
+      var s__8951__auto____138508 = cljs.core.first.call(null, G__138506__138507);
+      var G__138506__138509 = G__138506__138507;
+      while(true) {
+        s__8951__auto____138508.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'filter-updated"], {"\ufdd0'filter-updated":cat}));
+        var temp__3974__auto____138510 = cljs.core.next.call(null, G__138506__138509);
+        if(temp__3974__auto____138510) {
+          var G__138506__138511 = temp__3974__auto____138510;
+          var G__138514 = cljs.core.first.call(null, G__138506__138511);
+          var G__138515 = G__138506__138511;
+          s__8951__auto____138508 = G__138514;
+          G__138506__138509 = G__138515;
+          continue
+        }else {
+          return null
+        }
+        break
       }
-      break
+    }else {
+      return null
     }
   }else {
     return null
@@ -36262,17 +36321,17 @@ vcfvis.controls.update_category_filter_BANG_ = function update_category_filter_B
 c2.event.on.call(null, "#cat-filters", "\ufdd0'click", function(d, _, e) {
   return vcfvis.controls.update_category_filter_BANG_.call(null, d, c2.dom.text.call(null, e.target), goog.string.contains(c2.dom.attr.call(null, e.target, "\ufdd0'class"), "active"))
 });
-var $btn__10299 = c2.dom.select.call(null, "#filter-btn");
-var co__7953__auto____10303 = function() {
-  var co__6205__auto____10302 = new reflex.core.ComputedObservable(null, true, function() {
-    var G__10300__10301 = cljs.core._lookup.call(null, cljs.core.deref.call(null, vcfvis.data._BANG_analysis_status), cljs.core._lookup.call(null, cljs.core.first.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)), "\ufdd0'file-url", null), null);
-    if(cljs.core._EQ_.call(null, null, G__10300__10301)) {
+var $btn__138516 = c2.dom.select.call(null, "#filter-btn");
+var co__7953__auto____138520 = function() {
+  var co__6205__auto____138519 = new reflex.core.ComputedObservable(null, true, function() {
+    var G__138517__138518 = cljs.core._lookup.call(null, cljs.core.deref.call(null, vcfvis.data._BANG_analysis_status), cljs.core._lookup.call(null, cljs.core.first.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)), "\ufdd0'file-url", null), null);
+    if(cljs.core._EQ_.call(null, null, G__138517__138518)) {
       return cljs.core.PersistentVector.fromArray(["\ufdd0'button#filter-btn.btn", cljs.core.ObjMap.fromObject(["\ufdd0'properties"], {"\ufdd0'properties":cljs.core.ObjMap.fromObject(["\ufdd0'disabled"], {"\ufdd0'disabled":false})}), "Export subset"], true)
     }else {
-      if(cljs.core._EQ_.call(null, "\ufdd0'running", G__10300__10301)) {
+      if(cljs.core._EQ_.call(null, "\ufdd0'running", G__138517__138518)) {
         return cljs.core.PersistentVector.fromArray(["\ufdd0'button#filter-btn.btn", cljs.core.ObjMap.fromObject(["\ufdd0'properties"], {"\ufdd0'properties":cljs.core.ObjMap.fromObject(["\ufdd0'disabled"], {"\ufdd0'disabled":true})}), "Running..."], true)
       }else {
-        if(cljs.core._EQ_.call(null, "\ufdd0'completed", G__10300__10301)) {
+        if(cljs.core._EQ_.call(null, "\ufdd0'completed", G__138517__138518)) {
           return cljs.core.PersistentVector.fromArray(["\ufdd0'button#filter-btn.btn", cljs.core.ObjMap.fromObject(["\ufdd0'properties"], {"\ufdd0'properties":cljs.core.ObjMap.fromObject(["\ufdd0'disabled"], {"\ufdd0'disabled":true})}), "Completed"], true)
         }else {
           if("\ufdd0'else") {
@@ -36284,16 +36343,16 @@ var co__7953__auto____10303 = function() {
       }
     }
   }, cljs.core.gensym.call(null, "computed-observable"), cljs.core.ObjMap.EMPTY, cljs.core.ObjMap.EMPTY);
-  cljs.core.deref.call(null, co__6205__auto____10302);
-  return co__6205__auto____10302
+  cljs.core.deref.call(null, co__6205__auto____138519);
+  return co__6205__auto____138519
 }();
-var $el__7954__auto____10304 = c2.dom.__GT_dom.call(null, $btn__10299);
-singult.core.merge_BANG_.call(null, $el__7954__auto____10304, cljs.core.deref.call(null, co__7953__auto____10303));
-cljs.core.add_watch.call(null, co__7953__auto____10303, "\ufdd0'update-dom", function() {
-  return singult.core.merge_BANG_.call(null, $el__7954__auto____10304, cljs.core.deref.call(null, co__7953__auto____10303))
+var $el__7954__auto____138521 = c2.dom.__GT_dom.call(null, $btn__138516);
+singult.core.merge_BANG_.call(null, $el__7954__auto____138521, cljs.core.deref.call(null, co__7953__auto____138520));
+cljs.core.add_watch.call(null, co__7953__auto____138520, "\ufdd0'update-dom", function() {
+  return singult.core.merge_BANG_.call(null, $el__7954__auto____138521, cljs.core.deref.call(null, co__7953__auto____138520))
 });
-co__7953__auto____10303;
-c2.event.on_raw.call(null, $btn__10299, "\ufdd0'click", function(_) {
+co__7953__auto____138520;
+c2.event.on_raw.call(null, $btn__138516, "\ufdd0'click", function(_) {
   return vcfvis.data.filter_analysis.call(null, cljs.core._lookup.call(null, cljs.core.first.call(null, cljs.core.deref.call(null, vcfvis.core._BANG_vcfs)), "\ufdd0'file-url", null), cljs.core.deref.call(null, vcfvis.core._BANG_filters))
 });
 goog.provide("vcfvis.main");

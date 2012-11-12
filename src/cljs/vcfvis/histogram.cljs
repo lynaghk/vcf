@@ -49,7 +49,7 @@
              (let [x (aget d "key"), count (aget d "value")]
                [:rect.bar {:x (scale-x x)
                            :width dx
-                           :height (scale-y count)}]))
+                           :height (if (zero? count) 0 (scale-y count))}]))
            ;;else, render using a path element
            [:path
             ;; ;;Path Bars

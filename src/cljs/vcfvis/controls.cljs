@@ -5,7 +5,8 @@
   (:use [chosen.core :only [ichooseu! options]]
         [c2.core :only [unify]]
         [c2.util :only [clj->js]])
-  (:require [clojure.string :as string]
+  (:require [clojure.set :as set]
+            [clojure.string :as string]
             [vcfvis.core :as core]
             [vcfvis.histogram :as histogram]
             [vcfvis.data :as data]
@@ -92,9 +93,26 @@
                                   [:td cat-id]
                                   [:td (string/join ", " vals)]]))]]))
 
+(defn- combine-categories
+  "Combine multiple sets of categories, including all choices"
+  [vcfs]
+  (let [shared (reduce core/intersection (map #(set (map :id (:available-categories %)))
+                                              vcfs))
+        cats (map :available-categories vcfs)]
+    (->> (reduce (fn [coll x]
+                   (if-let [cur (get coll (:id x))]
+                     (assoc coll (:id x)
+                            (assoc cur :choices (set/union (:choices cur) (:choices x))))
+                     (assoc coll (:id x) x)))
+                 (into {} (for [x (first cats) :when (contains? shared (:id x))]
+                            [(:id x) x]))
+                 (apply concat (rest cats)))
+         vals
+         (sort-by :id))))
+
 ;; ## Filters
 (bind! "#cat-filters"
-       (let [cs (reduce core/intersection (map :available-categories @core/!vcfs))]
+       (let [cs (combine-categories @core/!vcfs)]
          [:div#cat-filters
           (unify cs
                  (fn [{:keys [id desc choices]}]
@@ -107,15 +125,18 @@
 
 (defn update-category-filter!
   [cat val off?]
-  (let [orig (get @core/!cat-filters (:id cat) #{})
+  (let [shared (into {} (for [x (combine-categories @core/!vcfs)]
+                          [(:id x) (:choices x)]))
+        orig (get @core/!cat-filters (:id cat) #{})
         new (if off? (disj orig val) (conj orig val))]
-    (swap! core/!cat-filters assoc (:id cat) new)
-    (doseq [vcf @core/!vcfs]
-      (.filter (get-in vcf [:cf (:id cat) :dimension])
-               (fn [d]
-                 (or (empty? new)
-                     (not (empty? (core/intersection (set d) new))))))))
-  (publish! {:filter-updated cat}))
+    (when (contains? (get shared (:id cat)) val)
+      (swap! core/!cat-filters assoc (:id cat) new)
+      (doseq [vcf @core/!vcfs]
+        (.filter (get-in vcf [:cf (:id cat) :dimension])
+                 (fn [d]
+                   (or (empty? new)
+                       (not (empty? (core/intersection (set d) new)))))))
+      (publish! {:filter-updated cat}))))
 
 (event/on "#cat-filters" :click
           (fn [d _ e]
