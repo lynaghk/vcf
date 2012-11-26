@@ -20147,166 +20147,329 @@ cljs.core.UUID.prototype.toString = function() {
   return cljs.core.pr_str.call(null, this__26630)
 };
 cljs.core.UUID;
-goog.provide("clojure.string");
+goog.provide("reflex.core");
 goog.require("cljs.core");
-goog.require("goog.string.StringBuffer");
-goog.require("goog.string");
-clojure.string.seq_reverse = function seq_reverse(coll) {
-  return cljs.core.reduce.call(null, cljs.core.conj, cljs.core.List.EMPTY, coll)
+reflex.core.capture_derefed = function capture_derefed(f) {
+  var _BANG_recently_derefed27616__27617 = reflex.core._BANG_recently_derefed;
+  try {
+    reflex.core._BANG_recently_derefed = cljs.core.atom.call(null, cljs.core.PersistentHashSet.EMPTY, "\ufdd0'meta", cljs.core.ObjMap.fromObject(["\ufdd0'no-deref-monitor"], {"\ufdd0'no-deref-monitor":true}));
+    var res__27619 = f.call(null);
+    return cljs.core.ObjMap.fromObject(["\ufdd0'res", "\ufdd0'derefed"], {"\ufdd0'res":res__27619, "\ufdd0'derefed":cljs.core.deref.call(null, reflex.core._BANG_recently_derefed)})
+  }finally {
+    reflex.core._BANG_recently_derefed = _BANG_recently_derefed27616__27617
+  }
 };
-clojure.string.reverse = function reverse(s) {
-  return s.split("").reverse().join("")
-};
-clojure.string.replace = function replace(s, match, replacement) {
-  if(cljs.core.string_QMARK_.call(null, match)) {
-    return s.replace(new RegExp(goog.string.regExpEscape(match), "g"), replacement)
-  }else {
-    if(cljs.core.truth_(match.hasOwnProperty("source"))) {
-      return s.replace(new RegExp(match.source, "g"), replacement)
+reflex.core.notify_deref_watcher_BANG_ = function notify_deref_watcher_BANG_(derefable) {
+  if(cljs.core.truth_(function() {
+    var and__3822__auto____27621 = reflex.core._BANG_recently_derefed;
+    if(cljs.core.truth_(and__3822__auto____27621)) {
+      return cljs.core.not.call(null, (new cljs.core.Keyword("\ufdd0'no-deref-monitor")).call(null, cljs.core.meta.call(null, derefable)))
     }else {
-      if("\ufdd0'else") {
-        throw[cljs.core.str("Invalid match arg: "), cljs.core.str(match)].join("");
+      return and__3822__auto____27621
+    }
+  }())) {
+    return cljs.core.swap_BANG_.call(null, reflex.core._BANG_recently_derefed, function(p1__27611_SHARP_) {
+      return cljs.core.conj.call(null, p1__27611_SHARP_, derefable)
+    })
+  }else {
+    return null
+  }
+};
+cljs.core.Atom.prototype.cljs$core$IDeref$ = true;
+cljs.core.Atom.prototype.cljs$core$IDeref$_deref$arity$1 = function(this$) {
+  reflex.core.notify_deref_watcher_BANG_.call(null, this$);
+  return this$.state
+};
+reflex.core.IDisposable = {};
+reflex.core.dispose_BANG_ = function dispose_BANG_(this$) {
+  if(function() {
+    var and__3822__auto____27626 = this$;
+    if(and__3822__auto____27626) {
+      return this$.reflex$core$IDisposable$dispose_BANG_$arity$1
+    }else {
+      return and__3822__auto____27626
+    }
+  }()) {
+    return this$.reflex$core$IDisposable$dispose_BANG_$arity$1(this$)
+  }else {
+    var x__2256__auto____27627 = this$ == null ? null : this$;
+    return function() {
+      var or__3824__auto____27628 = reflex.core.dispose_BANG_[goog.typeOf(x__2256__auto____27627)];
+      if(or__3824__auto____27628) {
+        return or__3824__auto____27628
       }else {
-        return null
+        var or__3824__auto____27629 = reflex.core.dispose_BANG_["_"];
+        if(or__3824__auto____27629) {
+          return or__3824__auto____27629
+        }else {
+          throw cljs.core.missing_protocol.call(null, "IDisposable.dispose!", this$);
+        }
+      }
+    }().call(null, this$)
+  }
+};
+reflex.core.ComputedObservable = function(state, dirty_QMARK_, f, key, parent_watchables, watches, __meta, __extmap) {
+  this.state = state;
+  this.dirty_QMARK_ = dirty_QMARK_;
+  this.f = f;
+  this.key = key;
+  this.parent_watchables = parent_watchables;
+  this.watches = watches;
+  this.__meta = __meta;
+  this.__extmap = __extmap;
+  this.cljs$lang$protocol_mask$partition1$ = 0;
+  this.cljs$lang$protocol_mask$partition0$ = 2766571274;
+  if(arguments.length > 6) {
+    this.__meta = __meta;
+    this.__extmap = __extmap
+  }else {
+    this.__meta = null;
+    this.__extmap = null
+  }
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2211__auto__) {
+  var this__27633 = this;
+  var h__2085__auto____27634 = this__27633.__hash;
+  if(!(h__2085__auto____27634 == null)) {
+    return h__2085__auto____27634
+  }else {
+    var h__2085__auto____27635 = cljs.core.hash_imap.call(null, this__2211__auto__);
+    this__27633.__hash = h__2085__auto____27635;
+    return h__2085__auto____27635
+  }
+};
+reflex.core.ComputedObservable.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2216__auto__, k__2217__auto__) {
+  var this__27636 = this;
+  return this__2216__auto__.cljs$core$ILookup$_lookup$arity$3(this__2216__auto__, k__2217__auto__, null)
+};
+reflex.core.ComputedObservable.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2218__auto__, k27631, else__2219__auto__) {
+  var this__27637 = this;
+  if(k27631 === "\ufdd0'state") {
+    return this__27637.state
+  }else {
+    if(k27631 === "\ufdd0'dirty?") {
+      return this__27637.dirty_QMARK_
+    }else {
+      if(k27631 === "\ufdd0'f") {
+        return this__27637.f
+      }else {
+        if(k27631 === "\ufdd0'key") {
+          return this__27637.key
+        }else {
+          if(k27631 === "\ufdd0'parent-watchables") {
+            return this__27637.parent_watchables
+          }else {
+            if(k27631 === "\ufdd0'watches") {
+              return this__27637.watches
+            }else {
+              if("\ufdd0'else") {
+                return cljs.core._lookup.call(null, this__27637.__extmap, k27631, else__2219__auto__)
+              }else {
+                return null
+              }
+            }
+          }
+        }
       }
     }
   }
 };
-clojure.string.replace_first = function replace_first(s, match, replacement) {
-  return s.replace(match, replacement)
-};
-clojure.string.join = function() {
-  var join = null;
-  var join__1 = function(coll) {
-    return cljs.core.apply.call(null, cljs.core.str, coll)
-  };
-  var join__2 = function(separator, coll) {
-    return cljs.core.apply.call(null, cljs.core.str, cljs.core.interpose.call(null, separator, coll))
-  };
-  join = function(separator, coll) {
-    switch(arguments.length) {
-      case 1:
-        return join__1.call(this, separator);
-      case 2:
-        return join__2.call(this, separator, coll)
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  join.cljs$lang$arity$1 = join__1;
-  join.cljs$lang$arity$2 = join__2;
-  return join
-}();
-clojure.string.upper_case = function upper_case(s) {
-  return s.toUpperCase()
-};
-clojure.string.lower_case = function lower_case(s) {
-  return s.toLowerCase()
-};
-clojure.string.capitalize = function capitalize(s) {
-  if(cljs.core.count.call(null, s) < 2) {
-    return clojure.string.upper_case.call(null, s)
+reflex.core.ComputedObservable.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2223__auto__, k__2224__auto__, G__27630) {
+  var this__27638 = this;
+  var pred__27639__27642 = cljs.core.identical_QMARK_;
+  var expr__27640__27643 = k__2224__auto__;
+  if(pred__27639__27642.call(null, "\ufdd0'state", expr__27640__27643)) {
+    return new reflex.core.ComputedObservable(G__27630, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
   }else {
-    return[cljs.core.str(clojure.string.upper_case.call(null, cljs.core.subs.call(null, s, 0, 1))), cljs.core.str(clojure.string.lower_case.call(null, cljs.core.subs.call(null, s, 1)))].join("")
+    if(pred__27639__27642.call(null, "\ufdd0'dirty?", expr__27640__27643)) {
+      return new reflex.core.ComputedObservable(this__27638.state, G__27630, this__27638.f, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
+    }else {
+      if(pred__27639__27642.call(null, "\ufdd0'f", expr__27640__27643)) {
+        return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, G__27630, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
+      }else {
+        if(pred__27639__27642.call(null, "\ufdd0'key", expr__27640__27643)) {
+          return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, G__27630, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
+        }else {
+          if(pred__27639__27642.call(null, "\ufdd0'parent-watchables", expr__27640__27643)) {
+            return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, G__27630, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
+          }else {
+            if(pred__27639__27642.call(null, "\ufdd0'watches", expr__27640__27643)) {
+              return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, this__27638.parent_watchables, G__27630, this__27638.__meta, this__27638.__extmap, null)
+            }else {
+              return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, cljs.core.assoc.call(null, this__27638.__extmap, k__2224__auto__, G__27630), null)
+            }
+          }
+        }
+      }
+    }
   }
 };
-clojure.string.split = function() {
-  var split = null;
-  var split__2 = function(s, re) {
-    return cljs.core.vec.call(null, [cljs.core.str(s)].join("").split(re))
-  };
-  var split__3 = function(s, re, limit) {
-    if(limit < 1) {
-      return cljs.core.vec.call(null, [cljs.core.str(s)].join("").split(re))
-    }else {
-      var s__26637 = s;
-      var limit__26638 = limit;
-      var parts__26639 = cljs.core.PersistentVector.EMPTY;
+reflex.core.ComputedObservable.prototype.cljs$core$IDeref$_deref$arity$1 = function(this$) {
+  var this__27644 = this;
+  reflex.core.notify_deref_watcher_BANG_.call(null, this$);
+  if(cljs.core.not.call(null, this__27644.dirty_QMARK_)) {
+    return this$.state
+  }else {
+    var map__27645__27646 = reflex.core.capture_derefed.call(null, this__27644.f);
+    var map__27645__27647 = cljs.core.seq_QMARK_.call(null, map__27645__27646) ? cljs.core.apply.call(null, cljs.core.hash_map, map__27645__27646) : map__27645__27646;
+    var derefed__27648 = cljs.core._lookup.call(null, map__27645__27647, "\ufdd0'derefed", null);
+    var res__27649 = cljs.core._lookup.call(null, map__27645__27647, "\ufdd0'res", null);
+    var G__27650__27651 = cljs.core.seq.call(null, this__27644.parent_watchables);
+    if(G__27650__27651) {
+      var w__27652 = cljs.core.first.call(null, G__27650__27651);
+      var G__27650__27653 = G__27650__27651;
       while(true) {
-        if(cljs.core._EQ_.call(null, limit__26638, 1)) {
-          return cljs.core.conj.call(null, parts__26639, s__26637)
+        cljs.core.remove_watch.call(null, w__27652, this__27644.key);
+        var temp__3974__auto____27654 = cljs.core.next.call(null, G__27650__27653);
+        if(temp__3974__auto____27654) {
+          var G__27650__27655 = temp__3974__auto____27654;
+          var G__27703 = cljs.core.first.call(null, G__27650__27655);
+          var G__27704 = G__27650__27655;
+          w__27652 = G__27703;
+          G__27650__27653 = G__27704;
+          continue
         }else {
-          var temp__3971__auto____26640 = cljs.core.re_find.call(null, re, s__26637);
-          if(cljs.core.truth_(temp__3971__auto____26640)) {
-            var m__26641 = temp__3971__auto____26640;
-            var index__26642 = s__26637.indexOf(m__26641);
-            var G__26643 = s__26637.substring(index__26642 + cljs.core.count.call(null, m__26641));
-            var G__26644 = limit__26638 - 1;
-            var G__26645 = cljs.core.conj.call(null, parts__26639, s__26637.substring(0, index__26642));
-            s__26637 = G__26643;
-            limit__26638 = G__26644;
-            parts__26639 = G__26645;
-            continue
-          }else {
-            return cljs.core.conj.call(null, parts__26639, s__26637)
-          }
         }
         break
       }
-    }
-  };
-  split = function(s, re, limit) {
-    switch(arguments.length) {
-      case 2:
-        return split__2.call(this, s, re);
-      case 3:
-        return split__3.call(this, s, re, limit)
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  split.cljs$lang$arity$2 = split__2;
-  split.cljs$lang$arity$3 = split__3;
-  return split
-}();
-clojure.string.split_lines = function split_lines(s) {
-  return clojure.string.split.call(null, s, /\n|\r\n/)
-};
-clojure.string.trim = function trim(s) {
-  return goog.string.trim(s)
-};
-clojure.string.triml = function triml(s) {
-  return goog.string.trimLeft(s)
-};
-clojure.string.trimr = function trimr(s) {
-  return goog.string.trimRight(s)
-};
-clojure.string.trim_newline = function trim_newline(s) {
-  var index__26649 = s.length;
-  while(true) {
-    if(index__26649 === 0) {
-      return""
     }else {
-      var ch__26650 = cljs.core._lookup.call(null, s, index__26649 - 1, null);
-      if(function() {
-        var or__3824__auto____26651 = cljs.core._EQ_.call(null, ch__26650, "\n");
-        if(or__3824__auto____26651) {
-          return or__3824__auto____26651
-        }else {
-          return cljs.core._EQ_.call(null, ch__26650, "\r")
-        }
-      }()) {
-        var G__26652 = index__26649 - 1;
-        index__26649 = G__26652;
-        continue
-      }else {
-        return s.substring(0, index__26649)
-      }
     }
-    break
+    this$.parent_watchables = derefed__27648;
+    var G__27656__27657 = cljs.core.seq.call(null, derefed__27648);
+    if(G__27656__27657) {
+      var w__27658 = cljs.core.first.call(null, G__27656__27657);
+      var G__27656__27659 = G__27656__27657;
+      while(true) {
+        cljs.core.add_watch.call(null, w__27658, this__27644.key, function(w__27658, G__27656__27659) {
+          return function() {
+            this$.dirty_QMARK_ = true;
+            return cljs.core._notify_watches.call(null, this$, null, null)
+          }
+        }(w__27658, G__27656__27659));
+        var temp__3974__auto____27660 = cljs.core.next.call(null, G__27656__27659);
+        if(temp__3974__auto____27660) {
+          var G__27656__27661 = temp__3974__auto____27660;
+          var G__27705 = cljs.core.first.call(null, G__27656__27661);
+          var G__27706 = G__27656__27661;
+          w__27658 = G__27705;
+          G__27656__27659 = G__27706;
+          continue
+        }else {
+        }
+        break
+      }
+    }else {
+    }
+    this$.state = res__27649;
+    this$.dirty_QMARK_ = false;
+    return res__27649
   }
 };
-clojure.string.blank_QMARK_ = function blank_QMARK_(s) {
-  var s__26656 = [cljs.core.str(s)].join("");
-  if(cljs.core.truth_(function() {
-    var or__3824__auto____26657 = cljs.core.not.call(null, s__26656);
-    if(or__3824__auto____26657) {
-      return or__3824__auto____26657
-    }else {
-      var or__3824__auto____26658 = cljs.core._EQ_.call(null, "", s__26656);
-      if(or__3824__auto____26658) {
-        return or__3824__auto____26658
+reflex.core.ComputedObservable.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2221__auto__, entry__2222__auto__) {
+  var this__27662 = this;
+  if(cljs.core.vector_QMARK_.call(null, entry__2222__auto__)) {
+    return this__2221__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2221__auto__, cljs.core._nth.call(null, entry__2222__auto__, 0), cljs.core._nth.call(null, entry__2222__auto__, 1))
+  }else {
+    return cljs.core.reduce.call(null, cljs.core._conj, this__2221__auto__, entry__2222__auto__)
+  }
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IWatchable$_notify_watches$arity$3 = function(this$, _27664, _) {
+  var this__27663 = this;
+  var G__27665__27666 = cljs.core.seq.call(null, this__27663.watches);
+  if(G__27665__27666) {
+    var G__27668__27670 = cljs.core.first.call(null, G__27665__27666);
+    var vec__27669__27671 = G__27668__27670;
+    var key__27672 = cljs.core.nth.call(null, vec__27669__27671, 0, null);
+    var wf__27673 = cljs.core.nth.call(null, vec__27669__27671, 1, null);
+    var G__27665__27674 = G__27665__27666;
+    var G__27668__27675 = G__27668__27670;
+    var G__27665__27676 = G__27665__27674;
+    while(true) {
+      var vec__27677__27678 = G__27668__27675;
+      var key__27679 = cljs.core.nth.call(null, vec__27677__27678, 0, null);
+      var wf__27680 = cljs.core.nth.call(null, vec__27677__27678, 1, null);
+      var G__27665__27681 = G__27665__27676;
+      wf__27680.call(null);
+      var temp__3974__auto____27682 = cljs.core.next.call(null, G__27665__27681);
+      if(temp__3974__auto____27682) {
+        var G__27665__27683 = temp__3974__auto____27682;
+        var G__27707 = cljs.core.first.call(null, G__27665__27683);
+        var G__27708 = G__27665__27683;
+        G__27668__27675 = G__27707;
+        G__27665__27676 = G__27708;
+        continue
       }else {
-        return cljs.core.re_matches.call(null, /\s+/, s__26656)
+        return null
       }
+      break
+    }
+  }else {
+    return null
+  }
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IWatchable$_add_watch$arity$3 = function(this$, key, wf) {
+  var this__27684 = this;
+  return this$.watches = cljs.core.assoc.call(null, this__27684.watches, key, wf)
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IWatchable$_remove_watch$arity$2 = function(this$, key) {
+  var this__27685 = this;
+  return this$.watches = cljs.core.dissoc.call(null, this__27685.watches, key)
+};
+reflex.core.ComputedObservable.prototype.reflex$core$IDisposable$ = true;
+reflex.core.ComputedObservable.prototype.reflex$core$IDisposable$dispose_BANG_$arity$1 = function(this$) {
+  var this__27686 = this;
+  var G__27687__27688 = cljs.core.seq.call(null, this__27686.parent_watchables);
+  if(G__27687__27688) {
+    var w__27689 = cljs.core.first.call(null, G__27687__27688);
+    var G__27687__27690 = G__27687__27688;
+    while(true) {
+      cljs.core.remove_watch.call(null, w__27689, this__27686.key);
+      var temp__3974__auto____27691 = cljs.core.next.call(null, G__27687__27690);
+      if(temp__3974__auto____27691) {
+        var G__27687__27692 = temp__3974__auto____27691;
+        var G__27709 = cljs.core.first.call(null, G__27687__27692);
+        var G__27710 = G__27687__27692;
+        w__27689 = G__27709;
+        G__27687__27690 = G__27710;
+        continue
+      }else {
+      }
+      break
+    }
+  }else {
+  }
+  return this$.watches = null
+};
+reflex.core.ComputedObservable.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2228__auto__) {
+  var this__27693 = this;
+  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'state", this__27693.state), cljs.core.vector.call(null, "\ufdd0'dirty?", this__27693.dirty_QMARK_), cljs.core.vector.call(null, "\ufdd0'f", this__27693.f), cljs.core.vector.call(null, "\ufdd0'key", this__27693.key), cljs.core.vector.call(null, "\ufdd0'parent-watchables", this__27693.parent_watchables), cljs.core.vector.call(null, "\ufdd0'watches", this__27693.watches)], 
+  true), this__27693.__extmap))
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IPrintable$_pr_seq$arity$2 = function(this__2230__auto__, opts__2231__auto__) {
+  var this__27694 = this;
+  var pr_pair__2232__auto____27695 = function(keyval__2233__auto__) {
+    return cljs.core.pr_sequential.call(null, cljs.core.pr_seq, "", " ", "", opts__2231__auto__, keyval__2233__auto__)
+  };
+  return cljs.core.pr_sequential.call(null, pr_pair__2232__auto____27695, [cljs.core.str("#"), cljs.core.str("ComputedObservable"), cljs.core.str("{")].join(""), ", ", "}", opts__2231__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'state", this__27694.state), cljs.core.vector.call(null, "\ufdd0'dirty?", this__27694.dirty_QMARK_), cljs.core.vector.call(null, "\ufdd0'f", this__27694.f), cljs.core.vector.call(null, "\ufdd0'key", this__27694.key), 
+  cljs.core.vector.call(null, "\ufdd0'parent-watchables", this__27694.parent_watchables), cljs.core.vector.call(null, "\ufdd0'watches", this__27694.watches)], true), this__27694.__extmap))
+};
+reflex.core.ComputedObservable.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2220__auto__) {
+  var this__27696 = this;
+  return 6 + cljs.core.count.call(null, this__27696.__extmap)
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2212__auto__, other__2213__auto__) {
+  var this__27697 = this;
+  if(cljs.core.truth_(function() {
+    var and__3822__auto____27698 = other__2213__auto__;
+    if(cljs.core.truth_(and__3822__auto____27698)) {
+      var and__3822__auto____27699 = this__2212__auto__.constructor === other__2213__auto__.constructor;
+      if(and__3822__auto____27699) {
+        return cljs.core.equiv_map.call(null, this__2212__auto__, other__2213__auto__)
+      }else {
+        return and__3822__auto____27699
+      }
+    }else {
+      return and__3822__auto____27698
     }
   }())) {
     return true
@@ -20314,28 +20477,732 @@ clojure.string.blank_QMARK_ = function blank_QMARK_(s) {
     return false
   }
 };
-clojure.string.escape = function escape(s, cmap) {
-  var buffer__26665 = new goog.string.StringBuffer;
-  var length__26666 = s.length;
-  var index__26667 = 0;
-  while(true) {
-    if(cljs.core._EQ_.call(null, length__26666, index__26667)) {
-      return buffer__26665.toString()
+reflex.core.ComputedObservable.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2215__auto__, G__27630) {
+  var this__27700 = this;
+  return new reflex.core.ComputedObservable(this__27700.state, this__27700.dirty_QMARK_, this__27700.f, this__27700.key, this__27700.parent_watchables, this__27700.watches, G__27630, this__27700.__extmap, this__27700.__hash)
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2214__auto__) {
+  var this__27701 = this;
+  return this__27701.__meta
+};
+reflex.core.ComputedObservable.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2225__auto__, k__2226__auto__) {
+  var this__27702 = this;
+  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0'dirty?", "\ufdd0'state", "\ufdd0'key", "\ufdd0'f", "\ufdd0'watches", "\ufdd0'parent-watchables"]), k__2226__auto__)) {
+    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2225__auto__), this__27702.__meta), k__2226__auto__)
+  }else {
+    return new reflex.core.ComputedObservable(this__27702.state, this__27702.dirty_QMARK_, this__27702.f, this__27702.key, this__27702.parent_watchables, this__27702.watches, this__27702.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, this__27702.__extmap, k__2226__auto__)), null)
+  }
+};
+reflex.core.ComputedObservable.cljs$lang$type = true;
+reflex.core.ComputedObservable.cljs$lang$ctorPrSeq = function(this__2250__auto__) {
+  return cljs.core.list.call(null, "reflex.core/ComputedObservable")
+};
+reflex.core.__GT_ComputedObservable = function __GT_ComputedObservable(state, dirty_QMARK_, f, key, parent_watchables, watches) {
+  return new reflex.core.ComputedObservable(state, dirty_QMARK_, f, key, parent_watchables, watches)
+};
+reflex.core.map__GT_ComputedObservable = function map__GT_ComputedObservable(G__27632) {
+  return new reflex.core.ComputedObservable((new cljs.core.Keyword("\ufdd0'state")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'dirty?")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'f")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'key")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'parent-watchables")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'watches")).call(null, G__27632), null, cljs.core.dissoc.call(null, G__27632, "\ufdd0'state", "\ufdd0'dirty?", 
+  "\ufdd0'f", "\ufdd0'key", "\ufdd0'parent-watchables", "\ufdd0'watches"))
+};
+reflex.core.ComputedObservable;
+reflex.core.ComputedObservable.prototype.cljs$core$IHash$ = true;
+reflex.core.ComputedObservable.prototype.cljs$core$IHash$_hash$arity$1 = function(this$) {
+  return this$.key
+};
+var array_p, explode_p, ignore_p, key_prefix, map_p, namespace_tag, number_p, p, re_svg_tags, re_tag, re_whitespace, string_p, unify_p, whitespace_node_p, xmlns, __hasProp = {}.hasOwnProperty;
+goog.require("goog.string");
+goog.provide("singult.coffee");
+goog.provide("singult.coffee.Unify");
+goog.provide("singult.coffee.Ignore");
+p = function(x) {
+  console.log(x);
+  return x
+};
+re_tag = /([^\s\.#]+)(?:#([^\s\.#]+))?(?:\.([^\s#]+))?/;
+re_svg_tags = /^(svg|g|rect|circle|clipPath|path|line|polygon|polyline|text|textPath)$/;
+re_whitespace = /^\s+$/;
+key_prefix = "\x00";
+xmlns = {xhtml:"http://www.w3.org/1999/xhtml", svg:"http://www.w3.org/2000/svg"};
+namespace_tag = function(tag_str) {
+  var nsp, tag, _ref;
+  _ref = tag_str.split(":"), nsp = _ref[0], tag = _ref[1];
+  if(tag != null) {
+    return[xmlns[nsp] || nsp, tag]
+  }else {
+    if(tag_str.match(re_svg_tags)) {
+      return[xmlns.svg, tag_str]
     }else {
-      var ch__26668 = s.charAt(index__26667);
-      var temp__3971__auto____26669 = cljs.core._lookup.call(null, cmap, ch__26668, null);
-      if(cljs.core.truth_(temp__3971__auto____26669)) {
-        var replacement__26670 = temp__3971__auto____26669;
-        buffer__26665.append([cljs.core.str(replacement__26670)].join(""))
-      }else {
-        buffer__26665.append(ch__26668)
-      }
-      var G__26671 = index__26667 + 1;
-      index__26667 = G__26671;
+      return[xmlns.xhtml, tag_str]
+    }
+  }
+};
+explode_p = function(v) {
+  return v[0] === ":*:"
+};
+unify_p = function(x) {
+  return x != null && x instanceof singult.coffee.Unify
+};
+ignore_p = function(x) {
+  return x != null && x instanceof singult.coffee.Ignore
+};
+array_p = function(x) {
+  return x != null && x.forEach != null
+};
+map_p = function(x) {
+  return x != null && !array_p(x) && !unify_p(x) && !ignore_p(x) && x instanceof Object
+};
+string_p = function(x) {
+  return x != null && x.substring != null
+};
+number_p = function(x) {
+  return x != null && x.toFixed != null
+};
+whitespace_node_p = function($n) {
+  return $n.nodeType === 8 || $n.nodeType === 3 && $n.textContent.match(re_whitespace)
+};
+singult.coffee.style = function($e, m) {
+  var k, v, _results;
+  _results = [];
+  for(k in m) {
+    if(!__hasProp.call(m, k)) {
       continue
     }
-    break
+    v = m[k];
+    _results.push($e.style[goog.string.toCamelCase(k)] = v)
   }
+  return _results
+};
+singult.coffee.properties = function($e, m) {
+  var prop, v, _results;
+  _results = [];
+  for(prop in m) {
+    if(!__hasProp.call(m, prop)) {
+      continue
+    }
+    v = m[prop];
+    _results.push($e[prop] = v)
+  }
+  return _results
+};
+singult.coffee.attr = function($e, attr_map) {
+  var k, v, _results;
+  if(attr_map["style"] != null) {
+    singult.coffee.style($e, attr_map["style"]);
+    delete attr_map["style"]
+  }
+  if(attr_map["properties"] != null) {
+    singult.coffee.properties($e, attr_map["properties"]);
+    delete attr_map["properties"]
+  }
+  if(array_p(attr_map["class"])) {
+    $e.setAttribute("class", attr_map["class"].join(" "));
+    delete attr_map["class"]
+  }
+  _results = [];
+  for(k in attr_map) {
+    if(!__hasProp.call(attr_map, k)) {
+      continue
+    }
+    v = attr_map[k];
+    if(v != null) {
+      _results.push($e.setAttribute(k, v))
+    }else {
+      _results.push($e.removeAttribute(k))
+    }
+  }
+  return _results
+};
+singult.coffee.node_data = function($e, d) {
+  if(d != null) {
+    return $e["__singult_data__"] = d
+  }else {
+    return $e["__singult_data__"]
+  }
+};
+singult.coffee.canonicalize = function(x) {
+  if(number_p(x)) {
+    return x.toString()
+  }else {
+    if(array_p(x)) {
+      return singult.coffee.canonicalize_hiccup(x)
+    }else {
+      return x
+    }
+  }
+};
+singult.coffee.canonicalize_hiccup = function(v) {
+  var abbreviated_classes, attr, canonical, canonical_children, children, cls_str, id, nsp, tag, tag_str, _, _ref, _ref1, _ref2;
+  tag = v[0];
+  _ref = map_p(v[1]) ? [v[1], v.slice(2)] : [{}, v.slice(1)], attr = _ref[0], children = _ref[1];
+  _ref1 = tag.match(re_tag), _ = _ref1[0], tag_str = _ref1[1], id = _ref1[2], cls_str = _ref1[3];
+  if(id != null) {
+    attr["id"] = id
+  }
+  if(cls_str != null) {
+    abbreviated_classes = cls_str.split(".");
+    if(array_p(attr["class"])) {
+      attr["class"] = attr["class"].concat(abbreviated_classes)
+    }else {
+      if(string_p(attr["class"])) {
+        attr["class"] = abbreviated_classes.concat([attr["class"]])
+      }else {
+        if(!(attr["class"] != null)) {
+          attr["class"] = abbreviated_classes
+        }
+      }
+    }
+  }
+  _ref2 = namespace_tag(tag_str), nsp = _ref2[0], tag = _ref2[1];
+  canonical_children = [];
+  children.forEach(function(v) {
+    if(v != null) {
+      if(explode_p(v)) {
+        return v.slice(1).forEach(function(v) {
+          return canonical_children.push(singult.coffee.canonicalize(v))
+        })
+      }else {
+        return canonical_children.push(singult.coffee.canonicalize(v))
+      }
+    }
+  });
+  canonical = {nsp:nsp, tag:tag, attr:attr, children:canonical_children};
+  return canonical
+};
+singult.coffee.render = function(m) {
+  var $e, c;
+  if(unify_p(m)) {
+    throw new Error("Unify must be the first and only child of its parent.");
+  }else {
+    if(ignore_p(m)) {
+      return null
+    }else {
+      if(string_p(m)) {
+        return document.createTextNode(m)
+      }else {
+        $e = document.createElementNS(m.nsp, m.tag);
+        singult.coffee.attr($e, m.attr);
+        if(unify_p(c = m.children[0])) {
+          if(c.enter != null) {
+            c.data.forEach(function(d) {
+              var $el;
+              $el = c.enter(d);
+              singult.coffee.node_data($el, d);
+              return $e.appendChild($el)
+            })
+          }else {
+            c.data.forEach(function(d) {
+              var $el;
+              $el = singult.coffee.render(singult.coffee.canonicalize(c.mapping(d)));
+              singult.coffee.node_data($el, d);
+              return $e.appendChild($el)
+            })
+          }
+        }else {
+          m.children.forEach(function(c) {
+            var $c;
+            $c = singult.coffee.render(c);
+            if($c != null) {
+              return $e.appendChild($c)
+            }
+          })
+        }
+        return $e
+      }
+    }
+  }
+};
+singult.coffee.Unify = function(data, mapping, key_fn, enter, update, exit, force_update_p) {
+  this.data = data;
+  this.mapping = mapping;
+  this.key_fn = key_fn;
+  this.enter = enter;
+  this.update = update;
+  this.exit = exit;
+  this.force_update_p = force_update_p;
+  return this
+};
+singult.coffee.Ignore = function() {
+  return this
+};
+singult.coffee.unify_ = function($container, u) {
+  var $n, $nodes, enter, exit, i, key, key_fn, nodes_by_key, update, _;
+  enter = u.enter || function(d) {
+    var $el;
+    $el = singult.coffee.render(singult.coffee.canonicalize(u.mapping(d)));
+    $container.appendChild($el);
+    return $el
+  };
+  update = u.update || function($n, d) {
+    return singult.coffee.merge($n, singult.coffee.canonicalize(u.mapping(d)))
+  };
+  exit = u.exit || function($n) {
+    return $container.removeChild($n)
+  };
+  key_fn = u.key_fn || function(d, idx) {
+    return idx
+  };
+  $nodes = $container.childNodes;
+  nodes_by_key = {};
+  i = 0;
+  while(i < $nodes.length) {
+    key = key_prefix + key_fn(singult.coffee.node_data($nodes[i]), i);
+    nodes_by_key[key] = $nodes[i];
+    i += 1
+  }
+  u.data.forEach(function(d, i) {
+    var $el, $n, identical_data_p, old_data;
+    key = key_prefix + key_fn(d, i);
+    if($n = nodes_by_key[key]) {
+      if(u.force_update_p) {
+        $el = update($n, d);
+        singult.coffee.node_data($el, d)
+      }else {
+        old_data = singult.coffee.node_data($n);
+        identical_data_p = old_data.cljs$core$IEquiv$_equiv$arity$2 != null ? old_data.cljs$core$IEquiv$_equiv$arity$2(old_data, d) : old_data === d;
+        if(!identical_data_p) {
+          $el = update($n, d);
+          singult.coffee.node_data($el, d)
+        }
+      }
+      return delete nodes_by_key[key]
+    }else {
+      $el = enter(d);
+      return singult.coffee.node_data($el, d)
+    }
+  });
+  for(_ in nodes_by_key) {
+    $n = nodes_by_key[_];
+    exit($n)
+  }
+  return null
+};
+singult.coffee.merge = function($e, m) {
+  var $c, c, i, _i, _j, _ref, _ref1;
+  if(unify_p(m)) {
+    singult.coffee.unify_($e, m)
+  }else {
+    if(ignore_p(m)) {
+    }else {
+      if($e.nodeName.toLowerCase() !== m.tag.toLowerCase()) {
+        p($e);
+        p(m);
+        throw new Error("Cannot merge $e into node of different type");
+      }
+      singult.coffee.attr($e, m.attr);
+      if($e.hasChildNodes()) {
+        for(i = _i = _ref = $e.childNodes.length - 1;_ref <= 0 ? _i <= 0 : _i >= 0;i = _ref <= 0 ? ++_i : --_i) {
+          $c = $e.childNodes[i];
+          if(whitespace_node_p($c)) {
+            $e.removeChild($c)
+          }
+        }
+      }
+      if(unify_p(m.children[0])) {
+        singult.coffee.merge($e, m.children[0])
+      }else {
+        if($e.childNodes.length > m.children.length) {
+          for(i = _j = _ref1 = $e.childNodes.length - 1;_ref1 <= 0 ? _j <= 0 : _j >= 0;i = _ref1 <= 0 ? ++_j : --_j) {
+            $e.removeChild($e.childNodes[i])
+          }
+        }
+        i = 0;
+        while(i < m.children.length) {
+          c = m.children[i] || "";
+          $c = $e.childNodes[i];
+          if(string_p(c)) {
+            if($c != null) {
+              $c.textContent = c
+            }else {
+              $e.appendChild(document.createTextNode(c))
+            }
+          }else {
+            if(ignore_p(c)) {
+            }else {
+              if(map_p(c)) {
+                if($c != null) {
+                  singult.coffee.merge($c, c)
+                }else {
+                  $e.appendChild(singult.coffee.render(c))
+                }
+              }else {
+                p($c);
+                p(c);
+                throw new Error("Cannot merge children");
+              }
+            }
+          }
+          i += 1
+        }
+      }
+    }
+  }
+  return $e
+};
+goog.provide("singult.core");
+goog.require("cljs.core");
+goog.require("singult.coffee");
+singult.core.Unify = function(data, mapping, key_fn, enter, update, exit, force_update_QMARK_, __meta, __extmap) {
+  this.data = data;
+  this.mapping = mapping;
+  this.key_fn = key_fn;
+  this.enter = enter;
+  this.update = update;
+  this.exit = exit;
+  this.force_update_QMARK_ = force_update_QMARK_;
+  this.__meta = __meta;
+  this.__extmap = __extmap;
+  this.cljs$lang$protocol_mask$partition1$ = 0;
+  this.cljs$lang$protocol_mask$partition0$ = 619054858;
+  if(arguments.length > 7) {
+    this.__meta = __meta;
+    this.__extmap = __extmap
+  }else {
+    this.__meta = null;
+    this.__extmap = null
+  }
+};
+singult.core.Unify.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2211__auto__) {
+  var this__26835 = this;
+  var h__2085__auto____26836 = this__26835.__hash;
+  if(!(h__2085__auto____26836 == null)) {
+    return h__2085__auto____26836
+  }else {
+    var h__2085__auto____26837 = cljs.core.hash_imap.call(null, this__2211__auto__);
+    this__26835.__hash = h__2085__auto____26837;
+    return h__2085__auto____26837
+  }
+};
+singult.core.Unify.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2216__auto__, k__2217__auto__) {
+  var this__26838 = this;
+  return this__2216__auto__.cljs$core$ILookup$_lookup$arity$3(this__2216__auto__, k__2217__auto__, null)
+};
+singult.core.Unify.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2218__auto__, k26833, else__2219__auto__) {
+  var this__26839 = this;
+  if(k26833 === "\ufdd0'data") {
+    return this__26839.data
+  }else {
+    if(k26833 === "\ufdd0'mapping") {
+      return this__26839.mapping
+    }else {
+      if(k26833 === "\ufdd0'key-fn") {
+        return this__26839.key_fn
+      }else {
+        if(k26833 === "\ufdd0'enter") {
+          return this__26839.enter
+        }else {
+          if(k26833 === "\ufdd0'update") {
+            return this__26839.update
+          }else {
+            if(k26833 === "\ufdd0'exit") {
+              return this__26839.exit
+            }else {
+              if(k26833 === "\ufdd0'force-update?") {
+                return this__26839.force_update_QMARK_
+              }else {
+                if("\ufdd0'else") {
+                  return cljs.core._lookup.call(null, this__26839.__extmap, k26833, else__2219__auto__)
+                }else {
+                  return null
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+singult.core.Unify.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2223__auto__, k__2224__auto__, G__26832) {
+  var this__26840 = this;
+  var pred__26841__26844 = cljs.core.identical_QMARK_;
+  var expr__26842__26845 = k__2224__auto__;
+  if(pred__26841__26844.call(null, "\ufdd0'data", expr__26842__26845)) {
+    return new singult.core.Unify(G__26832, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
+  }else {
+    if(pred__26841__26844.call(null, "\ufdd0'mapping", expr__26842__26845)) {
+      return new singult.core.Unify(this__26840.data, G__26832, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
+    }else {
+      if(pred__26841__26844.call(null, "\ufdd0'key-fn", expr__26842__26845)) {
+        return new singult.core.Unify(this__26840.data, this__26840.mapping, G__26832, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
+      }else {
+        if(pred__26841__26844.call(null, "\ufdd0'enter", expr__26842__26845)) {
+          return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, G__26832, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
+        }else {
+          if(pred__26841__26844.call(null, "\ufdd0'update", expr__26842__26845)) {
+            return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, G__26832, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
+          }else {
+            if(pred__26841__26844.call(null, "\ufdd0'exit", expr__26842__26845)) {
+              return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, G__26832, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
+            }else {
+              if(pred__26841__26844.call(null, "\ufdd0'force-update?", expr__26842__26845)) {
+                return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, G__26832, this__26840.__meta, this__26840.__extmap, null)
+              }else {
+                return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, cljs.core.assoc.call(null, this__26840.__extmap, k__2224__auto__, G__26832), null)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+singult.core.Unify.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2221__auto__, entry__2222__auto__) {
+  var this__26846 = this;
+  if(cljs.core.vector_QMARK_.call(null, entry__2222__auto__)) {
+    return this__2221__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2221__auto__, cljs.core._nth.call(null, entry__2222__auto__, 0), cljs.core._nth.call(null, entry__2222__auto__, 1))
+  }else {
+    return cljs.core.reduce.call(null, cljs.core._conj, this__2221__auto__, entry__2222__auto__)
+  }
+};
+singult.core.Unify.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2228__auto__) {
+  var this__26847 = this;
+  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'data", this__26847.data), cljs.core.vector.call(null, "\ufdd0'mapping", this__26847.mapping), cljs.core.vector.call(null, "\ufdd0'key-fn", this__26847.key_fn), cljs.core.vector.call(null, "\ufdd0'enter", this__26847.enter), cljs.core.vector.call(null, "\ufdd0'update", this__26847.update), cljs.core.vector.call(null, "\ufdd0'exit", this__26847.exit), cljs.core.vector.call(null, 
+  "\ufdd0'force-update?", this__26847.force_update_QMARK_)], true), this__26847.__extmap))
+};
+singult.core.Unify.prototype.cljs$core$IPrintable$_pr_seq$arity$2 = function(this__2230__auto__, opts__2231__auto__) {
+  var this__26848 = this;
+  var pr_pair__2232__auto____26849 = function(keyval__2233__auto__) {
+    return cljs.core.pr_sequential.call(null, cljs.core.pr_seq, "", " ", "", opts__2231__auto__, keyval__2233__auto__)
+  };
+  return cljs.core.pr_sequential.call(null, pr_pair__2232__auto____26849, [cljs.core.str("#"), cljs.core.str("Unify"), cljs.core.str("{")].join(""), ", ", "}", opts__2231__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'data", this__26848.data), cljs.core.vector.call(null, "\ufdd0'mapping", this__26848.mapping), cljs.core.vector.call(null, "\ufdd0'key-fn", this__26848.key_fn), cljs.core.vector.call(null, "\ufdd0'enter", this__26848.enter), 
+  cljs.core.vector.call(null, "\ufdd0'update", this__26848.update), cljs.core.vector.call(null, "\ufdd0'exit", this__26848.exit), cljs.core.vector.call(null, "\ufdd0'force-update?", this__26848.force_update_QMARK_)], true), this__26848.__extmap))
+};
+singult.core.Unify.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2220__auto__) {
+  var this__26850 = this;
+  return 7 + cljs.core.count.call(null, this__26850.__extmap)
+};
+singult.core.Unify.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2212__auto__, other__2213__auto__) {
+  var this__26851 = this;
+  if(cljs.core.truth_(function() {
+    var and__3822__auto____26852 = other__2213__auto__;
+    if(cljs.core.truth_(and__3822__auto____26852)) {
+      var and__3822__auto____26853 = this__2212__auto__.constructor === other__2213__auto__.constructor;
+      if(and__3822__auto____26853) {
+        return cljs.core.equiv_map.call(null, this__2212__auto__, other__2213__auto__)
+      }else {
+        return and__3822__auto____26853
+      }
+    }else {
+      return and__3822__auto____26852
+    }
+  }())) {
+    return true
+  }else {
+    return false
+  }
+};
+singult.core.Unify.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2215__auto__, G__26832) {
+  var this__26854 = this;
+  return new singult.core.Unify(this__26854.data, this__26854.mapping, this__26854.key_fn, this__26854.enter, this__26854.update, this__26854.exit, this__26854.force_update_QMARK_, G__26832, this__26854.__extmap, this__26854.__hash)
+};
+singult.core.Unify.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2214__auto__) {
+  var this__26855 = this;
+  return this__26855.__meta
+};
+singult.core.Unify.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2225__auto__, k__2226__auto__) {
+  var this__26856 = this;
+  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0'data", "\ufdd0'force-update?", "\ufdd0'enter", "\ufdd0'exit", "\ufdd0'key-fn", "\ufdd0'update", "\ufdd0'mapping"]), k__2226__auto__)) {
+    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2225__auto__), this__26856.__meta), k__2226__auto__)
+  }else {
+    return new singult.core.Unify(this__26856.data, this__26856.mapping, this__26856.key_fn, this__26856.enter, this__26856.update, this__26856.exit, this__26856.force_update_QMARK_, this__26856.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, this__26856.__extmap, k__2226__auto__)), null)
+  }
+};
+singult.core.Unify.cljs$lang$type = true;
+singult.core.Unify.cljs$lang$ctorPrSeq = function(this__2250__auto__) {
+  return cljs.core.list.call(null, "singult.core/Unify")
+};
+singult.core.__GT_Unify = function __GT_Unify(data, mapping, key_fn, enter, update, exit, force_update_QMARK_) {
+  return new singult.core.Unify(data, mapping, key_fn, enter, update, exit, force_update_QMARK_)
+};
+singult.core.map__GT_Unify = function map__GT_Unify(G__26834) {
+  return new singult.core.Unify((new cljs.core.Keyword("\ufdd0'data")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'mapping")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'key-fn")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'enter")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'update")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'exit")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'force-update?")).call(null, G__26834), null, cljs.core.dissoc.call(null, 
+  G__26834, "\ufdd0'data", "\ufdd0'mapping", "\ufdd0'key-fn", "\ufdd0'enter", "\ufdd0'update", "\ufdd0'exit", "\ufdd0'force-update?"))
+};
+singult.core.Unify;
+singult.core.clj__GT_js = function clj__GT_js(x) {
+  if(cljs.core.instance_QMARK_.call(null, singult.core.Unify, x)) {
+    var map__26910__26911 = x;
+    var map__26910__26912 = cljs.core.seq_QMARK_.call(null, map__26910__26911) ? cljs.core.apply.call(null, cljs.core.hash_map, map__26910__26911) : map__26910__26911;
+    var force_update_QMARK___26913 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'force-update?", null);
+    var exit__26914 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'exit", null);
+    var update__26915 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'update", null);
+    var enter__26916 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'enter", null);
+    var key_fn__26917 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'key-fn", null);
+    var mapping__26918 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'mapping", null);
+    var data__26919 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'data", null);
+    var data_arr__26927 = function() {
+      var a__26920 = [];
+      var G__26921__26922 = cljs.core.seq.call(null, data__26919);
+      if(G__26921__26922) {
+        var d__26923 = cljs.core.first.call(null, G__26921__26922);
+        var G__26921__26924 = G__26921__26922;
+        while(true) {
+          a__26920.push(d__26923);
+          var temp__3974__auto____26925 = cljs.core.next.call(null, G__26921__26924);
+          if(temp__3974__auto____26925) {
+            var G__26921__26926 = temp__3974__auto____26925;
+            var G__26963 = cljs.core.first.call(null, G__26921__26926);
+            var G__26964 = G__26921__26926;
+            d__26923 = G__26963;
+            G__26921__26924 = G__26964;
+            continue
+          }else {
+          }
+          break
+        }
+      }else {
+      }
+      return a__26920
+    }();
+    return new singult.coffee.Unify(data_arr__26927, function(p1__26831_SHARP_) {
+      return clj__GT_js.call(null, mapping__26918.call(null, p1__26831_SHARP_))
+    }, key_fn__26917, enter__26916, update__26915, exit__26914, force_update_QMARK___26913)
+  }else {
+    if(cljs.core.keyword_QMARK_.call(null, x)) {
+      return cljs.core.name.call(null, x)
+    }else {
+      if(cljs.core.map_QMARK_.call(null, x)) {
+        var o__26928 = {};
+        var G__26929__26930 = cljs.core.seq.call(null, x);
+        if(G__26929__26930) {
+          var G__26932__26934 = cljs.core.first.call(null, G__26929__26930);
+          var vec__26933__26935 = G__26932__26934;
+          var k__26936 = cljs.core.nth.call(null, vec__26933__26935, 0, null);
+          var v__26937 = cljs.core.nth.call(null, vec__26933__26935, 1, null);
+          var G__26929__26938 = G__26929__26930;
+          var G__26932__26939 = G__26932__26934;
+          var G__26929__26940 = G__26929__26938;
+          while(true) {
+            var vec__26941__26942 = G__26932__26939;
+            var k__26943 = cljs.core.nth.call(null, vec__26941__26942, 0, null);
+            var v__26944 = cljs.core.nth.call(null, vec__26941__26942, 1, null);
+            var G__26929__26945 = G__26929__26940;
+            var key__26946 = clj__GT_js.call(null, k__26943);
+            if(cljs.core.string_QMARK_.call(null, key__26946)) {
+            }else {
+              throw"Cannot convert; JavaScript map keys must be strings";
+            }
+            o__26928[key__26946] = clj__GT_js.call(null, v__26944);
+            var temp__3974__auto____26947 = cljs.core.next.call(null, G__26929__26945);
+            if(temp__3974__auto____26947) {
+              var G__26929__26948 = temp__3974__auto____26947;
+              var G__26965 = cljs.core.first.call(null, G__26929__26948);
+              var G__26966 = G__26929__26948;
+              G__26932__26939 = G__26965;
+              G__26929__26940 = G__26966;
+              continue
+            }else {
+            }
+            break
+          }
+        }else {
+        }
+        return o__26928
+      }else {
+        if(cljs.core.seq_QMARK_.call(null, x)) {
+          var a__26949 = [];
+          a__26949.push(":*:");
+          var G__26950__26951 = cljs.core.seq.call(null, x);
+          if(G__26950__26951) {
+            var item__26952 = cljs.core.first.call(null, G__26950__26951);
+            var G__26950__26953 = G__26950__26951;
+            while(true) {
+              a__26949.push(clj__GT_js.call(null, item__26952));
+              var temp__3974__auto____26954 = cljs.core.next.call(null, G__26950__26953);
+              if(temp__3974__auto____26954) {
+                var G__26950__26955 = temp__3974__auto____26954;
+                var G__26967 = cljs.core.first.call(null, G__26950__26955);
+                var G__26968 = G__26950__26955;
+                item__26952 = G__26967;
+                G__26950__26953 = G__26968;
+                continue
+              }else {
+              }
+              break
+            }
+          }else {
+          }
+          return a__26949
+        }else {
+          if(cljs.core.coll_QMARK_.call(null, x)) {
+            var a__26956 = [];
+            var G__26957__26958 = cljs.core.seq.call(null, x);
+            if(G__26957__26958) {
+              var item__26959 = cljs.core.first.call(null, G__26957__26958);
+              var G__26957__26960 = G__26957__26958;
+              while(true) {
+                a__26956.push(clj__GT_js.call(null, item__26959));
+                var temp__3974__auto____26961 = cljs.core.next.call(null, G__26957__26960);
+                if(temp__3974__auto____26961) {
+                  var G__26957__26962 = temp__3974__auto____26961;
+                  var G__26969 = cljs.core.first.call(null, G__26957__26962);
+                  var G__26970 = G__26957__26962;
+                  item__26959 = G__26969;
+                  G__26957__26960 = G__26970;
+                  continue
+                }else {
+                }
+                break
+              }
+            }else {
+            }
+            return a__26956
+          }else {
+            if("\ufdd0'else") {
+              return x
+            }else {
+              return null
+            }
+          }
+        }
+      }
+    }
+  }
+};
+singult.core.node_data = singult.coffee.node_data;
+singult.core.attr = function attr($n, m) {
+  return singult.coffee.attr.call(null, $n, singult.core.clj__GT_js.call(null, m))
+};
+singult.core.render = function render(v) {
+  return singult.coffee.render.call(null, singult.coffee.canonicalize.call(null, singult.core.clj__GT_js.call(null, v)))
+};
+singult.core.merge_BANG_ = function merge_BANG_($n, v) {
+  if(v == null) {
+    return null
+  }else {
+    return singult.coffee.merge.call(null, $n, singult.coffee.canonicalize.call(null, singult.core.clj__GT_js.call(null, v)))
+  }
+};
+singult.core.unify = function() {
+  var unify__delegate = function(data, mapping, p__26971) {
+    var map__26980__26981 = p__26971;
+    var map__26980__26982 = cljs.core.seq_QMARK_.call(null, map__26980__26981) ? cljs.core.apply.call(null, cljs.core.hash_map, map__26980__26981) : map__26980__26981;
+    var force_update_QMARK___26983 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'force-update?", null);
+    var exit__26984 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'exit", null);
+    var update__26985 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'update", null);
+    var enter__26986 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'enter", null);
+    var key_fn__26987 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'key-fn", null);
+    return new singult.core.Unify(data, mapping, key_fn__26987, enter__26986, update__26985, exit__26984, force_update_QMARK___26983)
+  };
+  var unify = function(data, mapping, var_args) {
+    var p__26971 = null;
+    if(goog.isDef(var_args)) {
+      p__26971 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0)
+    }
+    return unify__delegate.call(this, data, mapping, p__26971)
+  };
+  unify.cljs$lang$maxFixedArity = 2;
+  unify.cljs$lang$applyTo = function(arglist__26988) {
+    var data = cljs.core.first(arglist__26988);
+    var mapping = cljs.core.first(cljs.core.next(arglist__26988));
+    var p__26971 = cljs.core.rest(cljs.core.next(arglist__26988));
+    return unify__delegate(data, mapping, p__26971)
+  };
+  unify.cljs$lang$arity$variadic = unify__delegate;
+  return unify
+}();
+singult.core.ignore = function ignore() {
+  return new singult.coffee.Ignore
 };
 goog.provide("goog.dom.classes");
 goog.require("goog.array");
@@ -21512,481 +22379,166 @@ goog.dom.DomHelper.prototype.getNodeTextLength = goog.dom.getNodeTextLength;
 goog.dom.DomHelper.prototype.getNodeTextOffset = goog.dom.getNodeTextOffset;
 goog.dom.DomHelper.prototype.getAncestorByTagNameAndClass = goog.dom.getAncestorByTagNameAndClass;
 goog.dom.DomHelper.prototype.getAncestor = goog.dom.getAncestor;
-var array_p, explode_p, ignore_p, key_prefix, map_p, namespace_tag, number_p, p, re_svg_tags, re_tag, re_whitespace, string_p, unify_p, whitespace_node_p, xmlns, __hasProp = {}.hasOwnProperty;
-goog.require("goog.string");
-goog.provide("singult.coffee");
-goog.provide("singult.coffee.Unify");
-goog.provide("singult.coffee.Ignore");
-p = function(x) {
-  console.log(x);
-  return x
-};
-re_tag = /([^\s\.#]+)(?:#([^\s\.#]+))?(?:\.([^\s#]+))?/;
-re_svg_tags = /^(svg|g|rect|circle|clipPath|path|line|polygon|polyline|text|textPath)$/;
-re_whitespace = /^\s+$/;
-key_prefix = "\x00";
-xmlns = {xhtml:"http://www.w3.org/1999/xhtml", svg:"http://www.w3.org/2000/svg"};
-namespace_tag = function(tag_str) {
-  var nsp, tag, _ref;
-  _ref = tag_str.split(":"), nsp = _ref[0], tag = _ref[1];
-  if(tag != null) {
-    return[xmlns[nsp] || nsp, tag]
-  }else {
-    if(tag_str.match(re_svg_tags)) {
-      return[xmlns.svg, tag_str]
-    }else {
-      return[xmlns.xhtml, tag_str]
-    }
-  }
-};
-explode_p = function(v) {
-  return v[0] === ":*:"
-};
-unify_p = function(x) {
-  return x != null && x instanceof singult.coffee.Unify
-};
-ignore_p = function(x) {
-  return x != null && x instanceof singult.coffee.Ignore
-};
-array_p = function(x) {
-  return x != null && x.forEach != null
-};
-map_p = function(x) {
-  return x != null && !array_p(x) && !unify_p(x) && !ignore_p(x) && x instanceof Object
-};
-string_p = function(x) {
-  return x != null && x.substring != null
-};
-number_p = function(x) {
-  return x != null && x.toFixed != null
-};
-whitespace_node_p = function($n) {
-  return $n.nodeType === 8 || $n.nodeType === 3 && $n.textContent.match(re_whitespace)
-};
-singult.coffee.style = function($e, m) {
-  var k, v, _results;
-  _results = [];
-  for(k in m) {
-    if(!__hasProp.call(m, k)) {
-      continue
-    }
-    v = m[k];
-    _results.push($e.style[goog.string.toCamelCase(k)] = v)
-  }
-  return _results
-};
-singult.coffee.properties = function($e, m) {
-  var prop, v, _results;
-  _results = [];
-  for(prop in m) {
-    if(!__hasProp.call(m, prop)) {
-      continue
-    }
-    v = m[prop];
-    _results.push($e[prop] = v)
-  }
-  return _results
-};
-singult.coffee.attr = function($e, attr_map) {
-  var k, v, _results;
-  if(attr_map["style"] != null) {
-    singult.coffee.style($e, attr_map["style"]);
-    delete attr_map["style"]
-  }
-  if(attr_map["properties"] != null) {
-    singult.coffee.properties($e, attr_map["properties"]);
-    delete attr_map["properties"]
-  }
-  if(array_p(attr_map["class"])) {
-    $e.setAttribute("class", attr_map["class"].join(" "));
-    delete attr_map["class"]
-  }
-  _results = [];
-  for(k in attr_map) {
-    if(!__hasProp.call(attr_map, k)) {
-      continue
-    }
-    v = attr_map[k];
-    if(v != null) {
-      _results.push($e.setAttribute(k, v))
-    }else {
-      _results.push($e.removeAttribute(k))
-    }
-  }
-  return _results
-};
-singult.coffee.node_data = function($e, d) {
-  if(d != null) {
-    return $e["__singult_data__"] = d
-  }else {
-    return $e["__singult_data__"]
-  }
-};
-singult.coffee.canonicalize = function(x) {
-  if(number_p(x)) {
-    return x.toString()
-  }else {
-    if(array_p(x)) {
-      return singult.coffee.canonicalize_hiccup(x)
-    }else {
-      return x
-    }
-  }
-};
-singult.coffee.canonicalize_hiccup = function(v) {
-  var abbreviated_classes, attr, canonical, canonical_children, children, cls_str, id, nsp, tag, tag_str, _, _ref, _ref1, _ref2;
-  tag = v[0];
-  _ref = map_p(v[1]) ? [v[1], v.slice(2)] : [{}, v.slice(1)], attr = _ref[0], children = _ref[1];
-  _ref1 = tag.match(re_tag), _ = _ref1[0], tag_str = _ref1[1], id = _ref1[2], cls_str = _ref1[3];
-  if(id != null) {
-    attr["id"] = id
-  }
-  if(cls_str != null) {
-    abbreviated_classes = cls_str.split(".");
-    if(array_p(attr["class"])) {
-      attr["class"] = attr["class"].concat(abbreviated_classes)
-    }else {
-      if(string_p(attr["class"])) {
-        attr["class"] = abbreviated_classes.concat([attr["class"]])
-      }else {
-        if(!(attr["class"] != null)) {
-          attr["class"] = abbreviated_classes
-        }
-      }
-    }
-  }
-  _ref2 = namespace_tag(tag_str), nsp = _ref2[0], tag = _ref2[1];
-  canonical_children = [];
-  children.forEach(function(v) {
-    if(v != null) {
-      if(explode_p(v)) {
-        return v.slice(1).forEach(function(v) {
-          return canonical_children.push(singult.coffee.canonicalize(v))
-        })
-      }else {
-        return canonical_children.push(singult.coffee.canonicalize(v))
-      }
-    }
-  });
-  canonical = {nsp:nsp, tag:tag, attr:attr, children:canonical_children};
-  return canonical
-};
-singult.coffee.render = function(m) {
-  var $e, c;
-  if(unify_p(m)) {
-    throw new Error("Unify must be the first and only child of its parent.");
-  }else {
-    if(ignore_p(m)) {
-      return null
-    }else {
-      if(string_p(m)) {
-        return document.createTextNode(m)
-      }else {
-        $e = document.createElementNS(m.nsp, m.tag);
-        singult.coffee.attr($e, m.attr);
-        if(unify_p(c = m.children[0])) {
-          if(c.enter != null) {
-            c.data.forEach(function(d) {
-              var $el;
-              $el = c.enter(d);
-              singult.coffee.node_data($el, d);
-              return $e.appendChild($el)
-            })
-          }else {
-            c.data.forEach(function(d) {
-              var $el;
-              $el = singult.coffee.render(singult.coffee.canonicalize(c.mapping(d)));
-              singult.coffee.node_data($el, d);
-              return $e.appendChild($el)
-            })
-          }
-        }else {
-          m.children.forEach(function(c) {
-            var $c;
-            $c = singult.coffee.render(c);
-            if($c != null) {
-              return $e.appendChild($c)
-            }
-          })
-        }
-        return $e
-      }
-    }
-  }
-};
-singult.coffee.Unify = function(data, mapping, key_fn, enter, update, exit, force_update_p) {
-  this.data = data;
-  this.mapping = mapping;
-  this.key_fn = key_fn;
-  this.enter = enter;
-  this.update = update;
-  this.exit = exit;
-  this.force_update_p = force_update_p;
-  return this
-};
-singult.coffee.Ignore = function() {
-  return this
-};
-singult.coffee.unify_ = function($container, u) {
-  var $n, $nodes, enter, exit, i, key, key_fn, nodes_by_key, update, _;
-  enter = u.enter || function(d) {
-    var $el;
-    $el = singult.coffee.render(singult.coffee.canonicalize(u.mapping(d)));
-    $container.appendChild($el);
-    return $el
-  };
-  update = u.update || function($n, d) {
-    return singult.coffee.merge($n, singult.coffee.canonicalize(u.mapping(d)))
-  };
-  exit = u.exit || function($n) {
-    return $container.removeChild($n)
-  };
-  key_fn = u.key_fn || function(d, idx) {
-    return idx
-  };
-  $nodes = $container.childNodes;
-  nodes_by_key = {};
-  i = 0;
-  while(i < $nodes.length) {
-    key = key_prefix + key_fn(singult.coffee.node_data($nodes[i]), i);
-    nodes_by_key[key] = $nodes[i];
-    i += 1
-  }
-  u.data.forEach(function(d, i) {
-    var $el, $n, identical_data_p, old_data;
-    key = key_prefix + key_fn(d, i);
-    if($n = nodes_by_key[key]) {
-      if(u.force_update_p) {
-        $el = update($n, d);
-        singult.coffee.node_data($el, d)
-      }else {
-        old_data = singult.coffee.node_data($n);
-        identical_data_p = old_data.cljs$core$IEquiv$_equiv$arity$2 != null ? old_data.cljs$core$IEquiv$_equiv$arity$2(old_data, d) : old_data === d;
-        if(!identical_data_p) {
-          $el = update($n, d);
-          singult.coffee.node_data($el, d)
-        }
-      }
-      return delete nodes_by_key[key]
-    }else {
-      $el = enter(d);
-      return singult.coffee.node_data($el, d)
-    }
-  });
-  for(_ in nodes_by_key) {
-    $n = nodes_by_key[_];
-    exit($n)
-  }
-  return null
-};
-singult.coffee.merge = function($e, m) {
-  var $c, c, i, _i, _j, _ref, _ref1;
-  if(unify_p(m)) {
-    singult.coffee.unify_($e, m)
-  }else {
-    if(ignore_p(m)) {
-    }else {
-      if($e.nodeName.toLowerCase() !== m.tag.toLowerCase()) {
-        p($e);
-        p(m);
-        throw new Error("Cannot merge $e into node of different type");
-      }
-      singult.coffee.attr($e, m.attr);
-      if($e.hasChildNodes()) {
-        for(i = _i = _ref = $e.childNodes.length - 1;_ref <= 0 ? _i <= 0 : _i >= 0;i = _ref <= 0 ? ++_i : --_i) {
-          $c = $e.childNodes[i];
-          if(whitespace_node_p($c)) {
-            $e.removeChild($c)
-          }
-        }
-      }
-      if(unify_p(m.children[0])) {
-        singult.coffee.merge($e, m.children[0])
-      }else {
-        if($e.childNodes.length > m.children.length) {
-          for(i = _j = _ref1 = $e.childNodes.length - 1;_ref1 <= 0 ? _j <= 0 : _j >= 0;i = _ref1 <= 0 ? ++_j : --_j) {
-            $e.removeChild($e.childNodes[i])
-          }
-        }
-        i = 0;
-        while(i < m.children.length) {
-          c = m.children[i] || "";
-          $c = $e.childNodes[i];
-          if(string_p(c)) {
-            if($c != null) {
-              $c.textContent = c
-            }else {
-              $e.appendChild(document.createTextNode(c))
-            }
-          }else {
-            if(ignore_p(c)) {
-            }else {
-              if(map_p(c)) {
-                if($c != null) {
-                  singult.coffee.merge($c, c)
-                }else {
-                  $e.appendChild(singult.coffee.render(c))
-                }
-              }else {
-                p($c);
-                p(c);
-                throw new Error("Cannot merge children");
-              }
-            }
-          }
-          i += 1
-        }
-      }
-    }
-  }
-  return $e
-};
-goog.provide("singult.core");
+goog.provide("clojure.string");
 goog.require("cljs.core");
-goog.require("singult.coffee");
-singult.core.Unify = function(data, mapping, key_fn, enter, update, exit, force_update_QMARK_, __meta, __extmap) {
-  this.data = data;
-  this.mapping = mapping;
-  this.key_fn = key_fn;
-  this.enter = enter;
-  this.update = update;
-  this.exit = exit;
-  this.force_update_QMARK_ = force_update_QMARK_;
-  this.__meta = __meta;
-  this.__extmap = __extmap;
-  this.cljs$lang$protocol_mask$partition1$ = 0;
-  this.cljs$lang$protocol_mask$partition0$ = 619054858;
-  if(arguments.length > 7) {
-    this.__meta = __meta;
-    this.__extmap = __extmap
-  }else {
-    this.__meta = null;
-    this.__extmap = null
-  }
+goog.require("goog.string.StringBuffer");
+goog.require("goog.string");
+clojure.string.seq_reverse = function seq_reverse(coll) {
+  return cljs.core.reduce.call(null, cljs.core.conj, cljs.core.List.EMPTY, coll)
 };
-singult.core.Unify.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2211__auto__) {
-  var this__26835 = this;
-  var h__2085__auto____26836 = this__26835.__hash;
-  if(!(h__2085__auto____26836 == null)) {
-    return h__2085__auto____26836
-  }else {
-    var h__2085__auto____26837 = cljs.core.hash_imap.call(null, this__2211__auto__);
-    this__26835.__hash = h__2085__auto____26837;
-    return h__2085__auto____26837
-  }
+clojure.string.reverse = function reverse(s) {
+  return s.split("").reverse().join("")
 };
-singult.core.Unify.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2216__auto__, k__2217__auto__) {
-  var this__26838 = this;
-  return this__2216__auto__.cljs$core$ILookup$_lookup$arity$3(this__2216__auto__, k__2217__auto__, null)
-};
-singult.core.Unify.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2218__auto__, k26833, else__2219__auto__) {
-  var this__26839 = this;
-  if(k26833 === "\ufdd0'data") {
-    return this__26839.data
+clojure.string.replace = function replace(s, match, replacement) {
+  if(cljs.core.string_QMARK_.call(null, match)) {
+    return s.replace(new RegExp(goog.string.regExpEscape(match), "g"), replacement)
   }else {
-    if(k26833 === "\ufdd0'mapping") {
-      return this__26839.mapping
+    if(cljs.core.truth_(match.hasOwnProperty("source"))) {
+      return s.replace(new RegExp(match.source, "g"), replacement)
     }else {
-      if(k26833 === "\ufdd0'key-fn") {
-        return this__26839.key_fn
+      if("\ufdd0'else") {
+        throw[cljs.core.str("Invalid match arg: "), cljs.core.str(match)].join("");
       }else {
-        if(k26833 === "\ufdd0'enter") {
-          return this__26839.enter
-        }else {
-          if(k26833 === "\ufdd0'update") {
-            return this__26839.update
-          }else {
-            if(k26833 === "\ufdd0'exit") {
-              return this__26839.exit
-            }else {
-              if(k26833 === "\ufdd0'force-update?") {
-                return this__26839.force_update_QMARK_
-              }else {
-                if("\ufdd0'else") {
-                  return cljs.core._lookup.call(null, this__26839.__extmap, k26833, else__2219__auto__)
-                }else {
-                  return null
-                }
-              }
-            }
-          }
-        }
+        return null
       }
     }
   }
 };
-singult.core.Unify.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2223__auto__, k__2224__auto__, G__26832) {
-  var this__26840 = this;
-  var pred__26841__26844 = cljs.core.identical_QMARK_;
-  var expr__26842__26845 = k__2224__auto__;
-  if(pred__26841__26844.call(null, "\ufdd0'data", expr__26842__26845)) {
-    return new singult.core.Unify(G__26832, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
-  }else {
-    if(pred__26841__26844.call(null, "\ufdd0'mapping", expr__26842__26845)) {
-      return new singult.core.Unify(this__26840.data, G__26832, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
-    }else {
-      if(pred__26841__26844.call(null, "\ufdd0'key-fn", expr__26842__26845)) {
-        return new singult.core.Unify(this__26840.data, this__26840.mapping, G__26832, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
-      }else {
-        if(pred__26841__26844.call(null, "\ufdd0'enter", expr__26842__26845)) {
-          return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, G__26832, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
-        }else {
-          if(pred__26841__26844.call(null, "\ufdd0'update", expr__26842__26845)) {
-            return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, G__26832, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
-          }else {
-            if(pred__26841__26844.call(null, "\ufdd0'exit", expr__26842__26845)) {
-              return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, G__26832, this__26840.force_update_QMARK_, this__26840.__meta, this__26840.__extmap, null)
-            }else {
-              if(pred__26841__26844.call(null, "\ufdd0'force-update?", expr__26842__26845)) {
-                return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, G__26832, this__26840.__meta, this__26840.__extmap, null)
-              }else {
-                return new singult.core.Unify(this__26840.data, this__26840.mapping, this__26840.key_fn, this__26840.enter, this__26840.update, this__26840.exit, this__26840.force_update_QMARK_, this__26840.__meta, cljs.core.assoc.call(null, this__26840.__extmap, k__2224__auto__, G__26832), null)
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+clojure.string.replace_first = function replace_first(s, match, replacement) {
+  return s.replace(match, replacement)
 };
-singult.core.Unify.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2221__auto__, entry__2222__auto__) {
-  var this__26846 = this;
-  if(cljs.core.vector_QMARK_.call(null, entry__2222__auto__)) {
-    return this__2221__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2221__auto__, cljs.core._nth.call(null, entry__2222__auto__, 0), cljs.core._nth.call(null, entry__2222__auto__, 1))
-  }else {
-    return cljs.core.reduce.call(null, cljs.core._conj, this__2221__auto__, entry__2222__auto__)
-  }
-};
-singult.core.Unify.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2228__auto__) {
-  var this__26847 = this;
-  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'data", this__26847.data), cljs.core.vector.call(null, "\ufdd0'mapping", this__26847.mapping), cljs.core.vector.call(null, "\ufdd0'key-fn", this__26847.key_fn), cljs.core.vector.call(null, "\ufdd0'enter", this__26847.enter), cljs.core.vector.call(null, "\ufdd0'update", this__26847.update), cljs.core.vector.call(null, "\ufdd0'exit", this__26847.exit), cljs.core.vector.call(null, 
-  "\ufdd0'force-update?", this__26847.force_update_QMARK_)], true), this__26847.__extmap))
-};
-singult.core.Unify.prototype.cljs$core$IPrintable$_pr_seq$arity$2 = function(this__2230__auto__, opts__2231__auto__) {
-  var this__26848 = this;
-  var pr_pair__2232__auto____26849 = function(keyval__2233__auto__) {
-    return cljs.core.pr_sequential.call(null, cljs.core.pr_seq, "", " ", "", opts__2231__auto__, keyval__2233__auto__)
+clojure.string.join = function() {
+  var join = null;
+  var join__1 = function(coll) {
+    return cljs.core.apply.call(null, cljs.core.str, coll)
   };
-  return cljs.core.pr_sequential.call(null, pr_pair__2232__auto____26849, [cljs.core.str("#"), cljs.core.str("Unify"), cljs.core.str("{")].join(""), ", ", "}", opts__2231__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'data", this__26848.data), cljs.core.vector.call(null, "\ufdd0'mapping", this__26848.mapping), cljs.core.vector.call(null, "\ufdd0'key-fn", this__26848.key_fn), cljs.core.vector.call(null, "\ufdd0'enter", this__26848.enter), 
-  cljs.core.vector.call(null, "\ufdd0'update", this__26848.update), cljs.core.vector.call(null, "\ufdd0'exit", this__26848.exit), cljs.core.vector.call(null, "\ufdd0'force-update?", this__26848.force_update_QMARK_)], true), this__26848.__extmap))
+  var join__2 = function(separator, coll) {
+    return cljs.core.apply.call(null, cljs.core.str, cljs.core.interpose.call(null, separator, coll))
+  };
+  join = function(separator, coll) {
+    switch(arguments.length) {
+      case 1:
+        return join__1.call(this, separator);
+      case 2:
+        return join__2.call(this, separator, coll)
+    }
+    throw"Invalid arity: " + arguments.length;
+  };
+  join.cljs$lang$arity$1 = join__1;
+  join.cljs$lang$arity$2 = join__2;
+  return join
+}();
+clojure.string.upper_case = function upper_case(s) {
+  return s.toUpperCase()
 };
-singult.core.Unify.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2220__auto__) {
-  var this__26850 = this;
-  return 7 + cljs.core.count.call(null, this__26850.__extmap)
+clojure.string.lower_case = function lower_case(s) {
+  return s.toLowerCase()
 };
-singult.core.Unify.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2212__auto__, other__2213__auto__) {
-  var this__26851 = this;
-  if(cljs.core.truth_(function() {
-    var and__3822__auto____26852 = other__2213__auto__;
-    if(cljs.core.truth_(and__3822__auto____26852)) {
-      var and__3822__auto____26853 = this__2212__auto__.constructor === other__2213__auto__.constructor;
-      if(and__3822__auto____26853) {
-        return cljs.core.equiv_map.call(null, this__2212__auto__, other__2213__auto__)
-      }else {
-        return and__3822__auto____26853
-      }
+clojure.string.capitalize = function capitalize(s) {
+  if(cljs.core.count.call(null, s) < 2) {
+    return clojure.string.upper_case.call(null, s)
+  }else {
+    return[cljs.core.str(clojure.string.upper_case.call(null, cljs.core.subs.call(null, s, 0, 1))), cljs.core.str(clojure.string.lower_case.call(null, cljs.core.subs.call(null, s, 1)))].join("")
+  }
+};
+clojure.string.split = function() {
+  var split = null;
+  var split__2 = function(s, re) {
+    return cljs.core.vec.call(null, [cljs.core.str(s)].join("").split(re))
+  };
+  var split__3 = function(s, re, limit) {
+    if(limit < 1) {
+      return cljs.core.vec.call(null, [cljs.core.str(s)].join("").split(re))
     }else {
-      return and__3822__auto____26852
+      var s__26637 = s;
+      var limit__26638 = limit;
+      var parts__26639 = cljs.core.PersistentVector.EMPTY;
+      while(true) {
+        if(cljs.core._EQ_.call(null, limit__26638, 1)) {
+          return cljs.core.conj.call(null, parts__26639, s__26637)
+        }else {
+          var temp__3971__auto____26640 = cljs.core.re_find.call(null, re, s__26637);
+          if(cljs.core.truth_(temp__3971__auto____26640)) {
+            var m__26641 = temp__3971__auto____26640;
+            var index__26642 = s__26637.indexOf(m__26641);
+            var G__26643 = s__26637.substring(index__26642 + cljs.core.count.call(null, m__26641));
+            var G__26644 = limit__26638 - 1;
+            var G__26645 = cljs.core.conj.call(null, parts__26639, s__26637.substring(0, index__26642));
+            s__26637 = G__26643;
+            limit__26638 = G__26644;
+            parts__26639 = G__26645;
+            continue
+          }else {
+            return cljs.core.conj.call(null, parts__26639, s__26637)
+          }
+        }
+        break
+      }
+    }
+  };
+  split = function(s, re, limit) {
+    switch(arguments.length) {
+      case 2:
+        return split__2.call(this, s, re);
+      case 3:
+        return split__3.call(this, s, re, limit)
+    }
+    throw"Invalid arity: " + arguments.length;
+  };
+  split.cljs$lang$arity$2 = split__2;
+  split.cljs$lang$arity$3 = split__3;
+  return split
+}();
+clojure.string.split_lines = function split_lines(s) {
+  return clojure.string.split.call(null, s, /\n|\r\n/)
+};
+clojure.string.trim = function trim(s) {
+  return goog.string.trim(s)
+};
+clojure.string.triml = function triml(s) {
+  return goog.string.trimLeft(s)
+};
+clojure.string.trimr = function trimr(s) {
+  return goog.string.trimRight(s)
+};
+clojure.string.trim_newline = function trim_newline(s) {
+  var index__26649 = s.length;
+  while(true) {
+    if(index__26649 === 0) {
+      return""
+    }else {
+      var ch__26650 = cljs.core._lookup.call(null, s, index__26649 - 1, null);
+      if(function() {
+        var or__3824__auto____26651 = cljs.core._EQ_.call(null, ch__26650, "\n");
+        if(or__3824__auto____26651) {
+          return or__3824__auto____26651
+        }else {
+          return cljs.core._EQ_.call(null, ch__26650, "\r")
+        }
+      }()) {
+        var G__26652 = index__26649 - 1;
+        index__26649 = G__26652;
+        continue
+      }else {
+        return s.substring(0, index__26649)
+      }
+    }
+    break
+  }
+};
+clojure.string.blank_QMARK_ = function blank_QMARK_(s) {
+  var s__26656 = [cljs.core.str(s)].join("");
+  if(cljs.core.truth_(function() {
+    var or__3824__auto____26657 = cljs.core.not.call(null, s__26656);
+    if(or__3824__auto____26657) {
+      return or__3824__auto____26657
+    }else {
+      var or__3824__auto____26658 = cljs.core._EQ_.call(null, "", s__26656);
+      if(or__3824__auto____26658) {
+        return or__3824__auto____26658
+      }else {
+        return cljs.core.re_matches.call(null, /\s+/, s__26656)
+      }
     }
   }())) {
     return true
@@ -21994,218 +22546,28 @@ singult.core.Unify.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__22
     return false
   }
 };
-singult.core.Unify.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2215__auto__, G__26832) {
-  var this__26854 = this;
-  return new singult.core.Unify(this__26854.data, this__26854.mapping, this__26854.key_fn, this__26854.enter, this__26854.update, this__26854.exit, this__26854.force_update_QMARK_, G__26832, this__26854.__extmap, this__26854.__hash)
-};
-singult.core.Unify.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2214__auto__) {
-  var this__26855 = this;
-  return this__26855.__meta
-};
-singult.core.Unify.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2225__auto__, k__2226__auto__) {
-  var this__26856 = this;
-  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0'data", "\ufdd0'force-update?", "\ufdd0'enter", "\ufdd0'exit", "\ufdd0'key-fn", "\ufdd0'update", "\ufdd0'mapping"]), k__2226__auto__)) {
-    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2225__auto__), this__26856.__meta), k__2226__auto__)
-  }else {
-    return new singult.core.Unify(this__26856.data, this__26856.mapping, this__26856.key_fn, this__26856.enter, this__26856.update, this__26856.exit, this__26856.force_update_QMARK_, this__26856.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, this__26856.__extmap, k__2226__auto__)), null)
-  }
-};
-singult.core.Unify.cljs$lang$type = true;
-singult.core.Unify.cljs$lang$ctorPrSeq = function(this__2250__auto__) {
-  return cljs.core.list.call(null, "singult.core/Unify")
-};
-singult.core.__GT_Unify = function __GT_Unify(data, mapping, key_fn, enter, update, exit, force_update_QMARK_) {
-  return new singult.core.Unify(data, mapping, key_fn, enter, update, exit, force_update_QMARK_)
-};
-singult.core.map__GT_Unify = function map__GT_Unify(G__26834) {
-  return new singult.core.Unify((new cljs.core.Keyword("\ufdd0'data")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'mapping")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'key-fn")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'enter")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'update")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'exit")).call(null, G__26834), (new cljs.core.Keyword("\ufdd0'force-update?")).call(null, G__26834), null, cljs.core.dissoc.call(null, 
-  G__26834, "\ufdd0'data", "\ufdd0'mapping", "\ufdd0'key-fn", "\ufdd0'enter", "\ufdd0'update", "\ufdd0'exit", "\ufdd0'force-update?"))
-};
-singult.core.Unify;
-singult.core.clj__GT_js = function clj__GT_js(x) {
-  if(cljs.core.instance_QMARK_.call(null, singult.core.Unify, x)) {
-    var map__26910__26911 = x;
-    var map__26910__26912 = cljs.core.seq_QMARK_.call(null, map__26910__26911) ? cljs.core.apply.call(null, cljs.core.hash_map, map__26910__26911) : map__26910__26911;
-    var force_update_QMARK___26913 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'force-update?", null);
-    var exit__26914 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'exit", null);
-    var update__26915 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'update", null);
-    var enter__26916 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'enter", null);
-    var key_fn__26917 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'key-fn", null);
-    var mapping__26918 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'mapping", null);
-    var data__26919 = cljs.core._lookup.call(null, map__26910__26912, "\ufdd0'data", null);
-    var data_arr__26927 = function() {
-      var a__26920 = [];
-      var G__26921__26922 = cljs.core.seq.call(null, data__26919);
-      if(G__26921__26922) {
-        var d__26923 = cljs.core.first.call(null, G__26921__26922);
-        var G__26921__26924 = G__26921__26922;
-        while(true) {
-          a__26920.push(d__26923);
-          var temp__3974__auto____26925 = cljs.core.next.call(null, G__26921__26924);
-          if(temp__3974__auto____26925) {
-            var G__26921__26926 = temp__3974__auto____26925;
-            var G__26963 = cljs.core.first.call(null, G__26921__26926);
-            var G__26964 = G__26921__26926;
-            d__26923 = G__26963;
-            G__26921__26924 = G__26964;
-            continue
-          }else {
-          }
-          break
-        }
-      }else {
-      }
-      return a__26920
-    }();
-    return new singult.coffee.Unify(data_arr__26927, function(p1__26831_SHARP_) {
-      return clj__GT_js.call(null, mapping__26918.call(null, p1__26831_SHARP_))
-    }, key_fn__26917, enter__26916, update__26915, exit__26914, force_update_QMARK___26913)
-  }else {
-    if(cljs.core.keyword_QMARK_.call(null, x)) {
-      return cljs.core.name.call(null, x)
+clojure.string.escape = function escape(s, cmap) {
+  var buffer__26665 = new goog.string.StringBuffer;
+  var length__26666 = s.length;
+  var index__26667 = 0;
+  while(true) {
+    if(cljs.core._EQ_.call(null, length__26666, index__26667)) {
+      return buffer__26665.toString()
     }else {
-      if(cljs.core.map_QMARK_.call(null, x)) {
-        var o__26928 = {};
-        var G__26929__26930 = cljs.core.seq.call(null, x);
-        if(G__26929__26930) {
-          var G__26932__26934 = cljs.core.first.call(null, G__26929__26930);
-          var vec__26933__26935 = G__26932__26934;
-          var k__26936 = cljs.core.nth.call(null, vec__26933__26935, 0, null);
-          var v__26937 = cljs.core.nth.call(null, vec__26933__26935, 1, null);
-          var G__26929__26938 = G__26929__26930;
-          var G__26932__26939 = G__26932__26934;
-          var G__26929__26940 = G__26929__26938;
-          while(true) {
-            var vec__26941__26942 = G__26932__26939;
-            var k__26943 = cljs.core.nth.call(null, vec__26941__26942, 0, null);
-            var v__26944 = cljs.core.nth.call(null, vec__26941__26942, 1, null);
-            var G__26929__26945 = G__26929__26940;
-            var key__26946 = clj__GT_js.call(null, k__26943);
-            if(cljs.core.string_QMARK_.call(null, key__26946)) {
-            }else {
-              throw"Cannot convert; JavaScript map keys must be strings";
-            }
-            o__26928[key__26946] = clj__GT_js.call(null, v__26944);
-            var temp__3974__auto____26947 = cljs.core.next.call(null, G__26929__26945);
-            if(temp__3974__auto____26947) {
-              var G__26929__26948 = temp__3974__auto____26947;
-              var G__26965 = cljs.core.first.call(null, G__26929__26948);
-              var G__26966 = G__26929__26948;
-              G__26932__26939 = G__26965;
-              G__26929__26940 = G__26966;
-              continue
-            }else {
-            }
-            break
-          }
-        }else {
-        }
-        return o__26928
+      var ch__26668 = s.charAt(index__26667);
+      var temp__3971__auto____26669 = cljs.core._lookup.call(null, cmap, ch__26668, null);
+      if(cljs.core.truth_(temp__3971__auto____26669)) {
+        var replacement__26670 = temp__3971__auto____26669;
+        buffer__26665.append([cljs.core.str(replacement__26670)].join(""))
       }else {
-        if(cljs.core.seq_QMARK_.call(null, x)) {
-          var a__26949 = [];
-          a__26949.push(":*:");
-          var G__26950__26951 = cljs.core.seq.call(null, x);
-          if(G__26950__26951) {
-            var item__26952 = cljs.core.first.call(null, G__26950__26951);
-            var G__26950__26953 = G__26950__26951;
-            while(true) {
-              a__26949.push(clj__GT_js.call(null, item__26952));
-              var temp__3974__auto____26954 = cljs.core.next.call(null, G__26950__26953);
-              if(temp__3974__auto____26954) {
-                var G__26950__26955 = temp__3974__auto____26954;
-                var G__26967 = cljs.core.first.call(null, G__26950__26955);
-                var G__26968 = G__26950__26955;
-                item__26952 = G__26967;
-                G__26950__26953 = G__26968;
-                continue
-              }else {
-              }
-              break
-            }
-          }else {
-          }
-          return a__26949
-        }else {
-          if(cljs.core.coll_QMARK_.call(null, x)) {
-            var a__26956 = [];
-            var G__26957__26958 = cljs.core.seq.call(null, x);
-            if(G__26957__26958) {
-              var item__26959 = cljs.core.first.call(null, G__26957__26958);
-              var G__26957__26960 = G__26957__26958;
-              while(true) {
-                a__26956.push(clj__GT_js.call(null, item__26959));
-                var temp__3974__auto____26961 = cljs.core.next.call(null, G__26957__26960);
-                if(temp__3974__auto____26961) {
-                  var G__26957__26962 = temp__3974__auto____26961;
-                  var G__26969 = cljs.core.first.call(null, G__26957__26962);
-                  var G__26970 = G__26957__26962;
-                  item__26959 = G__26969;
-                  G__26957__26960 = G__26970;
-                  continue
-                }else {
-                }
-                break
-              }
-            }else {
-            }
-            return a__26956
-          }else {
-            if("\ufdd0'else") {
-              return x
-            }else {
-              return null
-            }
-          }
-        }
+        buffer__26665.append(ch__26668)
       }
+      var G__26671 = index__26667 + 1;
+      index__26667 = G__26671;
+      continue
     }
+    break
   }
-};
-singult.core.node_data = singult.coffee.node_data;
-singult.core.attr = function attr($n, m) {
-  return singult.coffee.attr.call(null, $n, singult.core.clj__GT_js.call(null, m))
-};
-singult.core.render = function render(v) {
-  return singult.coffee.render.call(null, singult.coffee.canonicalize.call(null, singult.core.clj__GT_js.call(null, v)))
-};
-singult.core.merge_BANG_ = function merge_BANG_($n, v) {
-  if(v == null) {
-    return null
-  }else {
-    return singult.coffee.merge.call(null, $n, singult.coffee.canonicalize.call(null, singult.core.clj__GT_js.call(null, v)))
-  }
-};
-singult.core.unify = function() {
-  var unify__delegate = function(data, mapping, p__26971) {
-    var map__26980__26981 = p__26971;
-    var map__26980__26982 = cljs.core.seq_QMARK_.call(null, map__26980__26981) ? cljs.core.apply.call(null, cljs.core.hash_map, map__26980__26981) : map__26980__26981;
-    var force_update_QMARK___26983 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'force-update?", null);
-    var exit__26984 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'exit", null);
-    var update__26985 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'update", null);
-    var enter__26986 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'enter", null);
-    var key_fn__26987 = cljs.core._lookup.call(null, map__26980__26982, "\ufdd0'key-fn", null);
-    return new singult.core.Unify(data, mapping, key_fn__26987, enter__26986, update__26985, exit__26984, force_update_QMARK___26983)
-  };
-  var unify = function(data, mapping, var_args) {
-    var p__26971 = null;
-    if(goog.isDef(var_args)) {
-      p__26971 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0)
-    }
-    return unify__delegate.call(this, data, mapping, p__26971)
-  };
-  unify.cljs$lang$maxFixedArity = 2;
-  unify.cljs$lang$applyTo = function(arglist__26988) {
-    var data = cljs.core.first(arglist__26988);
-    var mapping = cljs.core.first(cljs.core.next(arglist__26988));
-    var p__26971 = cljs.core.rest(cljs.core.next(arglist__26988));
-    return unify__delegate(data, mapping, p__26971)
-  };
-  unify.cljs$lang$arity$variadic = unify__delegate;
-  return unify
-}();
-singult.core.ignore = function ignore() {
-  return new singult.coffee.Ignore
 };
 goog.provide("goog.math.Box");
 goog.require("goog.math.Coordinate");
@@ -24480,6 +24842,2119 @@ c2.dom.request_animation_frame = function() {
     }
   }
 }();
+goog.provide("c2.core");
+goog.require("cljs.core");
+goog.require("reflex.core");
+goog.require("c2.dom");
+goog.require("singult.core");
+c2.core.node_data = singult.core.node_data;
+c2.core.unify = function() {
+  var unify__delegate = function(data, mapping, args) {
+    if(cljs.core.seq.call(null, data)) {
+      mapping.call(null, cljs.core.first.call(null, data))
+    }else {
+    }
+    return cljs.core.apply.call(null, singult.core.unify, data, mapping, args)
+  };
+  var unify = function(data, mapping, var_args) {
+    var args = null;
+    if(goog.isDef(var_args)) {
+      args = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0)
+    }
+    return unify__delegate.call(this, data, mapping, args)
+  };
+  unify.cljs$lang$maxFixedArity = 2;
+  unify.cljs$lang$applyTo = function(arglist__27610) {
+    var data = cljs.core.first(arglist__27610);
+    var mapping = cljs.core.first(cljs.core.next(arglist__27610));
+    var args = cljs.core.rest(cljs.core.next(arglist__27610));
+    return unify__delegate(data, mapping, args)
+  };
+  unify.cljs$lang$arity$variadic = unify__delegate;
+  return unify
+}();
+goog.provide("cljs.reader");
+goog.require("cljs.core");
+goog.require("goog.string");
+cljs.reader.PushbackReader = {};
+cljs.reader.read_char = function read_char(reader) {
+  if(function() {
+    var and__3822__auto____26999 = reader;
+    if(and__3822__auto____26999) {
+      return reader.cljs$reader$PushbackReader$read_char$arity$1
+    }else {
+      return and__3822__auto____26999
+    }
+  }()) {
+    return reader.cljs$reader$PushbackReader$read_char$arity$1(reader)
+  }else {
+    var x__2256__auto____27000 = reader == null ? null : reader;
+    return function() {
+      var or__3824__auto____27001 = cljs.reader.read_char[goog.typeOf(x__2256__auto____27000)];
+      if(or__3824__auto____27001) {
+        return or__3824__auto____27001
+      }else {
+        var or__3824__auto____27002 = cljs.reader.read_char["_"];
+        if(or__3824__auto____27002) {
+          return or__3824__auto____27002
+        }else {
+          throw cljs.core.missing_protocol.call(null, "PushbackReader.read-char", reader);
+        }
+      }
+    }().call(null, reader)
+  }
+};
+cljs.reader.unread = function unread(reader, ch) {
+  if(function() {
+    var and__3822__auto____27007 = reader;
+    if(and__3822__auto____27007) {
+      return reader.cljs$reader$PushbackReader$unread$arity$2
+    }else {
+      return and__3822__auto____27007
+    }
+  }()) {
+    return reader.cljs$reader$PushbackReader$unread$arity$2(reader, ch)
+  }else {
+    var x__2256__auto____27008 = reader == null ? null : reader;
+    return function() {
+      var or__3824__auto____27009 = cljs.reader.unread[goog.typeOf(x__2256__auto____27008)];
+      if(or__3824__auto____27009) {
+        return or__3824__auto____27009
+      }else {
+        var or__3824__auto____27010 = cljs.reader.unread["_"];
+        if(or__3824__auto____27010) {
+          return or__3824__auto____27010
+        }else {
+          throw cljs.core.missing_protocol.call(null, "PushbackReader.unread", reader);
+        }
+      }
+    }().call(null, reader, ch)
+  }
+};
+cljs.reader.StringPushbackReader = function(s, index_atom, buffer_atom) {
+  this.s = s;
+  this.index_atom = index_atom;
+  this.buffer_atom = buffer_atom
+};
+cljs.reader.StringPushbackReader.cljs$lang$type = true;
+cljs.reader.StringPushbackReader.cljs$lang$ctorPrSeq = function(this__2202__auto__) {
+  return cljs.core.list.call(null, "cljs.reader/StringPushbackReader")
+};
+cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$ = true;
+cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$read_char$arity$1 = function(reader) {
+  var this__27011 = this;
+  if(cljs.core.empty_QMARK_.call(null, cljs.core.deref.call(null, this__27011.buffer_atom))) {
+    var idx__27012 = cljs.core.deref.call(null, this__27011.index_atom);
+    cljs.core.swap_BANG_.call(null, this__27011.index_atom, cljs.core.inc);
+    return this__27011.s[idx__27012]
+  }else {
+    var buf__27013 = cljs.core.deref.call(null, this__27011.buffer_atom);
+    cljs.core.swap_BANG_.call(null, this__27011.buffer_atom, cljs.core.rest);
+    return cljs.core.first.call(null, buf__27013)
+  }
+};
+cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$unread$arity$2 = function(reader, ch) {
+  var this__27014 = this;
+  return cljs.core.swap_BANG_.call(null, this__27014.buffer_atom, function(p1__26994_SHARP_) {
+    return cljs.core.cons.call(null, ch, p1__26994_SHARP_)
+  })
+};
+cljs.reader.StringPushbackReader;
+cljs.reader.push_back_reader = function push_back_reader(s) {
+  return new cljs.reader.StringPushbackReader(s, cljs.core.atom.call(null, 0), cljs.core.atom.call(null, null))
+};
+cljs.reader.whitespace_QMARK_ = function whitespace_QMARK_(ch) {
+  var or__3824__auto____27016 = goog.string.isBreakingWhitespace(ch);
+  if(cljs.core.truth_(or__3824__auto____27016)) {
+    return or__3824__auto____27016
+  }else {
+    return"," === ch
+  }
+};
+cljs.reader.numeric_QMARK_ = function numeric_QMARK_(ch) {
+  return goog.string.isNumeric(ch)
+};
+cljs.reader.comment_prefix_QMARK_ = function comment_prefix_QMARK_(ch) {
+  return";" === ch
+};
+cljs.reader.number_literal_QMARK_ = function number_literal_QMARK_(reader, initch) {
+  var or__3824__auto____27021 = cljs.reader.numeric_QMARK_.call(null, initch);
+  if(or__3824__auto____27021) {
+    return or__3824__auto____27021
+  }else {
+    var and__3822__auto____27023 = function() {
+      var or__3824__auto____27022 = "+" === initch;
+      if(or__3824__auto____27022) {
+        return or__3824__auto____27022
+      }else {
+        return"-" === initch
+      }
+    }();
+    if(cljs.core.truth_(and__3822__auto____27023)) {
+      return cljs.reader.numeric_QMARK_.call(null, function() {
+        var next_ch__27024 = cljs.reader.read_char.call(null, reader);
+        cljs.reader.unread.call(null, reader, next_ch__27024);
+        return next_ch__27024
+      }())
+    }else {
+      return and__3822__auto____27023
+    }
+  }
+};
+cljs.reader.reader_error = function() {
+  var reader_error__delegate = function(rdr, msg) {
+    throw new Error(cljs.core.apply.call(null, cljs.core.str, msg));
+  };
+  var reader_error = function(rdr, var_args) {
+    var msg = null;
+    if(goog.isDef(var_args)) {
+      msg = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0)
+    }
+    return reader_error__delegate.call(this, rdr, msg)
+  };
+  reader_error.cljs$lang$maxFixedArity = 1;
+  reader_error.cljs$lang$applyTo = function(arglist__27025) {
+    var rdr = cljs.core.first(arglist__27025);
+    var msg = cljs.core.rest(arglist__27025);
+    return reader_error__delegate(rdr, msg)
+  };
+  reader_error.cljs$lang$arity$variadic = reader_error__delegate;
+  return reader_error
+}();
+cljs.reader.macro_terminating_QMARK_ = function macro_terminating_QMARK_(ch) {
+  var and__3822__auto____27029 = !(ch === "#");
+  if(and__3822__auto____27029) {
+    var and__3822__auto____27030 = !(ch === "'");
+    if(and__3822__auto____27030) {
+      var and__3822__auto____27031 = !(ch === ":");
+      if(and__3822__auto____27031) {
+        return cljs.reader.macros.call(null, ch)
+      }else {
+        return and__3822__auto____27031
+      }
+    }else {
+      return and__3822__auto____27030
+    }
+  }else {
+    return and__3822__auto____27029
+  }
+};
+cljs.reader.read_token = function read_token(rdr, initch) {
+  var sb__27036 = new goog.string.StringBuffer(initch);
+  var ch__27037 = cljs.reader.read_char.call(null, rdr);
+  while(true) {
+    if(function() {
+      var or__3824__auto____27038 = ch__27037 == null;
+      if(or__3824__auto____27038) {
+        return or__3824__auto____27038
+      }else {
+        var or__3824__auto____27039 = cljs.reader.whitespace_QMARK_.call(null, ch__27037);
+        if(or__3824__auto____27039) {
+          return or__3824__auto____27039
+        }else {
+          return cljs.reader.macro_terminating_QMARK_.call(null, ch__27037)
+        }
+      }
+    }()) {
+      cljs.reader.unread.call(null, rdr, ch__27037);
+      return sb__27036.toString()
+    }else {
+      var G__27040 = function() {
+        sb__27036.append(ch__27037);
+        return sb__27036
+      }();
+      var G__27041 = cljs.reader.read_char.call(null, rdr);
+      sb__27036 = G__27040;
+      ch__27037 = G__27041;
+      continue
+    }
+    break
+  }
+};
+cljs.reader.skip_line = function skip_line(reader, _) {
+  while(true) {
+    var ch__27045 = cljs.reader.read_char.call(null, reader);
+    if(function() {
+      var or__3824__auto____27046 = ch__27045 === "n";
+      if(or__3824__auto____27046) {
+        return or__3824__auto____27046
+      }else {
+        var or__3824__auto____27047 = ch__27045 === "r";
+        if(or__3824__auto____27047) {
+          return or__3824__auto____27047
+        }else {
+          return ch__27045 == null
+        }
+      }
+    }()) {
+      return reader
+    }else {
+      continue
+    }
+    break
+  }
+};
+cljs.reader.int_pattern = cljs.core.re_pattern.call(null, "([-+]?)(?:(0)|([1-9][0-9]*)|0[xX]([0-9A-Fa-f]+)|0([0-7]+)|([1-9][0-9]?)[rR]([0-9A-Za-z]+)|0[0-9]+)(N)?");
+cljs.reader.ratio_pattern = cljs.core.re_pattern.call(null, "([-+]?[0-9]+)/([0-9]+)");
+cljs.reader.float_pattern = cljs.core.re_pattern.call(null, "([-+]?[0-9]+(\\.[0-9]*)?([eE][-+]?[0-9]+)?)(M)?");
+cljs.reader.symbol_pattern = cljs.core.re_pattern.call(null, "[:]?([^0-9/].*/)?([^0-9/][^/]*)");
+cljs.reader.re_find_STAR_ = function re_find_STAR_(re, s) {
+  var matches__27049 = re.exec(s);
+  if(matches__27049 == null) {
+    return null
+  }else {
+    if(matches__27049.length === 1) {
+      return matches__27049[0]
+    }else {
+      return matches__27049
+    }
+  }
+};
+cljs.reader.match_int = function match_int(s) {
+  var groups__27057 = cljs.reader.re_find_STAR_.call(null, cljs.reader.int_pattern, s);
+  var group3__27058 = groups__27057[2];
+  if(!function() {
+    var or__3824__auto____27059 = group3__27058 == null;
+    if(or__3824__auto____27059) {
+      return or__3824__auto____27059
+    }else {
+      return group3__27058.length < 1
+    }
+  }()) {
+    return 0
+  }else {
+    var negate__27060 = "-" === groups__27057[1] ? -1 : 1;
+    var a__27061 = cljs.core.truth_(groups__27057[3]) ? [groups__27057[3], 10] : cljs.core.truth_(groups__27057[4]) ? [groups__27057[4], 16] : cljs.core.truth_(groups__27057[5]) ? [groups__27057[5], 8] : cljs.core.truth_(groups__27057[7]) ? [groups__27057[7], parseInt(groups__27057[7])] : "\ufdd0'default" ? [null, null] : null;
+    var n__27062 = a__27061[0];
+    var radix__27063 = a__27061[1];
+    if(n__27062 == null) {
+      return null
+    }else {
+      return negate__27060 * parseInt(n__27062, radix__27063)
+    }
+  }
+};
+cljs.reader.match_ratio = function match_ratio(s) {
+  var groups__27067 = cljs.reader.re_find_STAR_.call(null, cljs.reader.ratio_pattern, s);
+  var numinator__27068 = groups__27067[1];
+  var denominator__27069 = groups__27067[2];
+  return parseInt(numinator__27068) / parseInt(denominator__27069)
+};
+cljs.reader.match_float = function match_float(s) {
+  return parseFloat(s)
+};
+cljs.reader.re_matches_STAR_ = function re_matches_STAR_(re, s) {
+  var matches__27072 = re.exec(s);
+  if(function() {
+    var and__3822__auto____27073 = !(matches__27072 == null);
+    if(and__3822__auto____27073) {
+      return matches__27072[0] === s
+    }else {
+      return and__3822__auto____27073
+    }
+  }()) {
+    if(matches__27072.length === 1) {
+      return matches__27072[0]
+    }else {
+      return matches__27072
+    }
+  }else {
+    return null
+  }
+};
+cljs.reader.match_number = function match_number(s) {
+  if(cljs.core.truth_(cljs.reader.re_matches_STAR_.call(null, cljs.reader.int_pattern, s))) {
+    return cljs.reader.match_int.call(null, s)
+  }else {
+    if(cljs.core.truth_(cljs.reader.re_matches_STAR_.call(null, cljs.reader.ratio_pattern, s))) {
+      return cljs.reader.match_ratio.call(null, s)
+    }else {
+      if(cljs.core.truth_(cljs.reader.re_matches_STAR_.call(null, cljs.reader.float_pattern, s))) {
+        return cljs.reader.match_float.call(null, s)
+      }else {
+        return null
+      }
+    }
+  }
+};
+cljs.reader.escape_char_map = function escape_char_map(c) {
+  if(c === "t") {
+    return"\t"
+  }else {
+    if(c === "r") {
+      return"\r"
+    }else {
+      if(c === "n") {
+        return"\n"
+      }else {
+        if(c === "\\") {
+          return"\\"
+        }else {
+          if(c === '"') {
+            return'"'
+          }else {
+            if(c === "b") {
+              return"\u0008"
+            }else {
+              if(c === "f") {
+                return"\u000c"
+              }else {
+                if("\ufdd0'else") {
+                  return null
+                }else {
+                  return null
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+cljs.reader.read_2_chars = function read_2_chars(reader) {
+  return(new goog.string.StringBuffer(cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader))).toString()
+};
+cljs.reader.read_4_chars = function read_4_chars(reader) {
+  return(new goog.string.StringBuffer(cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader))).toString()
+};
+cljs.reader.unicode_2_pattern = cljs.core.re_pattern.call(null, "[0-9A-Fa-f]{2}");
+cljs.reader.unicode_4_pattern = cljs.core.re_pattern.call(null, "[0-9A-Fa-f]{4}");
+cljs.reader.validate_unicode_escape = function validate_unicode_escape(unicode_pattern, reader, escape_char, unicode_str) {
+  if(cljs.core.truth_(cljs.core.re_matches.call(null, unicode_pattern, unicode_str))) {
+    return unicode_str
+  }else {
+    return cljs.reader.reader_error.call(null, reader, "Unexpected unicode escape \\", escape_char, unicode_str)
+  }
+};
+cljs.reader.make_unicode_char = function make_unicode_char(code_str) {
+  var code__27075 = parseInt(code_str, 16);
+  return String.fromCharCode(code__27075)
+};
+cljs.reader.escape_char = function escape_char(buffer, reader) {
+  var ch__27078 = cljs.reader.read_char.call(null, reader);
+  var mapresult__27079 = cljs.reader.escape_char_map.call(null, ch__27078);
+  if(cljs.core.truth_(mapresult__27079)) {
+    return mapresult__27079
+  }else {
+    if(ch__27078 === "x") {
+      return cljs.reader.make_unicode_char.call(null, cljs.reader.validate_unicode_escape.call(null, cljs.reader.unicode_2_pattern, reader, ch__27078, cljs.reader.read_2_chars.call(null, reader)))
+    }else {
+      if(ch__27078 === "u") {
+        return cljs.reader.make_unicode_char.call(null, cljs.reader.validate_unicode_escape.call(null, cljs.reader.unicode_4_pattern, reader, ch__27078, cljs.reader.read_4_chars.call(null, reader)))
+      }else {
+        if(cljs.reader.numeric_QMARK_.call(null, ch__27078)) {
+          return String.fromCharCode(ch__27078)
+        }else {
+          if("\ufdd0'else") {
+            return cljs.reader.reader_error.call(null, reader, "Unexpected unicode escape \\", ch__27078)
+          }else {
+            return null
+          }
+        }
+      }
+    }
+  }
+};
+cljs.reader.read_past = function read_past(pred, rdr) {
+  var ch__27081 = cljs.reader.read_char.call(null, rdr);
+  while(true) {
+    if(cljs.core.truth_(pred.call(null, ch__27081))) {
+      var G__27082 = cljs.reader.read_char.call(null, rdr);
+      ch__27081 = G__27082;
+      continue
+    }else {
+      return ch__27081
+    }
+    break
+  }
+};
+cljs.reader.read_delimited_list = function read_delimited_list(delim, rdr, recursive_QMARK_) {
+  var a__27089 = cljs.core.transient$.call(null, cljs.core.PersistentVector.EMPTY);
+  while(true) {
+    var ch__27090 = cljs.reader.read_past.call(null, cljs.reader.whitespace_QMARK_, rdr);
+    if(cljs.core.truth_(ch__27090)) {
+    }else {
+      cljs.reader.reader_error.call(null, rdr, "EOF")
+    }
+    if(delim === ch__27090) {
+      return cljs.core.persistent_BANG_.call(null, a__27089)
+    }else {
+      var temp__3971__auto____27091 = cljs.reader.macros.call(null, ch__27090);
+      if(cljs.core.truth_(temp__3971__auto____27091)) {
+        var macrofn__27092 = temp__3971__auto____27091;
+        var mret__27093 = macrofn__27092.call(null, rdr, ch__27090);
+        var G__27095 = mret__27093 === rdr ? a__27089 : cljs.core.conj_BANG_.call(null, a__27089, mret__27093);
+        a__27089 = G__27095;
+        continue
+      }else {
+        cljs.reader.unread.call(null, rdr, ch__27090);
+        var o__27094 = cljs.reader.read.call(null, rdr, true, null, recursive_QMARK_);
+        var G__27096 = o__27094 === rdr ? a__27089 : cljs.core.conj_BANG_.call(null, a__27089, o__27094);
+        a__27089 = G__27096;
+        continue
+      }
+    }
+    break
+  }
+};
+cljs.reader.not_implemented = function not_implemented(rdr, ch) {
+  return cljs.reader.reader_error.call(null, rdr, "Reader for ", ch, " not implemented yet")
+};
+cljs.reader.read_dispatch = function read_dispatch(rdr, _) {
+  var ch__27101 = cljs.reader.read_char.call(null, rdr);
+  var dm__27102 = cljs.reader.dispatch_macros.call(null, ch__27101);
+  if(cljs.core.truth_(dm__27102)) {
+    return dm__27102.call(null, rdr, _)
+  }else {
+    var temp__3971__auto____27103 = cljs.reader.maybe_read_tagged_type.call(null, rdr, ch__27101);
+    if(cljs.core.truth_(temp__3971__auto____27103)) {
+      var obj__27104 = temp__3971__auto____27103;
+      return obj__27104
+    }else {
+      return cljs.reader.reader_error.call(null, rdr, "No dispatch macro for ", ch__27101)
+    }
+  }
+};
+cljs.reader.read_unmatched_delimiter = function read_unmatched_delimiter(rdr, ch) {
+  return cljs.reader.reader_error.call(null, rdr, "Unmached delimiter ", ch)
+};
+cljs.reader.read_list = function read_list(rdr, _) {
+  return cljs.core.apply.call(null, cljs.core.list, cljs.reader.read_delimited_list.call(null, ")", rdr, true))
+};
+cljs.reader.read_comment = cljs.reader.skip_line;
+cljs.reader.read_vector = function read_vector(rdr, _) {
+  return cljs.reader.read_delimited_list.call(null, "]", rdr, true)
+};
+cljs.reader.read_map = function read_map(rdr, _) {
+  var l__27106 = cljs.reader.read_delimited_list.call(null, "}", rdr, true);
+  if(cljs.core.odd_QMARK_.call(null, cljs.core.count.call(null, l__27106))) {
+    cljs.reader.reader_error.call(null, rdr, "Map literal must contain an even number of forms")
+  }else {
+  }
+  return cljs.core.apply.call(null, cljs.core.hash_map, l__27106)
+};
+cljs.reader.read_number = function read_number(reader, initch) {
+  var buffer__27113 = new goog.string.StringBuffer(initch);
+  var ch__27114 = cljs.reader.read_char.call(null, reader);
+  while(true) {
+    if(cljs.core.truth_(function() {
+      var or__3824__auto____27115 = ch__27114 == null;
+      if(or__3824__auto____27115) {
+        return or__3824__auto____27115
+      }else {
+        var or__3824__auto____27116 = cljs.reader.whitespace_QMARK_.call(null, ch__27114);
+        if(or__3824__auto____27116) {
+          return or__3824__auto____27116
+        }else {
+          return cljs.reader.macros.call(null, ch__27114)
+        }
+      }
+    }())) {
+      cljs.reader.unread.call(null, reader, ch__27114);
+      var s__27117 = buffer__27113.toString();
+      var or__3824__auto____27118 = cljs.reader.match_number.call(null, s__27117);
+      if(cljs.core.truth_(or__3824__auto____27118)) {
+        return or__3824__auto____27118
+      }else {
+        return cljs.reader.reader_error.call(null, reader, "Invalid number format [", s__27117, "]")
+      }
+    }else {
+      var G__27119 = function() {
+        buffer__27113.append(ch__27114);
+        return buffer__27113
+      }();
+      var G__27120 = cljs.reader.read_char.call(null, reader);
+      buffer__27113 = G__27119;
+      ch__27114 = G__27120;
+      continue
+    }
+    break
+  }
+};
+cljs.reader.read_string_STAR_ = function read_string_STAR_(reader, _) {
+  var buffer__27123 = new goog.string.StringBuffer;
+  var ch__27124 = cljs.reader.read_char.call(null, reader);
+  while(true) {
+    if(ch__27124 == null) {
+      return cljs.reader.reader_error.call(null, reader, "EOF while reading string")
+    }else {
+      if("\\" === ch__27124) {
+        var G__27125 = function() {
+          buffer__27123.append(cljs.reader.escape_char.call(null, buffer__27123, reader));
+          return buffer__27123
+        }();
+        var G__27126 = cljs.reader.read_char.call(null, reader);
+        buffer__27123 = G__27125;
+        ch__27124 = G__27126;
+        continue
+      }else {
+        if('"' === ch__27124) {
+          return buffer__27123.toString()
+        }else {
+          if("\ufdd0'default") {
+            var G__27127 = function() {
+              buffer__27123.append(ch__27124);
+              return buffer__27123
+            }();
+            var G__27128 = cljs.reader.read_char.call(null, reader);
+            buffer__27123 = G__27127;
+            ch__27124 = G__27128;
+            continue
+          }else {
+            return null
+          }
+        }
+      }
+    }
+    break
+  }
+};
+cljs.reader.special_symbols = function special_symbols(t, not_found) {
+  if(t === "nil") {
+    return null
+  }else {
+    if(t === "true") {
+      return true
+    }else {
+      if(t === "false") {
+        return false
+      }else {
+        if("\ufdd0'else") {
+          return not_found
+        }else {
+          return null
+        }
+      }
+    }
+  }
+};
+cljs.reader.read_symbol = function read_symbol(reader, initch) {
+  var token__27130 = cljs.reader.read_token.call(null, reader, initch);
+  if(cljs.core.truth_(goog.string.contains(token__27130, "/"))) {
+    return cljs.core.symbol.call(null, cljs.core.subs.call(null, token__27130, 0, token__27130.indexOf("/")), cljs.core.subs.call(null, token__27130, token__27130.indexOf("/") + 1, token__27130.length))
+  }else {
+    return cljs.reader.special_symbols.call(null, token__27130, cljs.core.symbol.call(null, token__27130))
+  }
+};
+cljs.reader.read_keyword = function read_keyword(reader, initch) {
+  var token__27140 = cljs.reader.read_token.call(null, reader, cljs.reader.read_char.call(null, reader));
+  var a__27141 = cljs.reader.re_matches_STAR_.call(null, cljs.reader.symbol_pattern, token__27140);
+  var token__27142 = a__27141[0];
+  var ns__27143 = a__27141[1];
+  var name__27144 = a__27141[2];
+  if(cljs.core.truth_(function() {
+    var or__3824__auto____27146 = function() {
+      var and__3822__auto____27145 = !(void 0 === ns__27143);
+      if(and__3822__auto____27145) {
+        return ns__27143.substring(ns__27143.length - 2, ns__27143.length) === ":/"
+      }else {
+        return and__3822__auto____27145
+      }
+    }();
+    if(cljs.core.truth_(or__3824__auto____27146)) {
+      return or__3824__auto____27146
+    }else {
+      var or__3824__auto____27147 = name__27144[name__27144.length - 1] === ":";
+      if(or__3824__auto____27147) {
+        return or__3824__auto____27147
+      }else {
+        return!(token__27142.indexOf("::", 1) === -1)
+      }
+    }
+  }())) {
+    return cljs.reader.reader_error.call(null, reader, "Invalid token: ", token__27142)
+  }else {
+    if(function() {
+      var and__3822__auto____27148 = !(ns__27143 == null);
+      if(and__3822__auto____27148) {
+        return ns__27143.length > 0
+      }else {
+        return and__3822__auto____27148
+      }
+    }()) {
+      return cljs.core.keyword.call(null, ns__27143.substring(0, ns__27143.indexOf("/")), name__27144)
+    }else {
+      return cljs.core.keyword.call(null, token__27142)
+    }
+  }
+};
+cljs.reader.desugar_meta = function desugar_meta(f) {
+  if(cljs.core.symbol_QMARK_.call(null, f)) {
+    return cljs.core.ObjMap.fromObject(["\ufdd0'tag"], {"\ufdd0'tag":f})
+  }else {
+    if(cljs.core.string_QMARK_.call(null, f)) {
+      return cljs.core.ObjMap.fromObject(["\ufdd0'tag"], {"\ufdd0'tag":f})
+    }else {
+      if(cljs.core.keyword_QMARK_.call(null, f)) {
+        return cljs.core.PersistentArrayMap.fromArrays([f], [true])
+      }else {
+        if("\ufdd0'else") {
+          return f
+        }else {
+          return null
+        }
+      }
+    }
+  }
+};
+cljs.reader.wrapping_reader = function wrapping_reader(sym) {
+  return function(rdr, _) {
+    return cljs.core.list.call(null, sym, cljs.reader.read.call(null, rdr, true, null, true))
+  }
+};
+cljs.reader.throwing_reader = function throwing_reader(msg) {
+  return function(rdr, _) {
+    return cljs.reader.reader_error.call(null, rdr, msg)
+  }
+};
+cljs.reader.read_meta = function read_meta(rdr, _) {
+  var m__27154 = cljs.reader.desugar_meta.call(null, cljs.reader.read.call(null, rdr, true, null, true));
+  if(cljs.core.map_QMARK_.call(null, m__27154)) {
+  }else {
+    cljs.reader.reader_error.call(null, rdr, "Metadata must be Symbol,Keyword,String or Map")
+  }
+  var o__27155 = cljs.reader.read.call(null, rdr, true, null, true);
+  if(function() {
+    var G__27156__27157 = o__27155;
+    if(G__27156__27157) {
+      if(function() {
+        var or__3824__auto____27158 = G__27156__27157.cljs$lang$protocol_mask$partition0$ & 262144;
+        if(or__3824__auto____27158) {
+          return or__3824__auto____27158
+        }else {
+          return G__27156__27157.cljs$core$IWithMeta$
+        }
+      }()) {
+        return true
+      }else {
+        if(!G__27156__27157.cljs$lang$protocol_mask$partition0$) {
+          return cljs.core.type_satisfies_.call(null, cljs.core.IWithMeta, G__27156__27157)
+        }else {
+          return false
+        }
+      }
+    }else {
+      return cljs.core.type_satisfies_.call(null, cljs.core.IWithMeta, G__27156__27157)
+    }
+  }()) {
+    return cljs.core.with_meta.call(null, o__27155, cljs.core.merge.call(null, cljs.core.meta.call(null, o__27155), m__27154))
+  }else {
+    return cljs.reader.reader_error.call(null, rdr, "Metadata can only be applied to IWithMetas")
+  }
+};
+cljs.reader.read_set = function read_set(rdr, _) {
+  return cljs.core.set.call(null, cljs.reader.read_delimited_list.call(null, "}", rdr, true))
+};
+cljs.reader.read_regex = function read_regex(rdr, ch) {
+  return cljs.core.re_pattern.call(null, cljs.reader.read_string_STAR_.call(null, rdr, ch))
+};
+cljs.reader.read_discard = function read_discard(rdr, _) {
+  cljs.reader.read.call(null, rdr, true, null, true);
+  return rdr
+};
+cljs.reader.macros = function macros(c) {
+  if(c === '"') {
+    return cljs.reader.read_string_STAR_
+  }else {
+    if(c === ":") {
+      return cljs.reader.read_keyword
+    }else {
+      if(c === ";") {
+        return cljs.reader.not_implemented
+      }else {
+        if(c === "'") {
+          return cljs.reader.wrapping_reader.call(null, "\ufdd1'quote")
+        }else {
+          if(c === "@") {
+            return cljs.reader.wrapping_reader.call(null, "\ufdd1'deref")
+          }else {
+            if(c === "^") {
+              return cljs.reader.read_meta
+            }else {
+              if(c === "`") {
+                return cljs.reader.not_implemented
+              }else {
+                if(c === "~") {
+                  return cljs.reader.not_implemented
+                }else {
+                  if(c === "(") {
+                    return cljs.reader.read_list
+                  }else {
+                    if(c === ")") {
+                      return cljs.reader.read_unmatched_delimiter
+                    }else {
+                      if(c === "[") {
+                        return cljs.reader.read_vector
+                      }else {
+                        if(c === "]") {
+                          return cljs.reader.read_unmatched_delimiter
+                        }else {
+                          if(c === "{") {
+                            return cljs.reader.read_map
+                          }else {
+                            if(c === "}") {
+                              return cljs.reader.read_unmatched_delimiter
+                            }else {
+                              if(c === "\\") {
+                                return cljs.reader.read_char
+                              }else {
+                                if(c === "%") {
+                                  return cljs.reader.not_implemented
+                                }else {
+                                  if(c === "#") {
+                                    return cljs.reader.read_dispatch
+                                  }else {
+                                    if("\ufdd0'else") {
+                                      return null
+                                    }else {
+                                      return null
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+cljs.reader.dispatch_macros = function dispatch_macros(s) {
+  if(s === "{") {
+    return cljs.reader.read_set
+  }else {
+    if(s === "<") {
+      return cljs.reader.throwing_reader.call(null, "Unreadable form")
+    }else {
+      if(s === '"') {
+        return cljs.reader.read_regex
+      }else {
+        if(s === "!") {
+          return cljs.reader.read_comment
+        }else {
+          if(s === "_") {
+            return cljs.reader.read_discard
+          }else {
+            if("\ufdd0'else") {
+              return null
+            }else {
+              return null
+            }
+          }
+        }
+      }
+    }
+  }
+};
+cljs.reader.read = function read(reader, eof_is_error, sentinel, is_recursive) {
+  while(true) {
+    var ch__27162 = cljs.reader.read_char.call(null, reader);
+    if(ch__27162 == null) {
+      if(cljs.core.truth_(eof_is_error)) {
+        return cljs.reader.reader_error.call(null, reader, "EOF")
+      }else {
+        return sentinel
+      }
+    }else {
+      if(cljs.reader.whitespace_QMARK_.call(null, ch__27162)) {
+        var G__27165 = reader;
+        var G__27166 = eof_is_error;
+        var G__27167 = sentinel;
+        var G__27168 = is_recursive;
+        reader = G__27165;
+        eof_is_error = G__27166;
+        sentinel = G__27167;
+        is_recursive = G__27168;
+        continue
+      }else {
+        if(cljs.reader.comment_prefix_QMARK_.call(null, ch__27162)) {
+          var G__27169 = cljs.reader.read_comment.call(null, reader, ch__27162);
+          var G__27170 = eof_is_error;
+          var G__27171 = sentinel;
+          var G__27172 = is_recursive;
+          reader = G__27169;
+          eof_is_error = G__27170;
+          sentinel = G__27171;
+          is_recursive = G__27172;
+          continue
+        }else {
+          if("\ufdd0'else") {
+            var f__27163 = cljs.reader.macros.call(null, ch__27162);
+            var res__27164 = cljs.core.truth_(f__27163) ? f__27163.call(null, reader, ch__27162) : cljs.reader.number_literal_QMARK_.call(null, reader, ch__27162) ? cljs.reader.read_number.call(null, reader, ch__27162) : "\ufdd0'else" ? cljs.reader.read_symbol.call(null, reader, ch__27162) : null;
+            if(res__27164 === reader) {
+              var G__27173 = reader;
+              var G__27174 = eof_is_error;
+              var G__27175 = sentinel;
+              var G__27176 = is_recursive;
+              reader = G__27173;
+              eof_is_error = G__27174;
+              sentinel = G__27175;
+              is_recursive = G__27176;
+              continue
+            }else {
+              return res__27164
+            }
+          }else {
+            return null
+          }
+        }
+      }
+    }
+    break
+  }
+};
+cljs.reader.read_string = function read_string(s) {
+  var r__27178 = cljs.reader.push_back_reader.call(null, s);
+  return cljs.reader.read.call(null, r__27178, true, null, false)
+};
+cljs.reader.zero_fill_right = function zero_fill_right(s, width) {
+  if(cljs.core._EQ_.call(null, width, cljs.core.count.call(null, s))) {
+    return s
+  }else {
+    if(width < cljs.core.count.call(null, s)) {
+      return s.substring(0, width)
+    }else {
+      if("\ufdd0'else") {
+        var b__27180 = new goog.string.StringBuffer(s);
+        while(true) {
+          if(b__27180.getLength() < width) {
+            var G__27181 = b__27180.append("0");
+            b__27180 = G__27181;
+            continue
+          }else {
+            return b__27180.toString()
+          }
+          break
+        }
+      }else {
+        return null
+      }
+    }
+  }
+};
+cljs.reader.divisible_QMARK_ = function divisible_QMARK_(num, div) {
+  return num % div === 0
+};
+cljs.reader.indivisible_QMARK_ = function indivisible_QMARK_(num, div) {
+  return cljs.core.not.call(null, cljs.reader.divisible_QMARK_.call(null, num, div))
+};
+cljs.reader.leap_year_QMARK_ = function leap_year_QMARK_(year) {
+  var and__3822__auto____27184 = cljs.reader.divisible_QMARK_.call(null, year, 4);
+  if(cljs.core.truth_(and__3822__auto____27184)) {
+    var or__3824__auto____27185 = cljs.reader.indivisible_QMARK_.call(null, year, 100);
+    if(cljs.core.truth_(or__3824__auto____27185)) {
+      return or__3824__auto____27185
+    }else {
+      return cljs.reader.divisible_QMARK_.call(null, year, 400)
+    }
+  }else {
+    return and__3822__auto____27184
+  }
+};
+cljs.reader.days_in_month = function() {
+  var dim_norm__27190 = cljs.core.PersistentVector.fromArray([null, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], true);
+  var dim_leap__27191 = cljs.core.PersistentVector.fromArray([null, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], true);
+  return function(month, leap_year_QMARK_) {
+    return cljs.core._lookup.call(null, cljs.core.truth_(leap_year_QMARK_) ? dim_leap__27191 : dim_norm__27190, month, null)
+  }
+}();
+cljs.reader.parse_and_validate_timestamp = function() {
+  var timestamp__27192 = /(\d\d\d\d)(?:-(\d\d)(?:-(\d\d)(?:[T](\d\d)(?::(\d\d)(?::(\d\d)(?:[.](\d+))?)?)?)?)?)?(?:[Z]|([-+])(\d\d):(\d\d))?/;
+  var check__27194 = function(low, n, high, msg) {
+    if(function() {
+      var and__3822__auto____27193 = low <= n;
+      if(and__3822__auto____27193) {
+        return n <= high
+      }else {
+        return and__3822__auto____27193
+      }
+    }()) {
+    }else {
+      throw new Error([cljs.core.str("Assert failed: "), cljs.core.str([cljs.core.str(msg), cljs.core.str(" Failed:  "), cljs.core.str(low), cljs.core.str("<="), cljs.core.str(n), cljs.core.str("<="), cljs.core.str(high)].join("")), cljs.core.str("\n"), cljs.core.str(cljs.core.pr_str.call(null, cljs.core.with_meta(cljs.core.list("\ufdd1'<=", "\ufdd1'low", "\ufdd1'n", "\ufdd1'high"), cljs.core.hash_map("\ufdd0'line", 474))))].join(""));
+    }
+    return n
+  };
+  return function(ts) {
+    var temp__3974__auto____27195 = cljs.core.map.call(null, cljs.core.vec, cljs.core.split_at.call(null, 8, cljs.core.re_matches.call(null, timestamp__27192, ts)));
+    if(cljs.core.truth_(temp__3974__auto____27195)) {
+      var vec__27196__27199 = temp__3974__auto____27195;
+      var vec__27197__27200 = cljs.core.nth.call(null, vec__27196__27199, 0, null);
+      var ___27201 = cljs.core.nth.call(null, vec__27197__27200, 0, null);
+      var years__27202 = cljs.core.nth.call(null, vec__27197__27200, 1, null);
+      var months__27203 = cljs.core.nth.call(null, vec__27197__27200, 2, null);
+      var days__27204 = cljs.core.nth.call(null, vec__27197__27200, 3, null);
+      var hours__27205 = cljs.core.nth.call(null, vec__27197__27200, 4, null);
+      var minutes__27206 = cljs.core.nth.call(null, vec__27197__27200, 5, null);
+      var seconds__27207 = cljs.core.nth.call(null, vec__27197__27200, 6, null);
+      var milliseconds__27208 = cljs.core.nth.call(null, vec__27197__27200, 7, null);
+      var vec__27198__27209 = cljs.core.nth.call(null, vec__27196__27199, 1, null);
+      var ___27210 = cljs.core.nth.call(null, vec__27198__27209, 0, null);
+      var ___27211 = cljs.core.nth.call(null, vec__27198__27209, 1, null);
+      var ___27212 = cljs.core.nth.call(null, vec__27198__27209, 2, null);
+      var V__27213 = vec__27196__27199;
+      var vec__27214__27217 = cljs.core.map.call(null, function(v) {
+        return cljs.core.map.call(null, function(p1__27189_SHARP_) {
+          return parseInt(p1__27189_SHARP_, 10)
+        }, v)
+      }, cljs.core.map.call(null, function(p1__27187_SHARP_, p2__27186_SHARP_) {
+        return cljs.core.update_in.call(null, p2__27186_SHARP_, cljs.core.PersistentVector.fromArray([0], true), p1__27187_SHARP_)
+      }, cljs.core.PersistentVector.fromArray([cljs.core.constantly.call(null, null), function(p1__27188_SHARP_) {
+        if(cljs.core._EQ_.call(null, p1__27188_SHARP_, "-")) {
+          return"-1"
+        }else {
+          return"1"
+        }
+      }], true), V__27213));
+      var vec__27215__27218 = cljs.core.nth.call(null, vec__27214__27217, 0, null);
+      var ___27219 = cljs.core.nth.call(null, vec__27215__27218, 0, null);
+      var y__27220 = cljs.core.nth.call(null, vec__27215__27218, 1, null);
+      var mo__27221 = cljs.core.nth.call(null, vec__27215__27218, 2, null);
+      var d__27222 = cljs.core.nth.call(null, vec__27215__27218, 3, null);
+      var h__27223 = cljs.core.nth.call(null, vec__27215__27218, 4, null);
+      var m__27224 = cljs.core.nth.call(null, vec__27215__27218, 5, null);
+      var s__27225 = cljs.core.nth.call(null, vec__27215__27218, 6, null);
+      var ms__27226 = cljs.core.nth.call(null, vec__27215__27218, 7, null);
+      var vec__27216__27227 = cljs.core.nth.call(null, vec__27214__27217, 1, null);
+      var offset_sign__27228 = cljs.core.nth.call(null, vec__27216__27227, 0, null);
+      var offset_hours__27229 = cljs.core.nth.call(null, vec__27216__27227, 1, null);
+      var offset_minutes__27230 = cljs.core.nth.call(null, vec__27216__27227, 2, null);
+      var offset__27231 = offset_sign__27228 * (offset_hours__27229 * 60 + offset_minutes__27230);
+      return cljs.core.PersistentVector.fromArray([cljs.core.not.call(null, years__27202) ? 1970 : y__27220, cljs.core.not.call(null, months__27203) ? 1 : check__27194.call(null, 1, mo__27221, 12, "timestamp month field must be in range 1..12"), cljs.core.not.call(null, days__27204) ? 1 : check__27194.call(null, 1, d__27222, cljs.reader.days_in_month.call(null, mo__27221, cljs.reader.leap_year_QMARK_.call(null, y__27220)), "timestamp day field must be in range 1..last day in month"), cljs.core.not.call(null, 
+      hours__27205) ? 0 : check__27194.call(null, 0, h__27223, 23, "timestamp hour field must be in range 0..23"), cljs.core.not.call(null, minutes__27206) ? 0 : check__27194.call(null, 0, m__27224, 59, "timestamp minute field must be in range 0..59"), cljs.core.not.call(null, seconds__27207) ? 0 : check__27194.call(null, 0, s__27225, cljs.core._EQ_.call(null, m__27224, 59) ? 60 : 59, "timestamp second field must be in range 0..60"), cljs.core.not.call(null, milliseconds__27208) ? 0 : check__27194.call(null, 
+      0, ms__27226, 999, "timestamp millisecond field must be in range 0..999"), offset__27231], true)
+    }else {
+      return null
+    }
+  }
+}();
+cljs.reader.parse_timestamp = function parse_timestamp(ts) {
+  var temp__3971__auto____27243 = cljs.reader.parse_and_validate_timestamp.call(null, ts);
+  if(cljs.core.truth_(temp__3971__auto____27243)) {
+    var vec__27244__27245 = temp__3971__auto____27243;
+    var years__27246 = cljs.core.nth.call(null, vec__27244__27245, 0, null);
+    var months__27247 = cljs.core.nth.call(null, vec__27244__27245, 1, null);
+    var days__27248 = cljs.core.nth.call(null, vec__27244__27245, 2, null);
+    var hours__27249 = cljs.core.nth.call(null, vec__27244__27245, 3, null);
+    var minutes__27250 = cljs.core.nth.call(null, vec__27244__27245, 4, null);
+    var seconds__27251 = cljs.core.nth.call(null, vec__27244__27245, 5, null);
+    var ms__27252 = cljs.core.nth.call(null, vec__27244__27245, 6, null);
+    var offset__27253 = cljs.core.nth.call(null, vec__27244__27245, 7, null);
+    return new Date(Date.UTC(years__27246, months__27247 - 1, days__27248, hours__27249, minutes__27250, seconds__27251, ms__27252) - offset__27253 * 60 * 1E3)
+  }else {
+    return cljs.reader.reader_error.call(null, null, [cljs.core.str("Unrecognized date/time syntax: "), cljs.core.str(ts)].join(""))
+  }
+};
+cljs.reader.read_date = function read_date(s) {
+  if(cljs.core.string_QMARK_.call(null, s)) {
+    return cljs.reader.parse_timestamp.call(null, s)
+  }else {
+    return cljs.reader.reader_error.call(null, null, "Instance literal expects a string for its timestamp.")
+  }
+};
+cljs.reader.read_queue = function read_queue(elems) {
+  if(cljs.core.vector_QMARK_.call(null, elems)) {
+    return cljs.core.into.call(null, cljs.core.PersistentQueue.EMPTY, elems)
+  }else {
+    return cljs.reader.reader_error.call(null, null, "Queue literal expects a vector for its elements.")
+  }
+};
+cljs.reader.read_uuid = function read_uuid(uuid) {
+  if(cljs.core.string_QMARK_.call(null, uuid)) {
+    return new cljs.core.UUID(uuid)
+  }else {
+    return cljs.reader.reader_error.call(null, null, "UUID literal expects a string as its representation.")
+  }
+};
+cljs.reader._STAR_tag_table_STAR_ = cljs.core.atom.call(null, cljs.core.ObjMap.fromObject(["inst", "uuid", "queue"], {"inst":cljs.reader.read_date, "uuid":cljs.reader.read_uuid, "queue":cljs.reader.read_queue}));
+cljs.reader.maybe_read_tagged_type = function maybe_read_tagged_type(rdr, initch) {
+  var tag__27257 = cljs.reader.read_symbol.call(null, rdr, initch);
+  var temp__3971__auto____27258 = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), cljs.core.name.call(null, tag__27257), null);
+  if(cljs.core.truth_(temp__3971__auto____27258)) {
+    var pfn__27259 = temp__3971__auto____27258;
+    return pfn__27259.call(null, cljs.reader.read.call(null, rdr, true, null, false))
+  }else {
+    return cljs.reader.reader_error.call(null, rdr, "Could not find tag parser for ", cljs.core.name.call(null, tag__27257), " in ", cljs.core.pr_str.call(null, cljs.core.keys.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_))))
+  }
+};
+cljs.reader.register_tag_parser_BANG_ = function register_tag_parser_BANG_(tag, f) {
+  var tag__27262 = cljs.core.name.call(null, tag);
+  var old_parser__27263 = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), tag__27262, null);
+  cljs.core.swap_BANG_.call(null, cljs.reader._STAR_tag_table_STAR_, cljs.core.assoc, tag__27262, f);
+  return old_parser__27263
+};
+cljs.reader.deregister_tag_parser_BANG_ = function deregister_tag_parser_BANG_(tag) {
+  var tag__27266 = cljs.core.name.call(null, tag);
+  var old_parser__27267 = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), tag__27266, null);
+  cljs.core.swap_BANG_.call(null, cljs.reader._STAR_tag_table_STAR_, cljs.core.dissoc, tag__27266);
+  return old_parser__27267
+};
+goog.provide("goog.debug.EntryPointMonitor");
+goog.provide("goog.debug.entryPointRegistry");
+goog.debug.EntryPointMonitor = function() {
+};
+goog.debug.EntryPointMonitor.prototype.wrap;
+goog.debug.EntryPointMonitor.prototype.unwrap;
+goog.debug.entryPointRegistry.refList_ = [];
+goog.debug.entryPointRegistry.register = function(callback) {
+  goog.debug.entryPointRegistry.refList_[goog.debug.entryPointRegistry.refList_.length] = callback
+};
+goog.debug.entryPointRegistry.monitorAll = function(monitor) {
+  var transformer = goog.bind(monitor.wrap, monitor);
+  for(var i = 0;i < goog.debug.entryPointRegistry.refList_.length;i++) {
+    goog.debug.entryPointRegistry.refList_[i](transformer)
+  }
+};
+goog.debug.entryPointRegistry.unmonitorAllIfPossible = function(monitor) {
+  var transformer = goog.bind(monitor.unwrap, monitor);
+  for(var i = 0;i < goog.debug.entryPointRegistry.refList_.length;i++) {
+    goog.debug.entryPointRegistry.refList_[i](transformer)
+  }
+};
+goog.provide("goog.debug.errorHandlerWeakDep");
+goog.debug.errorHandlerWeakDep = {protectEntryPoint:function(fn, opt_tracers) {
+  return fn
+}};
+goog.provide("goog.events.BrowserFeature");
+goog.require("goog.userAgent");
+goog.events.BrowserFeature = {HAS_W3C_BUTTON:!goog.userAgent.IE || goog.userAgent.isVersion("9"), SET_KEY_CODE_TO_PREVENT_DEFAULT:goog.userAgent.IE && !goog.userAgent.isVersion("8")};
+goog.provide("goog.disposable.IDisposable");
+goog.disposable.IDisposable = function() {
+};
+goog.disposable.IDisposable.prototype.dispose;
+goog.disposable.IDisposable.prototype.isDisposed;
+goog.provide("goog.Disposable");
+goog.provide("goog.dispose");
+goog.require("goog.disposable.IDisposable");
+goog.Disposable = function() {
+  if(goog.Disposable.ENABLE_MONITORING) {
+    goog.Disposable.instances_[goog.getUid(this)] = this
+  }
+};
+goog.Disposable.ENABLE_MONITORING = false;
+goog.Disposable.instances_ = {};
+goog.Disposable.getUndisposedObjects = function() {
+  var ret = [];
+  for(var id in goog.Disposable.instances_) {
+    if(goog.Disposable.instances_.hasOwnProperty(id)) {
+      ret.push(goog.Disposable.instances_[Number(id)])
+    }
+  }
+  return ret
+};
+goog.Disposable.clearUndisposedObjects = function() {
+  goog.Disposable.instances_ = {}
+};
+goog.Disposable.prototype.disposed_ = false;
+goog.Disposable.prototype.isDisposed = function() {
+  return this.disposed_
+};
+goog.Disposable.prototype.getDisposed = goog.Disposable.prototype.isDisposed;
+goog.Disposable.prototype.dispose = function() {
+  if(!this.disposed_) {
+    this.disposed_ = true;
+    this.disposeInternal();
+    if(goog.Disposable.ENABLE_MONITORING) {
+      var uid = goog.getUid(this);
+      if(!goog.Disposable.instances_.hasOwnProperty(uid)) {
+        throw Error(this + " did not call the goog.Disposable base " + "constructor or was disposed of after a clearUndisposedObjects " + "call");
+      }
+      delete goog.Disposable.instances_[uid]
+    }
+  }
+};
+goog.Disposable.prototype.disposeInternal = function() {
+};
+goog.dispose = function(obj) {
+  if(obj && typeof obj.dispose == "function") {
+    obj.dispose()
+  }
+};
+goog.provide("goog.events.Event");
+goog.require("goog.Disposable");
+goog.events.Event = function(type, opt_target) {
+  goog.Disposable.call(this);
+  this.type = type;
+  this.target = opt_target;
+  this.currentTarget = this.target
+};
+goog.inherits(goog.events.Event, goog.Disposable);
+goog.events.Event.prototype.disposeInternal = function() {
+  delete this.type;
+  delete this.target;
+  delete this.currentTarget
+};
+goog.events.Event.prototype.propagationStopped_ = false;
+goog.events.Event.prototype.returnValue_ = true;
+goog.events.Event.prototype.stopPropagation = function() {
+  this.propagationStopped_ = true
+};
+goog.events.Event.prototype.preventDefault = function() {
+  this.returnValue_ = false
+};
+goog.events.Event.stopPropagation = function(e) {
+  e.stopPropagation()
+};
+goog.events.Event.preventDefault = function(e) {
+  e.preventDefault()
+};
+goog.provide("goog.events.EventType");
+goog.require("goog.userAgent");
+goog.events.EventType = {CLICK:"click", DBLCLICK:"dblclick", MOUSEDOWN:"mousedown", MOUSEUP:"mouseup", MOUSEOVER:"mouseover", MOUSEOUT:"mouseout", MOUSEMOVE:"mousemove", SELECTSTART:"selectstart", KEYPRESS:"keypress", KEYDOWN:"keydown", KEYUP:"keyup", BLUR:"blur", FOCUS:"focus", DEACTIVATE:"deactivate", FOCUSIN:goog.userAgent.IE ? "focusin" : "DOMFocusIn", FOCUSOUT:goog.userAgent.IE ? "focusout" : "DOMFocusOut", CHANGE:"change", SELECT:"select", SUBMIT:"submit", INPUT:"input", PROPERTYCHANGE:"propertychange", 
+DRAGSTART:"dragstart", DRAGENTER:"dragenter", DRAGOVER:"dragover", DRAGLEAVE:"dragleave", DROP:"drop", TOUCHSTART:"touchstart", TOUCHMOVE:"touchmove", TOUCHEND:"touchend", TOUCHCANCEL:"touchcancel", CONTEXTMENU:"contextmenu", ERROR:"error", HELP:"help", LOAD:"load", LOSECAPTURE:"losecapture", READYSTATECHANGE:"readystatechange", RESIZE:"resize", SCROLL:"scroll", UNLOAD:"unload", HASHCHANGE:"hashchange", PAGEHIDE:"pagehide", PAGESHOW:"pageshow", POPSTATE:"popstate", COPY:"copy", PASTE:"paste", CUT:"cut", 
+MESSAGE:"message", CONNECT:"connect"};
+goog.provide("goog.reflect");
+goog.reflect.object = function(type, object) {
+  return object
+};
+goog.reflect.sinkValue = new Function("a", "return a");
+goog.provide("goog.events.BrowserEvent");
+goog.provide("goog.events.BrowserEvent.MouseButton");
+goog.require("goog.events.BrowserFeature");
+goog.require("goog.events.Event");
+goog.require("goog.events.EventType");
+goog.require("goog.reflect");
+goog.require("goog.userAgent");
+goog.events.BrowserEvent = function(opt_e, opt_currentTarget) {
+  if(opt_e) {
+    this.init(opt_e, opt_currentTarget)
+  }
+};
+goog.inherits(goog.events.BrowserEvent, goog.events.Event);
+goog.events.BrowserEvent.MouseButton = {LEFT:0, MIDDLE:1, RIGHT:2};
+goog.events.BrowserEvent.IEButtonMap = [1, 4, 2];
+goog.events.BrowserEvent.prototype.target = null;
+goog.events.BrowserEvent.prototype.currentTarget;
+goog.events.BrowserEvent.prototype.relatedTarget = null;
+goog.events.BrowserEvent.prototype.offsetX = 0;
+goog.events.BrowserEvent.prototype.offsetY = 0;
+goog.events.BrowserEvent.prototype.clientX = 0;
+goog.events.BrowserEvent.prototype.clientY = 0;
+goog.events.BrowserEvent.prototype.screenX = 0;
+goog.events.BrowserEvent.prototype.screenY = 0;
+goog.events.BrowserEvent.prototype.button = 0;
+goog.events.BrowserEvent.prototype.keyCode = 0;
+goog.events.BrowserEvent.prototype.charCode = 0;
+goog.events.BrowserEvent.prototype.ctrlKey = false;
+goog.events.BrowserEvent.prototype.altKey = false;
+goog.events.BrowserEvent.prototype.shiftKey = false;
+goog.events.BrowserEvent.prototype.metaKey = false;
+goog.events.BrowserEvent.prototype.state;
+goog.events.BrowserEvent.prototype.platformModifierKey = false;
+goog.events.BrowserEvent.prototype.event_ = null;
+goog.events.BrowserEvent.prototype.init = function(e, opt_currentTarget) {
+  var type = this.type = e.type;
+  goog.events.Event.call(this, type);
+  this.target = e.target || e.srcElement;
+  this.currentTarget = opt_currentTarget;
+  var relatedTarget = e.relatedTarget;
+  if(relatedTarget) {
+    if(goog.userAgent.GECKO) {
+      try {
+        goog.reflect.sinkValue(relatedTarget.nodeName)
+      }catch(err) {
+        relatedTarget = null
+      }
+    }
+  }else {
+    if(type == goog.events.EventType.MOUSEOVER) {
+      relatedTarget = e.fromElement
+    }else {
+      if(type == goog.events.EventType.MOUSEOUT) {
+        relatedTarget = e.toElement
+      }
+    }
+  }
+  this.relatedTarget = relatedTarget;
+  this.offsetX = e.offsetX !== undefined ? e.offsetX : e.layerX;
+  this.offsetY = e.offsetY !== undefined ? e.offsetY : e.layerY;
+  this.clientX = e.clientX !== undefined ? e.clientX : e.pageX;
+  this.clientY = e.clientY !== undefined ? e.clientY : e.pageY;
+  this.screenX = e.screenX || 0;
+  this.screenY = e.screenY || 0;
+  this.button = e.button;
+  this.keyCode = e.keyCode || 0;
+  this.charCode = e.charCode || (type == "keypress" ? e.keyCode : 0);
+  this.ctrlKey = e.ctrlKey;
+  this.altKey = e.altKey;
+  this.shiftKey = e.shiftKey;
+  this.metaKey = e.metaKey;
+  this.platformModifierKey = goog.userAgent.MAC ? e.metaKey : e.ctrlKey;
+  this.state = e.state;
+  this.event_ = e;
+  delete this.returnValue_;
+  delete this.propagationStopped_
+};
+goog.events.BrowserEvent.prototype.isButton = function(button) {
+  if(!goog.events.BrowserFeature.HAS_W3C_BUTTON) {
+    if(this.type == "click") {
+      return button == goog.events.BrowserEvent.MouseButton.LEFT
+    }else {
+      return!!(this.event_.button & goog.events.BrowserEvent.IEButtonMap[button])
+    }
+  }else {
+    return this.event_.button == button
+  }
+};
+goog.events.BrowserEvent.prototype.isMouseActionButton = function() {
+  return this.isButton(goog.events.BrowserEvent.MouseButton.LEFT) && !(goog.userAgent.WEBKIT && goog.userAgent.MAC && this.ctrlKey)
+};
+goog.events.BrowserEvent.prototype.stopPropagation = function() {
+  goog.events.BrowserEvent.superClass_.stopPropagation.call(this);
+  if(this.event_.stopPropagation) {
+    this.event_.stopPropagation()
+  }else {
+    this.event_.cancelBubble = true
+  }
+};
+goog.events.BrowserEvent.prototype.preventDefault = function() {
+  goog.events.BrowserEvent.superClass_.preventDefault.call(this);
+  var be = this.event_;
+  if(!be.preventDefault) {
+    be.returnValue = false;
+    if(goog.events.BrowserFeature.SET_KEY_CODE_TO_PREVENT_DEFAULT) {
+      try {
+        var VK_F1 = 112;
+        var VK_F12 = 123;
+        if(be.ctrlKey || be.keyCode >= VK_F1 && be.keyCode <= VK_F12) {
+          be.keyCode = -1
+        }
+      }catch(ex) {
+      }
+    }
+  }else {
+    be.preventDefault()
+  }
+};
+goog.events.BrowserEvent.prototype.getBrowserEvent = function() {
+  return this.event_
+};
+goog.events.BrowserEvent.prototype.disposeInternal = function() {
+  goog.events.BrowserEvent.superClass_.disposeInternal.call(this);
+  this.event_ = null;
+  this.target = null;
+  this.currentTarget = null;
+  this.relatedTarget = null
+};
+goog.provide("goog.events.EventWrapper");
+goog.events.EventWrapper = function() {
+};
+goog.events.EventWrapper.prototype.listen = function(src, listener, opt_capt, opt_scope, opt_eventHandler) {
+};
+goog.events.EventWrapper.prototype.unlisten = function(src, listener, opt_capt, opt_scope, opt_eventHandler) {
+};
+goog.provide("goog.events.Listener");
+goog.events.Listener = function() {
+};
+goog.events.Listener.counter_ = 0;
+goog.events.Listener.prototype.isFunctionListener_;
+goog.events.Listener.prototype.listener;
+goog.events.Listener.prototype.proxy;
+goog.events.Listener.prototype.src;
+goog.events.Listener.prototype.type;
+goog.events.Listener.prototype.capture;
+goog.events.Listener.prototype.handler;
+goog.events.Listener.prototype.key = 0;
+goog.events.Listener.prototype.removed = false;
+goog.events.Listener.prototype.callOnce = false;
+goog.events.Listener.prototype.init = function(listener, proxy, src, type, capture, opt_handler) {
+  if(goog.isFunction(listener)) {
+    this.isFunctionListener_ = true
+  }else {
+    if(listener && listener.handleEvent && goog.isFunction(listener.handleEvent)) {
+      this.isFunctionListener_ = false
+    }else {
+      throw Error("Invalid listener argument");
+    }
+  }
+  this.listener = listener;
+  this.proxy = proxy;
+  this.src = src;
+  this.type = type;
+  this.capture = !!capture;
+  this.handler = opt_handler;
+  this.callOnce = false;
+  this.key = ++goog.events.Listener.counter_;
+  this.removed = false
+};
+goog.events.Listener.prototype.handleEvent = function(eventObject) {
+  if(this.isFunctionListener_) {
+    return this.listener.call(this.handler || this.src, eventObject)
+  }
+  return this.listener.handleEvent.call(this.listener, eventObject)
+};
+goog.provide("goog.structs.SimplePool");
+goog.require("goog.Disposable");
+goog.structs.SimplePool = function(initialCount, maxCount) {
+  goog.Disposable.call(this);
+  this.maxCount_ = maxCount;
+  this.freeQueue_ = [];
+  this.createInitial_(initialCount)
+};
+goog.inherits(goog.structs.SimplePool, goog.Disposable);
+goog.structs.SimplePool.prototype.createObjectFn_ = null;
+goog.structs.SimplePool.prototype.disposeObjectFn_ = null;
+goog.structs.SimplePool.prototype.setCreateObjectFn = function(createObjectFn) {
+  this.createObjectFn_ = createObjectFn
+};
+goog.structs.SimplePool.prototype.setDisposeObjectFn = function(disposeObjectFn) {
+  this.disposeObjectFn_ = disposeObjectFn
+};
+goog.structs.SimplePool.prototype.getObject = function() {
+  if(this.freeQueue_.length) {
+    return this.freeQueue_.pop()
+  }
+  return this.createObject()
+};
+goog.structs.SimplePool.prototype.releaseObject = function(obj) {
+  if(this.freeQueue_.length < this.maxCount_) {
+    this.freeQueue_.push(obj)
+  }else {
+    this.disposeObject(obj)
+  }
+};
+goog.structs.SimplePool.prototype.createInitial_ = function(initialCount) {
+  if(initialCount > this.maxCount_) {
+    throw Error("[goog.structs.SimplePool] Initial cannot be greater than max");
+  }
+  for(var i = 0;i < initialCount;i++) {
+    this.freeQueue_.push(this.createObject())
+  }
+};
+goog.structs.SimplePool.prototype.createObject = function() {
+  if(this.createObjectFn_) {
+    return this.createObjectFn_()
+  }else {
+    return{}
+  }
+};
+goog.structs.SimplePool.prototype.disposeObject = function(obj) {
+  if(this.disposeObjectFn_) {
+    this.disposeObjectFn_(obj)
+  }else {
+    if(goog.isObject(obj)) {
+      if(goog.isFunction(obj.dispose)) {
+        obj.dispose()
+      }else {
+        for(var i in obj) {
+          delete obj[i]
+        }
+      }
+    }
+  }
+};
+goog.structs.SimplePool.prototype.disposeInternal = function() {
+  goog.structs.SimplePool.superClass_.disposeInternal.call(this);
+  var freeQueue = this.freeQueue_;
+  while(freeQueue.length) {
+    this.disposeObject(freeQueue.pop())
+  }
+  delete this.freeQueue_
+};
+goog.provide("goog.events.pools");
+goog.require("goog.events.BrowserEvent");
+goog.require("goog.events.Listener");
+goog.require("goog.structs.SimplePool");
+goog.require("goog.userAgent.jscript");
+goog.events.ASSUME_GOOD_GC = false;
+goog.events.pools.getObject;
+goog.events.pools.releaseObject;
+goog.events.pools.getArray;
+goog.events.pools.releaseArray;
+goog.events.pools.getProxy;
+goog.events.pools.setProxyCallbackFunction;
+goog.events.pools.releaseProxy;
+goog.events.pools.getListener;
+goog.events.pools.releaseListener;
+goog.events.pools.getEvent;
+goog.events.pools.releaseEvent;
+(function() {
+  var BAD_GC = !goog.events.ASSUME_GOOD_GC && goog.userAgent.jscript.HAS_JSCRIPT && !goog.userAgent.jscript.isVersion("5.7");
+  function getObject() {
+    return{count_:0, remaining_:0}
+  }
+  function getArray() {
+    return[]
+  }
+  var proxyCallbackFunction;
+  goog.events.pools.setProxyCallbackFunction = function(cb) {
+    proxyCallbackFunction = cb
+  };
+  function getProxy() {
+    var f = function(eventObject) {
+      return proxyCallbackFunction.call(f.src, f.key, eventObject)
+    };
+    return f
+  }
+  function getListener() {
+    return new goog.events.Listener
+  }
+  function getEvent() {
+    return new goog.events.BrowserEvent
+  }
+  if(!BAD_GC) {
+    goog.events.pools.getObject = getObject;
+    goog.events.pools.releaseObject = goog.nullFunction;
+    goog.events.pools.getArray = getArray;
+    goog.events.pools.releaseArray = goog.nullFunction;
+    goog.events.pools.getProxy = getProxy;
+    goog.events.pools.releaseProxy = goog.nullFunction;
+    goog.events.pools.getListener = getListener;
+    goog.events.pools.releaseListener = goog.nullFunction;
+    goog.events.pools.getEvent = getEvent;
+    goog.events.pools.releaseEvent = goog.nullFunction
+  }else {
+    goog.events.pools.getObject = function() {
+      return objectPool.getObject()
+    };
+    goog.events.pools.releaseObject = function(obj) {
+      objectPool.releaseObject(obj)
+    };
+    goog.events.pools.getArray = function() {
+      return arrayPool.getObject()
+    };
+    goog.events.pools.releaseArray = function(obj) {
+      arrayPool.releaseObject(obj)
+    };
+    goog.events.pools.getProxy = function() {
+      return proxyPool.getObject()
+    };
+    goog.events.pools.releaseProxy = function(obj) {
+      proxyPool.releaseObject(getProxy())
+    };
+    goog.events.pools.getListener = function() {
+      return listenerPool.getObject()
+    };
+    goog.events.pools.releaseListener = function(obj) {
+      listenerPool.releaseObject(obj)
+    };
+    goog.events.pools.getEvent = function() {
+      return eventPool.getObject()
+    };
+    goog.events.pools.releaseEvent = function(obj) {
+      eventPool.releaseObject(obj)
+    };
+    var OBJECT_POOL_INITIAL_COUNT = 0;
+    var OBJECT_POOL_MAX_COUNT = 600;
+    var objectPool = new goog.structs.SimplePool(OBJECT_POOL_INITIAL_COUNT, OBJECT_POOL_MAX_COUNT);
+    objectPool.setCreateObjectFn(getObject);
+    var ARRAY_POOL_INITIAL_COUNT = 0;
+    var ARRAY_POOL_MAX_COUNT = 600;
+    var arrayPool = new goog.structs.SimplePool(ARRAY_POOL_INITIAL_COUNT, ARRAY_POOL_MAX_COUNT);
+    arrayPool.setCreateObjectFn(getArray);
+    var HANDLE_EVENT_PROXY_POOL_INITIAL_COUNT = 0;
+    var HANDLE_EVENT_PROXY_POOL_MAX_COUNT = 600;
+    var proxyPool = new goog.structs.SimplePool(HANDLE_EVENT_PROXY_POOL_INITIAL_COUNT, HANDLE_EVENT_PROXY_POOL_MAX_COUNT);
+    proxyPool.setCreateObjectFn(getProxy);
+    var LISTENER_POOL_INITIAL_COUNT = 0;
+    var LISTENER_POOL_MAX_COUNT = 600;
+    var listenerPool = new goog.structs.SimplePool(LISTENER_POOL_INITIAL_COUNT, LISTENER_POOL_MAX_COUNT);
+    listenerPool.setCreateObjectFn(getListener);
+    var EVENT_POOL_INITIAL_COUNT = 0;
+    var EVENT_POOL_MAX_COUNT = 600;
+    var eventPool = new goog.structs.SimplePool(EVENT_POOL_INITIAL_COUNT, EVENT_POOL_MAX_COUNT);
+    eventPool.setCreateObjectFn(getEvent)
+  }
+})();
+goog.provide("goog.events");
+goog.require("goog.array");
+goog.require("goog.debug.entryPointRegistry");
+goog.require("goog.debug.errorHandlerWeakDep");
+goog.require("goog.events.BrowserEvent");
+goog.require("goog.events.Event");
+goog.require("goog.events.EventWrapper");
+goog.require("goog.events.pools");
+goog.require("goog.object");
+goog.require("goog.userAgent");
+goog.events.listeners_ = {};
+goog.events.listenerTree_ = {};
+goog.events.sources_ = {};
+goog.events.onString_ = "on";
+goog.events.onStringMap_ = {};
+goog.events.keySeparator_ = "_";
+goog.events.requiresSyntheticEventPropagation_;
+goog.events.listen = function(src, type, listener, opt_capt, opt_handler) {
+  if(!type) {
+    throw Error("Invalid event type");
+  }else {
+    if(goog.isArray(type)) {
+      for(var i = 0;i < type.length;i++) {
+        goog.events.listen(src, type[i], listener, opt_capt, opt_handler)
+      }
+      return null
+    }else {
+      var capture = !!opt_capt;
+      var map = goog.events.listenerTree_;
+      if(!(type in map)) {
+        map[type] = goog.events.pools.getObject()
+      }
+      map = map[type];
+      if(!(capture in map)) {
+        map[capture] = goog.events.pools.getObject();
+        map.count_++
+      }
+      map = map[capture];
+      var srcUid = goog.getUid(src);
+      var listenerArray, listenerObj;
+      map.remaining_++;
+      if(!map[srcUid]) {
+        listenerArray = map[srcUid] = goog.events.pools.getArray();
+        map.count_++
+      }else {
+        listenerArray = map[srcUid];
+        for(var i = 0;i < listenerArray.length;i++) {
+          listenerObj = listenerArray[i];
+          if(listenerObj.listener == listener && listenerObj.handler == opt_handler) {
+            if(listenerObj.removed) {
+              break
+            }
+            return listenerArray[i].key
+          }
+        }
+      }
+      var proxy = goog.events.pools.getProxy();
+      proxy.src = src;
+      listenerObj = goog.events.pools.getListener();
+      listenerObj.init(listener, proxy, src, type, capture, opt_handler);
+      var key = listenerObj.key;
+      proxy.key = key;
+      listenerArray.push(listenerObj);
+      goog.events.listeners_[key] = listenerObj;
+      if(!goog.events.sources_[srcUid]) {
+        goog.events.sources_[srcUid] = goog.events.pools.getArray()
+      }
+      goog.events.sources_[srcUid].push(listenerObj);
+      if(src.addEventListener) {
+        if(src == goog.global || !src.customEvent_) {
+          src.addEventListener(type, proxy, capture)
+        }
+      }else {
+        src.attachEvent(goog.events.getOnString_(type), proxy)
+      }
+      return key
+    }
+  }
+};
+goog.events.listenOnce = function(src, type, listener, opt_capt, opt_handler) {
+  if(goog.isArray(type)) {
+    for(var i = 0;i < type.length;i++) {
+      goog.events.listenOnce(src, type[i], listener, opt_capt, opt_handler)
+    }
+    return null
+  }
+  var key = goog.events.listen(src, type, listener, opt_capt, opt_handler);
+  var listenerObj = goog.events.listeners_[key];
+  listenerObj.callOnce = true;
+  return key
+};
+goog.events.listenWithWrapper = function(src, wrapper, listener, opt_capt, opt_handler) {
+  wrapper.listen(src, listener, opt_capt, opt_handler)
+};
+goog.events.unlisten = function(src, type, listener, opt_capt, opt_handler) {
+  if(goog.isArray(type)) {
+    for(var i = 0;i < type.length;i++) {
+      goog.events.unlisten(src, type[i], listener, opt_capt, opt_handler)
+    }
+    return null
+  }
+  var capture = !!opt_capt;
+  var listenerArray = goog.events.getListeners_(src, type, capture);
+  if(!listenerArray) {
+    return false
+  }
+  for(var i = 0;i < listenerArray.length;i++) {
+    if(listenerArray[i].listener == listener && listenerArray[i].capture == capture && listenerArray[i].handler == opt_handler) {
+      return goog.events.unlistenByKey(listenerArray[i].key)
+    }
+  }
+  return false
+};
+goog.events.unlistenByKey = function(key) {
+  if(!goog.events.listeners_[key]) {
+    return false
+  }
+  var listener = goog.events.listeners_[key];
+  if(listener.removed) {
+    return false
+  }
+  var src = listener.src;
+  var type = listener.type;
+  var proxy = listener.proxy;
+  var capture = listener.capture;
+  if(src.removeEventListener) {
+    if(src == goog.global || !src.customEvent_) {
+      src.removeEventListener(type, proxy, capture)
+    }
+  }else {
+    if(src.detachEvent) {
+      src.detachEvent(goog.events.getOnString_(type), proxy)
+    }
+  }
+  var srcUid = goog.getUid(src);
+  var listenerArray = goog.events.listenerTree_[type][capture][srcUid];
+  if(goog.events.sources_[srcUid]) {
+    var sourcesArray = goog.events.sources_[srcUid];
+    goog.array.remove(sourcesArray, listener);
+    if(sourcesArray.length == 0) {
+      delete goog.events.sources_[srcUid]
+    }
+  }
+  listener.removed = true;
+  listenerArray.needsCleanup_ = true;
+  goog.events.cleanUp_(type, capture, srcUid, listenerArray);
+  delete goog.events.listeners_[key];
+  return true
+};
+goog.events.unlistenWithWrapper = function(src, wrapper, listener, opt_capt, opt_handler) {
+  wrapper.unlisten(src, listener, opt_capt, opt_handler)
+};
+goog.events.cleanUp_ = function(type, capture, srcUid, listenerArray) {
+  if(!listenerArray.locked_) {
+    if(listenerArray.needsCleanup_) {
+      for(var oldIndex = 0, newIndex = 0;oldIndex < listenerArray.length;oldIndex++) {
+        if(listenerArray[oldIndex].removed) {
+          var proxy = listenerArray[oldIndex].proxy;
+          proxy.src = null;
+          goog.events.pools.releaseProxy(proxy);
+          goog.events.pools.releaseListener(listenerArray[oldIndex]);
+          continue
+        }
+        if(oldIndex != newIndex) {
+          listenerArray[newIndex] = listenerArray[oldIndex]
+        }
+        newIndex++
+      }
+      listenerArray.length = newIndex;
+      listenerArray.needsCleanup_ = false;
+      if(newIndex == 0) {
+        goog.events.pools.releaseArray(listenerArray);
+        delete goog.events.listenerTree_[type][capture][srcUid];
+        goog.events.listenerTree_[type][capture].count_--;
+        if(goog.events.listenerTree_[type][capture].count_ == 0) {
+          goog.events.pools.releaseObject(goog.events.listenerTree_[type][capture]);
+          delete goog.events.listenerTree_[type][capture];
+          goog.events.listenerTree_[type].count_--
+        }
+        if(goog.events.listenerTree_[type].count_ == 0) {
+          goog.events.pools.releaseObject(goog.events.listenerTree_[type]);
+          delete goog.events.listenerTree_[type]
+        }
+      }
+    }
+  }
+};
+goog.events.removeAll = function(opt_obj, opt_type, opt_capt) {
+  var count = 0;
+  var noObj = opt_obj == null;
+  var noType = opt_type == null;
+  var noCapt = opt_capt == null;
+  opt_capt = !!opt_capt;
+  if(!noObj) {
+    var srcUid = goog.getUid(opt_obj);
+    if(goog.events.sources_[srcUid]) {
+      var sourcesArray = goog.events.sources_[srcUid];
+      for(var i = sourcesArray.length - 1;i >= 0;i--) {
+        var listener = sourcesArray[i];
+        if((noType || opt_type == listener.type) && (noCapt || opt_capt == listener.capture)) {
+          goog.events.unlistenByKey(listener.key);
+          count++
+        }
+      }
+    }
+  }else {
+    goog.object.forEach(goog.events.sources_, function(listeners) {
+      for(var i = listeners.length - 1;i >= 0;i--) {
+        var listener = listeners[i];
+        if((noType || opt_type == listener.type) && (noCapt || opt_capt == listener.capture)) {
+          goog.events.unlistenByKey(listener.key);
+          count++
+        }
+      }
+    })
+  }
+  return count
+};
+goog.events.getListeners = function(obj, type, capture) {
+  return goog.events.getListeners_(obj, type, capture) || []
+};
+goog.events.getListeners_ = function(obj, type, capture) {
+  var map = goog.events.listenerTree_;
+  if(type in map) {
+    map = map[type];
+    if(capture in map) {
+      map = map[capture];
+      var objUid = goog.getUid(obj);
+      if(map[objUid]) {
+        return map[objUid]
+      }
+    }
+  }
+  return null
+};
+goog.events.getListener = function(src, type, listener, opt_capt, opt_handler) {
+  var capture = !!opt_capt;
+  var listenerArray = goog.events.getListeners_(src, type, capture);
+  if(listenerArray) {
+    for(var i = 0;i < listenerArray.length;i++) {
+      if(listenerArray[i].listener == listener && listenerArray[i].capture == capture && listenerArray[i].handler == opt_handler) {
+        return listenerArray[i]
+      }
+    }
+  }
+  return null
+};
+goog.events.hasListener = function(obj, opt_type, opt_capture) {
+  var objUid = goog.getUid(obj);
+  var listeners = goog.events.sources_[objUid];
+  if(listeners) {
+    var hasType = goog.isDef(opt_type);
+    var hasCapture = goog.isDef(opt_capture);
+    if(hasType && hasCapture) {
+      var map = goog.events.listenerTree_[opt_type];
+      return!!map && !!map[opt_capture] && objUid in map[opt_capture]
+    }else {
+      if(!(hasType || hasCapture)) {
+        return true
+      }else {
+        return goog.array.some(listeners, function(listener) {
+          return hasType && listener.type == opt_type || hasCapture && listener.capture == opt_capture
+        })
+      }
+    }
+  }
+  return false
+};
+goog.events.expose = function(e) {
+  var str = [];
+  for(var key in e) {
+    if(e[key] && e[key].id) {
+      str.push(key + " = " + e[key] + " (" + e[key].id + ")")
+    }else {
+      str.push(key + " = " + e[key])
+    }
+  }
+  return str.join("\n")
+};
+goog.events.getOnString_ = function(type) {
+  if(type in goog.events.onStringMap_) {
+    return goog.events.onStringMap_[type]
+  }
+  return goog.events.onStringMap_[type] = goog.events.onString_ + type
+};
+goog.events.fireListeners = function(obj, type, capture, eventObject) {
+  var map = goog.events.listenerTree_;
+  if(type in map) {
+    map = map[type];
+    if(capture in map) {
+      return goog.events.fireListeners_(map[capture], obj, type, capture, eventObject)
+    }
+  }
+  return true
+};
+goog.events.fireListeners_ = function(map, obj, type, capture, eventObject) {
+  var retval = 1;
+  var objUid = goog.getUid(obj);
+  if(map[objUid]) {
+    map.remaining_--;
+    var listenerArray = map[objUid];
+    if(!listenerArray.locked_) {
+      listenerArray.locked_ = 1
+    }else {
+      listenerArray.locked_++
+    }
+    try {
+      var length = listenerArray.length;
+      for(var i = 0;i < length;i++) {
+        var listener = listenerArray[i];
+        if(listener && !listener.removed) {
+          retval &= goog.events.fireListener(listener, eventObject) !== false
+        }
+      }
+    }finally {
+      listenerArray.locked_--;
+      goog.events.cleanUp_(type, capture, objUid, listenerArray)
+    }
+  }
+  return Boolean(retval)
+};
+goog.events.fireListener = function(listener, eventObject) {
+  var rv = listener.handleEvent(eventObject);
+  if(listener.callOnce) {
+    goog.events.unlistenByKey(listener.key)
+  }
+  return rv
+};
+goog.events.getTotalListenerCount = function() {
+  return goog.object.getCount(goog.events.listeners_)
+};
+goog.events.dispatchEvent = function(src, e) {
+  var type = e.type || e;
+  var map = goog.events.listenerTree_;
+  if(!(type in map)) {
+    return true
+  }
+  if(goog.isString(e)) {
+    e = new goog.events.Event(e, src)
+  }else {
+    if(!(e instanceof goog.events.Event)) {
+      var oldEvent = e;
+      e = new goog.events.Event(type, src);
+      goog.object.extend(e, oldEvent)
+    }else {
+      e.target = e.target || src
+    }
+  }
+  var rv = 1, ancestors;
+  map = map[type];
+  var hasCapture = true in map;
+  var targetsMap;
+  if(hasCapture) {
+    ancestors = [];
+    for(var parent = src;parent;parent = parent.getParentEventTarget()) {
+      ancestors.push(parent)
+    }
+    targetsMap = map[true];
+    targetsMap.remaining_ = targetsMap.count_;
+    for(var i = ancestors.length - 1;!e.propagationStopped_ && i >= 0 && targetsMap.remaining_;i--) {
+      e.currentTarget = ancestors[i];
+      rv &= goog.events.fireListeners_(targetsMap, ancestors[i], e.type, true, e) && e.returnValue_ != false
+    }
+  }
+  var hasBubble = false in map;
+  if(hasBubble) {
+    targetsMap = map[false];
+    targetsMap.remaining_ = targetsMap.count_;
+    if(hasCapture) {
+      for(var i = 0;!e.propagationStopped_ && i < ancestors.length && targetsMap.remaining_;i++) {
+        e.currentTarget = ancestors[i];
+        rv &= goog.events.fireListeners_(targetsMap, ancestors[i], e.type, false, e) && e.returnValue_ != false
+      }
+    }else {
+      for(var current = src;!e.propagationStopped_ && current && targetsMap.remaining_;current = current.getParentEventTarget()) {
+        e.currentTarget = current;
+        rv &= goog.events.fireListeners_(targetsMap, current, e.type, false, e) && e.returnValue_ != false
+      }
+    }
+  }
+  return Boolean(rv)
+};
+goog.events.protectBrowserEventEntryPoint = function(errorHandler) {
+  goog.events.handleBrowserEvent_ = errorHandler.protectEntryPoint(goog.events.handleBrowserEvent_);
+  goog.events.pools.setProxyCallbackFunction(goog.events.handleBrowserEvent_)
+};
+goog.events.handleBrowserEvent_ = function(key, opt_evt) {
+  if(!goog.events.listeners_[key]) {
+    return true
+  }
+  var listener = goog.events.listeners_[key];
+  var type = listener.type;
+  var map = goog.events.listenerTree_;
+  if(!(type in map)) {
+    return true
+  }
+  map = map[type];
+  var retval, targetsMap;
+  if(goog.events.synthesizeEventPropagation_()) {
+    var ieEvent = opt_evt || goog.getObjectByName("window.event");
+    var hasCapture = true in map;
+    var hasBubble = false in map;
+    if(hasCapture) {
+      if(goog.events.isMarkedIeEvent_(ieEvent)) {
+        return true
+      }
+      goog.events.markIeEvent_(ieEvent)
+    }
+    var evt = goog.events.pools.getEvent();
+    evt.init(ieEvent, this);
+    retval = true;
+    try {
+      if(hasCapture) {
+        var ancestors = goog.events.pools.getArray();
+        for(var parent = evt.currentTarget;parent;parent = parent.parentNode) {
+          ancestors.push(parent)
+        }
+        targetsMap = map[true];
+        targetsMap.remaining_ = targetsMap.count_;
+        for(var i = ancestors.length - 1;!evt.propagationStopped_ && i >= 0 && targetsMap.remaining_;i--) {
+          evt.currentTarget = ancestors[i];
+          retval &= goog.events.fireListeners_(targetsMap, ancestors[i], type, true, evt)
+        }
+        if(hasBubble) {
+          targetsMap = map[false];
+          targetsMap.remaining_ = targetsMap.count_;
+          for(var i = 0;!evt.propagationStopped_ && i < ancestors.length && targetsMap.remaining_;i++) {
+            evt.currentTarget = ancestors[i];
+            retval &= goog.events.fireListeners_(targetsMap, ancestors[i], type, false, evt)
+          }
+        }
+      }else {
+        retval = goog.events.fireListener(listener, evt)
+      }
+    }finally {
+      if(ancestors) {
+        ancestors.length = 0;
+        goog.events.pools.releaseArray(ancestors)
+      }
+      evt.dispose();
+      goog.events.pools.releaseEvent(evt)
+    }
+    return retval
+  }
+  var be = new goog.events.BrowserEvent(opt_evt, this);
+  try {
+    retval = goog.events.fireListener(listener, be)
+  }finally {
+    be.dispose()
+  }
+  return retval
+};
+goog.events.pools.setProxyCallbackFunction(goog.events.handleBrowserEvent_);
+goog.events.markIeEvent_ = function(e) {
+  var useReturnValue = false;
+  if(e.keyCode == 0) {
+    try {
+      e.keyCode = -1;
+      return
+    }catch(ex) {
+      useReturnValue = true
+    }
+  }
+  if(useReturnValue || e.returnValue == undefined) {
+    e.returnValue = true
+  }
+};
+goog.events.isMarkedIeEvent_ = function(e) {
+  return e.keyCode < 0 || e.returnValue != undefined
+};
+goog.events.uniqueIdCounter_ = 0;
+goog.events.getUniqueId = function(identifier) {
+  return identifier + "_" + goog.events.uniqueIdCounter_++
+};
+goog.events.synthesizeEventPropagation_ = function() {
+  if(goog.events.requiresSyntheticEventPropagation_ === undefined) {
+    goog.events.requiresSyntheticEventPropagation_ = goog.userAgent.IE && !goog.global["addEventListener"]
+  }
+  return goog.events.requiresSyntheticEventPropagation_
+};
+goog.debug.entryPointRegistry.register(function(transformer) {
+  goog.events.handleBrowserEvent_ = transformer(goog.events.handleBrowserEvent_);
+  goog.events.pools.setProxyCallbackFunction(goog.events.handleBrowserEvent_)
+});
+goog.provide("c2.event");
+goog.require("cljs.core");
+goog.require("cljs.reader");
+goog.require("c2.core");
+goog.require("goog.events");
+goog.require("c2.dom");
+goog.require("c2.core");
+goog.require("cljs.reader");
+c2.event.on_load = function on_load(f) {
+  return goog.events.listen(window, goog.events.EventType.LOAD, f)
+};
+c2.event.on_raw = function() {
+  var on_raw__delegate = function(node, event_type, f, p__27578) {
+    var map__27583__27584 = p__27578;
+    var map__27583__27585 = cljs.core.seq_QMARK_.call(null, map__27583__27584) ? cljs.core.apply.call(null, cljs.core.hash_map, map__27583__27584) : map__27583__27584;
+    var capture__27586 = cljs.core._lookup.call(null, map__27583__27585, "\ufdd0'capture", false);
+    return goog.events.listen(c2.dom.__GT_dom.call(null, node), cljs.core.name.call(null, event_type), f, capture__27586)
+  };
+  var on_raw = function(node, event_type, f, var_args) {
+    var p__27578 = null;
+    if(goog.isDef(var_args)) {
+      p__27578 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 3), 0)
+    }
+    return on_raw__delegate.call(this, node, event_type, f, p__27578)
+  };
+  on_raw.cljs$lang$maxFixedArity = 3;
+  on_raw.cljs$lang$applyTo = function(arglist__27587) {
+    var node = cljs.core.first(arglist__27587);
+    var event_type = cljs.core.first(cljs.core.next(arglist__27587));
+    var f = cljs.core.first(cljs.core.next(cljs.core.next(arglist__27587)));
+    var p__27578 = cljs.core.rest(cljs.core.next(cljs.core.next(arglist__27587)));
+    return on_raw__delegate(node, event_type, f, p__27578)
+  };
+  on_raw.cljs$lang$arity$variadic = on_raw__delegate;
+  return on_raw
+}();
+c2.event.on = function() {
+  var on = null;
+  var on__3 = function(node, event_type, f) {
+    return on.call(null, node, "*", event_type, f)
+  };
+  var on__5 = function() {
+    var G__27607__delegate = function(node, selector, event_type, f, p__27588) {
+      var map__27598__27599 = p__27588;
+      var map__27598__27600 = cljs.core.seq_QMARK_.call(null, map__27598__27599) ? cljs.core.apply.call(null, cljs.core.hash_map, map__27598__27599) : map__27598__27599;
+      var capture__27601 = cljs.core._lookup.call(null, map__27598__27600, "\ufdd0'capture", false);
+      return goog.events.listen(c2.dom.__GT_dom.call(null, node), cljs.core.name.call(null, event_type), function(event) {
+        if(cljs.core.truth_(c2.dom.matches_selector_QMARK_.call(null, event.target, selector))) {
+          var $node__27602 = event.target;
+          while(true) {
+            var temp__3971__auto____27603 = c2.core.node_data.call(null, $node__27602);
+            if(cljs.core.truth_(temp__3971__auto____27603)) {
+              var d__27604 = temp__3971__auto____27603;
+              return f.call(null, d__27604, $node__27602, event)
+            }else {
+              var temp__3971__auto____27605 = c2.dom.parent.call(null, $node__27602);
+              if(cljs.core.truth_(temp__3971__auto____27605)) {
+                var parent__27606 = temp__3971__auto____27605;
+                var G__27608 = parent__27606;
+                $node__27602 = G__27608;
+                continue
+              }else {
+                return null
+              }
+            }
+            break
+          }
+        }else {
+          return null
+        }
+      }, capture__27601)
+    };
+    var G__27607 = function(node, selector, event_type, f, var_args) {
+      var p__27588 = null;
+      if(goog.isDef(var_args)) {
+        p__27588 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0)
+      }
+      return G__27607__delegate.call(this, node, selector, event_type, f, p__27588)
+    };
+    G__27607.cljs$lang$maxFixedArity = 4;
+    G__27607.cljs$lang$applyTo = function(arglist__27609) {
+      var node = cljs.core.first(arglist__27609);
+      var selector = cljs.core.first(cljs.core.next(arglist__27609));
+      var event_type = cljs.core.first(cljs.core.next(cljs.core.next(arglist__27609)));
+      var f = cljs.core.first(cljs.core.next(cljs.core.next(cljs.core.next(arglist__27609))));
+      var p__27588 = cljs.core.rest(cljs.core.next(cljs.core.next(cljs.core.next(arglist__27609))));
+      return G__27607__delegate(node, selector, event_type, f, p__27588)
+    };
+    G__27607.cljs$lang$arity$variadic = G__27607__delegate;
+    return G__27607
+  }();
+  on = function(node, selector, event_type, f, var_args) {
+    var p__27588 = var_args;
+    switch(arguments.length) {
+      case 3:
+        return on__3.call(this, node, selector, event_type);
+      default:
+        return on__5.cljs$lang$arity$variadic(node, selector, event_type, f, cljs.core.array_seq(arguments, 4))
+    }
+    throw"Invalid arity: " + arguments.length;
+  };
+  on.cljs$lang$maxFixedArity = 4;
+  on.cljs$lang$applyTo = on__5.cljs$lang$applyTo;
+  on.cljs$lang$arity$3 = on__3;
+  on.cljs$lang$arity$variadic = on__5.cljs$lang$arity$variadic;
+  return on
+}();
 goog.provide("goog.uri.utils");
 goog.provide("goog.uri.utils.ComponentIndex");
 goog.require("goog.asserts");
@@ -25757,957 +28232,6 @@ shoreleave.browser.cookies.cookies_enabled_QMARK_ = function() {
 shoreleave.browser.cookies.empty_BANG_ = function empty_BANG_(cks) {
   return cks.clear()
 };
-goog.provide("goog.events.EventType");
-goog.require("goog.userAgent");
-goog.events.EventType = {CLICK:"click", DBLCLICK:"dblclick", MOUSEDOWN:"mousedown", MOUSEUP:"mouseup", MOUSEOVER:"mouseover", MOUSEOUT:"mouseout", MOUSEMOVE:"mousemove", SELECTSTART:"selectstart", KEYPRESS:"keypress", KEYDOWN:"keydown", KEYUP:"keyup", BLUR:"blur", FOCUS:"focus", DEACTIVATE:"deactivate", FOCUSIN:goog.userAgent.IE ? "focusin" : "DOMFocusIn", FOCUSOUT:goog.userAgent.IE ? "focusout" : "DOMFocusOut", CHANGE:"change", SELECT:"select", SUBMIT:"submit", INPUT:"input", PROPERTYCHANGE:"propertychange", 
-DRAGSTART:"dragstart", DRAGENTER:"dragenter", DRAGOVER:"dragover", DRAGLEAVE:"dragleave", DROP:"drop", TOUCHSTART:"touchstart", TOUCHMOVE:"touchmove", TOUCHEND:"touchend", TOUCHCANCEL:"touchcancel", CONTEXTMENU:"contextmenu", ERROR:"error", HELP:"help", LOAD:"load", LOSECAPTURE:"losecapture", READYSTATECHANGE:"readystatechange", RESIZE:"resize", SCROLL:"scroll", UNLOAD:"unload", HASHCHANGE:"hashchange", PAGEHIDE:"pagehide", PAGESHOW:"pageshow", POPSTATE:"popstate", COPY:"copy", PASTE:"paste", CUT:"cut", 
-MESSAGE:"message", CONNECT:"connect"};
-goog.provide("goog.disposable.IDisposable");
-goog.disposable.IDisposable = function() {
-};
-goog.disposable.IDisposable.prototype.dispose;
-goog.disposable.IDisposable.prototype.isDisposed;
-goog.provide("goog.Disposable");
-goog.provide("goog.dispose");
-goog.require("goog.disposable.IDisposable");
-goog.Disposable = function() {
-  if(goog.Disposable.ENABLE_MONITORING) {
-    goog.Disposable.instances_[goog.getUid(this)] = this
-  }
-};
-goog.Disposable.ENABLE_MONITORING = false;
-goog.Disposable.instances_ = {};
-goog.Disposable.getUndisposedObjects = function() {
-  var ret = [];
-  for(var id in goog.Disposable.instances_) {
-    if(goog.Disposable.instances_.hasOwnProperty(id)) {
-      ret.push(goog.Disposable.instances_[Number(id)])
-    }
-  }
-  return ret
-};
-goog.Disposable.clearUndisposedObjects = function() {
-  goog.Disposable.instances_ = {}
-};
-goog.Disposable.prototype.disposed_ = false;
-goog.Disposable.prototype.isDisposed = function() {
-  return this.disposed_
-};
-goog.Disposable.prototype.getDisposed = goog.Disposable.prototype.isDisposed;
-goog.Disposable.prototype.dispose = function() {
-  if(!this.disposed_) {
-    this.disposed_ = true;
-    this.disposeInternal();
-    if(goog.Disposable.ENABLE_MONITORING) {
-      var uid = goog.getUid(this);
-      if(!goog.Disposable.instances_.hasOwnProperty(uid)) {
-        throw Error(this + " did not call the goog.Disposable base " + "constructor or was disposed of after a clearUndisposedObjects " + "call");
-      }
-      delete goog.Disposable.instances_[uid]
-    }
-  }
-};
-goog.Disposable.prototype.disposeInternal = function() {
-};
-goog.dispose = function(obj) {
-  if(obj && typeof obj.dispose == "function") {
-    obj.dispose()
-  }
-};
-goog.provide("goog.debug.EntryPointMonitor");
-goog.provide("goog.debug.entryPointRegistry");
-goog.debug.EntryPointMonitor = function() {
-};
-goog.debug.EntryPointMonitor.prototype.wrap;
-goog.debug.EntryPointMonitor.prototype.unwrap;
-goog.debug.entryPointRegistry.refList_ = [];
-goog.debug.entryPointRegistry.register = function(callback) {
-  goog.debug.entryPointRegistry.refList_[goog.debug.entryPointRegistry.refList_.length] = callback
-};
-goog.debug.entryPointRegistry.monitorAll = function(monitor) {
-  var transformer = goog.bind(monitor.wrap, monitor);
-  for(var i = 0;i < goog.debug.entryPointRegistry.refList_.length;i++) {
-    goog.debug.entryPointRegistry.refList_[i](transformer)
-  }
-};
-goog.debug.entryPointRegistry.unmonitorAllIfPossible = function(monitor) {
-  var transformer = goog.bind(monitor.unwrap, monitor);
-  for(var i = 0;i < goog.debug.entryPointRegistry.refList_.length;i++) {
-    goog.debug.entryPointRegistry.refList_[i](transformer)
-  }
-};
-goog.provide("goog.debug.errorHandlerWeakDep");
-goog.debug.errorHandlerWeakDep = {protectEntryPoint:function(fn, opt_tracers) {
-  return fn
-}};
-goog.provide("goog.events.BrowserFeature");
-goog.require("goog.userAgent");
-goog.events.BrowserFeature = {HAS_W3C_BUTTON:!goog.userAgent.IE || goog.userAgent.isVersion("9"), SET_KEY_CODE_TO_PREVENT_DEFAULT:goog.userAgent.IE && !goog.userAgent.isVersion("8")};
-goog.provide("goog.events.Event");
-goog.require("goog.Disposable");
-goog.events.Event = function(type, opt_target) {
-  goog.Disposable.call(this);
-  this.type = type;
-  this.target = opt_target;
-  this.currentTarget = this.target
-};
-goog.inherits(goog.events.Event, goog.Disposable);
-goog.events.Event.prototype.disposeInternal = function() {
-  delete this.type;
-  delete this.target;
-  delete this.currentTarget
-};
-goog.events.Event.prototype.propagationStopped_ = false;
-goog.events.Event.prototype.returnValue_ = true;
-goog.events.Event.prototype.stopPropagation = function() {
-  this.propagationStopped_ = true
-};
-goog.events.Event.prototype.preventDefault = function() {
-  this.returnValue_ = false
-};
-goog.events.Event.stopPropagation = function(e) {
-  e.stopPropagation()
-};
-goog.events.Event.preventDefault = function(e) {
-  e.preventDefault()
-};
-goog.provide("goog.reflect");
-goog.reflect.object = function(type, object) {
-  return object
-};
-goog.reflect.sinkValue = new Function("a", "return a");
-goog.provide("goog.events.BrowserEvent");
-goog.provide("goog.events.BrowserEvent.MouseButton");
-goog.require("goog.events.BrowserFeature");
-goog.require("goog.events.Event");
-goog.require("goog.events.EventType");
-goog.require("goog.reflect");
-goog.require("goog.userAgent");
-goog.events.BrowserEvent = function(opt_e, opt_currentTarget) {
-  if(opt_e) {
-    this.init(opt_e, opt_currentTarget)
-  }
-};
-goog.inherits(goog.events.BrowserEvent, goog.events.Event);
-goog.events.BrowserEvent.MouseButton = {LEFT:0, MIDDLE:1, RIGHT:2};
-goog.events.BrowserEvent.IEButtonMap = [1, 4, 2];
-goog.events.BrowserEvent.prototype.target = null;
-goog.events.BrowserEvent.prototype.currentTarget;
-goog.events.BrowserEvent.prototype.relatedTarget = null;
-goog.events.BrowserEvent.prototype.offsetX = 0;
-goog.events.BrowserEvent.prototype.offsetY = 0;
-goog.events.BrowserEvent.prototype.clientX = 0;
-goog.events.BrowserEvent.prototype.clientY = 0;
-goog.events.BrowserEvent.prototype.screenX = 0;
-goog.events.BrowserEvent.prototype.screenY = 0;
-goog.events.BrowserEvent.prototype.button = 0;
-goog.events.BrowserEvent.prototype.keyCode = 0;
-goog.events.BrowserEvent.prototype.charCode = 0;
-goog.events.BrowserEvent.prototype.ctrlKey = false;
-goog.events.BrowserEvent.prototype.altKey = false;
-goog.events.BrowserEvent.prototype.shiftKey = false;
-goog.events.BrowserEvent.prototype.metaKey = false;
-goog.events.BrowserEvent.prototype.state;
-goog.events.BrowserEvent.prototype.platformModifierKey = false;
-goog.events.BrowserEvent.prototype.event_ = null;
-goog.events.BrowserEvent.prototype.init = function(e, opt_currentTarget) {
-  var type = this.type = e.type;
-  goog.events.Event.call(this, type);
-  this.target = e.target || e.srcElement;
-  this.currentTarget = opt_currentTarget;
-  var relatedTarget = e.relatedTarget;
-  if(relatedTarget) {
-    if(goog.userAgent.GECKO) {
-      try {
-        goog.reflect.sinkValue(relatedTarget.nodeName)
-      }catch(err) {
-        relatedTarget = null
-      }
-    }
-  }else {
-    if(type == goog.events.EventType.MOUSEOVER) {
-      relatedTarget = e.fromElement
-    }else {
-      if(type == goog.events.EventType.MOUSEOUT) {
-        relatedTarget = e.toElement
-      }
-    }
-  }
-  this.relatedTarget = relatedTarget;
-  this.offsetX = e.offsetX !== undefined ? e.offsetX : e.layerX;
-  this.offsetY = e.offsetY !== undefined ? e.offsetY : e.layerY;
-  this.clientX = e.clientX !== undefined ? e.clientX : e.pageX;
-  this.clientY = e.clientY !== undefined ? e.clientY : e.pageY;
-  this.screenX = e.screenX || 0;
-  this.screenY = e.screenY || 0;
-  this.button = e.button;
-  this.keyCode = e.keyCode || 0;
-  this.charCode = e.charCode || (type == "keypress" ? e.keyCode : 0);
-  this.ctrlKey = e.ctrlKey;
-  this.altKey = e.altKey;
-  this.shiftKey = e.shiftKey;
-  this.metaKey = e.metaKey;
-  this.platformModifierKey = goog.userAgent.MAC ? e.metaKey : e.ctrlKey;
-  this.state = e.state;
-  this.event_ = e;
-  delete this.returnValue_;
-  delete this.propagationStopped_
-};
-goog.events.BrowserEvent.prototype.isButton = function(button) {
-  if(!goog.events.BrowserFeature.HAS_W3C_BUTTON) {
-    if(this.type == "click") {
-      return button == goog.events.BrowserEvent.MouseButton.LEFT
-    }else {
-      return!!(this.event_.button & goog.events.BrowserEvent.IEButtonMap[button])
-    }
-  }else {
-    return this.event_.button == button
-  }
-};
-goog.events.BrowserEvent.prototype.isMouseActionButton = function() {
-  return this.isButton(goog.events.BrowserEvent.MouseButton.LEFT) && !(goog.userAgent.WEBKIT && goog.userAgent.MAC && this.ctrlKey)
-};
-goog.events.BrowserEvent.prototype.stopPropagation = function() {
-  goog.events.BrowserEvent.superClass_.stopPropagation.call(this);
-  if(this.event_.stopPropagation) {
-    this.event_.stopPropagation()
-  }else {
-    this.event_.cancelBubble = true
-  }
-};
-goog.events.BrowserEvent.prototype.preventDefault = function() {
-  goog.events.BrowserEvent.superClass_.preventDefault.call(this);
-  var be = this.event_;
-  if(!be.preventDefault) {
-    be.returnValue = false;
-    if(goog.events.BrowserFeature.SET_KEY_CODE_TO_PREVENT_DEFAULT) {
-      try {
-        var VK_F1 = 112;
-        var VK_F12 = 123;
-        if(be.ctrlKey || be.keyCode >= VK_F1 && be.keyCode <= VK_F12) {
-          be.keyCode = -1
-        }
-      }catch(ex) {
-      }
-    }
-  }else {
-    be.preventDefault()
-  }
-};
-goog.events.BrowserEvent.prototype.getBrowserEvent = function() {
-  return this.event_
-};
-goog.events.BrowserEvent.prototype.disposeInternal = function() {
-  goog.events.BrowserEvent.superClass_.disposeInternal.call(this);
-  this.event_ = null;
-  this.target = null;
-  this.currentTarget = null;
-  this.relatedTarget = null
-};
-goog.provide("goog.events.EventWrapper");
-goog.events.EventWrapper = function() {
-};
-goog.events.EventWrapper.prototype.listen = function(src, listener, opt_capt, opt_scope, opt_eventHandler) {
-};
-goog.events.EventWrapper.prototype.unlisten = function(src, listener, opt_capt, opt_scope, opt_eventHandler) {
-};
-goog.provide("goog.events.Listener");
-goog.events.Listener = function() {
-};
-goog.events.Listener.counter_ = 0;
-goog.events.Listener.prototype.isFunctionListener_;
-goog.events.Listener.prototype.listener;
-goog.events.Listener.prototype.proxy;
-goog.events.Listener.prototype.src;
-goog.events.Listener.prototype.type;
-goog.events.Listener.prototype.capture;
-goog.events.Listener.prototype.handler;
-goog.events.Listener.prototype.key = 0;
-goog.events.Listener.prototype.removed = false;
-goog.events.Listener.prototype.callOnce = false;
-goog.events.Listener.prototype.init = function(listener, proxy, src, type, capture, opt_handler) {
-  if(goog.isFunction(listener)) {
-    this.isFunctionListener_ = true
-  }else {
-    if(listener && listener.handleEvent && goog.isFunction(listener.handleEvent)) {
-      this.isFunctionListener_ = false
-    }else {
-      throw Error("Invalid listener argument");
-    }
-  }
-  this.listener = listener;
-  this.proxy = proxy;
-  this.src = src;
-  this.type = type;
-  this.capture = !!capture;
-  this.handler = opt_handler;
-  this.callOnce = false;
-  this.key = ++goog.events.Listener.counter_;
-  this.removed = false
-};
-goog.events.Listener.prototype.handleEvent = function(eventObject) {
-  if(this.isFunctionListener_) {
-    return this.listener.call(this.handler || this.src, eventObject)
-  }
-  return this.listener.handleEvent.call(this.listener, eventObject)
-};
-goog.provide("goog.structs.SimplePool");
-goog.require("goog.Disposable");
-goog.structs.SimplePool = function(initialCount, maxCount) {
-  goog.Disposable.call(this);
-  this.maxCount_ = maxCount;
-  this.freeQueue_ = [];
-  this.createInitial_(initialCount)
-};
-goog.inherits(goog.structs.SimplePool, goog.Disposable);
-goog.structs.SimplePool.prototype.createObjectFn_ = null;
-goog.structs.SimplePool.prototype.disposeObjectFn_ = null;
-goog.structs.SimplePool.prototype.setCreateObjectFn = function(createObjectFn) {
-  this.createObjectFn_ = createObjectFn
-};
-goog.structs.SimplePool.prototype.setDisposeObjectFn = function(disposeObjectFn) {
-  this.disposeObjectFn_ = disposeObjectFn
-};
-goog.structs.SimplePool.prototype.getObject = function() {
-  if(this.freeQueue_.length) {
-    return this.freeQueue_.pop()
-  }
-  return this.createObject()
-};
-goog.structs.SimplePool.prototype.releaseObject = function(obj) {
-  if(this.freeQueue_.length < this.maxCount_) {
-    this.freeQueue_.push(obj)
-  }else {
-    this.disposeObject(obj)
-  }
-};
-goog.structs.SimplePool.prototype.createInitial_ = function(initialCount) {
-  if(initialCount > this.maxCount_) {
-    throw Error("[goog.structs.SimplePool] Initial cannot be greater than max");
-  }
-  for(var i = 0;i < initialCount;i++) {
-    this.freeQueue_.push(this.createObject())
-  }
-};
-goog.structs.SimplePool.prototype.createObject = function() {
-  if(this.createObjectFn_) {
-    return this.createObjectFn_()
-  }else {
-    return{}
-  }
-};
-goog.structs.SimplePool.prototype.disposeObject = function(obj) {
-  if(this.disposeObjectFn_) {
-    this.disposeObjectFn_(obj)
-  }else {
-    if(goog.isObject(obj)) {
-      if(goog.isFunction(obj.dispose)) {
-        obj.dispose()
-      }else {
-        for(var i in obj) {
-          delete obj[i]
-        }
-      }
-    }
-  }
-};
-goog.structs.SimplePool.prototype.disposeInternal = function() {
-  goog.structs.SimplePool.superClass_.disposeInternal.call(this);
-  var freeQueue = this.freeQueue_;
-  while(freeQueue.length) {
-    this.disposeObject(freeQueue.pop())
-  }
-  delete this.freeQueue_
-};
-goog.provide("goog.events.pools");
-goog.require("goog.events.BrowserEvent");
-goog.require("goog.events.Listener");
-goog.require("goog.structs.SimplePool");
-goog.require("goog.userAgent.jscript");
-goog.events.ASSUME_GOOD_GC = false;
-goog.events.pools.getObject;
-goog.events.pools.releaseObject;
-goog.events.pools.getArray;
-goog.events.pools.releaseArray;
-goog.events.pools.getProxy;
-goog.events.pools.setProxyCallbackFunction;
-goog.events.pools.releaseProxy;
-goog.events.pools.getListener;
-goog.events.pools.releaseListener;
-goog.events.pools.getEvent;
-goog.events.pools.releaseEvent;
-(function() {
-  var BAD_GC = !goog.events.ASSUME_GOOD_GC && goog.userAgent.jscript.HAS_JSCRIPT && !goog.userAgent.jscript.isVersion("5.7");
-  function getObject() {
-    return{count_:0, remaining_:0}
-  }
-  function getArray() {
-    return[]
-  }
-  var proxyCallbackFunction;
-  goog.events.pools.setProxyCallbackFunction = function(cb) {
-    proxyCallbackFunction = cb
-  };
-  function getProxy() {
-    var f = function(eventObject) {
-      return proxyCallbackFunction.call(f.src, f.key, eventObject)
-    };
-    return f
-  }
-  function getListener() {
-    return new goog.events.Listener
-  }
-  function getEvent() {
-    return new goog.events.BrowserEvent
-  }
-  if(!BAD_GC) {
-    goog.events.pools.getObject = getObject;
-    goog.events.pools.releaseObject = goog.nullFunction;
-    goog.events.pools.getArray = getArray;
-    goog.events.pools.releaseArray = goog.nullFunction;
-    goog.events.pools.getProxy = getProxy;
-    goog.events.pools.releaseProxy = goog.nullFunction;
-    goog.events.pools.getListener = getListener;
-    goog.events.pools.releaseListener = goog.nullFunction;
-    goog.events.pools.getEvent = getEvent;
-    goog.events.pools.releaseEvent = goog.nullFunction
-  }else {
-    goog.events.pools.getObject = function() {
-      return objectPool.getObject()
-    };
-    goog.events.pools.releaseObject = function(obj) {
-      objectPool.releaseObject(obj)
-    };
-    goog.events.pools.getArray = function() {
-      return arrayPool.getObject()
-    };
-    goog.events.pools.releaseArray = function(obj) {
-      arrayPool.releaseObject(obj)
-    };
-    goog.events.pools.getProxy = function() {
-      return proxyPool.getObject()
-    };
-    goog.events.pools.releaseProxy = function(obj) {
-      proxyPool.releaseObject(getProxy())
-    };
-    goog.events.pools.getListener = function() {
-      return listenerPool.getObject()
-    };
-    goog.events.pools.releaseListener = function(obj) {
-      listenerPool.releaseObject(obj)
-    };
-    goog.events.pools.getEvent = function() {
-      return eventPool.getObject()
-    };
-    goog.events.pools.releaseEvent = function(obj) {
-      eventPool.releaseObject(obj)
-    };
-    var OBJECT_POOL_INITIAL_COUNT = 0;
-    var OBJECT_POOL_MAX_COUNT = 600;
-    var objectPool = new goog.structs.SimplePool(OBJECT_POOL_INITIAL_COUNT, OBJECT_POOL_MAX_COUNT);
-    objectPool.setCreateObjectFn(getObject);
-    var ARRAY_POOL_INITIAL_COUNT = 0;
-    var ARRAY_POOL_MAX_COUNT = 600;
-    var arrayPool = new goog.structs.SimplePool(ARRAY_POOL_INITIAL_COUNT, ARRAY_POOL_MAX_COUNT);
-    arrayPool.setCreateObjectFn(getArray);
-    var HANDLE_EVENT_PROXY_POOL_INITIAL_COUNT = 0;
-    var HANDLE_EVENT_PROXY_POOL_MAX_COUNT = 600;
-    var proxyPool = new goog.structs.SimplePool(HANDLE_EVENT_PROXY_POOL_INITIAL_COUNT, HANDLE_EVENT_PROXY_POOL_MAX_COUNT);
-    proxyPool.setCreateObjectFn(getProxy);
-    var LISTENER_POOL_INITIAL_COUNT = 0;
-    var LISTENER_POOL_MAX_COUNT = 600;
-    var listenerPool = new goog.structs.SimplePool(LISTENER_POOL_INITIAL_COUNT, LISTENER_POOL_MAX_COUNT);
-    listenerPool.setCreateObjectFn(getListener);
-    var EVENT_POOL_INITIAL_COUNT = 0;
-    var EVENT_POOL_MAX_COUNT = 600;
-    var eventPool = new goog.structs.SimplePool(EVENT_POOL_INITIAL_COUNT, EVENT_POOL_MAX_COUNT);
-    eventPool.setCreateObjectFn(getEvent)
-  }
-})();
-goog.provide("goog.events");
-goog.require("goog.array");
-goog.require("goog.debug.entryPointRegistry");
-goog.require("goog.debug.errorHandlerWeakDep");
-goog.require("goog.events.BrowserEvent");
-goog.require("goog.events.Event");
-goog.require("goog.events.EventWrapper");
-goog.require("goog.events.pools");
-goog.require("goog.object");
-goog.require("goog.userAgent");
-goog.events.listeners_ = {};
-goog.events.listenerTree_ = {};
-goog.events.sources_ = {};
-goog.events.onString_ = "on";
-goog.events.onStringMap_ = {};
-goog.events.keySeparator_ = "_";
-goog.events.requiresSyntheticEventPropagation_;
-goog.events.listen = function(src, type, listener, opt_capt, opt_handler) {
-  if(!type) {
-    throw Error("Invalid event type");
-  }else {
-    if(goog.isArray(type)) {
-      for(var i = 0;i < type.length;i++) {
-        goog.events.listen(src, type[i], listener, opt_capt, opt_handler)
-      }
-      return null
-    }else {
-      var capture = !!opt_capt;
-      var map = goog.events.listenerTree_;
-      if(!(type in map)) {
-        map[type] = goog.events.pools.getObject()
-      }
-      map = map[type];
-      if(!(capture in map)) {
-        map[capture] = goog.events.pools.getObject();
-        map.count_++
-      }
-      map = map[capture];
-      var srcUid = goog.getUid(src);
-      var listenerArray, listenerObj;
-      map.remaining_++;
-      if(!map[srcUid]) {
-        listenerArray = map[srcUid] = goog.events.pools.getArray();
-        map.count_++
-      }else {
-        listenerArray = map[srcUid];
-        for(var i = 0;i < listenerArray.length;i++) {
-          listenerObj = listenerArray[i];
-          if(listenerObj.listener == listener && listenerObj.handler == opt_handler) {
-            if(listenerObj.removed) {
-              break
-            }
-            return listenerArray[i].key
-          }
-        }
-      }
-      var proxy = goog.events.pools.getProxy();
-      proxy.src = src;
-      listenerObj = goog.events.pools.getListener();
-      listenerObj.init(listener, proxy, src, type, capture, opt_handler);
-      var key = listenerObj.key;
-      proxy.key = key;
-      listenerArray.push(listenerObj);
-      goog.events.listeners_[key] = listenerObj;
-      if(!goog.events.sources_[srcUid]) {
-        goog.events.sources_[srcUid] = goog.events.pools.getArray()
-      }
-      goog.events.sources_[srcUid].push(listenerObj);
-      if(src.addEventListener) {
-        if(src == goog.global || !src.customEvent_) {
-          src.addEventListener(type, proxy, capture)
-        }
-      }else {
-        src.attachEvent(goog.events.getOnString_(type), proxy)
-      }
-      return key
-    }
-  }
-};
-goog.events.listenOnce = function(src, type, listener, opt_capt, opt_handler) {
-  if(goog.isArray(type)) {
-    for(var i = 0;i < type.length;i++) {
-      goog.events.listenOnce(src, type[i], listener, opt_capt, opt_handler)
-    }
-    return null
-  }
-  var key = goog.events.listen(src, type, listener, opt_capt, opt_handler);
-  var listenerObj = goog.events.listeners_[key];
-  listenerObj.callOnce = true;
-  return key
-};
-goog.events.listenWithWrapper = function(src, wrapper, listener, opt_capt, opt_handler) {
-  wrapper.listen(src, listener, opt_capt, opt_handler)
-};
-goog.events.unlisten = function(src, type, listener, opt_capt, opt_handler) {
-  if(goog.isArray(type)) {
-    for(var i = 0;i < type.length;i++) {
-      goog.events.unlisten(src, type[i], listener, opt_capt, opt_handler)
-    }
-    return null
-  }
-  var capture = !!opt_capt;
-  var listenerArray = goog.events.getListeners_(src, type, capture);
-  if(!listenerArray) {
-    return false
-  }
-  for(var i = 0;i < listenerArray.length;i++) {
-    if(listenerArray[i].listener == listener && listenerArray[i].capture == capture && listenerArray[i].handler == opt_handler) {
-      return goog.events.unlistenByKey(listenerArray[i].key)
-    }
-  }
-  return false
-};
-goog.events.unlistenByKey = function(key) {
-  if(!goog.events.listeners_[key]) {
-    return false
-  }
-  var listener = goog.events.listeners_[key];
-  if(listener.removed) {
-    return false
-  }
-  var src = listener.src;
-  var type = listener.type;
-  var proxy = listener.proxy;
-  var capture = listener.capture;
-  if(src.removeEventListener) {
-    if(src == goog.global || !src.customEvent_) {
-      src.removeEventListener(type, proxy, capture)
-    }
-  }else {
-    if(src.detachEvent) {
-      src.detachEvent(goog.events.getOnString_(type), proxy)
-    }
-  }
-  var srcUid = goog.getUid(src);
-  var listenerArray = goog.events.listenerTree_[type][capture][srcUid];
-  if(goog.events.sources_[srcUid]) {
-    var sourcesArray = goog.events.sources_[srcUid];
-    goog.array.remove(sourcesArray, listener);
-    if(sourcesArray.length == 0) {
-      delete goog.events.sources_[srcUid]
-    }
-  }
-  listener.removed = true;
-  listenerArray.needsCleanup_ = true;
-  goog.events.cleanUp_(type, capture, srcUid, listenerArray);
-  delete goog.events.listeners_[key];
-  return true
-};
-goog.events.unlistenWithWrapper = function(src, wrapper, listener, opt_capt, opt_handler) {
-  wrapper.unlisten(src, listener, opt_capt, opt_handler)
-};
-goog.events.cleanUp_ = function(type, capture, srcUid, listenerArray) {
-  if(!listenerArray.locked_) {
-    if(listenerArray.needsCleanup_) {
-      for(var oldIndex = 0, newIndex = 0;oldIndex < listenerArray.length;oldIndex++) {
-        if(listenerArray[oldIndex].removed) {
-          var proxy = listenerArray[oldIndex].proxy;
-          proxy.src = null;
-          goog.events.pools.releaseProxy(proxy);
-          goog.events.pools.releaseListener(listenerArray[oldIndex]);
-          continue
-        }
-        if(oldIndex != newIndex) {
-          listenerArray[newIndex] = listenerArray[oldIndex]
-        }
-        newIndex++
-      }
-      listenerArray.length = newIndex;
-      listenerArray.needsCleanup_ = false;
-      if(newIndex == 0) {
-        goog.events.pools.releaseArray(listenerArray);
-        delete goog.events.listenerTree_[type][capture][srcUid];
-        goog.events.listenerTree_[type][capture].count_--;
-        if(goog.events.listenerTree_[type][capture].count_ == 0) {
-          goog.events.pools.releaseObject(goog.events.listenerTree_[type][capture]);
-          delete goog.events.listenerTree_[type][capture];
-          goog.events.listenerTree_[type].count_--
-        }
-        if(goog.events.listenerTree_[type].count_ == 0) {
-          goog.events.pools.releaseObject(goog.events.listenerTree_[type]);
-          delete goog.events.listenerTree_[type]
-        }
-      }
-    }
-  }
-};
-goog.events.removeAll = function(opt_obj, opt_type, opt_capt) {
-  var count = 0;
-  var noObj = opt_obj == null;
-  var noType = opt_type == null;
-  var noCapt = opt_capt == null;
-  opt_capt = !!opt_capt;
-  if(!noObj) {
-    var srcUid = goog.getUid(opt_obj);
-    if(goog.events.sources_[srcUid]) {
-      var sourcesArray = goog.events.sources_[srcUid];
-      for(var i = sourcesArray.length - 1;i >= 0;i--) {
-        var listener = sourcesArray[i];
-        if((noType || opt_type == listener.type) && (noCapt || opt_capt == listener.capture)) {
-          goog.events.unlistenByKey(listener.key);
-          count++
-        }
-      }
-    }
-  }else {
-    goog.object.forEach(goog.events.sources_, function(listeners) {
-      for(var i = listeners.length - 1;i >= 0;i--) {
-        var listener = listeners[i];
-        if((noType || opt_type == listener.type) && (noCapt || opt_capt == listener.capture)) {
-          goog.events.unlistenByKey(listener.key);
-          count++
-        }
-      }
-    })
-  }
-  return count
-};
-goog.events.getListeners = function(obj, type, capture) {
-  return goog.events.getListeners_(obj, type, capture) || []
-};
-goog.events.getListeners_ = function(obj, type, capture) {
-  var map = goog.events.listenerTree_;
-  if(type in map) {
-    map = map[type];
-    if(capture in map) {
-      map = map[capture];
-      var objUid = goog.getUid(obj);
-      if(map[objUid]) {
-        return map[objUid]
-      }
-    }
-  }
-  return null
-};
-goog.events.getListener = function(src, type, listener, opt_capt, opt_handler) {
-  var capture = !!opt_capt;
-  var listenerArray = goog.events.getListeners_(src, type, capture);
-  if(listenerArray) {
-    for(var i = 0;i < listenerArray.length;i++) {
-      if(listenerArray[i].listener == listener && listenerArray[i].capture == capture && listenerArray[i].handler == opt_handler) {
-        return listenerArray[i]
-      }
-    }
-  }
-  return null
-};
-goog.events.hasListener = function(obj, opt_type, opt_capture) {
-  var objUid = goog.getUid(obj);
-  var listeners = goog.events.sources_[objUid];
-  if(listeners) {
-    var hasType = goog.isDef(opt_type);
-    var hasCapture = goog.isDef(opt_capture);
-    if(hasType && hasCapture) {
-      var map = goog.events.listenerTree_[opt_type];
-      return!!map && !!map[opt_capture] && objUid in map[opt_capture]
-    }else {
-      if(!(hasType || hasCapture)) {
-        return true
-      }else {
-        return goog.array.some(listeners, function(listener) {
-          return hasType && listener.type == opt_type || hasCapture && listener.capture == opt_capture
-        })
-      }
-    }
-  }
-  return false
-};
-goog.events.expose = function(e) {
-  var str = [];
-  for(var key in e) {
-    if(e[key] && e[key].id) {
-      str.push(key + " = " + e[key] + " (" + e[key].id + ")")
-    }else {
-      str.push(key + " = " + e[key])
-    }
-  }
-  return str.join("\n")
-};
-goog.events.getOnString_ = function(type) {
-  if(type in goog.events.onStringMap_) {
-    return goog.events.onStringMap_[type]
-  }
-  return goog.events.onStringMap_[type] = goog.events.onString_ + type
-};
-goog.events.fireListeners = function(obj, type, capture, eventObject) {
-  var map = goog.events.listenerTree_;
-  if(type in map) {
-    map = map[type];
-    if(capture in map) {
-      return goog.events.fireListeners_(map[capture], obj, type, capture, eventObject)
-    }
-  }
-  return true
-};
-goog.events.fireListeners_ = function(map, obj, type, capture, eventObject) {
-  var retval = 1;
-  var objUid = goog.getUid(obj);
-  if(map[objUid]) {
-    map.remaining_--;
-    var listenerArray = map[objUid];
-    if(!listenerArray.locked_) {
-      listenerArray.locked_ = 1
-    }else {
-      listenerArray.locked_++
-    }
-    try {
-      var length = listenerArray.length;
-      for(var i = 0;i < length;i++) {
-        var listener = listenerArray[i];
-        if(listener && !listener.removed) {
-          retval &= goog.events.fireListener(listener, eventObject) !== false
-        }
-      }
-    }finally {
-      listenerArray.locked_--;
-      goog.events.cleanUp_(type, capture, objUid, listenerArray)
-    }
-  }
-  return Boolean(retval)
-};
-goog.events.fireListener = function(listener, eventObject) {
-  var rv = listener.handleEvent(eventObject);
-  if(listener.callOnce) {
-    goog.events.unlistenByKey(listener.key)
-  }
-  return rv
-};
-goog.events.getTotalListenerCount = function() {
-  return goog.object.getCount(goog.events.listeners_)
-};
-goog.events.dispatchEvent = function(src, e) {
-  var type = e.type || e;
-  var map = goog.events.listenerTree_;
-  if(!(type in map)) {
-    return true
-  }
-  if(goog.isString(e)) {
-    e = new goog.events.Event(e, src)
-  }else {
-    if(!(e instanceof goog.events.Event)) {
-      var oldEvent = e;
-      e = new goog.events.Event(type, src);
-      goog.object.extend(e, oldEvent)
-    }else {
-      e.target = e.target || src
-    }
-  }
-  var rv = 1, ancestors;
-  map = map[type];
-  var hasCapture = true in map;
-  var targetsMap;
-  if(hasCapture) {
-    ancestors = [];
-    for(var parent = src;parent;parent = parent.getParentEventTarget()) {
-      ancestors.push(parent)
-    }
-    targetsMap = map[true];
-    targetsMap.remaining_ = targetsMap.count_;
-    for(var i = ancestors.length - 1;!e.propagationStopped_ && i >= 0 && targetsMap.remaining_;i--) {
-      e.currentTarget = ancestors[i];
-      rv &= goog.events.fireListeners_(targetsMap, ancestors[i], e.type, true, e) && e.returnValue_ != false
-    }
-  }
-  var hasBubble = false in map;
-  if(hasBubble) {
-    targetsMap = map[false];
-    targetsMap.remaining_ = targetsMap.count_;
-    if(hasCapture) {
-      for(var i = 0;!e.propagationStopped_ && i < ancestors.length && targetsMap.remaining_;i++) {
-        e.currentTarget = ancestors[i];
-        rv &= goog.events.fireListeners_(targetsMap, ancestors[i], e.type, false, e) && e.returnValue_ != false
-      }
-    }else {
-      for(var current = src;!e.propagationStopped_ && current && targetsMap.remaining_;current = current.getParentEventTarget()) {
-        e.currentTarget = current;
-        rv &= goog.events.fireListeners_(targetsMap, current, e.type, false, e) && e.returnValue_ != false
-      }
-    }
-  }
-  return Boolean(rv)
-};
-goog.events.protectBrowserEventEntryPoint = function(errorHandler) {
-  goog.events.handleBrowserEvent_ = errorHandler.protectEntryPoint(goog.events.handleBrowserEvent_);
-  goog.events.pools.setProxyCallbackFunction(goog.events.handleBrowserEvent_)
-};
-goog.events.handleBrowserEvent_ = function(key, opt_evt) {
-  if(!goog.events.listeners_[key]) {
-    return true
-  }
-  var listener = goog.events.listeners_[key];
-  var type = listener.type;
-  var map = goog.events.listenerTree_;
-  if(!(type in map)) {
-    return true
-  }
-  map = map[type];
-  var retval, targetsMap;
-  if(goog.events.synthesizeEventPropagation_()) {
-    var ieEvent = opt_evt || goog.getObjectByName("window.event");
-    var hasCapture = true in map;
-    var hasBubble = false in map;
-    if(hasCapture) {
-      if(goog.events.isMarkedIeEvent_(ieEvent)) {
-        return true
-      }
-      goog.events.markIeEvent_(ieEvent)
-    }
-    var evt = goog.events.pools.getEvent();
-    evt.init(ieEvent, this);
-    retval = true;
-    try {
-      if(hasCapture) {
-        var ancestors = goog.events.pools.getArray();
-        for(var parent = evt.currentTarget;parent;parent = parent.parentNode) {
-          ancestors.push(parent)
-        }
-        targetsMap = map[true];
-        targetsMap.remaining_ = targetsMap.count_;
-        for(var i = ancestors.length - 1;!evt.propagationStopped_ && i >= 0 && targetsMap.remaining_;i--) {
-          evt.currentTarget = ancestors[i];
-          retval &= goog.events.fireListeners_(targetsMap, ancestors[i], type, true, evt)
-        }
-        if(hasBubble) {
-          targetsMap = map[false];
-          targetsMap.remaining_ = targetsMap.count_;
-          for(var i = 0;!evt.propagationStopped_ && i < ancestors.length && targetsMap.remaining_;i++) {
-            evt.currentTarget = ancestors[i];
-            retval &= goog.events.fireListeners_(targetsMap, ancestors[i], type, false, evt)
-          }
-        }
-      }else {
-        retval = goog.events.fireListener(listener, evt)
-      }
-    }finally {
-      if(ancestors) {
-        ancestors.length = 0;
-        goog.events.pools.releaseArray(ancestors)
-      }
-      evt.dispose();
-      goog.events.pools.releaseEvent(evt)
-    }
-    return retval
-  }
-  var be = new goog.events.BrowserEvent(opt_evt, this);
-  try {
-    retval = goog.events.fireListener(listener, be)
-  }finally {
-    be.dispose()
-  }
-  return retval
-};
-goog.events.pools.setProxyCallbackFunction(goog.events.handleBrowserEvent_);
-goog.events.markIeEvent_ = function(e) {
-  var useReturnValue = false;
-  if(e.keyCode == 0) {
-    try {
-      e.keyCode = -1;
-      return
-    }catch(ex) {
-      useReturnValue = true
-    }
-  }
-  if(useReturnValue || e.returnValue == undefined) {
-    e.returnValue = true
-  }
-};
-goog.events.isMarkedIeEvent_ = function(e) {
-  return e.keyCode < 0 || e.returnValue != undefined
-};
-goog.events.uniqueIdCounter_ = 0;
-goog.events.getUniqueId = function(identifier) {
-  return identifier + "_" + goog.events.uniqueIdCounter_++
-};
-goog.events.synthesizeEventPropagation_ = function() {
-  if(goog.events.requiresSyntheticEventPropagation_ === undefined) {
-    goog.events.requiresSyntheticEventPropagation_ = goog.userAgent.IE && !goog.global["addEventListener"]
-  }
-  return goog.events.requiresSyntheticEventPropagation_
-};
-goog.debug.entryPointRegistry.register(function(transformer) {
-  goog.events.handleBrowserEvent_ = transformer(goog.events.handleBrowserEvent_);
-  goog.events.pools.setProxyCallbackFunction(goog.events.handleBrowserEvent_)
-});
 goog.provide("goog.events.EventTarget");
 goog.require("goog.Disposable");
 goog.require("goog.events");
@@ -30413,1030 +31937,6 @@ shoreleave.remotes.xhr.xhr = function() {
   xhr.cljs$lang$arity$variadic = xhr__delegate;
   return xhr
 }();
-goog.provide("cljs.reader");
-goog.require("cljs.core");
-goog.require("goog.string");
-cljs.reader.PushbackReader = {};
-cljs.reader.read_char = function read_char(reader) {
-  if(function() {
-    var and__3822__auto____26999 = reader;
-    if(and__3822__auto____26999) {
-      return reader.cljs$reader$PushbackReader$read_char$arity$1
-    }else {
-      return and__3822__auto____26999
-    }
-  }()) {
-    return reader.cljs$reader$PushbackReader$read_char$arity$1(reader)
-  }else {
-    var x__2256__auto____27000 = reader == null ? null : reader;
-    return function() {
-      var or__3824__auto____27001 = cljs.reader.read_char[goog.typeOf(x__2256__auto____27000)];
-      if(or__3824__auto____27001) {
-        return or__3824__auto____27001
-      }else {
-        var or__3824__auto____27002 = cljs.reader.read_char["_"];
-        if(or__3824__auto____27002) {
-          return or__3824__auto____27002
-        }else {
-          throw cljs.core.missing_protocol.call(null, "PushbackReader.read-char", reader);
-        }
-      }
-    }().call(null, reader)
-  }
-};
-cljs.reader.unread = function unread(reader, ch) {
-  if(function() {
-    var and__3822__auto____27007 = reader;
-    if(and__3822__auto____27007) {
-      return reader.cljs$reader$PushbackReader$unread$arity$2
-    }else {
-      return and__3822__auto____27007
-    }
-  }()) {
-    return reader.cljs$reader$PushbackReader$unread$arity$2(reader, ch)
-  }else {
-    var x__2256__auto____27008 = reader == null ? null : reader;
-    return function() {
-      var or__3824__auto____27009 = cljs.reader.unread[goog.typeOf(x__2256__auto____27008)];
-      if(or__3824__auto____27009) {
-        return or__3824__auto____27009
-      }else {
-        var or__3824__auto____27010 = cljs.reader.unread["_"];
-        if(or__3824__auto____27010) {
-          return or__3824__auto____27010
-        }else {
-          throw cljs.core.missing_protocol.call(null, "PushbackReader.unread", reader);
-        }
-      }
-    }().call(null, reader, ch)
-  }
-};
-cljs.reader.StringPushbackReader = function(s, index_atom, buffer_atom) {
-  this.s = s;
-  this.index_atom = index_atom;
-  this.buffer_atom = buffer_atom
-};
-cljs.reader.StringPushbackReader.cljs$lang$type = true;
-cljs.reader.StringPushbackReader.cljs$lang$ctorPrSeq = function(this__2202__auto__) {
-  return cljs.core.list.call(null, "cljs.reader/StringPushbackReader")
-};
-cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$ = true;
-cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$read_char$arity$1 = function(reader) {
-  var this__27011 = this;
-  if(cljs.core.empty_QMARK_.call(null, cljs.core.deref.call(null, this__27011.buffer_atom))) {
-    var idx__27012 = cljs.core.deref.call(null, this__27011.index_atom);
-    cljs.core.swap_BANG_.call(null, this__27011.index_atom, cljs.core.inc);
-    return this__27011.s[idx__27012]
-  }else {
-    var buf__27013 = cljs.core.deref.call(null, this__27011.buffer_atom);
-    cljs.core.swap_BANG_.call(null, this__27011.buffer_atom, cljs.core.rest);
-    return cljs.core.first.call(null, buf__27013)
-  }
-};
-cljs.reader.StringPushbackReader.prototype.cljs$reader$PushbackReader$unread$arity$2 = function(reader, ch) {
-  var this__27014 = this;
-  return cljs.core.swap_BANG_.call(null, this__27014.buffer_atom, function(p1__26994_SHARP_) {
-    return cljs.core.cons.call(null, ch, p1__26994_SHARP_)
-  })
-};
-cljs.reader.StringPushbackReader;
-cljs.reader.push_back_reader = function push_back_reader(s) {
-  return new cljs.reader.StringPushbackReader(s, cljs.core.atom.call(null, 0), cljs.core.atom.call(null, null))
-};
-cljs.reader.whitespace_QMARK_ = function whitespace_QMARK_(ch) {
-  var or__3824__auto____27016 = goog.string.isBreakingWhitespace(ch);
-  if(cljs.core.truth_(or__3824__auto____27016)) {
-    return or__3824__auto____27016
-  }else {
-    return"," === ch
-  }
-};
-cljs.reader.numeric_QMARK_ = function numeric_QMARK_(ch) {
-  return goog.string.isNumeric(ch)
-};
-cljs.reader.comment_prefix_QMARK_ = function comment_prefix_QMARK_(ch) {
-  return";" === ch
-};
-cljs.reader.number_literal_QMARK_ = function number_literal_QMARK_(reader, initch) {
-  var or__3824__auto____27021 = cljs.reader.numeric_QMARK_.call(null, initch);
-  if(or__3824__auto____27021) {
-    return or__3824__auto____27021
-  }else {
-    var and__3822__auto____27023 = function() {
-      var or__3824__auto____27022 = "+" === initch;
-      if(or__3824__auto____27022) {
-        return or__3824__auto____27022
-      }else {
-        return"-" === initch
-      }
-    }();
-    if(cljs.core.truth_(and__3822__auto____27023)) {
-      return cljs.reader.numeric_QMARK_.call(null, function() {
-        var next_ch__27024 = cljs.reader.read_char.call(null, reader);
-        cljs.reader.unread.call(null, reader, next_ch__27024);
-        return next_ch__27024
-      }())
-    }else {
-      return and__3822__auto____27023
-    }
-  }
-};
-cljs.reader.reader_error = function() {
-  var reader_error__delegate = function(rdr, msg) {
-    throw new Error(cljs.core.apply.call(null, cljs.core.str, msg));
-  };
-  var reader_error = function(rdr, var_args) {
-    var msg = null;
-    if(goog.isDef(var_args)) {
-      msg = cljs.core.array_seq(Array.prototype.slice.call(arguments, 1), 0)
-    }
-    return reader_error__delegate.call(this, rdr, msg)
-  };
-  reader_error.cljs$lang$maxFixedArity = 1;
-  reader_error.cljs$lang$applyTo = function(arglist__27025) {
-    var rdr = cljs.core.first(arglist__27025);
-    var msg = cljs.core.rest(arglist__27025);
-    return reader_error__delegate(rdr, msg)
-  };
-  reader_error.cljs$lang$arity$variadic = reader_error__delegate;
-  return reader_error
-}();
-cljs.reader.macro_terminating_QMARK_ = function macro_terminating_QMARK_(ch) {
-  var and__3822__auto____27029 = !(ch === "#");
-  if(and__3822__auto____27029) {
-    var and__3822__auto____27030 = !(ch === "'");
-    if(and__3822__auto____27030) {
-      var and__3822__auto____27031 = !(ch === ":");
-      if(and__3822__auto____27031) {
-        return cljs.reader.macros.call(null, ch)
-      }else {
-        return and__3822__auto____27031
-      }
-    }else {
-      return and__3822__auto____27030
-    }
-  }else {
-    return and__3822__auto____27029
-  }
-};
-cljs.reader.read_token = function read_token(rdr, initch) {
-  var sb__27036 = new goog.string.StringBuffer(initch);
-  var ch__27037 = cljs.reader.read_char.call(null, rdr);
-  while(true) {
-    if(function() {
-      var or__3824__auto____27038 = ch__27037 == null;
-      if(or__3824__auto____27038) {
-        return or__3824__auto____27038
-      }else {
-        var or__3824__auto____27039 = cljs.reader.whitespace_QMARK_.call(null, ch__27037);
-        if(or__3824__auto____27039) {
-          return or__3824__auto____27039
-        }else {
-          return cljs.reader.macro_terminating_QMARK_.call(null, ch__27037)
-        }
-      }
-    }()) {
-      cljs.reader.unread.call(null, rdr, ch__27037);
-      return sb__27036.toString()
-    }else {
-      var G__27040 = function() {
-        sb__27036.append(ch__27037);
-        return sb__27036
-      }();
-      var G__27041 = cljs.reader.read_char.call(null, rdr);
-      sb__27036 = G__27040;
-      ch__27037 = G__27041;
-      continue
-    }
-    break
-  }
-};
-cljs.reader.skip_line = function skip_line(reader, _) {
-  while(true) {
-    var ch__27045 = cljs.reader.read_char.call(null, reader);
-    if(function() {
-      var or__3824__auto____27046 = ch__27045 === "n";
-      if(or__3824__auto____27046) {
-        return or__3824__auto____27046
-      }else {
-        var or__3824__auto____27047 = ch__27045 === "r";
-        if(or__3824__auto____27047) {
-          return or__3824__auto____27047
-        }else {
-          return ch__27045 == null
-        }
-      }
-    }()) {
-      return reader
-    }else {
-      continue
-    }
-    break
-  }
-};
-cljs.reader.int_pattern = cljs.core.re_pattern.call(null, "([-+]?)(?:(0)|([1-9][0-9]*)|0[xX]([0-9A-Fa-f]+)|0([0-7]+)|([1-9][0-9]?)[rR]([0-9A-Za-z]+)|0[0-9]+)(N)?");
-cljs.reader.ratio_pattern = cljs.core.re_pattern.call(null, "([-+]?[0-9]+)/([0-9]+)");
-cljs.reader.float_pattern = cljs.core.re_pattern.call(null, "([-+]?[0-9]+(\\.[0-9]*)?([eE][-+]?[0-9]+)?)(M)?");
-cljs.reader.symbol_pattern = cljs.core.re_pattern.call(null, "[:]?([^0-9/].*/)?([^0-9/][^/]*)");
-cljs.reader.re_find_STAR_ = function re_find_STAR_(re, s) {
-  var matches__27049 = re.exec(s);
-  if(matches__27049 == null) {
-    return null
-  }else {
-    if(matches__27049.length === 1) {
-      return matches__27049[0]
-    }else {
-      return matches__27049
-    }
-  }
-};
-cljs.reader.match_int = function match_int(s) {
-  var groups__27057 = cljs.reader.re_find_STAR_.call(null, cljs.reader.int_pattern, s);
-  var group3__27058 = groups__27057[2];
-  if(!function() {
-    var or__3824__auto____27059 = group3__27058 == null;
-    if(or__3824__auto____27059) {
-      return or__3824__auto____27059
-    }else {
-      return group3__27058.length < 1
-    }
-  }()) {
-    return 0
-  }else {
-    var negate__27060 = "-" === groups__27057[1] ? -1 : 1;
-    var a__27061 = cljs.core.truth_(groups__27057[3]) ? [groups__27057[3], 10] : cljs.core.truth_(groups__27057[4]) ? [groups__27057[4], 16] : cljs.core.truth_(groups__27057[5]) ? [groups__27057[5], 8] : cljs.core.truth_(groups__27057[7]) ? [groups__27057[7], parseInt(groups__27057[7])] : "\ufdd0'default" ? [null, null] : null;
-    var n__27062 = a__27061[0];
-    var radix__27063 = a__27061[1];
-    if(n__27062 == null) {
-      return null
-    }else {
-      return negate__27060 * parseInt(n__27062, radix__27063)
-    }
-  }
-};
-cljs.reader.match_ratio = function match_ratio(s) {
-  var groups__27067 = cljs.reader.re_find_STAR_.call(null, cljs.reader.ratio_pattern, s);
-  var numinator__27068 = groups__27067[1];
-  var denominator__27069 = groups__27067[2];
-  return parseInt(numinator__27068) / parseInt(denominator__27069)
-};
-cljs.reader.match_float = function match_float(s) {
-  return parseFloat(s)
-};
-cljs.reader.re_matches_STAR_ = function re_matches_STAR_(re, s) {
-  var matches__27072 = re.exec(s);
-  if(function() {
-    var and__3822__auto____27073 = !(matches__27072 == null);
-    if(and__3822__auto____27073) {
-      return matches__27072[0] === s
-    }else {
-      return and__3822__auto____27073
-    }
-  }()) {
-    if(matches__27072.length === 1) {
-      return matches__27072[0]
-    }else {
-      return matches__27072
-    }
-  }else {
-    return null
-  }
-};
-cljs.reader.match_number = function match_number(s) {
-  if(cljs.core.truth_(cljs.reader.re_matches_STAR_.call(null, cljs.reader.int_pattern, s))) {
-    return cljs.reader.match_int.call(null, s)
-  }else {
-    if(cljs.core.truth_(cljs.reader.re_matches_STAR_.call(null, cljs.reader.ratio_pattern, s))) {
-      return cljs.reader.match_ratio.call(null, s)
-    }else {
-      if(cljs.core.truth_(cljs.reader.re_matches_STAR_.call(null, cljs.reader.float_pattern, s))) {
-        return cljs.reader.match_float.call(null, s)
-      }else {
-        return null
-      }
-    }
-  }
-};
-cljs.reader.escape_char_map = function escape_char_map(c) {
-  if(c === "t") {
-    return"\t"
-  }else {
-    if(c === "r") {
-      return"\r"
-    }else {
-      if(c === "n") {
-        return"\n"
-      }else {
-        if(c === "\\") {
-          return"\\"
-        }else {
-          if(c === '"') {
-            return'"'
-          }else {
-            if(c === "b") {
-              return"\u0008"
-            }else {
-              if(c === "f") {
-                return"\u000c"
-              }else {
-                if("\ufdd0'else") {
-                  return null
-                }else {
-                  return null
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-};
-cljs.reader.read_2_chars = function read_2_chars(reader) {
-  return(new goog.string.StringBuffer(cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader))).toString()
-};
-cljs.reader.read_4_chars = function read_4_chars(reader) {
-  return(new goog.string.StringBuffer(cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader), cljs.reader.read_char.call(null, reader))).toString()
-};
-cljs.reader.unicode_2_pattern = cljs.core.re_pattern.call(null, "[0-9A-Fa-f]{2}");
-cljs.reader.unicode_4_pattern = cljs.core.re_pattern.call(null, "[0-9A-Fa-f]{4}");
-cljs.reader.validate_unicode_escape = function validate_unicode_escape(unicode_pattern, reader, escape_char, unicode_str) {
-  if(cljs.core.truth_(cljs.core.re_matches.call(null, unicode_pattern, unicode_str))) {
-    return unicode_str
-  }else {
-    return cljs.reader.reader_error.call(null, reader, "Unexpected unicode escape \\", escape_char, unicode_str)
-  }
-};
-cljs.reader.make_unicode_char = function make_unicode_char(code_str) {
-  var code__27075 = parseInt(code_str, 16);
-  return String.fromCharCode(code__27075)
-};
-cljs.reader.escape_char = function escape_char(buffer, reader) {
-  var ch__27078 = cljs.reader.read_char.call(null, reader);
-  var mapresult__27079 = cljs.reader.escape_char_map.call(null, ch__27078);
-  if(cljs.core.truth_(mapresult__27079)) {
-    return mapresult__27079
-  }else {
-    if(ch__27078 === "x") {
-      return cljs.reader.make_unicode_char.call(null, cljs.reader.validate_unicode_escape.call(null, cljs.reader.unicode_2_pattern, reader, ch__27078, cljs.reader.read_2_chars.call(null, reader)))
-    }else {
-      if(ch__27078 === "u") {
-        return cljs.reader.make_unicode_char.call(null, cljs.reader.validate_unicode_escape.call(null, cljs.reader.unicode_4_pattern, reader, ch__27078, cljs.reader.read_4_chars.call(null, reader)))
-      }else {
-        if(cljs.reader.numeric_QMARK_.call(null, ch__27078)) {
-          return String.fromCharCode(ch__27078)
-        }else {
-          if("\ufdd0'else") {
-            return cljs.reader.reader_error.call(null, reader, "Unexpected unicode escape \\", ch__27078)
-          }else {
-            return null
-          }
-        }
-      }
-    }
-  }
-};
-cljs.reader.read_past = function read_past(pred, rdr) {
-  var ch__27081 = cljs.reader.read_char.call(null, rdr);
-  while(true) {
-    if(cljs.core.truth_(pred.call(null, ch__27081))) {
-      var G__27082 = cljs.reader.read_char.call(null, rdr);
-      ch__27081 = G__27082;
-      continue
-    }else {
-      return ch__27081
-    }
-    break
-  }
-};
-cljs.reader.read_delimited_list = function read_delimited_list(delim, rdr, recursive_QMARK_) {
-  var a__27089 = cljs.core.transient$.call(null, cljs.core.PersistentVector.EMPTY);
-  while(true) {
-    var ch__27090 = cljs.reader.read_past.call(null, cljs.reader.whitespace_QMARK_, rdr);
-    if(cljs.core.truth_(ch__27090)) {
-    }else {
-      cljs.reader.reader_error.call(null, rdr, "EOF")
-    }
-    if(delim === ch__27090) {
-      return cljs.core.persistent_BANG_.call(null, a__27089)
-    }else {
-      var temp__3971__auto____27091 = cljs.reader.macros.call(null, ch__27090);
-      if(cljs.core.truth_(temp__3971__auto____27091)) {
-        var macrofn__27092 = temp__3971__auto____27091;
-        var mret__27093 = macrofn__27092.call(null, rdr, ch__27090);
-        var G__27095 = mret__27093 === rdr ? a__27089 : cljs.core.conj_BANG_.call(null, a__27089, mret__27093);
-        a__27089 = G__27095;
-        continue
-      }else {
-        cljs.reader.unread.call(null, rdr, ch__27090);
-        var o__27094 = cljs.reader.read.call(null, rdr, true, null, recursive_QMARK_);
-        var G__27096 = o__27094 === rdr ? a__27089 : cljs.core.conj_BANG_.call(null, a__27089, o__27094);
-        a__27089 = G__27096;
-        continue
-      }
-    }
-    break
-  }
-};
-cljs.reader.not_implemented = function not_implemented(rdr, ch) {
-  return cljs.reader.reader_error.call(null, rdr, "Reader for ", ch, " not implemented yet")
-};
-cljs.reader.read_dispatch = function read_dispatch(rdr, _) {
-  var ch__27101 = cljs.reader.read_char.call(null, rdr);
-  var dm__27102 = cljs.reader.dispatch_macros.call(null, ch__27101);
-  if(cljs.core.truth_(dm__27102)) {
-    return dm__27102.call(null, rdr, _)
-  }else {
-    var temp__3971__auto____27103 = cljs.reader.maybe_read_tagged_type.call(null, rdr, ch__27101);
-    if(cljs.core.truth_(temp__3971__auto____27103)) {
-      var obj__27104 = temp__3971__auto____27103;
-      return obj__27104
-    }else {
-      return cljs.reader.reader_error.call(null, rdr, "No dispatch macro for ", ch__27101)
-    }
-  }
-};
-cljs.reader.read_unmatched_delimiter = function read_unmatched_delimiter(rdr, ch) {
-  return cljs.reader.reader_error.call(null, rdr, "Unmached delimiter ", ch)
-};
-cljs.reader.read_list = function read_list(rdr, _) {
-  return cljs.core.apply.call(null, cljs.core.list, cljs.reader.read_delimited_list.call(null, ")", rdr, true))
-};
-cljs.reader.read_comment = cljs.reader.skip_line;
-cljs.reader.read_vector = function read_vector(rdr, _) {
-  return cljs.reader.read_delimited_list.call(null, "]", rdr, true)
-};
-cljs.reader.read_map = function read_map(rdr, _) {
-  var l__27106 = cljs.reader.read_delimited_list.call(null, "}", rdr, true);
-  if(cljs.core.odd_QMARK_.call(null, cljs.core.count.call(null, l__27106))) {
-    cljs.reader.reader_error.call(null, rdr, "Map literal must contain an even number of forms")
-  }else {
-  }
-  return cljs.core.apply.call(null, cljs.core.hash_map, l__27106)
-};
-cljs.reader.read_number = function read_number(reader, initch) {
-  var buffer__27113 = new goog.string.StringBuffer(initch);
-  var ch__27114 = cljs.reader.read_char.call(null, reader);
-  while(true) {
-    if(cljs.core.truth_(function() {
-      var or__3824__auto____27115 = ch__27114 == null;
-      if(or__3824__auto____27115) {
-        return or__3824__auto____27115
-      }else {
-        var or__3824__auto____27116 = cljs.reader.whitespace_QMARK_.call(null, ch__27114);
-        if(or__3824__auto____27116) {
-          return or__3824__auto____27116
-        }else {
-          return cljs.reader.macros.call(null, ch__27114)
-        }
-      }
-    }())) {
-      cljs.reader.unread.call(null, reader, ch__27114);
-      var s__27117 = buffer__27113.toString();
-      var or__3824__auto____27118 = cljs.reader.match_number.call(null, s__27117);
-      if(cljs.core.truth_(or__3824__auto____27118)) {
-        return or__3824__auto____27118
-      }else {
-        return cljs.reader.reader_error.call(null, reader, "Invalid number format [", s__27117, "]")
-      }
-    }else {
-      var G__27119 = function() {
-        buffer__27113.append(ch__27114);
-        return buffer__27113
-      }();
-      var G__27120 = cljs.reader.read_char.call(null, reader);
-      buffer__27113 = G__27119;
-      ch__27114 = G__27120;
-      continue
-    }
-    break
-  }
-};
-cljs.reader.read_string_STAR_ = function read_string_STAR_(reader, _) {
-  var buffer__27123 = new goog.string.StringBuffer;
-  var ch__27124 = cljs.reader.read_char.call(null, reader);
-  while(true) {
-    if(ch__27124 == null) {
-      return cljs.reader.reader_error.call(null, reader, "EOF while reading string")
-    }else {
-      if("\\" === ch__27124) {
-        var G__27125 = function() {
-          buffer__27123.append(cljs.reader.escape_char.call(null, buffer__27123, reader));
-          return buffer__27123
-        }();
-        var G__27126 = cljs.reader.read_char.call(null, reader);
-        buffer__27123 = G__27125;
-        ch__27124 = G__27126;
-        continue
-      }else {
-        if('"' === ch__27124) {
-          return buffer__27123.toString()
-        }else {
-          if("\ufdd0'default") {
-            var G__27127 = function() {
-              buffer__27123.append(ch__27124);
-              return buffer__27123
-            }();
-            var G__27128 = cljs.reader.read_char.call(null, reader);
-            buffer__27123 = G__27127;
-            ch__27124 = G__27128;
-            continue
-          }else {
-            return null
-          }
-        }
-      }
-    }
-    break
-  }
-};
-cljs.reader.special_symbols = function special_symbols(t, not_found) {
-  if(t === "nil") {
-    return null
-  }else {
-    if(t === "true") {
-      return true
-    }else {
-      if(t === "false") {
-        return false
-      }else {
-        if("\ufdd0'else") {
-          return not_found
-        }else {
-          return null
-        }
-      }
-    }
-  }
-};
-cljs.reader.read_symbol = function read_symbol(reader, initch) {
-  var token__27130 = cljs.reader.read_token.call(null, reader, initch);
-  if(cljs.core.truth_(goog.string.contains(token__27130, "/"))) {
-    return cljs.core.symbol.call(null, cljs.core.subs.call(null, token__27130, 0, token__27130.indexOf("/")), cljs.core.subs.call(null, token__27130, token__27130.indexOf("/") + 1, token__27130.length))
-  }else {
-    return cljs.reader.special_symbols.call(null, token__27130, cljs.core.symbol.call(null, token__27130))
-  }
-};
-cljs.reader.read_keyword = function read_keyword(reader, initch) {
-  var token__27140 = cljs.reader.read_token.call(null, reader, cljs.reader.read_char.call(null, reader));
-  var a__27141 = cljs.reader.re_matches_STAR_.call(null, cljs.reader.symbol_pattern, token__27140);
-  var token__27142 = a__27141[0];
-  var ns__27143 = a__27141[1];
-  var name__27144 = a__27141[2];
-  if(cljs.core.truth_(function() {
-    var or__3824__auto____27146 = function() {
-      var and__3822__auto____27145 = !(void 0 === ns__27143);
-      if(and__3822__auto____27145) {
-        return ns__27143.substring(ns__27143.length - 2, ns__27143.length) === ":/"
-      }else {
-        return and__3822__auto____27145
-      }
-    }();
-    if(cljs.core.truth_(or__3824__auto____27146)) {
-      return or__3824__auto____27146
-    }else {
-      var or__3824__auto____27147 = name__27144[name__27144.length - 1] === ":";
-      if(or__3824__auto____27147) {
-        return or__3824__auto____27147
-      }else {
-        return!(token__27142.indexOf("::", 1) === -1)
-      }
-    }
-  }())) {
-    return cljs.reader.reader_error.call(null, reader, "Invalid token: ", token__27142)
-  }else {
-    if(function() {
-      var and__3822__auto____27148 = !(ns__27143 == null);
-      if(and__3822__auto____27148) {
-        return ns__27143.length > 0
-      }else {
-        return and__3822__auto____27148
-      }
-    }()) {
-      return cljs.core.keyword.call(null, ns__27143.substring(0, ns__27143.indexOf("/")), name__27144)
-    }else {
-      return cljs.core.keyword.call(null, token__27142)
-    }
-  }
-};
-cljs.reader.desugar_meta = function desugar_meta(f) {
-  if(cljs.core.symbol_QMARK_.call(null, f)) {
-    return cljs.core.ObjMap.fromObject(["\ufdd0'tag"], {"\ufdd0'tag":f})
-  }else {
-    if(cljs.core.string_QMARK_.call(null, f)) {
-      return cljs.core.ObjMap.fromObject(["\ufdd0'tag"], {"\ufdd0'tag":f})
-    }else {
-      if(cljs.core.keyword_QMARK_.call(null, f)) {
-        return cljs.core.PersistentArrayMap.fromArrays([f], [true])
-      }else {
-        if("\ufdd0'else") {
-          return f
-        }else {
-          return null
-        }
-      }
-    }
-  }
-};
-cljs.reader.wrapping_reader = function wrapping_reader(sym) {
-  return function(rdr, _) {
-    return cljs.core.list.call(null, sym, cljs.reader.read.call(null, rdr, true, null, true))
-  }
-};
-cljs.reader.throwing_reader = function throwing_reader(msg) {
-  return function(rdr, _) {
-    return cljs.reader.reader_error.call(null, rdr, msg)
-  }
-};
-cljs.reader.read_meta = function read_meta(rdr, _) {
-  var m__27154 = cljs.reader.desugar_meta.call(null, cljs.reader.read.call(null, rdr, true, null, true));
-  if(cljs.core.map_QMARK_.call(null, m__27154)) {
-  }else {
-    cljs.reader.reader_error.call(null, rdr, "Metadata must be Symbol,Keyword,String or Map")
-  }
-  var o__27155 = cljs.reader.read.call(null, rdr, true, null, true);
-  if(function() {
-    var G__27156__27157 = o__27155;
-    if(G__27156__27157) {
-      if(function() {
-        var or__3824__auto____27158 = G__27156__27157.cljs$lang$protocol_mask$partition0$ & 262144;
-        if(or__3824__auto____27158) {
-          return or__3824__auto____27158
-        }else {
-          return G__27156__27157.cljs$core$IWithMeta$
-        }
-      }()) {
-        return true
-      }else {
-        if(!G__27156__27157.cljs$lang$protocol_mask$partition0$) {
-          return cljs.core.type_satisfies_.call(null, cljs.core.IWithMeta, G__27156__27157)
-        }else {
-          return false
-        }
-      }
-    }else {
-      return cljs.core.type_satisfies_.call(null, cljs.core.IWithMeta, G__27156__27157)
-    }
-  }()) {
-    return cljs.core.with_meta.call(null, o__27155, cljs.core.merge.call(null, cljs.core.meta.call(null, o__27155), m__27154))
-  }else {
-    return cljs.reader.reader_error.call(null, rdr, "Metadata can only be applied to IWithMetas")
-  }
-};
-cljs.reader.read_set = function read_set(rdr, _) {
-  return cljs.core.set.call(null, cljs.reader.read_delimited_list.call(null, "}", rdr, true))
-};
-cljs.reader.read_regex = function read_regex(rdr, ch) {
-  return cljs.core.re_pattern.call(null, cljs.reader.read_string_STAR_.call(null, rdr, ch))
-};
-cljs.reader.read_discard = function read_discard(rdr, _) {
-  cljs.reader.read.call(null, rdr, true, null, true);
-  return rdr
-};
-cljs.reader.macros = function macros(c) {
-  if(c === '"') {
-    return cljs.reader.read_string_STAR_
-  }else {
-    if(c === ":") {
-      return cljs.reader.read_keyword
-    }else {
-      if(c === ";") {
-        return cljs.reader.not_implemented
-      }else {
-        if(c === "'") {
-          return cljs.reader.wrapping_reader.call(null, "\ufdd1'quote")
-        }else {
-          if(c === "@") {
-            return cljs.reader.wrapping_reader.call(null, "\ufdd1'deref")
-          }else {
-            if(c === "^") {
-              return cljs.reader.read_meta
-            }else {
-              if(c === "`") {
-                return cljs.reader.not_implemented
-              }else {
-                if(c === "~") {
-                  return cljs.reader.not_implemented
-                }else {
-                  if(c === "(") {
-                    return cljs.reader.read_list
-                  }else {
-                    if(c === ")") {
-                      return cljs.reader.read_unmatched_delimiter
-                    }else {
-                      if(c === "[") {
-                        return cljs.reader.read_vector
-                      }else {
-                        if(c === "]") {
-                          return cljs.reader.read_unmatched_delimiter
-                        }else {
-                          if(c === "{") {
-                            return cljs.reader.read_map
-                          }else {
-                            if(c === "}") {
-                              return cljs.reader.read_unmatched_delimiter
-                            }else {
-                              if(c === "\\") {
-                                return cljs.reader.read_char
-                              }else {
-                                if(c === "%") {
-                                  return cljs.reader.not_implemented
-                                }else {
-                                  if(c === "#") {
-                                    return cljs.reader.read_dispatch
-                                  }else {
-                                    if("\ufdd0'else") {
-                                      return null
-                                    }else {
-                                      return null
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-};
-cljs.reader.dispatch_macros = function dispatch_macros(s) {
-  if(s === "{") {
-    return cljs.reader.read_set
-  }else {
-    if(s === "<") {
-      return cljs.reader.throwing_reader.call(null, "Unreadable form")
-    }else {
-      if(s === '"') {
-        return cljs.reader.read_regex
-      }else {
-        if(s === "!") {
-          return cljs.reader.read_comment
-        }else {
-          if(s === "_") {
-            return cljs.reader.read_discard
-          }else {
-            if("\ufdd0'else") {
-              return null
-            }else {
-              return null
-            }
-          }
-        }
-      }
-    }
-  }
-};
-cljs.reader.read = function read(reader, eof_is_error, sentinel, is_recursive) {
-  while(true) {
-    var ch__27162 = cljs.reader.read_char.call(null, reader);
-    if(ch__27162 == null) {
-      if(cljs.core.truth_(eof_is_error)) {
-        return cljs.reader.reader_error.call(null, reader, "EOF")
-      }else {
-        return sentinel
-      }
-    }else {
-      if(cljs.reader.whitespace_QMARK_.call(null, ch__27162)) {
-        var G__27165 = reader;
-        var G__27166 = eof_is_error;
-        var G__27167 = sentinel;
-        var G__27168 = is_recursive;
-        reader = G__27165;
-        eof_is_error = G__27166;
-        sentinel = G__27167;
-        is_recursive = G__27168;
-        continue
-      }else {
-        if(cljs.reader.comment_prefix_QMARK_.call(null, ch__27162)) {
-          var G__27169 = cljs.reader.read_comment.call(null, reader, ch__27162);
-          var G__27170 = eof_is_error;
-          var G__27171 = sentinel;
-          var G__27172 = is_recursive;
-          reader = G__27169;
-          eof_is_error = G__27170;
-          sentinel = G__27171;
-          is_recursive = G__27172;
-          continue
-        }else {
-          if("\ufdd0'else") {
-            var f__27163 = cljs.reader.macros.call(null, ch__27162);
-            var res__27164 = cljs.core.truth_(f__27163) ? f__27163.call(null, reader, ch__27162) : cljs.reader.number_literal_QMARK_.call(null, reader, ch__27162) ? cljs.reader.read_number.call(null, reader, ch__27162) : "\ufdd0'else" ? cljs.reader.read_symbol.call(null, reader, ch__27162) : null;
-            if(res__27164 === reader) {
-              var G__27173 = reader;
-              var G__27174 = eof_is_error;
-              var G__27175 = sentinel;
-              var G__27176 = is_recursive;
-              reader = G__27173;
-              eof_is_error = G__27174;
-              sentinel = G__27175;
-              is_recursive = G__27176;
-              continue
-            }else {
-              return res__27164
-            }
-          }else {
-            return null
-          }
-        }
-      }
-    }
-    break
-  }
-};
-cljs.reader.read_string = function read_string(s) {
-  var r__27178 = cljs.reader.push_back_reader.call(null, s);
-  return cljs.reader.read.call(null, r__27178, true, null, false)
-};
-cljs.reader.zero_fill_right = function zero_fill_right(s, width) {
-  if(cljs.core._EQ_.call(null, width, cljs.core.count.call(null, s))) {
-    return s
-  }else {
-    if(width < cljs.core.count.call(null, s)) {
-      return s.substring(0, width)
-    }else {
-      if("\ufdd0'else") {
-        var b__27180 = new goog.string.StringBuffer(s);
-        while(true) {
-          if(b__27180.getLength() < width) {
-            var G__27181 = b__27180.append("0");
-            b__27180 = G__27181;
-            continue
-          }else {
-            return b__27180.toString()
-          }
-          break
-        }
-      }else {
-        return null
-      }
-    }
-  }
-};
-cljs.reader.divisible_QMARK_ = function divisible_QMARK_(num, div) {
-  return num % div === 0
-};
-cljs.reader.indivisible_QMARK_ = function indivisible_QMARK_(num, div) {
-  return cljs.core.not.call(null, cljs.reader.divisible_QMARK_.call(null, num, div))
-};
-cljs.reader.leap_year_QMARK_ = function leap_year_QMARK_(year) {
-  var and__3822__auto____27184 = cljs.reader.divisible_QMARK_.call(null, year, 4);
-  if(cljs.core.truth_(and__3822__auto____27184)) {
-    var or__3824__auto____27185 = cljs.reader.indivisible_QMARK_.call(null, year, 100);
-    if(cljs.core.truth_(or__3824__auto____27185)) {
-      return or__3824__auto____27185
-    }else {
-      return cljs.reader.divisible_QMARK_.call(null, year, 400)
-    }
-  }else {
-    return and__3822__auto____27184
-  }
-};
-cljs.reader.days_in_month = function() {
-  var dim_norm__27190 = cljs.core.PersistentVector.fromArray([null, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], true);
-  var dim_leap__27191 = cljs.core.PersistentVector.fromArray([null, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], true);
-  return function(month, leap_year_QMARK_) {
-    return cljs.core._lookup.call(null, cljs.core.truth_(leap_year_QMARK_) ? dim_leap__27191 : dim_norm__27190, month, null)
-  }
-}();
-cljs.reader.parse_and_validate_timestamp = function() {
-  var timestamp__27192 = /(\d\d\d\d)(?:-(\d\d)(?:-(\d\d)(?:[T](\d\d)(?::(\d\d)(?::(\d\d)(?:[.](\d+))?)?)?)?)?)?(?:[Z]|([-+])(\d\d):(\d\d))?/;
-  var check__27194 = function(low, n, high, msg) {
-    if(function() {
-      var and__3822__auto____27193 = low <= n;
-      if(and__3822__auto____27193) {
-        return n <= high
-      }else {
-        return and__3822__auto____27193
-      }
-    }()) {
-    }else {
-      throw new Error([cljs.core.str("Assert failed: "), cljs.core.str([cljs.core.str(msg), cljs.core.str(" Failed:  "), cljs.core.str(low), cljs.core.str("<="), cljs.core.str(n), cljs.core.str("<="), cljs.core.str(high)].join("")), cljs.core.str("\n"), cljs.core.str(cljs.core.pr_str.call(null, cljs.core.with_meta(cljs.core.list("\ufdd1'<=", "\ufdd1'low", "\ufdd1'n", "\ufdd1'high"), cljs.core.hash_map("\ufdd0'line", 474))))].join(""));
-    }
-    return n
-  };
-  return function(ts) {
-    var temp__3974__auto____27195 = cljs.core.map.call(null, cljs.core.vec, cljs.core.split_at.call(null, 8, cljs.core.re_matches.call(null, timestamp__27192, ts)));
-    if(cljs.core.truth_(temp__3974__auto____27195)) {
-      var vec__27196__27199 = temp__3974__auto____27195;
-      var vec__27197__27200 = cljs.core.nth.call(null, vec__27196__27199, 0, null);
-      var ___27201 = cljs.core.nth.call(null, vec__27197__27200, 0, null);
-      var years__27202 = cljs.core.nth.call(null, vec__27197__27200, 1, null);
-      var months__27203 = cljs.core.nth.call(null, vec__27197__27200, 2, null);
-      var days__27204 = cljs.core.nth.call(null, vec__27197__27200, 3, null);
-      var hours__27205 = cljs.core.nth.call(null, vec__27197__27200, 4, null);
-      var minutes__27206 = cljs.core.nth.call(null, vec__27197__27200, 5, null);
-      var seconds__27207 = cljs.core.nth.call(null, vec__27197__27200, 6, null);
-      var milliseconds__27208 = cljs.core.nth.call(null, vec__27197__27200, 7, null);
-      var vec__27198__27209 = cljs.core.nth.call(null, vec__27196__27199, 1, null);
-      var ___27210 = cljs.core.nth.call(null, vec__27198__27209, 0, null);
-      var ___27211 = cljs.core.nth.call(null, vec__27198__27209, 1, null);
-      var ___27212 = cljs.core.nth.call(null, vec__27198__27209, 2, null);
-      var V__27213 = vec__27196__27199;
-      var vec__27214__27217 = cljs.core.map.call(null, function(v) {
-        return cljs.core.map.call(null, function(p1__27189_SHARP_) {
-          return parseInt(p1__27189_SHARP_, 10)
-        }, v)
-      }, cljs.core.map.call(null, function(p1__27187_SHARP_, p2__27186_SHARP_) {
-        return cljs.core.update_in.call(null, p2__27186_SHARP_, cljs.core.PersistentVector.fromArray([0], true), p1__27187_SHARP_)
-      }, cljs.core.PersistentVector.fromArray([cljs.core.constantly.call(null, null), function(p1__27188_SHARP_) {
-        if(cljs.core._EQ_.call(null, p1__27188_SHARP_, "-")) {
-          return"-1"
-        }else {
-          return"1"
-        }
-      }], true), V__27213));
-      var vec__27215__27218 = cljs.core.nth.call(null, vec__27214__27217, 0, null);
-      var ___27219 = cljs.core.nth.call(null, vec__27215__27218, 0, null);
-      var y__27220 = cljs.core.nth.call(null, vec__27215__27218, 1, null);
-      var mo__27221 = cljs.core.nth.call(null, vec__27215__27218, 2, null);
-      var d__27222 = cljs.core.nth.call(null, vec__27215__27218, 3, null);
-      var h__27223 = cljs.core.nth.call(null, vec__27215__27218, 4, null);
-      var m__27224 = cljs.core.nth.call(null, vec__27215__27218, 5, null);
-      var s__27225 = cljs.core.nth.call(null, vec__27215__27218, 6, null);
-      var ms__27226 = cljs.core.nth.call(null, vec__27215__27218, 7, null);
-      var vec__27216__27227 = cljs.core.nth.call(null, vec__27214__27217, 1, null);
-      var offset_sign__27228 = cljs.core.nth.call(null, vec__27216__27227, 0, null);
-      var offset_hours__27229 = cljs.core.nth.call(null, vec__27216__27227, 1, null);
-      var offset_minutes__27230 = cljs.core.nth.call(null, vec__27216__27227, 2, null);
-      var offset__27231 = offset_sign__27228 * (offset_hours__27229 * 60 + offset_minutes__27230);
-      return cljs.core.PersistentVector.fromArray([cljs.core.not.call(null, years__27202) ? 1970 : y__27220, cljs.core.not.call(null, months__27203) ? 1 : check__27194.call(null, 1, mo__27221, 12, "timestamp month field must be in range 1..12"), cljs.core.not.call(null, days__27204) ? 1 : check__27194.call(null, 1, d__27222, cljs.reader.days_in_month.call(null, mo__27221, cljs.reader.leap_year_QMARK_.call(null, y__27220)), "timestamp day field must be in range 1..last day in month"), cljs.core.not.call(null, 
-      hours__27205) ? 0 : check__27194.call(null, 0, h__27223, 23, "timestamp hour field must be in range 0..23"), cljs.core.not.call(null, minutes__27206) ? 0 : check__27194.call(null, 0, m__27224, 59, "timestamp minute field must be in range 0..59"), cljs.core.not.call(null, seconds__27207) ? 0 : check__27194.call(null, 0, s__27225, cljs.core._EQ_.call(null, m__27224, 59) ? 60 : 59, "timestamp second field must be in range 0..60"), cljs.core.not.call(null, milliseconds__27208) ? 0 : check__27194.call(null, 
-      0, ms__27226, 999, "timestamp millisecond field must be in range 0..999"), offset__27231], true)
-    }else {
-      return null
-    }
-  }
-}();
-cljs.reader.parse_timestamp = function parse_timestamp(ts) {
-  var temp__3971__auto____27243 = cljs.reader.parse_and_validate_timestamp.call(null, ts);
-  if(cljs.core.truth_(temp__3971__auto____27243)) {
-    var vec__27244__27245 = temp__3971__auto____27243;
-    var years__27246 = cljs.core.nth.call(null, vec__27244__27245, 0, null);
-    var months__27247 = cljs.core.nth.call(null, vec__27244__27245, 1, null);
-    var days__27248 = cljs.core.nth.call(null, vec__27244__27245, 2, null);
-    var hours__27249 = cljs.core.nth.call(null, vec__27244__27245, 3, null);
-    var minutes__27250 = cljs.core.nth.call(null, vec__27244__27245, 4, null);
-    var seconds__27251 = cljs.core.nth.call(null, vec__27244__27245, 5, null);
-    var ms__27252 = cljs.core.nth.call(null, vec__27244__27245, 6, null);
-    var offset__27253 = cljs.core.nth.call(null, vec__27244__27245, 7, null);
-    return new Date(Date.UTC(years__27246, months__27247 - 1, days__27248, hours__27249, minutes__27250, seconds__27251, ms__27252) - offset__27253 * 60 * 1E3)
-  }else {
-    return cljs.reader.reader_error.call(null, null, [cljs.core.str("Unrecognized date/time syntax: "), cljs.core.str(ts)].join(""))
-  }
-};
-cljs.reader.read_date = function read_date(s) {
-  if(cljs.core.string_QMARK_.call(null, s)) {
-    return cljs.reader.parse_timestamp.call(null, s)
-  }else {
-    return cljs.reader.reader_error.call(null, null, "Instance literal expects a string for its timestamp.")
-  }
-};
-cljs.reader.read_queue = function read_queue(elems) {
-  if(cljs.core.vector_QMARK_.call(null, elems)) {
-    return cljs.core.into.call(null, cljs.core.PersistentQueue.EMPTY, elems)
-  }else {
-    return cljs.reader.reader_error.call(null, null, "Queue literal expects a vector for its elements.")
-  }
-};
-cljs.reader.read_uuid = function read_uuid(uuid) {
-  if(cljs.core.string_QMARK_.call(null, uuid)) {
-    return new cljs.core.UUID(uuid)
-  }else {
-    return cljs.reader.reader_error.call(null, null, "UUID literal expects a string as its representation.")
-  }
-};
-cljs.reader._STAR_tag_table_STAR_ = cljs.core.atom.call(null, cljs.core.ObjMap.fromObject(["inst", "uuid", "queue"], {"inst":cljs.reader.read_date, "uuid":cljs.reader.read_uuid, "queue":cljs.reader.read_queue}));
-cljs.reader.maybe_read_tagged_type = function maybe_read_tagged_type(rdr, initch) {
-  var tag__27257 = cljs.reader.read_symbol.call(null, rdr, initch);
-  var temp__3971__auto____27258 = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), cljs.core.name.call(null, tag__27257), null);
-  if(cljs.core.truth_(temp__3971__auto____27258)) {
-    var pfn__27259 = temp__3971__auto____27258;
-    return pfn__27259.call(null, cljs.reader.read.call(null, rdr, true, null, false))
-  }else {
-    return cljs.reader.reader_error.call(null, rdr, "Could not find tag parser for ", cljs.core.name.call(null, tag__27257), " in ", cljs.core.pr_str.call(null, cljs.core.keys.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_))))
-  }
-};
-cljs.reader.register_tag_parser_BANG_ = function register_tag_parser_BANG_(tag, f) {
-  var tag__27262 = cljs.core.name.call(null, tag);
-  var old_parser__27263 = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), tag__27262, null);
-  cljs.core.swap_BANG_.call(null, cljs.reader._STAR_tag_table_STAR_, cljs.core.assoc, tag__27262, f);
-  return old_parser__27263
-};
-cljs.reader.deregister_tag_parser_BANG_ = function deregister_tag_parser_BANG_(tag) {
-  var tag__27266 = cljs.core.name.call(null, tag);
-  var old_parser__27267 = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), tag__27266, null);
-  cljs.core.swap_BANG_.call(null, cljs.reader._STAR_tag_table_STAR_, cljs.core.dissoc, tag__27266);
-  return old_parser__27267
-};
 goog.provide("shoreleave.remotes.http_rpc");
 goog.require("cljs.core");
 goog.require("cljs.reader");
@@ -31470,27 +31970,34 @@ shoreleave.remotes.http_rpc.remote_callback = function() {
 goog.provide("aahru.ui");
 goog.require("cljs.core");
 goog.require("shoreleave.remotes.http_rpc");
+goog.require("c2.event");
 goog.require("c2.dom");
 goog.require("clojure.string");
 aahru.ui.set_navigation = function set_navigation() {
-  var loc__22507 = cljs.core.last.call(null, clojure.string.split.call(null, window.location.toString(cljs.core.List.EMPTY), /\//));
-  var G__22508__22509 = cljs.core.seq.call(null, c2.dom.children.call(null, c2.dom.select.call(null, "#top-navbar")));
-  if(G__22508__22509) {
-    var list_item__22510 = cljs.core.first.call(null, G__22508__22509);
-    var G__22508__22511 = G__22508__22509;
+  var loc__105176 = cljs.core.last.call(null, clojure.string.split.call(null, window.location.toString(cljs.core.List.EMPTY), /\//, 4));
+  var G__105177__105178 = cljs.core.seq.call(null, c2.dom.children.call(null, c2.dom.select.call(null, "#top-navbar")));
+  if(G__105177__105178) {
+    var list_item__105179 = cljs.core.first.call(null, G__105177__105178);
+    var G__105177__105180 = G__105177__105178;
     while(true) {
-      if(cljs.core._EQ_.call(null, [cljs.core.str("/"), cljs.core.str(loc__22507)].join(""), c2.dom.attr.call(null, cljs.core.first.call(null, c2.dom.children.call(null, list_item__22510)), "\ufdd0'href"))) {
-        c2.dom.add_class_BANG_.call(null, list_item__22510, "active")
+      var res__7898__auto____105181 = c2.dom.attr.call(null, cljs.core.first.call(null, c2.dom.children.call(null, list_item__105179)), "\ufdd0'href");
+      console.log(cljs.core.prn_str.call(null, res__7898__auto____105181));
+      res__7898__auto____105181;
+      if(cljs.core._EQ_.call(null, [cljs.core.str("/"), cljs.core.str(loc__105176)].join(""), c2.dom.attr.call(null, cljs.core.first.call(null, c2.dom.children.call(null, list_item__105179)), "\ufdd0'href"))) {
+        c2.dom.add_class_BANG_.call(null, list_item__105179, "active");
+        c2.dom.add_class_BANG_.call(null, list_item__105179, "disabled");
+        c2.dom.attr.call(null, cljs.core.first.call(null, c2.dom.children.call(null, list_item__105179)), "\ufdd0'href", null)
       }else {
-        c2.dom.remove_class_BANG_.call(null, list_item__22510, "active")
+        c2.dom.remove_class_BANG_.call(null, list_item__105179, "active");
+        c2.dom.remove_class_BANG_.call(null, list_item__105179, "disabled")
       }
-      var temp__3974__auto____22512 = cljs.core.next.call(null, G__22508__22511);
-      if(temp__3974__auto____22512) {
-        var G__22508__22513 = temp__3974__auto____22512;
-        var G__22514 = cljs.core.first.call(null, G__22508__22513);
-        var G__22515 = G__22508__22513;
-        list_item__22510 = G__22514;
-        G__22508__22511 = G__22515;
+      var temp__3974__auto____105182 = cljs.core.next.call(null, G__105177__105180);
+      if(temp__3974__auto____105182) {
+        var G__105177__105183 = temp__3974__auto____105182;
+        var G__105184 = cljs.core.first.call(null, G__105177__105183);
+        var G__105185 = G__105177__105183;
+        list_item__105179 = G__105184;
+        G__105177__105180 = G__105185;
         continue
       }else {
         return null
@@ -32055,506 +32562,6 @@ aahru.xprize.score.setup_remotes = function setup_remotes() {
   return aahru.xprize.score.prep_remote_selectors.call(null, "region", "bed")
 };
 goog.exportSymbol("aahru.xprize.score.setup_remotes", aahru.xprize.score.setup_remotes);
-goog.provide("reflex.core");
-goog.require("cljs.core");
-reflex.core.capture_derefed = function capture_derefed(f) {
-  var _BANG_recently_derefed27616__27617 = reflex.core._BANG_recently_derefed;
-  try {
-    reflex.core._BANG_recently_derefed = cljs.core.atom.call(null, cljs.core.PersistentHashSet.EMPTY, "\ufdd0'meta", cljs.core.ObjMap.fromObject(["\ufdd0'no-deref-monitor"], {"\ufdd0'no-deref-monitor":true}));
-    var res__27619 = f.call(null);
-    return cljs.core.ObjMap.fromObject(["\ufdd0'res", "\ufdd0'derefed"], {"\ufdd0'res":res__27619, "\ufdd0'derefed":cljs.core.deref.call(null, reflex.core._BANG_recently_derefed)})
-  }finally {
-    reflex.core._BANG_recently_derefed = _BANG_recently_derefed27616__27617
-  }
-};
-reflex.core.notify_deref_watcher_BANG_ = function notify_deref_watcher_BANG_(derefable) {
-  if(cljs.core.truth_(function() {
-    var and__3822__auto____27621 = reflex.core._BANG_recently_derefed;
-    if(cljs.core.truth_(and__3822__auto____27621)) {
-      return cljs.core.not.call(null, (new cljs.core.Keyword("\ufdd0'no-deref-monitor")).call(null, cljs.core.meta.call(null, derefable)))
-    }else {
-      return and__3822__auto____27621
-    }
-  }())) {
-    return cljs.core.swap_BANG_.call(null, reflex.core._BANG_recently_derefed, function(p1__27611_SHARP_) {
-      return cljs.core.conj.call(null, p1__27611_SHARP_, derefable)
-    })
-  }else {
-    return null
-  }
-};
-cljs.core.Atom.prototype.cljs$core$IDeref$ = true;
-cljs.core.Atom.prototype.cljs$core$IDeref$_deref$arity$1 = function(this$) {
-  reflex.core.notify_deref_watcher_BANG_.call(null, this$);
-  return this$.state
-};
-reflex.core.IDisposable = {};
-reflex.core.dispose_BANG_ = function dispose_BANG_(this$) {
-  if(function() {
-    var and__3822__auto____27626 = this$;
-    if(and__3822__auto____27626) {
-      return this$.reflex$core$IDisposable$dispose_BANG_$arity$1
-    }else {
-      return and__3822__auto____27626
-    }
-  }()) {
-    return this$.reflex$core$IDisposable$dispose_BANG_$arity$1(this$)
-  }else {
-    var x__2256__auto____27627 = this$ == null ? null : this$;
-    return function() {
-      var or__3824__auto____27628 = reflex.core.dispose_BANG_[goog.typeOf(x__2256__auto____27627)];
-      if(or__3824__auto____27628) {
-        return or__3824__auto____27628
-      }else {
-        var or__3824__auto____27629 = reflex.core.dispose_BANG_["_"];
-        if(or__3824__auto____27629) {
-          return or__3824__auto____27629
-        }else {
-          throw cljs.core.missing_protocol.call(null, "IDisposable.dispose!", this$);
-        }
-      }
-    }().call(null, this$)
-  }
-};
-reflex.core.ComputedObservable = function(state, dirty_QMARK_, f, key, parent_watchables, watches, __meta, __extmap) {
-  this.state = state;
-  this.dirty_QMARK_ = dirty_QMARK_;
-  this.f = f;
-  this.key = key;
-  this.parent_watchables = parent_watchables;
-  this.watches = watches;
-  this.__meta = __meta;
-  this.__extmap = __extmap;
-  this.cljs$lang$protocol_mask$partition1$ = 0;
-  this.cljs$lang$protocol_mask$partition0$ = 2766571274;
-  if(arguments.length > 6) {
-    this.__meta = __meta;
-    this.__extmap = __extmap
-  }else {
-    this.__meta = null;
-    this.__extmap = null
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2211__auto__) {
-  var this__27633 = this;
-  var h__2085__auto____27634 = this__27633.__hash;
-  if(!(h__2085__auto____27634 == null)) {
-    return h__2085__auto____27634
-  }else {
-    var h__2085__auto____27635 = cljs.core.hash_imap.call(null, this__2211__auto__);
-    this__27633.__hash = h__2085__auto____27635;
-    return h__2085__auto____27635
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2216__auto__, k__2217__auto__) {
-  var this__27636 = this;
-  return this__2216__auto__.cljs$core$ILookup$_lookup$arity$3(this__2216__auto__, k__2217__auto__, null)
-};
-reflex.core.ComputedObservable.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2218__auto__, k27631, else__2219__auto__) {
-  var this__27637 = this;
-  if(k27631 === "\ufdd0'state") {
-    return this__27637.state
-  }else {
-    if(k27631 === "\ufdd0'dirty?") {
-      return this__27637.dirty_QMARK_
-    }else {
-      if(k27631 === "\ufdd0'f") {
-        return this__27637.f
-      }else {
-        if(k27631 === "\ufdd0'key") {
-          return this__27637.key
-        }else {
-          if(k27631 === "\ufdd0'parent-watchables") {
-            return this__27637.parent_watchables
-          }else {
-            if(k27631 === "\ufdd0'watches") {
-              return this__27637.watches
-            }else {
-              if("\ufdd0'else") {
-                return cljs.core._lookup.call(null, this__27637.__extmap, k27631, else__2219__auto__)
-              }else {
-                return null
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2223__auto__, k__2224__auto__, G__27630) {
-  var this__27638 = this;
-  var pred__27639__27642 = cljs.core.identical_QMARK_;
-  var expr__27640__27643 = k__2224__auto__;
-  if(pred__27639__27642.call(null, "\ufdd0'state", expr__27640__27643)) {
-    return new reflex.core.ComputedObservable(G__27630, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
-  }else {
-    if(pred__27639__27642.call(null, "\ufdd0'dirty?", expr__27640__27643)) {
-      return new reflex.core.ComputedObservable(this__27638.state, G__27630, this__27638.f, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
-    }else {
-      if(pred__27639__27642.call(null, "\ufdd0'f", expr__27640__27643)) {
-        return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, G__27630, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
-      }else {
-        if(pred__27639__27642.call(null, "\ufdd0'key", expr__27640__27643)) {
-          return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, G__27630, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
-        }else {
-          if(pred__27639__27642.call(null, "\ufdd0'parent-watchables", expr__27640__27643)) {
-            return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, G__27630, this__27638.watches, this__27638.__meta, this__27638.__extmap, null)
-          }else {
-            if(pred__27639__27642.call(null, "\ufdd0'watches", expr__27640__27643)) {
-              return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, this__27638.parent_watchables, G__27630, this__27638.__meta, this__27638.__extmap, null)
-            }else {
-              return new reflex.core.ComputedObservable(this__27638.state, this__27638.dirty_QMARK_, this__27638.f, this__27638.key, this__27638.parent_watchables, this__27638.watches, this__27638.__meta, cljs.core.assoc.call(null, this__27638.__extmap, k__2224__auto__, G__27630), null)
-            }
-          }
-        }
-      }
-    }
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IDeref$_deref$arity$1 = function(this$) {
-  var this__27644 = this;
-  reflex.core.notify_deref_watcher_BANG_.call(null, this$);
-  if(cljs.core.not.call(null, this__27644.dirty_QMARK_)) {
-    return this$.state
-  }else {
-    var map__27645__27646 = reflex.core.capture_derefed.call(null, this__27644.f);
-    var map__27645__27647 = cljs.core.seq_QMARK_.call(null, map__27645__27646) ? cljs.core.apply.call(null, cljs.core.hash_map, map__27645__27646) : map__27645__27646;
-    var derefed__27648 = cljs.core._lookup.call(null, map__27645__27647, "\ufdd0'derefed", null);
-    var res__27649 = cljs.core._lookup.call(null, map__27645__27647, "\ufdd0'res", null);
-    var G__27650__27651 = cljs.core.seq.call(null, this__27644.parent_watchables);
-    if(G__27650__27651) {
-      var w__27652 = cljs.core.first.call(null, G__27650__27651);
-      var G__27650__27653 = G__27650__27651;
-      while(true) {
-        cljs.core.remove_watch.call(null, w__27652, this__27644.key);
-        var temp__3974__auto____27654 = cljs.core.next.call(null, G__27650__27653);
-        if(temp__3974__auto____27654) {
-          var G__27650__27655 = temp__3974__auto____27654;
-          var G__27703 = cljs.core.first.call(null, G__27650__27655);
-          var G__27704 = G__27650__27655;
-          w__27652 = G__27703;
-          G__27650__27653 = G__27704;
-          continue
-        }else {
-        }
-        break
-      }
-    }else {
-    }
-    this$.parent_watchables = derefed__27648;
-    var G__27656__27657 = cljs.core.seq.call(null, derefed__27648);
-    if(G__27656__27657) {
-      var w__27658 = cljs.core.first.call(null, G__27656__27657);
-      var G__27656__27659 = G__27656__27657;
-      while(true) {
-        cljs.core.add_watch.call(null, w__27658, this__27644.key, function(w__27658, G__27656__27659) {
-          return function() {
-            this$.dirty_QMARK_ = true;
-            return cljs.core._notify_watches.call(null, this$, null, null)
-          }
-        }(w__27658, G__27656__27659));
-        var temp__3974__auto____27660 = cljs.core.next.call(null, G__27656__27659);
-        if(temp__3974__auto____27660) {
-          var G__27656__27661 = temp__3974__auto____27660;
-          var G__27705 = cljs.core.first.call(null, G__27656__27661);
-          var G__27706 = G__27656__27661;
-          w__27658 = G__27705;
-          G__27656__27659 = G__27706;
-          continue
-        }else {
-        }
-        break
-      }
-    }else {
-    }
-    this$.state = res__27649;
-    this$.dirty_QMARK_ = false;
-    return res__27649
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2221__auto__, entry__2222__auto__) {
-  var this__27662 = this;
-  if(cljs.core.vector_QMARK_.call(null, entry__2222__auto__)) {
-    return this__2221__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2221__auto__, cljs.core._nth.call(null, entry__2222__auto__, 0), cljs.core._nth.call(null, entry__2222__auto__, 1))
-  }else {
-    return cljs.core.reduce.call(null, cljs.core._conj, this__2221__auto__, entry__2222__auto__)
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IWatchable$_notify_watches$arity$3 = function(this$, _27664, _) {
-  var this__27663 = this;
-  var G__27665__27666 = cljs.core.seq.call(null, this__27663.watches);
-  if(G__27665__27666) {
-    var G__27668__27670 = cljs.core.first.call(null, G__27665__27666);
-    var vec__27669__27671 = G__27668__27670;
-    var key__27672 = cljs.core.nth.call(null, vec__27669__27671, 0, null);
-    var wf__27673 = cljs.core.nth.call(null, vec__27669__27671, 1, null);
-    var G__27665__27674 = G__27665__27666;
-    var G__27668__27675 = G__27668__27670;
-    var G__27665__27676 = G__27665__27674;
-    while(true) {
-      var vec__27677__27678 = G__27668__27675;
-      var key__27679 = cljs.core.nth.call(null, vec__27677__27678, 0, null);
-      var wf__27680 = cljs.core.nth.call(null, vec__27677__27678, 1, null);
-      var G__27665__27681 = G__27665__27676;
-      wf__27680.call(null);
-      var temp__3974__auto____27682 = cljs.core.next.call(null, G__27665__27681);
-      if(temp__3974__auto____27682) {
-        var G__27665__27683 = temp__3974__auto____27682;
-        var G__27707 = cljs.core.first.call(null, G__27665__27683);
-        var G__27708 = G__27665__27683;
-        G__27668__27675 = G__27707;
-        G__27665__27676 = G__27708;
-        continue
-      }else {
-        return null
-      }
-      break
-    }
-  }else {
-    return null
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IWatchable$_add_watch$arity$3 = function(this$, key, wf) {
-  var this__27684 = this;
-  return this$.watches = cljs.core.assoc.call(null, this__27684.watches, key, wf)
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IWatchable$_remove_watch$arity$2 = function(this$, key) {
-  var this__27685 = this;
-  return this$.watches = cljs.core.dissoc.call(null, this__27685.watches, key)
-};
-reflex.core.ComputedObservable.prototype.reflex$core$IDisposable$ = true;
-reflex.core.ComputedObservable.prototype.reflex$core$IDisposable$dispose_BANG_$arity$1 = function(this$) {
-  var this__27686 = this;
-  var G__27687__27688 = cljs.core.seq.call(null, this__27686.parent_watchables);
-  if(G__27687__27688) {
-    var w__27689 = cljs.core.first.call(null, G__27687__27688);
-    var G__27687__27690 = G__27687__27688;
-    while(true) {
-      cljs.core.remove_watch.call(null, w__27689, this__27686.key);
-      var temp__3974__auto____27691 = cljs.core.next.call(null, G__27687__27690);
-      if(temp__3974__auto____27691) {
-        var G__27687__27692 = temp__3974__auto____27691;
-        var G__27709 = cljs.core.first.call(null, G__27687__27692);
-        var G__27710 = G__27687__27692;
-        w__27689 = G__27709;
-        G__27687__27690 = G__27710;
-        continue
-      }else {
-      }
-      break
-    }
-  }else {
-  }
-  return this$.watches = null
-};
-reflex.core.ComputedObservable.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2228__auto__) {
-  var this__27693 = this;
-  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'state", this__27693.state), cljs.core.vector.call(null, "\ufdd0'dirty?", this__27693.dirty_QMARK_), cljs.core.vector.call(null, "\ufdd0'f", this__27693.f), cljs.core.vector.call(null, "\ufdd0'key", this__27693.key), cljs.core.vector.call(null, "\ufdd0'parent-watchables", this__27693.parent_watchables), cljs.core.vector.call(null, "\ufdd0'watches", this__27693.watches)], 
-  true), this__27693.__extmap))
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IPrintable$_pr_seq$arity$2 = function(this__2230__auto__, opts__2231__auto__) {
-  var this__27694 = this;
-  var pr_pair__2232__auto____27695 = function(keyval__2233__auto__) {
-    return cljs.core.pr_sequential.call(null, cljs.core.pr_seq, "", " ", "", opts__2231__auto__, keyval__2233__auto__)
-  };
-  return cljs.core.pr_sequential.call(null, pr_pair__2232__auto____27695, [cljs.core.str("#"), cljs.core.str("ComputedObservable"), cljs.core.str("{")].join(""), ", ", "}", opts__2231__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0'state", this__27694.state), cljs.core.vector.call(null, "\ufdd0'dirty?", this__27694.dirty_QMARK_), cljs.core.vector.call(null, "\ufdd0'f", this__27694.f), cljs.core.vector.call(null, "\ufdd0'key", this__27694.key), 
-  cljs.core.vector.call(null, "\ufdd0'parent-watchables", this__27694.parent_watchables), cljs.core.vector.call(null, "\ufdd0'watches", this__27694.watches)], true), this__27694.__extmap))
-};
-reflex.core.ComputedObservable.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2220__auto__) {
-  var this__27696 = this;
-  return 6 + cljs.core.count.call(null, this__27696.__extmap)
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2212__auto__, other__2213__auto__) {
-  var this__27697 = this;
-  if(cljs.core.truth_(function() {
-    var and__3822__auto____27698 = other__2213__auto__;
-    if(cljs.core.truth_(and__3822__auto____27698)) {
-      var and__3822__auto____27699 = this__2212__auto__.constructor === other__2213__auto__.constructor;
-      if(and__3822__auto____27699) {
-        return cljs.core.equiv_map.call(null, this__2212__auto__, other__2213__auto__)
-      }else {
-        return and__3822__auto____27699
-      }
-    }else {
-      return and__3822__auto____27698
-    }
-  }())) {
-    return true
-  }else {
-    return false
-  }
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2215__auto__, G__27630) {
-  var this__27700 = this;
-  return new reflex.core.ComputedObservable(this__27700.state, this__27700.dirty_QMARK_, this__27700.f, this__27700.key, this__27700.parent_watchables, this__27700.watches, G__27630, this__27700.__extmap, this__27700.__hash)
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2214__auto__) {
-  var this__27701 = this;
-  return this__27701.__meta
-};
-reflex.core.ComputedObservable.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2225__auto__, k__2226__auto__) {
-  var this__27702 = this;
-  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0'dirty?", "\ufdd0'state", "\ufdd0'key", "\ufdd0'f", "\ufdd0'watches", "\ufdd0'parent-watchables"]), k__2226__auto__)) {
-    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2225__auto__), this__27702.__meta), k__2226__auto__)
-  }else {
-    return new reflex.core.ComputedObservable(this__27702.state, this__27702.dirty_QMARK_, this__27702.f, this__27702.key, this__27702.parent_watchables, this__27702.watches, this__27702.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, this__27702.__extmap, k__2226__auto__)), null)
-  }
-};
-reflex.core.ComputedObservable.cljs$lang$type = true;
-reflex.core.ComputedObservable.cljs$lang$ctorPrSeq = function(this__2250__auto__) {
-  return cljs.core.list.call(null, "reflex.core/ComputedObservable")
-};
-reflex.core.__GT_ComputedObservable = function __GT_ComputedObservable(state, dirty_QMARK_, f, key, parent_watchables, watches) {
-  return new reflex.core.ComputedObservable(state, dirty_QMARK_, f, key, parent_watchables, watches)
-};
-reflex.core.map__GT_ComputedObservable = function map__GT_ComputedObservable(G__27632) {
-  return new reflex.core.ComputedObservable((new cljs.core.Keyword("\ufdd0'state")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'dirty?")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'f")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'key")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'parent-watchables")).call(null, G__27632), (new cljs.core.Keyword("\ufdd0'watches")).call(null, G__27632), null, cljs.core.dissoc.call(null, G__27632, "\ufdd0'state", "\ufdd0'dirty?", 
-  "\ufdd0'f", "\ufdd0'key", "\ufdd0'parent-watchables", "\ufdd0'watches"))
-};
-reflex.core.ComputedObservable;
-reflex.core.ComputedObservable.prototype.cljs$core$IHash$ = true;
-reflex.core.ComputedObservable.prototype.cljs$core$IHash$_hash$arity$1 = function(this$) {
-  return this$.key
-};
-goog.provide("c2.core");
-goog.require("cljs.core");
-goog.require("reflex.core");
-goog.require("c2.dom");
-goog.require("singult.core");
-c2.core.node_data = singult.core.node_data;
-c2.core.unify = function() {
-  var unify__delegate = function(data, mapping, args) {
-    if(cljs.core.seq.call(null, data)) {
-      mapping.call(null, cljs.core.first.call(null, data))
-    }else {
-    }
-    return cljs.core.apply.call(null, singult.core.unify, data, mapping, args)
-  };
-  var unify = function(data, mapping, var_args) {
-    var args = null;
-    if(goog.isDef(var_args)) {
-      args = cljs.core.array_seq(Array.prototype.slice.call(arguments, 2), 0)
-    }
-    return unify__delegate.call(this, data, mapping, args)
-  };
-  unify.cljs$lang$maxFixedArity = 2;
-  unify.cljs$lang$applyTo = function(arglist__27610) {
-    var data = cljs.core.first(arglist__27610);
-    var mapping = cljs.core.first(cljs.core.next(arglist__27610));
-    var args = cljs.core.rest(cljs.core.next(arglist__27610));
-    return unify__delegate(data, mapping, args)
-  };
-  unify.cljs$lang$arity$variadic = unify__delegate;
-  return unify
-}();
-goog.provide("c2.event");
-goog.require("cljs.core");
-goog.require("cljs.reader");
-goog.require("c2.core");
-goog.require("goog.events");
-goog.require("c2.dom");
-goog.require("c2.core");
-goog.require("cljs.reader");
-c2.event.on_load = function on_load(f) {
-  return goog.events.listen(window, goog.events.EventType.LOAD, f)
-};
-c2.event.on_raw = function() {
-  var on_raw__delegate = function(node, event_type, f, p__27578) {
-    var map__27583__27584 = p__27578;
-    var map__27583__27585 = cljs.core.seq_QMARK_.call(null, map__27583__27584) ? cljs.core.apply.call(null, cljs.core.hash_map, map__27583__27584) : map__27583__27584;
-    var capture__27586 = cljs.core._lookup.call(null, map__27583__27585, "\ufdd0'capture", false);
-    return goog.events.listen(c2.dom.__GT_dom.call(null, node), cljs.core.name.call(null, event_type), f, capture__27586)
-  };
-  var on_raw = function(node, event_type, f, var_args) {
-    var p__27578 = null;
-    if(goog.isDef(var_args)) {
-      p__27578 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 3), 0)
-    }
-    return on_raw__delegate.call(this, node, event_type, f, p__27578)
-  };
-  on_raw.cljs$lang$maxFixedArity = 3;
-  on_raw.cljs$lang$applyTo = function(arglist__27587) {
-    var node = cljs.core.first(arglist__27587);
-    var event_type = cljs.core.first(cljs.core.next(arglist__27587));
-    var f = cljs.core.first(cljs.core.next(cljs.core.next(arglist__27587)));
-    var p__27578 = cljs.core.rest(cljs.core.next(cljs.core.next(arglist__27587)));
-    return on_raw__delegate(node, event_type, f, p__27578)
-  };
-  on_raw.cljs$lang$arity$variadic = on_raw__delegate;
-  return on_raw
-}();
-c2.event.on = function() {
-  var on = null;
-  var on__3 = function(node, event_type, f) {
-    return on.call(null, node, "*", event_type, f)
-  };
-  var on__5 = function() {
-    var G__27607__delegate = function(node, selector, event_type, f, p__27588) {
-      var map__27598__27599 = p__27588;
-      var map__27598__27600 = cljs.core.seq_QMARK_.call(null, map__27598__27599) ? cljs.core.apply.call(null, cljs.core.hash_map, map__27598__27599) : map__27598__27599;
-      var capture__27601 = cljs.core._lookup.call(null, map__27598__27600, "\ufdd0'capture", false);
-      return goog.events.listen(c2.dom.__GT_dom.call(null, node), cljs.core.name.call(null, event_type), function(event) {
-        if(cljs.core.truth_(c2.dom.matches_selector_QMARK_.call(null, event.target, selector))) {
-          var $node__27602 = event.target;
-          while(true) {
-            var temp__3971__auto____27603 = c2.core.node_data.call(null, $node__27602);
-            if(cljs.core.truth_(temp__3971__auto____27603)) {
-              var d__27604 = temp__3971__auto____27603;
-              return f.call(null, d__27604, $node__27602, event)
-            }else {
-              var temp__3971__auto____27605 = c2.dom.parent.call(null, $node__27602);
-              if(cljs.core.truth_(temp__3971__auto____27605)) {
-                var parent__27606 = temp__3971__auto____27605;
-                var G__27608 = parent__27606;
-                $node__27602 = G__27608;
-                continue
-              }else {
-                return null
-              }
-            }
-            break
-          }
-        }else {
-          return null
-        }
-      }, capture__27601)
-    };
-    var G__27607 = function(node, selector, event_type, f, var_args) {
-      var p__27588 = null;
-      if(goog.isDef(var_args)) {
-        p__27588 = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0)
-      }
-      return G__27607__delegate.call(this, node, selector, event_type, f, p__27588)
-    };
-    G__27607.cljs$lang$maxFixedArity = 4;
-    G__27607.cljs$lang$applyTo = function(arglist__27609) {
-      var node = cljs.core.first(arglist__27609);
-      var selector = cljs.core.first(cljs.core.next(arglist__27609));
-      var event_type = cljs.core.first(cljs.core.next(cljs.core.next(arglist__27609)));
-      var f = cljs.core.first(cljs.core.next(cljs.core.next(cljs.core.next(arglist__27609))));
-      var p__27588 = cljs.core.rest(cljs.core.next(cljs.core.next(cljs.core.next(arglist__27609))));
-      return G__27607__delegate(node, selector, event_type, f, p__27588)
-    };
-    G__27607.cljs$lang$arity$variadic = G__27607__delegate;
-    return G__27607
-  }();
-  on = function(node, selector, event_type, f, var_args) {
-    var p__27588 = var_args;
-    switch(arguments.length) {
-      case 3:
-        return on__3.call(this, node, selector, event_type);
-      default:
-        return on__5.cljs$lang$arity$variadic(node, selector, event_type, f, cljs.core.array_seq(arguments, 4))
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  on.cljs$lang$maxFixedArity = 4;
-  on.cljs$lang$applyTo = on__5.cljs$lang$applyTo;
-  on.cljs$lang$arity$3 = on__3;
-  on.cljs$lang$arity$variadic = on__5.cljs$lang$arity$variadic;
-  return on
-}();
 goog.provide("aahru.xprize.analyses");
 goog.require("cljs.core");
 goog.require("shoreleave.remotes.http_rpc");

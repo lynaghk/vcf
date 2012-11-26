@@ -3,21 +3,32 @@
   (:use-macros [c2.util :only [pp]])
   (:require [clojure.string :as string]
             [c2.dom :as dom]
+            [c2.event :as event]
             [shoreleave.remotes.http-rpc :as rpc]))
 
 (defn ^:export set-navigation
   "Correctly set the active top level navigation toolbar."
   []
   (let [loc (-> (.toString window.location ())
-                (string/split #"/")
+                (string/split #"/" 4)
                 last)]
     (doseq [list-item (dom/children (dom/select "#top-navbar"))]
+      (pp (-> (dom/children list-item)
+              first
+              (dom/attr :href)))
       (if (= (str "/" loc)
              (-> (dom/children list-item)
                  first
                  (dom/attr :href)))
-        (dom/add-class! list-item "active")
-        (dom/remove-class! list-item "active")))))
+        (do
+          (dom/add-class! list-item "active")
+          (dom/add-class! list-item "disabled")
+          (-> (dom/children list-item)
+              first
+              (dom/attr :href nil)))
+        (do
+          (dom/remove-class! list-item "active")
+          (dom/remove-class! list-item "disabled"))))))
 
 (defn- logged-in-dropdown [user]
   [:ul {:class "nav pull-right" :id "user-dropdown"}
